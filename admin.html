@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Booc</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="style/index_style.css">
+<link rel="stylesheet" href="style/headerFooter.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+	.book{
+	
+	
+	margin-bottom:25px;
+	border-image: 5px round;
+	}
+	
+	.book_image{
+	  
+	  width:100%;
+	  height:200px;
+		 
+		
+	}
+	
+	.books_container
+	{
+		
+		padding:50px;
+	
+	}
+	.book_title
+	{
+	
+		text-align: center;
+	}
+	
+  .checked {
+  color: orange;
+		}
+	
+</style>
+<script src=""></script>
+<body>
+<!--
+<nav class="py-2">
+
+    <div class="row" style="margin-right: -120px">
+        
+        <div class="col-2 d-flex  align-items-center">
+            <img  class=" mx-5 my-1 navbar-brand "  src="img/logo.png" alt="Booc" >
+        </div>
+        <div class="col-4"></div>
+   
+        <div class="col-5 d-flex align-items-center justify-content-around ">
+            <a class=" text-white my-2 " href="index.html">Home</a>
+            <a class=" text-white my-2 " href="findPlace.html">Map</a>
+            <a class=" text-white my-2 " href="community.html">Community</a>
+            <a class=" btn text-dark my-2 writer" href="writer.html">Writer</a>
+            <div>
+                <a  href="#" ><img  class="  my-3 mr-3 icon"  src="img/icons/iconBell.png" ></a>
+                <a  href="#" ><img  class="  m-1 rounded-circle"  src="img/exPP.png"  ></a>
+                <a  href="#" ><img  class=" m-1 icondrop"  src="img/icons/iconDropdownWhite.png"  ></a>
+            </div>
+        </div>  
+
+    </div>
+
+</nav>
+-->
+<nav class="py-2 ">
+
+    <div class="row" style="margin-right: -120px">
+        
+        <div class="col-2 col-md-4 d-flex  align-items-center">
+            <img  class=" mx-5 my-1 navbar-brand "  src="img/logo.png" alt="Booc" >
+        </div>
+        <div class="col-2 col-md-3"></div>
+   
+        <div class="col-6 col-md-4 d-flex align-items-center justify-content-around ">
+            <a class=" text-white my-2 " href="index.html">Home</a>
+            <a class=" text-white my-2 " href="findPlace.html">Map</a>
+            <a class=" text-white my-2 " href="community.html">Community</a>
+            <a class=" btn text-dark my-2 writer" href="writer.html">Writer</a>
+            <div>
+                <a  href="#" ><img  class="  my-3 mr-3 icon"  src="img/icons/iconBell.png" ></a>
+                <a  href="#" ><img  class="  m-1 rounded-circle"  src="img/exPP.png"  ></a>
+                <a  href="#" ><img  class=" m-1 icondrop"  src="img/icons/iconDropdownWhite.png"  ></a>
+            </div>
+        </div>  
+
+    </div>
+
+</nav>
+
+
+<!-- #######################################################################################################
+
+
+########################################## YOUR CODE HERE ##################################################
+
+    
+############################################################################################################
+-->
+
+<div class="container   books_container">
+  <div class="row ">
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book1.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book1</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+    <div class="col-4 col-md-2 book" >
+	
+		<figure>
+        <img src="img/books/book2.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book2</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book3.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book3</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book4.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book4</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star "></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	<div class="col-4 col-md-2 book"  >
+		<figure>
+        <img src="img/books/book5.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book5</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book20.png" alt="" class="book_image rounded  ">
+        <figcaption class="book_title">book20</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+  </div> <!--  end of row   -->
+  <div class="row ">
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book7.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book7</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+    <div class="col-4 col-md-2 book" >
+	
+		<figure>
+        <img src="img/books/book8.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book8</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book9.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book9</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book10.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book10</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	<div class="col-4 col-md-2 book"  >
+		<figure>
+        <img src="img/books/book11.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book11</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book21.png" alt="" class="book_image rounded  ">
+        <figcaption class="book_title">book21</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+  </div> <!--  end of row   -->
+  
+  <div class="row ">
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book22.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book22</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+    <div class="col-4 col-md-2 book" >
+	
+		<figure>
+        <img src="img/books/book14.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book14</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book15.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book15</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book16.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book16</figcaption>
+		<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	<div class="col-4 col-md-2 book"  >
+		<figure>
+        <img src="img/books/book17.png" alt="" class="  book_image rounded  img-fluid">
+        <figcaption class="book_title">book17</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+		
+      </figure>
+	</div>
+	
+    <div class="col-4 col-md-2 book" >
+		<figure>
+        <img src="img/books/book18.png" alt="" class="book_image rounded  ">
+        <figcaption class="book_title">book18</figcaption>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+      </figure>
+	</div>
+	
+  </div> <!--  end of row   -->
+
+  <div class="row d-flex justify-content-center " style="text-align: center;" >
+
+`		<a href="#collapse" style="text-align: center;" >  More... </a>
+
+  </div>
+
+  
+</div>
+
+<hr>
+<h5> Reports </h5>
+<ul title="reports">
+	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
+	<li>A user reports <a href="#collapse">Shimaa Adel </a> Comment</li>
+	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
+	<li>A user reports <a href="#collapse">Shimaa Adel </a> Comment</li>
+	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
+	<li>A user reports <a href="#collapse">Shimaa Adel </a> Comment</li>
+	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
+
+
+</ul>
+<div class="row d-flex justify-content-center " style="text-align: center;" >
+
+`	<a href="#collapse" style="text-align: center;" >  More... </a>
+
+  </div>
+
+
+  	
+			
+  <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 ">
+	
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+
+
+<footer>
+
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 ">
+    
+        <div class="col-4 col-md-2 d-flex  align-items-center">
+            <img  class=" "  src="img/logo.png" alt="Booc" >
+        </div>
+        <div class="col-8 col-md-6 d-flex align-items-center justify-content-around">
+            <div class=" footer d-flex flex-column justify-content-around ">
+                <a href="#" class="footer m-1">About B<span>oo</span>c</a>
+                <a href="#" class="m-1">FAQ</a>
+                <a href="#" class="m-1">Contact Us</a>
+            </div>
+            <div class="footer d-flex flex-column justify-content-around">
+                <a href="#" class="m-1">Terms of Use</a>
+                <a href="#" class="m-1">Privacy Policy</a>
+                <a href="#" class="footer m-1"><span>Logout</span></a>
+            </div>
+        </div>
+
+        <div class="col-10 col-md-4 cols-sm-6">
+
+            <form class="form-inline mr-5"style="float: right;" >
+                <input class="form-control " type="search" placeholder="Search for a book" style="background-color: #1A2438; color:white;border:none;height:3rem;width:17rem">
+                <button class="btn bg-light " type="submit" style="height:3.2rem; width:auto">
+                    <img  class=" icon"  src="img/icons/iconSearch.png" >
+                </button>
+            </form>
+
+        </div>
+    
+    </div>
+
+</foorer>
+
+
+<!--
+<footer>
+
+    <div class="row px-5">
+    
+        <div class="col-2 d-flex  align-items-center">
+            <img  class=" "  src="img/logo.png" alt="Booc" >
+        </div>
+        <div class="col-5 d-flex align-items-center justify-content-around">
+            <div class=" footer d-flex flex-column justify-content-around ">
+                <a href="#" class="footer m-1">About B<span>oo</span>c</a>
+                <a href="#" class="m-1">FAQ</a>
+                <a href="#" class="m-1">Contact Us</a>
+            </div>
+            <div class="footer d-flex flex-column justify-content-around">
+                <a href="#" class="m-1">Terms of Use</a>
+                <a href="#" class="m-1">Privacy Policy</a>
+                <a href="#" class="footer m-1"><span>Logout</span></a>
+            </div>
+        </div>
+
+        <div class="col-5 pr-3">
+
+            <form class="form-inline mr-5"style="float: right;" >
+                <input class="form-control " type="search" placeholder="Search for a book" style="background-color: #1A2438; color:white;border:none;height:3rem;width:17rem">
+                <button class="btn bg-light " type="submit" style="height:3.2rem; width:auto">
+                    <img  class=" icon"  src="img/icons/iconSearch.png" >
+                </button>
+            </form>
+
+        </div>
+    
+    </div>
+
+</foorer>
+-->
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
