@@ -1,47 +1,89 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-body{
-
+body {
     font-family: 'Roboto', sans-serif;
 }
-nav{
-    background-color: #263044;
-    font-size:1rem
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
-img.navbar-brand{
+
+nav {
+    background-color: #263044;
+    font-size: 1rem
+}
+
+img.navbar-brand {
     width: 4rem;
 }
+
 img.rounded-circle {
     border-radius: 50%;
     width: 3.5rem;
 }
+
 img.icon {
     width: 1.3rem;
 }
+
 img.icondrop {
     width: 0.9rem;
 }
-.writer{
 
+.writer {
     background-color: #FEC7B5;
-    width:6rem ; 
+    width: 6rem;
     font-weight: bold
 }
-footer{
-    padding:4.2rem;
+
+footer {
+    padding: 4.2rem;
     background-color: #263044;
-    font-size:3rem;
-
+    font-size: 3rem;
 }
-.footer>a{
-    color:white;
-    font-size:1.3rem
 
+.footer>a {
+    color: white;
+    font-size: 1.3rem
 }
-.footer>span{
-    color:#F8A488;
+
+.footer>span {
+    color: #F8A488;
     ;
-    font-size:1.3rem;
+    font-size: 1.3rem;
     font-weight: bold;
+}
 
+#searchBar>input {
+    background-color: #1A2438;
+    color: white;
+    border: none;
+}
+
+@media only screen and (min-width: 1450px) {
+    #searchBar {
+        margin-left: 100px
+    }
+    #searchBar>button {
+        height: 3.2rem;
+        width: auto
+    }
+    #searchBar>input {
+        border: none;
+        height: 3rem;
+        width: 17rem
+    }
+}
+
+@media only screen and (max-width: 1450px) {
+    #searchBar>button {
+        height: 3.2rem;
+        width: auto
+    }
+    #searchBar>input {
+        border: none;
+        height: 3rem;
+        width: 12rem;
+    }
 }

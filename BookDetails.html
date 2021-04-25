@@ -17,17 +17,21 @@
 
     <div class="row" style="margin-right: -120px">
         
-        <div class="col-2 d-flex  align-items-center">
+        <div class="col-md-2  d-flex  align-items-center">
             <img  class=" mx-5 my-1 navbar-brand "  src="img/logo.png" alt="Booc" >
+         
         </div>
-        <div class="col-4"></div>
+
+        <div class="col-md-4 " id="nav-padding-div">
+        
+        </div>
    
-        <div class="col-5 d-flex align-items-center justify-content-around ">
+        <div class="col-lg-5 col-sm-9 col-xs-8 d-flex align-items-center justify-content-around ">
             <a class=" text-white my-2 " href="index.html">Home</a>
             <a class=" text-white my-2 " href="findPlace.html">Map</a>
             <a class=" text-white my-2 " href="community.html">Community</a>
             <a class=" btn text-dark my-2 writer" href="writer.html">Writer</a>
-            <div>
+            <div >
                 <a  href="#" ><img  class="  my-3 mr-3 icon"  src="img/icons/iconBell.png" ></a>
                 <a  href="#" ><img  class="  m-1 rounded-circle"  src="img/exPP.png"  ></a>
                 <a  href="#" ><img  class=" m-1 icondrop"  src="img/icons/iconDropdownWhite.png"  ></a>
@@ -38,7 +42,8 @@
 
 </nav>
 
-<div class="m-5">
+<div class="">
+
 
 <!-- #######################################################################################################
 
@@ -54,12 +59,12 @@
 
 <footer>
 
-    <div class="row px-5">
+    <div class="row px-lg-5 px-xs-1">
     
-        <div class="col-2 d-flex  align-items-center">
+        <div class="col-md-2 col-xs-12 d-flex  align-items-center">
             <img  class=" "  src="img/logo.png" alt="Booc" >
         </div>
-        <div class="col-5 d-flex align-items-center justify-content-around">
+        <div class="col-md-5  col-xs-12 d-flex align-items-center justify-content-around">
             <div class=" footer d-flex flex-column justify-content-around ">
                 <a href="#" class="footer m-1">About B<span>oo</span>c</a>
                 <a href="#" class="m-1">FAQ</a>
@@ -71,12 +76,11 @@
                 <a href="#" class="footer m-1"><span>Logout</span></a>
             </div>
         </div>
+        <div class="col-md-5 col-xs-12 pr-md-3 " >
 
-        <div class="col-5 pr-3">
-
-            <form class="form-inline mr-5"style="float: right;" >
-                <input class="form-control " type="search" placeholder="Search for a book" style="background-color: #1A2438; color:white;border:none;height:3rem;width:17rem">
-                <button class="btn bg-light " type="submit" style="height:3.2rem; width:auto">
+            <form class="form-inline mr-lg-5  " id="searchBar" >
+                <input class="form-control my-5 " type="search" placeholder="Search for a book" >
+                <button class="btn bg-light " type="submit" >
                     <img  class=" icon"  src="img/icons/iconSearch.png" >
                 </button>
             </form>
