@@ -1,0 +1,2 @@
+class ShortStoriesChapter < ApplicationRecord
+end
