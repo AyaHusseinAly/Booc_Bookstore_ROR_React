@@ -32,9 +32,11 @@ img.icondrop {
 }
 
 .writer {
-    background-color: #FEC7B5;
+    border: 1px solid #FEC7B5;
+    border-radius: 5px;
     width: 6rem;
-    font-weight: bold
+    font-weight: bold;
+    text-align: center;
 }
 
 footer {
