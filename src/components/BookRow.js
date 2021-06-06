@@ -4,14 +4,18 @@ import '../style/admin.css';
 class BookRow extends Component {
 
     render() {
-
         return (
 
                 <div className="row ">
-                <div className="col-4 col-md-2 book" >
+
+                    {/* <ul>
+                        {this.props.items.map(data=><li>{data.volumeInfo.title}</li>)}
+                    </ul> */}
+
+                 <div className="col-4 col-md-2 book" >
                     <figure>
-                    <img src="img/books/book1.png" alt="" className="  book_image rounded  img-fluid"/>
-                    <figcaption className="book_title">book1</figcaption>
+                    <img style={{width:'100%'}} src={this.props.items[0]&&this.props.items[0].volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                    <figcaption className="book_title">{this.props.items[0]&&this.props.items[0].volumeInfo.title.slice(0,15)}</figcaption>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
@@ -22,8 +26,8 @@ class BookRow extends Component {
                 <div className="col-4 col-md-2 book" >
                 
                     <figure>
-                    <img src="img/books/book2.png" alt="" className="  book_image rounded  img-fluid"/>
-                    <figcaption className="book_title">book2</figcaption>
+                    <img style={{width:'100%'}} src={this.props.items[1]&&this.props.items[1].volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                    <figcaption className="book_title">{this.props.items[1]&&this.props.items[1].volumeInfo.title.slice(0,15)}</figcaption>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star"></span>
@@ -34,8 +38,8 @@ class BookRow extends Component {
                 
                 <div className="col-4 col-md-2 book" >
                     <figure>
-                    <img src="img/books/book3.png" alt="" className="  book_image rounded  img-fluid"/>
-                    <figcaption className="book_title">book3</figcaption>
+                    <img style={{width:'100%'}} src={this.props.items[2]&&this.props.items[2].volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                    <figcaption className="book_title">{this.props.items[2]&&this.props.items[2].volumeInfo.title.slice(0,15)}</figcaption>
                     <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
@@ -46,8 +50,8 @@ class BookRow extends Component {
                 
                 <div className="col-4 col-md-2 book" >
                     <figure>
-                    <img src="img/books/book4.png" alt="" className="  book_image rounded  img-fluid"/>
-                    <figcaption className="book_title">book4</figcaption>
+                    <img style={{width:'100%'}} src={this.props.items[3]&&this.props.items[3].volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                    <figcaption className="book_title">{this.props.items[3]&&this.props.items[3].volumeInfo.title.slice(0,15)}</figcaption>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star "></span>
                         <span className="fa fa-star"></span>
@@ -57,8 +61,8 @@ class BookRow extends Component {
                 </div>
                 <div className="col-4 col-md-2 book"  >
                     <figure>
-                    <img src="img/books/book5.png" alt="" className="  book_image rounded  img-fluid"/>
-                    <figcaption className="book_title">book5</figcaption>
+                    <img style={{width:'100%'}} src={this.props.items[4]&&this.props.items[4].volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                    <figcaption className="book_title">{this.props.items[4]&&this.props.items[4].volumeInfo.title.slice(0,15)}</figcaption>
                     <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
@@ -69,8 +73,8 @@ class BookRow extends Component {
                 
                 <div className="col-4 col-md-2 book" >
                     <figure>
-                    <img src="img/books/book20.png" alt="" className="book_image rounded  "/>
-                    <figcaption className="book_title">book20</figcaption>
+                    <img style={{width:'100%'}} src={this.props.items[5]&&this.props.items[5].volumeInfo.imageLinks.thumbnail} alt="" className="book_image rounded  "/>
+                    <figcaption className="book_title">{this.props.items[5]&&this.props.items[5].volumeInfo.title.slice(0,15)}</figcaption>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star checked"></span>
                         <span className="fa fa-star"></span>
