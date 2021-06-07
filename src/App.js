@@ -25,13 +25,13 @@ import {
 
 
 
-const api=new GoogleAPI();
-api.getByAuthor("conan doyle").then(res=>{
-  console.log(res)
-})
-api.getByCategory("fiction").then(res=>{
-    console.log(res)
-})
+// const api=new GoogleAPI();
+// api.getByAuthor("conan doyle").then(res=>{
+//   console.log(res)
+// })
+// api.getByCategory("fiction").then(res=>{
+//     console.log(res)
+// })
 // api.getFilteredBooks({
 //   'inauthor':'conan',
 //   'subject':'foction',
