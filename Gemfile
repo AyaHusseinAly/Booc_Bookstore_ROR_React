@@ -7,6 +7,7 @@ ruby '2.7.3'
 gem 'rails', '~> 5.2.6'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -31,6 +32,11 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+#devise gem
+gem 'devise'
+gem 'devise-jwt'
+# gem 'knock'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
