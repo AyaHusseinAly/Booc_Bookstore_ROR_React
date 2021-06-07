@@ -32,6 +32,7 @@ import {
 // api.getByCategory("fiction").then(res=>{
 //     console.log(res)
 // })
+
 // api.getFilteredBooks({
 //   'inauthor':'conan',
 //   'subject':'foction',
@@ -54,9 +55,10 @@ function App() {
           <Route path="/mystories" component={MyStories}/>
           <Route path="/addstory" component={AddStory}/>
           <Route path="/bookdetails" component={BookDetails}/>
-          <Route path="/searchresults" component={SearchResults}/>
           <Route path="/userprofile" component={UserProfile}/>
           <Route path="/admin" component={Admin}/>
+          {/* <Route path="/searchresults" component={SearchResults}/> */}
+
 
 
 

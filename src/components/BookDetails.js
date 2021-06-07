@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/BookDetails.css';
 import { Link } from "react-router-dom";
-import FeatherIcon from "feather-icons-react";
+import FeatherIcon from "feather-icons";
 
 class BookDetails extends Component {
 
