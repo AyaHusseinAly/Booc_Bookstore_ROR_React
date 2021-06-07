@@ -1,0 +1,2 @@
+module ShortStoriesHelper
+end
