@@ -16,8 +16,8 @@ componentDidMount(){
                 "Access-Control-Allow-Headers": "Content-Type"}
 })
     .then(response => {
-        this.setState({shortstoies:response.data.short_stories});
-        console.log(this.state.shortstoies);
+        this.setState({shortstoies:response.data.api});
+        console.log(response.data.api);
     });
   
 }
@@ -27,7 +27,10 @@ componentDidMount(){
     render() {
 
         return (
-            <h1>Writer</h1>
+            <div>
+                <h1>Writer</h1>
+            </div>
+            
 
     );
     }
