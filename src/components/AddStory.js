@@ -1,91 +1,96 @@
 import React, { Component } from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../style/headerFooter.css';
 import axios from 'axios';
 
 class AddStory extends Component {
     constructor(props) {
+
         super(props);
         this.state={
-            fileUploadState:"",
             shortStoryTitle:"",
             shortStoryDescription:"",
             shortStoryLanguage:"",
             shortStoryAudience:"",
-            shortStoryGenre:"",
+            shortStoryGenre:[],
             shortStoryCover:"",
-            errors:{}
+            errors:{},
+            genres:[]
         
         }
         this.inputReference = React.createRef();
-        // this.shortStoryTitle=React.createRef();
+        let activeError=false;
     }
+    handleImage=(e)=>{
+             const file = e.target.files[0];
+            console.log(e.currentTarget.value);
+    }
+    handleChange = (e) => {
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        this.setState({shortStoryGenre: value});
+      }
     handleSubmit=async e=>{
         e.preventDefault();
-        // console.log(this.shortStoryTitle.current.value);
-        // console.log(e.currentTarget);
         const errors=this.validate();
-        console.log(errors);
+        console.log(this.state.shortStoryGenre);
         if(errors === null) {
             console.log('submit');
             const obj={
-            fileUploadState:this.state.fileUploadState,
             shortStoryTitle:this.state.shortStoryTitle,
             shortStoryDescription:this.state.shortStoryDescription,
             shortStoryLanguage:this.state.shortStoryLanguage,
             shortStoryAudience:this.state.shortStoryAudience,
             shortStoryGenre:this.state.shortStoryGenre,
-            shortStoryCover:this.state.shortStoryCover
+            shortStoryCover:this.state.shortStoryCover,
+            
             }
-            await axios.post("http://localhost:3000/shortStory/",obj,{headers: {"Access-Control-Allow-Origin": "*",
+            const res=await axios.post("http://localhost:3000/shortStories",obj,{headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}});
-            // try {
-            //     await axios.post("http://localhost:3000/shortStory/",obj,{headers:{"Content-Type" : "application/json"}});
-            //     // console.log(result.response);
-            //   } catch (error) {
-            //     console.error("error");     // NOTE - use "error.response.data` (not "error")
-            //   }
-            // await axios.request({
-            //     method: 'Post',
-            //     url: 'http://localhost:3001/shortStory/',
-            //     data: obj
-            //   })
+            console.log(res);
+            this.props.history.push('/writer') 
         }
         else{
             console.log('no submit');
+            this.activeError=true;
         }
-        
-
-        
+   
     }
     validate=()=>{
         const errors={};
         console.log(this.state.shortStoryTitle,this.state.shortStoryGenre)
         if(this.state.shortStoryTitle.trim() === "")
           errors.title="Title is required"
-        if(this.state.shortStoryGenre ==="")
+        if(this.state.shortStoryAudience ==="")
+          errors.audience="Audience is required"  
+        if(this.state.shortStoryGenre.length ===0)
           errors.genre="Genre is required"
         this.setState({errors});
         return Object.keys(errors).length === 0 ? null:errors;
     }
     async componentDidMount(){
-        const res=await axios.get('http://localhost:3000/ShortStory',
+        const res=await axios.get('http://localhost:3000/shortStoriesGenres',
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}});
-        console.log(res);
+        
+        this.setState({genres:res.data.short_stories});
+        console.log(this.state.genres);
        
     }
     
     fileUploadAction = () =>this.inputReference.current.click();
-    fileUploadInputChange = (e) =>this.setState({fileUploadState:e.target.value});
+    // fileUploadInputChange = (e) =>this.setState({fileUploadState:e.target.value});
     render() {
 
-        return (<form className='my-2 mx-5 p-5 row' style={{width:'100%'}} onSubmit={this.handleSubmit}>
+        return (
+        
+        <React.Fragment>
+          
+        <form className='my-2 mx-5 p-5 row' style={{width:'100%'}} onSubmit={this.handleSubmit}>
             <div className='col col-3'style={{width:'100%',backgroundColor:'#ADB4C3'}}>
-                 <input type="file" hidden ref={this.inputReference} value={this.state.shortStoryCover}
-            onChange={(e)=>this.setState({shortStoryCover:e.currentTarget.value})}/>
+                 {/* <input type="file" hidden ref={this.inputReference} value={this.state.shortStoryCover}
+            onChange={(e)=>this.setState({shortStoryCover:e.currentTarget.value})}/> */}
+            <input type="file" hidden ref={this.inputReference} value={this.state.shortStoryCover}
+            onChange={this.handleImage}/> 
                  <div className="btn mx-5 align-self-center" style={{textAlign:'center',borderColor:'#F8A488',borderWidth:'3px',marginTop:'70%',backgroundColor:'#ADB4C3',display:'block'}} onClick={this.fileUploadAction}>
                   <i className="fa fa-image" style={{float:'center'}}>  Upload Cover</i>
                 </div>  
@@ -96,6 +101,7 @@ class AddStory extends Component {
             <label className="formLabel" style={{display:'block'}} htmlFor='shortstorytitle'>Title</label>
             <input type="text" className="formControl p-1" style={{ borderRadius: '4px'}} placeholder=" your story's name.." id='shortstorytitle' value={this.state.shortStoryTitle}
             onChange={(e)=>this.setState({shortStoryTitle:e.currentTarget.value})}/>
+            {this.state.errors.title &&(<div className="alert alert-danger" role="alert">{this.state.errors.title}</div>)}
            
             <label className="formLabel mt-4" style={{display:'block'}}
             htmlFor='shortstorydescription'>Description</label>
@@ -105,12 +111,15 @@ class AddStory extends Component {
                 <div>
                     <label className="formLabel" style={{display:'block'}}
                     htmlFor='shortstorygenre'>Genre</label>
-                    <select className="formControl p-1" style={{ borderRadius: '4px',display:'inlineBlock'}} id='shortstorygenre' value={this.state.shortStoryGenre}
-            onChange={(e)=>this.setState({shortStoryGenre:e.currentTarget.value})}>
-                    <option value="" disabled selected >Choose a literature kind ..</option>
-                    <option>Action</option>
-                    <option>Fiction</option>
+                    {/* <select className="formControl p-1" style={{ borderRadius: '4px',display:'inlineBlock'}} id='shortstorygenre' value={this.state.shortStoryGenre}
+            onChange={(e)=>this.setState({shortStoryGenre:e.currentTarget.value})} multiple size="3"> */}
+                <select className="formControl p-1" style={{ borderRadius: '4px',display:'inlineBlock'}} id='shortstorygenre' value={this.state.shortStoryGenre} onChange={this.handleChange} multiple size="3">
+                    <option value="" disabled defaultValue >Choose a literature kind ..</option>
+                    {this.state.genres.map(option=>{
+                        return <option value={option.id}>{option.title}</option>
+                    })}
                     </select>
+                    {this.state.errors.genre &&(<div className="alert alert-danger" role="alert">{this.state.errors.genre}</div>)}
                 </div>
                 <div>
                     <label className="formLabel" style={{display:'block'}}
@@ -124,11 +133,13 @@ class AddStory extends Component {
             </div>
             <label className="formLabel mt-4" style={{display:'block'}} htmlFor='shortstoryAudience'>Target Audience</label>
             <select className="formControl " style={{ borderRadius: '4px',display:'inlineBlock'}} id='shortstoryAudience' value={this.state.shortStoryAudience}
-            onChange={(e)=>this.setState({shortStoryAudience:e.currentTarget.value})} name='genre'>
-            <option value="" disabled selected >Your primary readers ..</option>
-                <option value="less than 10" name='genre'>less than 10</option>
-                <option value="10-18" name='genre'>10-18 </option>
+            onChange={(e)=>this.setState({shortStoryAudience:e.currentTarget.value})}  >
+            <option value="" disabled defaultValue>Your primary readers ..</option>
+                <option value="less than 10" >less than 10</option>
+                <option value="10-18" >10-18 </option>
+                <option value="all" >All </option>
             </select>
+            {this.state.errors.audience &&(<div className="alert alert-danger" role="alert">{this.state.errors.audience}</div>)}
             
             </div>
           <div className="d-flex justify-content-end" style={{width:'90%'}}>
@@ -138,7 +149,7 @@ class AddStory extends Component {
 
         </form>
             
-
+        </React.Fragment>
     );
     }
 }

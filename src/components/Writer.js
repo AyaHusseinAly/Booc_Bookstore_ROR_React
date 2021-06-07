@@ -2,9 +2,29 @@ import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
-// import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+import axios from 'axios';
+
+
 
 class Writer extends Component {
+    state={
+        shortstoies:[]
+    }
+
+componentDidMount(){
+    axios.get("http://localhost:3000/api/shortStories",
+    {headers: {"Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type"}
+})
+    .then(response => {
+        this.setState({shortstoies:response.data.api});
+        console.log(this.state.shortstoies);
+    });
+  
+}
+
+
 
     render() {
 

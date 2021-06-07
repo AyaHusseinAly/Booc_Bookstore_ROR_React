@@ -11,6 +11,7 @@ import AddStory from './components/AddStory';
 import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
+import GoogleAPI from './classes/GoogleAPI';
 
 
 
@@ -24,11 +25,24 @@ import {
 
 
 
-
+// const api=new GoogleAPI();
+// api.getByAuthor("conan doyle").then(res=>{
+//   console.log(res)
+// })
+// api.getByCategory("fiction").then(res=>{
+//     console.log(res)
+// })
+// api.getFilteredBooks({
+//   'inauthor':'conan',
+//   'subject':'foction',
+//   'filter':'free-ebooks'
+// }).then(res=>{
+//   console.log(res)
+// })
 
 function App() {
+  
   return (
-
     <div>
       <Header></Header>
       <div style={{minHeight:400}}>
