@@ -10,15 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_061401) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2021_06_07_164156) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "short_story_id"
+    t.integer "short_story_id"
     t.index ["short_story_id"], name: "index_bookmarks_on_short_story_id"
   end
 
@@ -33,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_061401) do
     t.string "book_title"
     t.string "book_isbn"
     t.string "cover"
-    t.bigint "bookstore_id"
+    t.integer "bookstore_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bookstore_id"], name: "index_bookstore_books_on_bookstore_id"
@@ -42,7 +39,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_061401) do
   create_table "bookstore_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
-    t.bigint "bookstore_id"
+    t.integer "bookstore_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bookstore_id"], name: "index_bookstore_rate_reviews_on_bookstore_id"
@@ -59,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_061401) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.bigint "short_stories_chapter_id"
+    t.integer "short_stories_chapter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_stories_chapter_id"], name: "index_comments_on_short_stories_chapter_id"
@@ -102,18 +99,22 @@ ActiveRecord::Schema.define(version: 2021_06_07_061401) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "short_story_genres", force: :cascade do |t|
+    t.integer "genre_id"
+    t.integer "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_short_story_genres_on_genre_id"
+    t.index ["short_story_id"], name: "index_short_story_genres_on_short_story_id"
+  end
+
   create_table "story_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
-    t.bigint "short_story_id"
+    t.integer "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_story_id"], name: "index_story_rate_reviews_on_short_story_id"
   end
 
-  add_foreign_key "bookmarks", "short_stories"
-  add_foreign_key "bookstore_books", "bookstores"
-  add_foreign_key "bookstore_rate_reviews", "bookstores"
-  add_foreign_key "comments", "short_stories_chapters"
-  add_foreign_key "story_rate_reviews", "short_stories"
 end
