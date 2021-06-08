@@ -10,6 +10,8 @@
     "antd": "^4.16.2",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+
+    "bootstrap-icons": "^1.5.0",
     "feather-icons": "^4.28.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
@@ -42,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "react-dev-utils": "^11.0.4"
+  },
+  "proxy": "http://localhost:3001/shortStory"
 }

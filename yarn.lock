@@ -2993,6 +2993,11 @@
   "resolved" "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   "version" "1.0.0"
 
+"bootstrap-icons@^1.5.0":
+  "integrity" "sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA=="
+  "resolved" "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.5.0.tgz"
+  "version" "1.5.0"
+
 "bootstrap@^4.6.0":
   "integrity" "sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw=="
   "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.0.tgz"
@@ -3479,7 +3484,11 @@
     "isobject" "^3.0.0"
     "static-extend" "^0.1.1"
 
+<<<<<<< HEAD
 "classnames@*", "classnames@^2.2.1", "classnames@^2.2.3", "classnames@^2.2.5", "classnames@^2.2.6", "classnames@2.x":
+=======
+"classnames@*", "classnames@^2.2.5", "classnames@^2.2.6":
+>>>>>>> f4ade6d269aa9c52929bb4533be447687d9b4cfc
   "integrity" "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA=="
   "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz"
   "version" "2.3.1"
@@ -9793,7 +9802,7 @@
     "uncontrollable" "^7.2.1"
     "warning" "^4.0.3"
 
-"react-dev-utils@^11.0.3":
+"react-dev-utils@^11.0.3", "react-dev-utils@^11.0.4":
   "integrity" "sha512-dx0LvIGHcOPtKbeiSUM4jqpBl3TcY7CDjZdfOIcKeznE7BWr9dg0iPG90G5yfVQ+p/rGNMXdbfStvzQZEVEi4A=="
   "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-11.0.4.tgz"
   "version" "11.0.4"

@@ -11,6 +11,7 @@ import AddStory from './components/AddStory';
 import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
+import Genre from './components/Genre';
 import GoogleAPI from './classes/GoogleAPI';
 
 
@@ -49,6 +50,7 @@ function App() {
       <div style={{minHeight:400}}>
       <Switch>
           <Route path="/" exact component={Home}/>
+          <Route path="/genre/:id" exact component={Genre}/>
           <Route path="/map" component={Map}/>
           <Route path="/writer" component={Writer}/>
           <Route path="/community" component={Community}/>

@@ -15,8 +15,8 @@ input,.dropdown-toggle{
     background-size: cover;
     width: 100%;
     height:500px;
-    -webkit-text-stroke-width: 0.2px;
-    -webkit-text-stroke-color: gray;
+    -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: rgb(155, 155, 155);
 
   }
  

@@ -6,6 +6,8 @@ import BookRow from './BookRow';
 import axios from 'axios';
 import { Input, Space } from 'antd';
 import SearchResults from './SearchResults';
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 
 class Home extends Component {
@@ -14,11 +16,12 @@ class Home extends Component {
         thriller:[],
         horror:[],
         search:false,
-        searchData:[]
+        searchData:[],
+        genres:[]
 
     }
 
-    componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
+    async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
         axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
         .then(response => {
             this.setState({fiction:response.data.items});
@@ -31,6 +34,13 @@ class Home extends Component {
         .then(response => {
             this.setState({horror:response.data.items});
         });
+        const res=await axios.get('http://localhost:3000/shortStoriesGenres',
+        {headers: {"Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT",
+        "Access-Control-Allow-Headers": "Content-Type"}});
+        
+        this.setState({genres:res.data.short_stories});
+        console.log(this.state.genres);
        
     }
 
@@ -55,26 +65,22 @@ class Home extends Component {
             return (
                 <div>
                     <div className="bckgnd pt-5" >
-                    <div class="input-group d-flex flex-column justify-content-center align-items-center text-center mt-5" style={{color:'rgba(255,255,255,0.95)',paddingTop:'1.9rem'}}>
+                    <div className="input-group d-flex flex-column justify-content-center align-items-center text-center mt-5" style={{color:'rgba(255,255,255,0.95)',paddingTop:'1.9rem'}}>
                         <h2 >Books Shopping online with <strong style={{fontWeight:'bold',color:'#263044',opacity:'1'}}>B<span style={{color: '#F8A488',fontWeight:'bold'}}>oo</span>c</strong></h2>
                         <h4>support local Bookstores</h4>
                         <h4>open a door to become a writer</h4> <br/>
                         <div className="d-flex ">
-                        <div class="form-outline" >
-                            <input type="search" id="form1" placeholder="Search for a Book" class="form-control" style={{width:'25rem',height:'2.9rem'}} />
+                        <div className="form-outline" >
+                            <input type="search" id="form1" placeholder="Search for a Book" className="form-control" style={{width:'25rem',height:'2.9rem'}} />
                         </div>
-                        <button type="button" onClick={onSearch} class="btn btn-primary" style={{backgroundColor:'#263044',width:'2.9rem'}}>
-                            <i class="fas fa-search"></i>
+                        <button type="button" onClick={onSearch} className="btn ml-1" style={{backgroundColor:'#263044',width:'2.9rem'}}>
+                            <i className="fas fa-search" style={{color:'white'}}></i>
                         </button>
-                        <div class="dropdown ml-3" >
-                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style={{width:'7rem',height:'2.9rem'}}>
-                                Genre
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                        <div className="dropdown ml-3" >
+                        <DropdownButton id="dropdown-basic-button" title="Genre" >
+                            {this.state.genres.map(genre=><Dropdown.Item  onClick={() => this.props.history.push('/genre/'+genre.id)}>{genre.title}</Dropdown.Item> )}
+                        </DropdownButton>
+                   
                             </div>
                         </div>
                         </div>            
