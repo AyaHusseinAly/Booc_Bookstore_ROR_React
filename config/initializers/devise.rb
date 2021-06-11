@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
 # breaking changes in upgrades (i.e., in the event that future versions of
 # Devise change the default values for those options).
-#
+require 'devise/devise_custom_failure'
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -46,7 +45,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [:email]
+  config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -278,8 +277,9 @@ Devise.setup do |config|
   # change the failure app, you can configure them inside the config.warden block.
   #
   # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+  #   # manager.intercept_401 = false
+  #   # manager.default_strategies(scope: :user).unshift :some_external_strategy
+  #   manager.failure_app = DeviseCustomFailure
   # end
 
   # ==> Mountable engine configurations
@@ -308,14 +308,17 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+  # config.jwt do |jwt|
+  #   jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+  #   jwt.dispatch_requests = [
+  #     ['POST', %r{^/login$}],
+  #   ]
+  #   jwt.dispatch_requests = [
+  #     ['DELETE', %r{^/signout$}],
+  #   ]
+  #   jwt.expiration_time = 14.days.to_i
+  # end
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
-    jwt.dispatch_requests = [
-      ['POST', %r{^/login$}],
-    ]
-    jwt.dispatch_requests = [
-      ['DELETE', %r{^/signout$}],
-    ]
-    jwt.expiration_time = 14.days.to_i
+    jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
   end
 end
