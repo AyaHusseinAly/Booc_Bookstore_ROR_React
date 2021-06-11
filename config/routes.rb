@@ -23,6 +23,8 @@ get '/member-data', to: 'members#show'
   get 'api/bookshelves', to:'api#bookshelves' # edit to accept user id
   get 'api/bookstores', to:'api#bookstores'
 
+  post '/shortStories', to:'short_stories#create'
+  get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
 
 
 end
