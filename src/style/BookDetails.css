@@ -317,6 +317,11 @@
     border: 1px solid #eee;
     padding: 3px
 }
+.btn-shelf{
+    margin: 50px;
+    display: inline-block;
+    margin-right: -5px;
+}
 
 
 
