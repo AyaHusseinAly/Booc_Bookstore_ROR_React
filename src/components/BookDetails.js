@@ -65,7 +65,7 @@ const BookDetails = (props) => {
                                 <button className="btn-shelf"> <i className="fa fa-plus"></i> Add To Shelf Book</button>
                             </div>
                          
-                            <ul className="list-unstyled details">
+                            <ul className="list-unstyled details" style={{margin: '70px 0'}}>
                                 <li><span>Author</span>: {book.length > 0 && book[0].volumeInfo.authors[0]}</li>
                                 <li><span>Number Of Pages</span>: {book.length > 0 && book[0].volumeInfo.pageCount}</li>
                                 <li><span>Publication Year</span>: {book.length > 0 && book[0].volumeInfo.publishedDate}</li>
