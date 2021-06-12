@@ -9,7 +9,8 @@ class BookRow extends Component {
 
                 <div className="row ">
 
-                {this.props.items.map(book=> <div className="col-4 col-md-2 book" >
+                   {this.props.items.map(book=>
+                    <div className="col-4 col-md-2 book" >
                     <figure>
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                     <figcaption className="book_title" style={{alignItems:'center'}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>
