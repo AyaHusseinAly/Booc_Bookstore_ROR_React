@@ -62,7 +62,7 @@ const BookDetails = (props) => {
                                 <span> No rating yet </span>
                                 }
 
-                                <button> <i className="fa fa-plus"></i> Add To Shelf Book</button>
+                                <button className="btn-shelf"> <i className="fa fa-plus"></i> Add To Shelf Book</button>
                             </div>
                          
                             <ul className="list-unstyled details">
