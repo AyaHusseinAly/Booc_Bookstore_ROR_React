@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "font-awesome": "^4.7.0",
     "react-dev-utils": "^11.0.4"
   },
   "proxy": "http://localhost:3001/shortStory"

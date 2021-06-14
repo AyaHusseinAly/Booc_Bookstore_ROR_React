@@ -22,15 +22,15 @@ class Home extends Component {
     }
 
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=1&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
         .then(response => {
             this.setState({fiction:response.data.items});
         });
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=1&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
         .then(response => {
             this.setState({thriller:response.data.items});
         });
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=6&maxResults=6&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
         .then(response => {
             this.setState({horror:response.data.items});
         });
