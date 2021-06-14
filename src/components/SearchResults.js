@@ -134,7 +134,7 @@ class SearchResults extends Component {
                     </div>
 
 
-                {/* <div className="row " style={{padding: '150px'}}>
+            {/* <div className="row " style={{padding: '150px'}}>
 
             {this.props.items.map(book=> 
                <div className="col-4 col-md-2 book" >
@@ -164,6 +164,15 @@ class SearchResults extends Component {
                 {this.props.items.map(book=> <div className="col-5 p-2  " >
                     <figure className="row">
                             <img  className="col" style={{width:'150px' , height:'200px'}} src={book&&book.volumeInfo.imageLinks&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                              <div className="hoverable">
+                              <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                                  <span className="details">details</span>
+                                </Link>
+                              <span className="icon-heart">
+                                <i className="fa fa-heart "></i>
+                              </span>
+                              </div>
+                              
                             <div className="col">
                                 <figcaption className="" style={{alignItems:'center'}}>{book&&book.volumeInfo.title}</figcaption>
                                 <span className="active-star"></span>
@@ -174,7 +183,7 @@ class SearchResults extends Component {
                             </div>
                     </figure>
                     </div>)}
-                </div> 
+                </div>  
 
                 <p>"Gener : "{this.state.selectGenerVal}</p>
                 <p>"Rating : "{this.state.selectRatingVal}</p>
