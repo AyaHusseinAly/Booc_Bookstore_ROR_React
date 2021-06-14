@@ -62,9 +62,15 @@ class SearchResults extends Component {
 
     render() {
         const mystyle = {
-            backgroundColor: "whitesmoke",
+            backgroundColor: "#263044",
+             //backgroundColor: "#FEC7B5",
+             //color :"#263044"
+             color :"white"
             
           };
+          const filterTextStyle = {
+            color:"#263044"
+          }
         const minOffset = 0;
         const maxOffset = 60; 
         const { thisYear, selectedYear } = this.state;
@@ -83,7 +89,7 @@ class SearchResults extends Component {
                      <div className=" row">
                         
                           <div  className="col-2">
-                             <h6>Publication Year</h6>
+                             <h6 style={filterTextStyle} >Publication Year</h6>
                              <select value={this.selectedYear} onChange={this.onHandleChange} style={mystyle}> 
                              {options}
                              </select>
@@ -92,7 +98,7 @@ class SearchResults extends Component {
                         
                         
                          <div className="col-2">
-                             <h6>Rating</h6>
+                             <h6 style={filterTextStyle} >Rating</h6>
                              <select value={this.state.selectRatingVal} onChange={this.setSelectRatingValue} style={mystyle}>
                              <option value="1">1</option>
                              <option value="2">2</option>
@@ -104,7 +110,7 @@ class SearchResults extends Component {
             
 
                         <div className="col-2">
-                            <h6 >OrderBy</h6>
+                            <h6 style={filterTextStyle} >OrderBy</h6>
                             <select value={this.state.selectOrderByVal} onChange={this.setSelectOrderByValue} style={mystyle}>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -115,7 +121,7 @@ class SearchResults extends Component {
                         </div>
 
                         <div className="col-2">
-                            <h6 >Genre</h6>
+                            <h6 style={filterTextStyle}  >Genre</h6>
                             <select value={this.state.selectGenerVal} onChange={this.setSelectGenerValue} style={mystyle}>
                             <option value="Fantasy">Fantasy</option>
                             <option value="Sci-Fi">Sci-Fi</option>
@@ -134,7 +140,7 @@ class SearchResults extends Component {
                     </div>
 
 
-            {/* <div className="row " style={{padding: '150px'}}>
+            <div className="row " style={{padding: '150px'}}>
 
             {this.props.items.map(book=> 
                <div className="col-4 col-md-2 book" >
@@ -158,9 +164,9 @@ class SearchResults extends Component {
                     <span className="clip-star"></span>
                     <span className="clip-star"></span>
                 </figure>
-                </div>)} */}
+                </div>)}
 
-                <div className="container row justify-content-between  p-2 " style={{marginTop:'30px' , marginLeft:'40px'  }}>
+                {/* <div className="container row justify-content-between  p-2 " style={{marginTop:'30px' , marginLeft:'40px'  }}>
                 {this.props.items.map(book=> <div className="col-5 p-2  " >
                     <figure className="row">
                             <img  className="col" style={{width:'150px' , height:'200px'}} src={book&&book.volumeInfo.imageLinks&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
@@ -182,7 +188,7 @@ class SearchResults extends Component {
                                 <span className="clip-star"></span>
                             </div>
                     </figure>
-                    </div>)}
+                    </div>)} */}
                 </div>  
 
                 <p>"Gener : "{this.state.selectGenerVal}</p>
