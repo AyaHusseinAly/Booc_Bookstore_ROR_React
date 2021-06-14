@@ -164,7 +164,7 @@ class SearchResults extends Component {
                 <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                 <li><span>Publication Year</span>: {book&&book.volumeInfo.publishedDate.toString()}</li>
                    <div className="hoverable">
-                     <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                     <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                          <span className="details">details</span>
                       </Link>
                      <span className="icon-heart">
