@@ -17,7 +17,11 @@ class SearchResults extends Component {
         
         this.state = {
           thisYear: thisYear,
-          selectedYear: " "
+          selectedYear: "",
+          selectGener:"",
+          selectOrderByVal:"",
+          selectRatingVal:"",
+        
         }
       }
       
@@ -27,19 +31,19 @@ class SearchResults extends Component {
         this.setState({ selectedYear: evt.target.value });
       };
     
-    state = {
-        selectGenerVal:" ",
-        selectRatingVal:" ",
-        selectOrderByVal:" ",
-        selectYearVal:" ",
+    // state = {
+    //     selectGenerVal:"",
+    //     selectRatingVal:"",
+    //     selectOrderByVal:"",
+    //     selectYearVal:"",
 
 
 
-      }
+    //   }
     
       setSelectGenerValue = (event) => {
         this.setState({
-            selectGenerVal: event.target.value
+          selectGener: event.target.value
         });
       }
       setSelectRatingValue = (event) => {
@@ -122,7 +126,7 @@ class SearchResults extends Component {
 
                         <div className="col-2">
                             <h6 style={filterTextStyle}  >Genre</h6>
-                            <select value={this.state.selectGenerVal} onChange={this.setSelectGenerValue} style={mystyle}>
+                            <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
                             <option value="Fantasy">Fantasy</option>
                             <option value="Sci-Fi">Sci-Fi</option>
                             <option value="Mystery">Mystery</option>
@@ -139,15 +143,26 @@ class SearchResults extends Component {
                         
                     </div>
 
-
+                    {/* (selectedYear == "" && this.state.selectGenerVal=="" && this.state.selectRatingVal=="" && this.state.selectOrderByVal=="" ){ */}
             <div className="row " style={{padding: '150px'}}>
 
-            {this.props.items.map(book=> 
-               <div className="col-4 col-md-2 book" >
+            {this.props.items.filter((book)=> {
+              if (selectedYear == "" && this.state.selectGener == "" && this.state.selectOrderByVal == ""  && this.state.selectRatingVal == ""  ){
+                return book
+              }
+              else if (book.volumeInfo.publishedDate.toString().includes(selectedYear)){
+                return book
+
+              }
+              
+            }).map(book=> 
+              
+                <div className="col-4 col-md-2 book" >
                 <figure>
                 
                 < div className="book_img">
                 <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                <li><span>Publication Year</span>: {book&&book.volumeInfo.publishedDate.toString()}</li>
                    <div className="hoverable">
                      <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                          <span className="details">details</span>
@@ -164,7 +179,46 @@ class SearchResults extends Component {
                     <span className="clip-star"></span>
                     <span className="clip-star"></span>
                 </figure>
-                </div>)}
+                </div>
+              
+                
+              
+             
+               )}
+
+
+      {/* <div className="row " style={{padding: '150px'}}>
+
+      {this.props.items.map(book=> 
+        
+          <div className="col-4 col-md-2 book" >
+          <figure>
+          
+          < div className="book_img">
+          <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+          <li><span>Publication Year</span>: {book&&book.volumeInfo.publishedDate}</li>
+            <div className="hoverable">
+              <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                  <span className="details">details</span>
+                </Link>
+              <span className="icon-heart">
+                <i className="fa fa-heart "></i>
+              </span>
+              </div>
+          </div>  
+          <figcaption className="book_title" style={{alignItems:'center'}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>
+              <span className="active-star"></span>
+              <span className="active-star"></span>
+              <span className="active-star"></span>
+              <span className="clip-star"></span>
+              <span className="clip-star"></span>
+          </figure>
+          </div>
+        
+          
+        
+      
+        )} */}
 
                 {/* <div className="container row justify-content-between  p-2 " style={{marginTop:'30px' , marginLeft:'40px'  }}>
                 {this.props.items.map(book=> <div className="col-5 p-2  " >
@@ -191,7 +245,7 @@ class SearchResults extends Component {
                     </div>)} */}
                 </div>  
 
-                <p>"Gener : "{this.state.selectGenerVal}</p>
+                <p>"Gener : "{this.state.selectGener}</p>
                 <p>"Rating : "{this.state.selectRatingVal}</p>
                 <p>"OrderBy : "{this.state.selectOrderByVal}</p>
                 <p>"Publication Year : "{selectedYear}</p>
