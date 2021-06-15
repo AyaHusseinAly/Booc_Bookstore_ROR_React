@@ -26,20 +26,11 @@ class SearchResults extends Component {
       }
       
       onHandleChange = (evt) => {
-        // Handle Change Here
-        // alert(evt.target.value);
+      
         this.setState({ selectedYear: evt.target.value });
       };
     
-    // state = {
-    //     selectGenerVal:"",
-    //     selectRatingVal:"",
-    //     selectOrderByVal:"",
-    //     selectYearVal:"",
 
-
-
-    //   }
     
       setSelectGenerValue = (event) => {
         this.setState({
@@ -67,8 +58,6 @@ class SearchResults extends Component {
     render() {
         const mystyle = {
             backgroundColor: "#263044",
-             //backgroundColor: "#FEC7B5",
-             //color :"#263044"
              color :"white"
             
           };
@@ -148,40 +137,21 @@ class SearchResults extends Component {
                     </div>
 
 
-                    {/* book.volumeInfo.categories.toString().includes(this.state.selectGener ) */}
             <div className="row " style={{padding: '150px'}}>
 
             {this.props.items.filter((book)=> {
               if (selectedYear === "" && this.state.selectGener === "" && this.state.selectOrderByVal === ""  && this.state.selectRatingVal === ""  ){
-                // console.log(book)
+                 console.log(book)
 
                 return book
               }
               else
              {
 
-              // if(selectedYear !== "" )
-              //  {
-              //   book = book.volumeInfo.publishedDate.toString().includes(selectedYear) 
-              //  }
-
-              // if( this.state.selectGener !== "")
-              // {
-              //   if(book.volumeInfo.categories)
-              //   {
-              //     book =book.volumeInfo.categories.includes(this.state.selectGener.toString())
-              //   }
-              //   else
-              //   {
-              //     book = null
-              //   }
-               
-              // }
-
+              
               if(selectedYear !== "" || this.state.selectGener !== "" )
                {
-                // book = book.volumeInfo.publishedDate.toString().includes(selectedYear)  || book.volumeInfo.categories.includes(this.state.selectGener.toString())
-                // console.log(book)
+               
 
                   if(selectedYear !== "" && this.state.selectGener !== "")
                   {
@@ -226,10 +196,7 @@ class SearchResults extends Component {
 
 
              }
-              // else if (book.volumeInfo.publishedDate.toString().includes(selectedYear)  ){
-              //   return book
-
-              // }
+              
               
             }).map(book=> 
               
@@ -238,7 +205,6 @@ class SearchResults extends Component {
                 
                 < div className="book_img">
                 <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-                <li><span>Publication Year</span>: {book&&book.volumeInfo.categories}</li>
                    <div className="hoverable">
                      <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                          <span className="details">details</span>
@@ -263,68 +229,10 @@ class SearchResults extends Component {
                )}
 
 
-      {/* <div className="row " style={{padding: '150px'}}>
-
-      {this.props.items.map(book=> 
-        
-          <div className="col-4 col-md-2 book" >
-          <figure>
-          
-          < div className="book_img">
-          <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-          <li><span>Publication Year</span>: {book&&book.volumeInfo.publishedDate}</li>
-            <div className="hoverable">
-              <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
-                  <span className="details">details</span>
-                </Link>
-              <span className="icon-heart">
-                <i className="fa fa-heart "></i>
-              </span>
-              </div>
-          </div>  
-          <figcaption className="book_title" style={{alignItems:'center'}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>
-              <span className="active-star"></span>
-              <span className="active-star"></span>
-              <span className="active-star"></span>
-              <span className="clip-star"></span>
-              <span className="clip-star"></span>
-          </figure>
-          </div>
-        
-          
-        
       
-        )} */}
-
-                {/* <div className="container row justify-content-between  p-2 " style={{marginTop:'30px' , marginLeft:'40px'  }}>
-                {this.props.items.map(book=> <div className="col-5 p-2  " >
-                    <figure className="row">
-                            <img  className="col" style={{width:'150px' , height:'200px'}} src={book&&book.volumeInfo.imageLinks&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-                              <div className="hoverable">
-                              <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
-                                  <span className="details">details</span>
-                                </Link>
-                              <span className="icon-heart">
-                                <i className="fa fa-heart "></i>
-                              </span>
-                              </div>
-                              
-                            <div className="col">
-                                <figcaption className="" style={{alignItems:'center'}}>{book&&book.volumeInfo.title}</figcaption>
-                                <span className="active-star"></span>
-                                <span className="active-star"></span>
-                                <span className="active-star"></span>
-                                <span className="clip-star"></span>
-                                <span className="clip-star"></span>
-                            </div>
-                    </figure>
-                    </div>)} */}
                 </div>  
 
-                <p>"Gener : "{this.state.selectGener}</p>
-                <p>"Rating : "{this.state.selectRatingVal}</p>
-                <p>"OrderBy : "{this.state.selectOrderByVal}</p>
-                <p>"Publication Year : "{selectedYear}</p>
+                
 
             
                 
