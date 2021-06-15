@@ -95,6 +95,7 @@ class SearchResults extends Component {
                           <div  className="col-2">
                              <h6 style={filterTextStyle} >Publication Year</h6>
                              <select value={this.selectedYear} onChange={this.onHandleChange} style={mystyle}> 
+                             <option value="">__none__</option>
                              {options}
                              </select>
                         </div>
@@ -127,7 +128,9 @@ class SearchResults extends Component {
                         <div className="col-2">
                             <h6 style={filterTextStyle}  >Genre</h6>
                             <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
+                            <option value="">__none__</option>
                             <option value="Fantasy">Fantasy</option>
+                            <option value="Fiction">Fiction</option>
                             <option value="Sci-Fi">Sci-Fi</option>
                             <option value="Mystery">Mystery</option>
                             <option value="Thriller">Thriller</option>
@@ -135,6 +138,7 @@ class SearchResults extends Component {
                             <option value="Westerns">Westerns</option>
                             <option value="Dystopian">Dystopian</option>
                             <option value="Contemporary">Contemporary</option>
+
                             </select>
 
                         </div>
@@ -143,17 +147,89 @@ class SearchResults extends Component {
                         
                     </div>
 
-                    {/* (selectedYear == "" && this.state.selectGenerVal=="" && this.state.selectRatingVal=="" && this.state.selectOrderByVal=="" ){ */}
+
+                    {/* book.volumeInfo.categories.toString().includes(this.state.selectGener ) */}
             <div className="row " style={{padding: '150px'}}>
 
             {this.props.items.filter((book)=> {
-              if (selectedYear == "" && this.state.selectGener == "" && this.state.selectOrderByVal == ""  && this.state.selectRatingVal == ""  ){
+              if (selectedYear === "" && this.state.selectGener === "" && this.state.selectOrderByVal === ""  && this.state.selectRatingVal === ""  ){
+                // console.log(book)
+
                 return book
               }
-              else if (book.volumeInfo.publishedDate.toString().includes(selectedYear)){
-                return book
+              else
+             {
+
+              // if(selectedYear !== "" )
+              //  {
+              //   book = book.volumeInfo.publishedDate.toString().includes(selectedYear) 
+              //  }
+
+              // if( this.state.selectGener !== "")
+              // {
+              //   if(book.volumeInfo.categories)
+              //   {
+              //     book =book.volumeInfo.categories.includes(this.state.selectGener.toString())
+              //   }
+              //   else
+              //   {
+              //     book = null
+              //   }
+               
+              // }
+
+              if(selectedYear !== "" || this.state.selectGener !== "" )
+               {
+                // book = book.volumeInfo.publishedDate.toString().includes(selectedYear)  || book.volumeInfo.categories.includes(this.state.selectGener.toString())
+                // console.log(book)
+
+                  if(selectedYear !== "" && this.state.selectGener !== "")
+                  {
+                    if(book.volumeInfo.categories)
+                    {
+                      book =book.volumeInfo.categories.includes(this.state.selectGener.toString()) && book.volumeInfo.publishedDate.toString().includes(selectedYear) 
+                    }
+                    else
+                    {
+                      book = null
+                    }
+                  }
+
+                  
+                  else if(selectedYear !== "" )
+                  {
+                    book = book.volumeInfo.publishedDate.toString().includes(selectedYear) 
+                  }
+
+                  else if( this.state.selectGener !== "")
+                  {
+                    if(book.volumeInfo.categories)
+                    {
+                      book =book.volumeInfo.categories.includes(this.state.selectGener.toString())
+                    }
+                    else
+                    {
+                      book = null
+                    }
+                  
+                  }
+
 
               }
+
+             
+              
+               
+               
+              
+              return book
+
+
+             }
+              // else if (book.volumeInfo.publishedDate.toString().includes(selectedYear)  ){
+              //   return book
+
+              // }
               
             }).map(book=> 
               
@@ -162,7 +238,7 @@ class SearchResults extends Component {
                 
                 < div className="book_img">
                 <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-                <li><span>Publication Year</span>: {book&&book.volumeInfo.publishedDate.toString()}</li>
+                <li><span>Publication Year</span>: {book&&book.volumeInfo.categories}</li>
                    <div className="hoverable">
                      <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                          <span className="details">details</span>
