@@ -11,7 +11,7 @@ const BookDetails = (props) => {
     useEffect(() =>{
         const isbn = props.match.params.isbn;
             axios.get(
-                `https://www.googleapis.com/books/v1/volumes?q=+isbn=${isbn}`
+                `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
             ).then (result => {
                 console.log(result)
                 setBook([result.data.items[0]])
