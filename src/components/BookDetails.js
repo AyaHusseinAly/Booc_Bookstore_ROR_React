@@ -35,7 +35,9 @@ const BookDetails = (props) => {
                                 <img src={book.length > 0 && book[0].volumeInfo.imageLinks.thumbnail} style={{ width: '400px'}}/>
                                 <div className="button">
                                    
-                                     <button><i className="fa fa-download "></i> Download</button>
+//                                      <button><i className="fa fa-download "></i> Download</button>
+                                    <button><i className="fa fa-book " ></i> 
+                                     <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
                                     <button><i className="fa fa-microphone"></i> Find near me</button>
                                   
                                 </div>
