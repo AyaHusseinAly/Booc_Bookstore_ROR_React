@@ -48,7 +48,8 @@ const BookDetails = (props) => {
                         <div className="box-info">
                             <span>Free</span>
                             <div className="heading">
-                                <h3>{book.length > 0 && book[0].volumeInfo.title}</h3>
+                                <h2>{book.length > 0 && book[0].volumeInfo.title}</h2>
+                                <h5>from {book.length > 0 && book[0].volumeInfo.categories} section</h5>
 
                                 {book.length > 0 && book[0].volumeInfo.averageRating ? 
                                 <div className="evaluation">
