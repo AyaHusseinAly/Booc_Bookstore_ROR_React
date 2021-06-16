@@ -33,7 +33,16 @@
 
 .product .parent-box .button button:first-child {
     background: #f5b17b;
-    border: 1px solid #f5b17b
+    border: 1px solid #f5b17b;
+    width: 120px;
+    color: #000;
+}
+.product .parent-box .button button:first-child a{
+    background: #f5b17b;
+    border: 1px solid #f5b17b;
+    color: #000;
+    text-decoration: none;
+    margin-left: 10px;
 }
 
 .product .parent-box .button button:last-child:hover {
