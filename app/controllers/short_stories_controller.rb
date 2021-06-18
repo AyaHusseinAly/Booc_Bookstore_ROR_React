@@ -28,6 +28,16 @@ class ShortStoriesController < ApplicationController
         @Finished=ShortStory.where(status:'finished')
         render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
     end
+    def show
+        
+        if ShortStory.where(id:params['id']).first != nil
+           @shortStory=ShortStory.find(params['id'])
+           @chapters=ShortStoriesChapter.where(shortStory_id:params['id'])
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters}
+        else 
+            render :json=>{message:"bad request"}  
+        end     
+    end
     
 
 end

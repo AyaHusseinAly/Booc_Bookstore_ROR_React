@@ -6,9 +6,11 @@ Rails.application.routes.draw do
   get 'api/bookstores', to:'api#bookstores'
 
   post '/shortStories', to:'short_stories#create'
+  post '/shortStoryDetails' ,to:'short_stories#show'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
   get '/shortStories' ,to:'short_stories#getShortStories'
   post '/createChapter' , to:'chapters#create'
+  
 
 
 end
