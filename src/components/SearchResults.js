@@ -9,6 +9,7 @@ class SearchResults extends Component {
     render() {
 
         return (
+        
             <div className="container d-flex flex-column ">
 
             {this.props.items.map(book=> <div className="col-4 col-md-4 book" >
@@ -27,6 +28,7 @@ class SearchResults extends Component {
 
         
             </div> 
+            
     );
     }
 }
