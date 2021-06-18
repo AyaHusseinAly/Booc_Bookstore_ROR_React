@@ -34,9 +34,9 @@ class Admin extends Component {
             
 <div>
 <div className="container books_container">
-                    <BookRow items={this.state.fiction}></BookRow>
-                    <BookRow items={this.state.thriller}></BookRow>
-                    <BookRow items={this.state.horror}></BookRow>
+                    <BookRow items={this.state.fiction.slice(0,6)}></BookRow>
+                    <BookRow items={this.state.thriller.slice(0,6)}></BookRow>
+                    <BookRow items={this.state.horror.slice(0,6)}></BookRow>
 
   <div className="row d-flex justify-content-center " style={{textAlign: "center"}} >
 

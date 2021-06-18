@@ -40,6 +40,7 @@ class Writer extends Component {
         ]
     }
 
+
     componentDidMount() {
         axios.get("http://localhost:3000/shortStories",
             {
@@ -62,9 +63,11 @@ class Writer extends Component {
 
 
 
+
     render() {
 
         return (
+
             <div >
                 {this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length == 0 && <div className='mt-5 pt-5' style={{ width: '100%', height: '100%' }}>
                     <h3 className='d-flex justify-content-center'>You haven't add any stories </h3>
@@ -76,7 +79,7 @@ class Writer extends Component {
                     </div>
                     <h3 className='ml-5'>Previous Work</h3>
                     <div className="container d-flex justify-content-between">
-                        <div className="col col-6 " style={{ display: "inline-block" }}>
+                        <div className="col col-lg-6 col-md-12 col-xs-12" style={{ display: "inline-block" }}>
                             <h4 style={{ textAlign: 'center' }}>Not finished yet</h4>
 
                             {this.state.shortstoiesNotFinished.map(shortstory => {
@@ -84,7 +87,7 @@ class Writer extends Component {
 
                             })}
                         </div>
-                        <div className="col col-6 " style={{ display: "inline-block" }}>
+                        <div className="col col-lg-6 col-md-12 col-xs-12" style={{ display: "inline-block" }}>
                             <h4 style={{ textAlign: 'center' }}>Finished</h4>
 
                             {this.state.shortstoiesFinished.map(shortstory => {

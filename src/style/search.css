@@ -1,0 +1,77 @@
+.book{
+	
+	
+	margin-bottom:25px;
+	border-image: 5px round;
+	}
+	
+	.book_image{
+	  
+	  width:100%;
+	  height:300px;
+		 
+		
+	}
+	
+	.books_container
+	{
+		
+		padding:50px;
+	
+	}
+	.book_title
+	{
+	
+		text-align: center;
+	}
+	
+  .checked {
+  color: goldenrod;
+		}
+
+
+		figure .hoverable{
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 40%;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform: translate(-50%, -50%);
+			background-color: rgba(255, 255, 255, 0.6);
+			opacity: 0;
+			transition: var(--transition);
+			
+		}
+		figure:hover .hoverable {
+			opacity: 1;
+		  }
+		  figure .hoverable .details {
+			background-color: var(--primaryColor);
+			color: white;
+			border-radius: 0.5rem;
+			padding: 10px 20px;
+			
+		  }
+	
+		  .icon-heart{
+			position: absolute;
+			top: 40px;
+			left: 20px;
+		}
+		 
+		.choose{
+			margin-top: 20px;
+			text-align: center;
+			color: var(--secondaryColor); 
+		}
+	
+		.choose > span {
+			color: var(--primaryColor);
+		}
+
+				
+	

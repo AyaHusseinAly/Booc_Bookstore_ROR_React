@@ -11,6 +11,7 @@ import AddStory from './components/AddStory';
 import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
+import Genre from './components/Genre';
 import GoogleAPI from './classes/GoogleAPI';
 import ShortStoryDetails from './components/ShortStoryDetails';
 
@@ -33,6 +34,7 @@ import {
 // api.getByCategory("fiction").then(res=>{
 //     console.log(res)
 // })
+
 // api.getFilteredBooks({
 //   'inauthor':'conan',
 //   'subject':'foction',
@@ -46,19 +48,23 @@ function App() {
   return (
     <div>
       <Header></Header>
+
       <div style={{ minHeight: 400 }}>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/genre/:id" exact component={Genre} />
           <Route path="/map" component={Map} />
           <Route path="/writer" component={Writer} />
           <Route path="/community" component={Community} />
           <Route path="/mystories" component={MyStories} />
           <Route path="/addstory" component={AddStory} />
-          <Route path="/bookdetails" component={BookDetails} />
-          <Route path="/searchresults" component={SearchResults} />
+          <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
           <Route path="/userprofile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
-          <Route path='/story/:id' component={ShortStoryDetails} />
+          {/* <Route path="/searchresults" component={SearchResults}/> */}
+          <Route path="/story/:storyId" component={ShortStoryDetails} />
+          {/* <Route path="/story/:id" render={(props) => <ShortStoryDetails {...props} />} /> */}
+
 
 
 

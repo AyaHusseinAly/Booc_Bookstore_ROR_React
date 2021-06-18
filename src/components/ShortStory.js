@@ -16,7 +16,8 @@ class ShortStory extends Component {
     render() {
         return (
             <div className="row m-2" style={{ height: '250px' }}>
-                <img className="col col-4" style={{ width: '40%', height: "90%", display: 'inline-block', borderRadius: '20px' }} src={this.props.shortstory.cover} />
+                <img className="col-4 book" style={{ width: '100%', height: "90%", display: 'inline-block', borderRadius: '20px' }} src={this.props.shortstory.cover} />
+
 
                 <div className="col col-7 mt-2" style={{ width: '45%', heigth: '100%', display: 'inline-block' }}>
                     <h5>{this.props.shortstory.title}</h5>

@@ -7,6 +7,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css'
 
+import "../node_modules/font-awesome/css/font-awesome.min.css";
+
 import {
   BrowserRouter as Router,
 } from "react-router-dom";

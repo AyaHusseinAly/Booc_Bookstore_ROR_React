@@ -29,7 +29,7 @@ class ShortStoryDetails extends Component {
     render() {
         // return (<h1>short story details{this.props.match.params.id}</h1>)
         return (<div>
-
+            short story details{this.props.match.params.storyId}
         </div>)
     }
 }
