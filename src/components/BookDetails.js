@@ -42,7 +42,7 @@ const BookDetails = (props) => {
     }, [])
         
         console.log(book[0]) 
-        // console.log(history.location.pathname)
+        
         //  console.log(window.location.href)
         return(
             
