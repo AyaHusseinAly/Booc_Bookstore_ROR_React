@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_163933) do
+ActiveRecord::Schema.define(version: 2021_06_07_164156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,15 @@ ActiveRecord::Schema.define(version: 2021_06_07_163933) do
     t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
   end
 
+  create_table "short_story_genres", force: :cascade do |t|
+    t.bigint "genre_id"
+    t.bigint "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_short_story_genres_on_genre_id"
+    t.index ["short_story_id"], name: "index_short_story_genres_on_short_story_id"
+  end
+
   create_table "story_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
@@ -127,5 +136,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_163933) do
   add_foreign_key "comments", "short_stories_chapters"
   add_foreign_key "short_story_generes", "genres"
   add_foreign_key "short_story_generes", "short_stories"
+  add_foreign_key "short_story_genres", "genres"
+  add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
 end
