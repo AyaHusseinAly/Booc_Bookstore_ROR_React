@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   post '/shortStories', to:'short_stories#create'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
+  get '/shortStories' ,to:'short_stories#getShortStories'
+  post '/createChapter' , to:'chapters#create'
 
 
 end
