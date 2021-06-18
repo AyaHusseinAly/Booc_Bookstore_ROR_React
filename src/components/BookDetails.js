@@ -43,7 +43,6 @@ const BookDetails = (props) => {
         
         console.log(book[0]) 
         
-        //  console.log(window.location.href)
         return(
             
             <> 
