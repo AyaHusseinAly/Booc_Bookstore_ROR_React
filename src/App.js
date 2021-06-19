@@ -62,7 +62,7 @@ function App() {
           <Route path="/userprofile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
           {/* <Route path="/searchresults" component={SearchResults}/> */}
-          <Route path="/story/:storyId" component={ShortStoryDetails} />
+          <Route path="/shortStory/:id" component={ShortStoryDetails} />
           {/* <Route path="/story/:id" render={(props) => <ShortStoryDetails {...props} />} /> */}
 
 

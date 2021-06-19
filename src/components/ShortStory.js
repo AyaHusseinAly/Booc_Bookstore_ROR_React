@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import '../style/shortStory.css';
+import { Link } from "react-router-dom";
 
 
 
@@ -37,8 +38,8 @@ class ShortStory extends Component {
                     <div className='mt-3'>
                         {this.props.shortstory.status == 'Not finished yet' && <CreateChapter shortStory={this.props.shortstory.id} />}
                         {/* <ViewShortStory /> */}
-                        <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
-                        >View</div>
+                        <Link className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
+                            to={`/shortStory/${this.props.shortstory.id}`}>View</Link>
                     </div>
                 </div>
             </div>)
