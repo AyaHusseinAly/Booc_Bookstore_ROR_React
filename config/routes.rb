@@ -18,11 +18,10 @@ get '/member-data', to: 'members#show'
     end
   end
 
-  get 'api/shortStories', to:'api#shortStories'
+  get 'api/shortStories', to:'short_stories#index'
   get 'api/bookmarks', to:'api#bookmarks'  # edit to accept user id
   get 'api/bookshelves', to:'api#bookshelves' # edit to accept user id
   get 'api/bookstores', to:'api#bookstores'
-
   post '/shortStories', to:'short_stories#create'
   post '/shortStoryDetails' ,to:'short_stories#show'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'

@@ -23,6 +23,13 @@ class ShortStoriesController < ApplicationController
         @genres=Genre.all()
         render :json=> @genres
     end
+
+    def index
+        @stories = ShortStory.all().order("created_at DESC");
+        render :json => {stories:@stories}
+
+    end
+
     def getShortStories
         @NotFinishedYet=ShortStory.where(status:'Not finished yet')
         @Finished=ShortStory.where(status:'finished')
