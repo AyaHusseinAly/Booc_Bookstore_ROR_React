@@ -33,7 +33,10 @@ class ShortStoriesController < ApplicationController
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
            @chapters=ShortStoriesChapter.where(shortStory_id:params['id'])
-           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters}
+           @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
+           @genres=Genre.where(id:@genre_ids)
+           @createdDate=ShortStory.find(19).created_at.strftime('%Y %b %d')
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate}
         else 
             render :json=>{message:"bad request"}  
         end     
