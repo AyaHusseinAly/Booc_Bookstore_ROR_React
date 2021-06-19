@@ -126,7 +126,7 @@ class Home extends Component {
                                 <div className="col-7">
                                     <h3 style={{fontWeight:'bold',marginBottom:'1.2rem'}}>Writers</h3>
                                     <p>Are you beginner in writting?<br/><strong>Booc </strong>opens the door for you to become a famous writer!</p>
-                                    <button  onClick={() => this.props.history.push('/writer') }>Write your first story</button>
+                                    <button  onClick={() => this.props.history.push('/addstory') }>Write your first story</button>
                                 </div>
                                 <img className="col-5" src="img/writeFeature1.png"/>
                             
