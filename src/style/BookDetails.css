@@ -1,4 +1,5 @@
 
+
 .product {
     padding: 40px 0
 }
@@ -45,9 +46,27 @@
     margin-left: 10px;
 }
 
-.product .parent-box .button button:last-child:hover {
+.product .parent-box .button button:nth-child(2):hover,.product .parent-box .button button:last-child:hover {
     background: #f5b17b;
     border: 1px solid #f5b17b
+}
+.product .parent-box .button button:nth-child(2) {
+    /* background: #f5b17b; */
+    border: 1px solid #f5b17b
+}
+
+.product .parent-box .button button:last-child a{
+   
+    color: #000;
+    text-decoration: none;
+    margin-left: 10px;
+}
+.product .parent-box .button button:last-child {
+    
+    border: 1px solid #f5b17b;
+    width: 200px;
+    color: #000;
+    margin-top: 5px;
 }
 
 .product .box-info > span {
@@ -326,11 +345,13 @@
     border: 1px solid #eee;
     padding: 3px
 }
+
 .btn-shelf{
     margin: 50px;
     display: inline-block;
     margin-right: -5px;
 }
+
 
 
 
