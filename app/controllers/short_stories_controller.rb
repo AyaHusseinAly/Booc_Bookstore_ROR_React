@@ -16,6 +16,10 @@ class ShortStoriesController < ApplicationController
         @genres=Genre.all()
         render :json=> @genres
     end
-    
+    def index
+        @stories = ShortStory.all()
+        render :json => {stories:@stories}
+
+    end
 
 end

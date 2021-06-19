@@ -8,6 +8,7 @@ gem 'rails', '~> 5.2.6'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 gem 'pg'
+
 #serializer for json for apis
 gem "active_model_serializers", "~> 0.8.0"
 #solving cors problem apis
@@ -37,6 +38,11 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#devise gem
+gem 'devise'
+gem 'devise-jwt'
+# gem 'knock'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -60,5 +66,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-# gem 'tzinfo-data', '~> 1.2019', '>= 1.2019.2'
+#gem 'tzinfo-data', '~> 1.2019', '>= 1.2019.2'
 

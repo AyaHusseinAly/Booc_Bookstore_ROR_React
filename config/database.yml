@@ -5,6 +5,7 @@
 #   gem 'sqlite3'
 #
 default: &default
+
   adapter: postgresql
   encoding: unicode
   username: postgres
@@ -12,11 +13,19 @@ default: &default
   host: localhost
   # adapter: sqlite3
   # timeout: 5000
+  # adapter: postgresql
+  # encoding: unicode
+  # username: postgres
+  # password: 123
+  # host: localhost
+  # adapter: sqlite3
+  timeout: 5000
 
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
+
   database: bookstore_development
 
   # database: db/development.sqlite3
