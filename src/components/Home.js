@@ -60,7 +60,7 @@ class Home extends Component {
         }
         
         if(this.state.search=='true'){
-            return(<SearchResults items={this.state.searchData}/>);
+            return(<SearchResults items={this.state.searchData} flag={0}/>);
         }
         else{
             return (
@@ -84,7 +84,7 @@ class Home extends Component {
 
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 {this.state.genres.map(genre=>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/'+genre.id)}>
+                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/'+genre.title)}>
                                     {genre.title}
                                 </a>)}
                             </div>
