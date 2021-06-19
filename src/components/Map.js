@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/map.css';
 import ReactDOM from 'react-dom';
 import {
-     GoogleMap,
-     withScriptjs,
-     withGoogleMap,
-     Marker,
+    InfoWindow,
+    GoogleMap,
+    withScriptjs,
+    withGoogleMap,
+    Marker,
   }from "react-google-maps";
  //import { GoogleMap, useJsApiLoader,withScriptjs, withGoogleMap, Marker} from '@react-google-maps/api';
 
@@ -19,8 +20,25 @@ class Map extends Component {
    
 
     state = {
-
+        address:'',
+        city:'',
+        area:'',
+        state:'',
+        zoom: 15,
+        height: 400,
+        mapPosition: {
+            lat: 0,
+            lng: 0,
+        }
     }
+
+    onMarkerDragEnd =(event) => {
+        let newLat = event.latLng.lat();
+        let newLng = event.latLng.lng();
+
+        console.log('newlat', newLat);
+    }
+
     render() {
         const bookName = {
             display : 'inline-block',
@@ -64,7 +82,11 @@ class Map extends Component {
             >
             <Marker
                 position={{ lat: 31.2001,  lng: 29.9187, }}
-            />
+            >
+                <InfoWindow>
+                    <div>Hello inside InfoWindow</div>
+                </InfoWindow>
+            </Marker>
             </GoogleMap>
         ));
   
