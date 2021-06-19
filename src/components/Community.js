@@ -62,7 +62,7 @@ class Community extends Component {
                     </div>
                     <div className="col-8">
 
-                        {this.state.stories.map(story=> 
+                        {this.state.stories && this.state.stories.map(story=> 
 
                         <div className="communityCard ">
                             <div className="pt-3 pl-3 d-flex justify-content-between">
