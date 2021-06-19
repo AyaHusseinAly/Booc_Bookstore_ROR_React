@@ -59,7 +59,7 @@ class Map extends Component {
 
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
-            defaultZoom={8}
+            defaultZoom={15}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             >
             <Marker
@@ -132,9 +132,9 @@ class Map extends Component {
 
                 <br></br>
                 <div className="row">
-                    <div className="container mt-3 rounded-sm col-md-8" style={distictSearch}>
+                    <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
                         <br/>
-                        <div  className="card col-md-5 col-md-5 col-xs-4 col-xs-3 mt-1 shadow" style={{border: "none"}}>
+                        <div  className="card col-md-12 col-md-5 col-xs-4 col-xs-3 mt-1 shadow" style={{border: "none"}}>
                             <div className="row">
                                 <div className="col-md-4 align-middle">
                                     <img src="img/alef.png" className="img-fluid  "/>
@@ -152,7 +152,7 @@ class Map extends Component {
                             </div>
                         </div>
 
-                        <div  className="card col-md-5 mt-3 shadow" style={{border: "none"}}>
+                        <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
                             <div className="row">
                                 <div className="col-md-4">
                                     <img src="img/alef.png" className="card-img-top embed-responsive-item"/>
@@ -180,11 +180,11 @@ class Map extends Component {
                         </div>
                         <div id="map"></div>
                     </div>   */}
-                    <div className="col-md-4">
+                    <div className="col-md-5" style={{}}>
                         <MapWithAMarker
                             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA&v=3.exp&libraries=geometry,drawing,places"
                             loadingElement={<div style={{ height: `100%`, width:`100%` }} />}
-                            containerElement={<div style={{ height: `450px`, width:`300px` }} />}
+                            containerElement={<div style={{ height: `500px`, width:`400px` }} />}
                             mapElement={<div style={{ height: `100%` }} />}
                         />
                        
