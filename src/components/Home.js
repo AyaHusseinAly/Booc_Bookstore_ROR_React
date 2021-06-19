@@ -11,6 +11,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 
 class Home extends Component {
+    
     state={
         fiction:[],
         thriller:[],
