@@ -22,6 +22,7 @@ class Home extends Component {
     }
 
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
+
         axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
         .then(response => {
             this.setState({fiction:response.data.items});
@@ -49,7 +50,7 @@ class Home extends Component {
         const { Search } = Input;
         const onSearch = () =>{ 
             let string=document.getElementById("form1").value;
-            axios.get("https://www.googleapis.com/books/v1/volumes?q="+ string +"+intitle:"+ string +"&startIndex=0&maxResults=8&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
+            axios.get("https://www.googleapis.com/books/v1/volumes?q="+ string +"+intitle:"+ string +"&startIndex=0&maxResults=40&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
             .then(response => {
                 this.setState({searchData:response.data.items});
                 this.setState({search:'true'})
@@ -64,24 +65,32 @@ class Home extends Component {
         else{
             return (
                 <div>
-                    <div className="bckgnd pt-5" >
-                    <div className="input-group d-flex flex-column justify-content-center align-items-center text-center mt-5" style={{color:'rgba(255,255,255,0.95)',paddingTop:'1.9rem'}}>
-                        <h2 >Books Shopping online with <strong style={{fontWeight:'bold',color:'#263044',opacity:'1'}}>B<span style={{color: '#F8A488',fontWeight:'bold'}}>oo</span>c</strong></h2>
+                    <div className="bckgnd" >
+                    <div className="input-group d-flex flex-column justify-content-center align-items-center text-center" style={{color:'rgba(255,255,255,0.95)',height:'650px'}}>
+                        <h2 >Books Shopping online with <strong style={{fontWeight:'bold',color:'#263044',opacity:'1'}}>B<span style={{color: '#F8A488',fontWeight:'bold',fontSize: '3rem'}}>oo</span>C</strong></h2>
                         <h4>support local Bookstores</h4>
                         <h4>open a door to become a writer</h4> <br/>
                         <div className="d-flex ">
                         <div className="form-outline" >
-                            <input type="search" id="form1" placeholder="Search for a Book" className="form-control" style={{width:'25rem',height:'2.9rem'}} />
+                            <input type="search" id="form1" placeholder="Search for a Book .." className="form-control" style={{width:'40rem',height:'4.5rem',fontSize: '1.5rem',paddingLeft:'1.5rem'}} />
                         </div>
-                        <button type="button" onClick={onSearch} className="btn ml-1" style={{backgroundColor:'#263044',width:'2.9rem'}}>
+                        <button type="button" onClick={onSearch} className="btn ml-1" style={{backgroundColor:'#263044',width:'4.5rem'}}>
                             <i className="fas fa-search" style={{color:'white'}}></i>
                         </button>
-                        <div className="dropdown ml-3" >
-                        <DropdownButton id="dropdown-basic-button" title="Genre" >
-                            {this.state.genres.map(genre=><Dropdown.Item  onClick={() => this.props.history.push('/genre/'+genre.id)}>{genre.title}</Dropdown.Item> )}
-                        </DropdownButton>
-                   
+                        <div className="dropdown show" >
+                            <a className="btn btn-secondary dropdown-toggle ml-2" style={{width:'9rem',height:'4.5rem',backgroundColor:'white',opacity:'0.65',color:'grey',fontSize: '1.5rem',borderRadius:'10px 10px' }} role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Genre 
+                            </a>
+
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                {this.state.genres.map(genre=>
+                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/'+genre.id)}>
+                                    {genre.title}
+                                </a>)}
                             </div>
+                        </div>
+                        
+            
                         </div>
                         </div>            
                     </div>
@@ -103,7 +112,7 @@ class Home extends Component {
                         <BookRow key={this.state.horror.id} items={this.state.horror}></BookRow>
                     
 
-                        <div className="d-flex flex-row justify-content-center align-items-evenly">
+                        <div className="d-flex flex-row justify-content-between align-items-evenly">
                             <div className="mycard row mx-2">
                                 <div className="col-6">
                                     <h3 style={{fontWeight:'bold',marginBottom:'1.2rem'}}>Community</h3>
@@ -114,12 +123,12 @@ class Home extends Component {
                                 
                             </div>
                             <div className="mycard row mx-2">
-                                <div className="col-6">
+                                <div className="col-7">
                                     <h3 style={{fontWeight:'bold',marginBottom:'1.2rem'}}>Writers</h3>
                                     <p>Are you beginner in writting?<br/><strong>Booc </strong>opens the door for you to become a famous writer!</p>
                                     <button  onClick={() => this.props.history.push('/writer') }>Write your first story</button>
                                 </div>
-                                <img className="col-6" src="img/writeFeature1.png"/>
+                                <img className="col-5" src="img/writeFeature1.png"/>
                             
                             </div>
                         </div>

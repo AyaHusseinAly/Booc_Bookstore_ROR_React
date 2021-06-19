@@ -56,7 +56,7 @@ function App() {
           <Route path="/community" component={Community}/>
           <Route path="/mystories" component={MyStories}/>
           <Route path="/addstory" component={AddStory}/>
-          <Route path="/bookdetails" component={BookDetails}/>
+          <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
           <Route path="/userprofile" component={UserProfile}/>
           <Route path="/admin" component={Admin}/>
           {/* <Route path="/searchresults" component={SearchResults}/> */}

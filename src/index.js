@@ -5,7 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+
+
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css'
+
+import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 import {
   BrowserRouter as Router,
