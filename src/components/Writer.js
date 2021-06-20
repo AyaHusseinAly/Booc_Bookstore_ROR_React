@@ -80,8 +80,8 @@ class Writer extends Component {
                     </div>
                     <h2 className='ml-3'>Previous Work</h2>
                     <br />
-                    <div className="container d-flex justify-content-end mx-1">
-                        <div className="col col-lg-6 col-md-12 col-xs-12 ml-3" style={{ display: "inline-block" }}>
+                    <div className="row d-flex justify-content-end ml-2">
+                        <div className="col col-lg-6 col-md-12 col-xs-12 " style={{ display: "inline-block" }}>
 
                             <h4 className=''>Not finished yet</h4>
 
@@ -90,7 +90,7 @@ class Writer extends Component {
 
                             })}
                         </div>
-                        <div className="col col-lg-6 col-md-12 col-xs-12 ml-3" style={{ display: "inline-block" }}>
+                        <div className="col col-lg-6 col-md-12 col-xs-12 " style={{ display: "inline-block" }}>
                             <h4 style={{}}>Finished</h4>
 
                             {this.state.shortstoiesFinished.map(shortstory => {

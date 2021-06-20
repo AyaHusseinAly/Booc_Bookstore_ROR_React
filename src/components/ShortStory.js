@@ -17,11 +17,11 @@ import AddChapter from './addChapter';
 class ShortStory extends Component {
     render() {
         return (
-            <div className="row shadow pt-2 m-1" style={{ height: '250px' }}>
-                <img className="col-4 book" style={{ width: '100%', height: "90%", display: 'inline-block', borderRadius: '20px' }} src={this.props.shortstory.cover} />
+            <div className="row shadow pt-1 m-1" style={{ height: '220px', paddingBottom: 'none' }}>
+                <img className="col-4 img-fluid embed-responsive-item my-2" style={{ width: '100%', height: "90%", display: 'inline-block', borderRadius: '20px', margin: 'none', paddingBottom: 'none' }} src={this.props.shortstory.cover} />
 
 
-                <div className="col col-7 mt-2" style={{ width: '45%', heigth: '100%', display: 'inline-block' }}>
+                <div className="col col-7 mt-2" style={{ width: '100%', heigth: '100%', display: 'inline-block' }}>
                     <h5>{this.props.shortstory.title}</h5>
                     <p>
                         <span className="fa fa-star checked"></span>
@@ -32,7 +32,7 @@ class ShortStory extends Component {
                         <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
                     </p>
                     <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>
-                        <span>{this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 85) + '....' : this.props.shortstory.summary}</span>
+                        <span>{this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 80) + '....' : this.props.shortstory.summary}</span>
                     </div>
 
                     <div className='mt-3'>
