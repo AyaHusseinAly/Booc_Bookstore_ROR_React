@@ -6,7 +6,8 @@ import axios from 'axios';
 
 class Community extends Component {
     state={
-        stories:[]
+        stories:[],
+        readMoreIds:[]
     }
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
 
@@ -27,7 +28,20 @@ class Community extends Component {
 
 
         }
+        const readMore = (storyId) =>{ 
+            var joined = this.state.readMoreIds;
 
+            if(this.state.readMoreIds.includes(storyId)){
+                joined.splice(joined.indexOf(storyId),1);
+            }
+            else{
+                joined.push(storyId);
+            }
+            this.setState({ readMoreIds: joined });
+            console.log(this.state.readMoreIds);
+
+
+        }
         return (
             <div className="pl-5 py-5">
                 <div className="row mb-3 pl-2" style={{height:'3rem'}}>
@@ -42,8 +56,8 @@ class Community extends Component {
                                 Order By
                             </a>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/')}>By Latest</a>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/')}>Followed writers</a>
+                                <a className="dropdown-item" onClick={() => this.props.history.push('/community')}>By Latest</a>
+                                <a className="dropdown-item" onClick={() => this.props.history.push('/community')}>Followed writers</a>
                         
                         </div>
                         </div>
@@ -55,7 +69,7 @@ class Community extends Component {
                             <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/addstory') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a Story</a>
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Bookmarks</a>
                             <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Downloads</a>
-                            <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Profile</a>
+                            <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/writer') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Profile</a>
 
 
                         </div>
@@ -64,7 +78,7 @@ class Community extends Component {
 
                         {this.state.stories && this.state.stories.map(story=> 
 
-                        <div className="communityCard ">
+                        <div className="communityCard " >
                             <div className="pt-3 pl-3 d-flex justify-content-between">
                                 <div className="d-flex">
                                     <img  className="  m-1 rounded-circle"  src="img/exPP.png"  />
@@ -77,7 +91,14 @@ class Community extends Component {
 
                             </div>
                             
-                            <p>{story.summary.slice(0,400)+' ... '}<a href="#" style={{color: '#263044'}}><strong>Read more</strong></a></p>
+                            <p>{this.state.readMoreIds.includes(story.id)&&story.summary}{!this.state.readMoreIds.includes(story.id)&&story.summary.slice(0,400)+' ... '}
+                                    <a onClick={()=>readMore(story.id)} style={{color: '#263044'}}>
+                                        <strong>{!this.state.readMoreIds.includes(story.id)&&"Read more"}</strong>
+                                    </a>
+                                    <a onClick={()=>readMore(story.id)} style={{color: '#263044'}}>
+                                        <strong>{this.state.readMoreIds.includes(story.id)&&"Read less"}</strong>
+                                    </a>
+                            </p>
                             <div className="communityCardFooter" >
                                 <div className="row  pt-2">
                                     <a className="col-5 pl-5 ml-5" href="#" style={{color:'#535964' }}><i className="far fa-thumbs-up"></i> Like</a>

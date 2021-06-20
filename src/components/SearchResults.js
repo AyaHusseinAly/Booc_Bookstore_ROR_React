@@ -115,6 +115,7 @@ class SearchResults extends Component {
                             </select>
                         </div>
                         
+                        
                         <div className="col-2">
                             <h6 style={filterTextStyle}  >Genre</h6>
                             <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
