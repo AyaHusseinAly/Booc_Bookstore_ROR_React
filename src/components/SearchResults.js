@@ -3,8 +3,12 @@ import React, { Component } from 'react';
 import '../style/search.css';
 import '../style/ratingStars.css';
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { Input, Space } from 'antd';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 
 
@@ -21,9 +25,30 @@ class SearchResults extends Component {
           selectGener:"",
           selectOrderByVal:"",
           selectRatingVal:"",
+          
         
         }
       }
+
+      state={
+        
+        genres:[]
+
+    }
+
+    async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
+
+        
+        const res=await axios.get('http://localhost:3000/shortStoriesGenres',
+        {headers: {"Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT",
+        "Access-Control-Allow-Headers": "Content-Type"}});
+        
+        this.setState({genres:res.data.short_stories});
+        console.log(this.state.genres);
+       
+    }
+
       
       onHandleChange = (evt) => {
       
@@ -115,7 +140,7 @@ class SearchResults extends Component {
                             </select>
                         </div>
                         
-                        <div className="col-2">
+                        {/* <div className="col-2">
                             <h6 style={filterTextStyle}  >Genre</h6>
                             <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
                             <option value="">__none__</option>
@@ -128,9 +153,33 @@ class SearchResults extends Component {
                             <option value="Westerns">Westerns</option>
                             <option value="Dystopian">Dystopian</option>
                             <option value="Contemporary">Contemporary</option>
+                            <option value="Horror">Horror</option>
+
 
                             </select>
 
+                        </div> */}
+                        <div className="col-2" >
+                          <h6 style={filterTextStyle}  >Genre</h6>
+                            <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
+                            <option value="">__none__</option>
+                            {this.state.genres&&this.state.genres.map(genre=>
+                                  <option value={genre.title}>{genre.title}</option>
+
+                                
+                              )}
+                            </select>
+
+                            {/* <a className="btn btn-secondary dropdown-toggle ml-2" style={{width:'9rem',height:'4.5rem',backgroundColor:'white',opacity:'0.65',color:'grey',fontSize: '1.5rem',borderRadius:'10px 10px' }} role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Genre 
+                            </a>
+
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                {this.state.genres&&this.state.genres.map(genre=>
+                                <a className="dropdown-item" >
+                                    {genre.title}
+                                </a>)}
+                            </div> */}
                         </div>
 
                         

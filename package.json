@@ -18,6 +18,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
     "react-date-picker": "^8.2.0",
+    "react-datepicker": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-geocode": "^0.2.3",
     "react-google-maps": "^9.4.5",
