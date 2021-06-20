@@ -75,6 +75,7 @@ class SearchResults extends Component {
         }
 
         return (
+
                 <div className="container  justify-content-center  p-2 " style={{marginTop:'30px' , marginLeft:'40px'  }} >
                      
                      
@@ -113,7 +114,7 @@ class SearchResults extends Component {
                             <option value="5">5</option>
                             </select>
                         </div>
-
+                        
                         <div className="col-2">
                             <h6 style={filterTextStyle}  >Genre</h6>
                             <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
@@ -201,16 +202,17 @@ class SearchResults extends Component {
               
               
             }).map(book=> 
-              
+      
                 <div className="col-4 col-md-2 book" >
                 <figure>
                 
                 < div className="book_img">
-                <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks?.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                    <div className="hoverable">
-                     <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                     <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                          <span className="details">details</span>
                       </Link>
+                      
                      <span className="icon-heart">
                        <i className="fa fa-heart "></i>
                      </span>
@@ -229,7 +231,6 @@ class SearchResults extends Component {
               
              
                )}
-
 
       
                 </div>  
