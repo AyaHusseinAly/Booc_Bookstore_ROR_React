@@ -10,12 +10,13 @@ import {
     withGoogleMap,
     Marker,
   }from "react-google-maps";
+  import Geocode from "react-geocode";
  //import { GoogleMap, useJsApiLoader,withScriptjs, withGoogleMap, Marker} from '@react-google-maps/api';
 
 
 
 
-
+Geocode.setApiKey("AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA")
 class Map extends Component {
    
 
@@ -35,6 +36,14 @@ class Map extends Component {
     onMarkerDragEnd =(event) => {
         let newLat = event.latLng.lat();
         let newLng = event.latLng.lng();
+
+        Geocode.fromLatLng(newLat,newLng)
+            .then(response =>{
+                const address = response.results[0].formatted_address,
+                    addressArray = response.results[0].address_components,
+                    city = this.getCity()
+            console.log('response', response)
+        })
 
         console.log('newlat', newLat);
     }
@@ -81,7 +90,11 @@ class Map extends Component {
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             >
             <Marker
+                draggable={true}
+                onDragEnd={this.onMarkerDragEnd}
                 position={{ lat: 31.2001,  lng: 29.9187, }}
+                //locations = [ {"lat":31.2001 ,"lng":29.9187}, {"lat":30.2001 ,"lng":29.9187}, {"lat":29.2001 ,"lng":29.9187} ]
+                
             >
                 <InfoWindow>
                     <div>Hello inside InfoWindow</div>
