@@ -6,18 +6,21 @@ import axios from 'axios';
 
 class Community extends Component {
     state={
-        stories:[],
+        posts:[],
         readMoreIds:[]
     }
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
 
-        const res=await axios.get('http://localhost:3000/api/shortStories',
+        axios.get('http://localhost:3000/communityPosts',
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
-        "Access-Control-Allow-Headers": "Content-Type"}});
+        "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+            this.setState({posts:response.data.posts});
+            console.log(this.state.posts);        
+
+        });
+     
         
-        this.setState({stories:res.data.stories});
-        console.log(this.state.stories);
        
     }
 
@@ -28,14 +31,14 @@ class Community extends Component {
 
 
         }
-        const readMore = (storyId) =>{ 
+        const readMore = (postId) =>{ 
             var joined = this.state.readMoreIds;
 
-            if(this.state.readMoreIds.includes(storyId)){
-                joined.splice(joined.indexOf(storyId),1);
+            if(this.state.readMoreIds.includes(postId)){
+                joined.splice(joined.indexOf(postId),1);
             }
             else{
-                joined.push(storyId);
+                joined.push(postId);
             }
             this.setState({ readMoreIds: joined });
             console.log(this.state.readMoreIds);
@@ -66,7 +69,7 @@ class Community extends Component {
                     <div className="col-3">
                         <div className="communityCard sideCard">
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964',fontWeight:'bold'}}> <i className="fas fa-caret-right"></i> Stories Feed</a>
-                            <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/addstory') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a Story</a>
+                            <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/addpost') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a post</a>
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Bookmarks</a>
                             <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Downloads</a>
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/writer') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Profile</a>
@@ -76,27 +79,27 @@ class Community extends Component {
                     </div>
                     <div className="col-8">
 
-                        {this.state.stories && this.state.stories.map(story=> 
+                        {this.state.posts && this.state.posts.map(post=> 
 
                         <div className="communityCard " >
                             <div className="pt-3 pl-3 d-flex justify-content-between">
                                 <div className="d-flex">
                                     <img  className="  m-1 rounded-circle"  src="img/exPP.png"  />
                                     <div className="d-flex flex-column mt-2">
-                                        <strong style={{color:'#535964',fontSize:'1.3rem' }} className="mb-1">Islam Kamel</strong>
-                                        <span>{story.title} <div className="chapterTag d-inline">Chapter 1</div></span>
+                                        <strong style={{color:'#535964',fontSize:'1.3rem' }} className="mb-1"></strong>
+                                        <span>{post.story_title} <div className="chapterTag d-inline">{post.chapter_title}</div></span>
                                     </div>
                                 </div>
                                 <a href="#" style={{color:'#CD3700', marginRight:'1.2rem'}}><strong >Report</strong></a>
 
                             </div>
                             
-                            <p>{this.state.readMoreIds.includes(story.id)&&story.summary}{!this.state.readMoreIds.includes(story.id)&&story.summary.slice(0,400)+' ... '}
-                                    <a onClick={()=>readMore(story.id)} style={{color: '#263044'}}>
-                                        <strong>{!this.state.readMoreIds.includes(story.id)&&"Read more"}</strong>
+                            <p>{this.state.readMoreIds.includes(post.id)&&post.content}{!this.state.readMoreIds.includes(post.id)&&post.content.slice(0,400)+' ... '}
+                                    <a onClick={()=>readMore(post.id)} style={{color: '#263044'}}>
+                                        <strong>{!this.state.readMoreIds.includes(post.id)&&"Read more"}</strong>
                                     </a>
-                                    <a onClick={()=>readMore(story.id)} style={{color: '#263044'}}>
-                                        <strong>{this.state.readMoreIds.includes(story.id)&&"Read less"}</strong>
+                                    <a onClick={()=>readMore(post.id)} style={{color: '#263044'}}>
+                                        <strong>{this.state.readMoreIds.includes(post.id)&&"Read less"}</strong>
                                     </a>
                             </p>
                             <div className="communityCardFooter" >
@@ -110,7 +113,6 @@ class Community extends Component {
                         </div>
 
                         )}
-
 
 
                     </div>
