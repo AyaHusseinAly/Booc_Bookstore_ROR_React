@@ -92,9 +92,7 @@ class Map extends Component {
             <Marker
                 draggable={true}
                 onDragEnd={this.onMarkerDragEnd}
-                position={{ lat: 31.2001,  lng: 29.9187, }}
-                //locations = [ {"lat":31.2001 ,"lng":29.9187}, {"lat":30.2001 ,"lng":29.9187}, {"lat":29.2001 ,"lng":29.9187} ]
-                
+                position={{ lat: 31.2001,  lng: 29.9187, }}               
             >
                 <InfoWindow>
                     <div>Hello inside InfoWindow</div>
@@ -122,7 +120,7 @@ class Map extends Component {
                 </div>
 
                 {/* distict search */}
-                <div  style={distictSearch} className="col-sm-3 col-xs-4 col-md-3 ">
+                <div  style={distictSearch} className="col-md-3 col-sm-3 col-xs-4 ">
                     <div  className="heading"><strong>Distict</strong></div>
                    <div class="input-group mb-3"> 
                         <div class="input-group-prepend">
@@ -226,7 +224,6 @@ class Map extends Component {
                     </div>
                 </div>
                 <br/>
-            {/* <div>{this.state.map}</div> */}
         </div>
     );
     }
