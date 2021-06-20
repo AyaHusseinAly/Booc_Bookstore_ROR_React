@@ -127,6 +127,8 @@ class SearchResults extends Component {
                             <option value="Westerns">Westerns</option>
                             <option value="Dystopian">Dystopian</option>
                             <option value="Contemporary">Contemporary</option>
+                            <option value="Horror">Horror</option>
+
 
                             </select>
 
