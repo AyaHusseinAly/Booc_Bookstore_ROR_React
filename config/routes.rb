@@ -27,6 +27,7 @@ get '/member-data', to: 'members#show'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
   get '/shortStories' ,to:'short_stories#getShortStories'
   post '/createChapter' , to:'chapters#create'
+  post '/storyFinished' ,to:'short_stories#setStoryFinished'
   
 
 

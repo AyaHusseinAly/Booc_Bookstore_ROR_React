@@ -42,11 +42,18 @@ class ShortStoriesController < ApplicationController
            @chapters=ShortStoriesChapter.where(shortStory_id:params['id'])
            @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
            @genres=Genre.where(id:@genre_ids)
-           @createdDate=ShortStory.find(19).created_at.strftime('%Y %b %d')
+           @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')
            render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate}
         else 
             render :json=>{message:"bad request"}  
         end     
+    end
+    def setStoryFinished
+        @shortStory=ShortStory.find(params['id'])
+        @shortStory.status='finished'
+        @shortStory.save
+        render :json=>{message:"request successfully"}
+
     end
     
 
