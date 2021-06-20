@@ -78,29 +78,56 @@ class Map extends Component {
             boxSizing: 'border-box',
           };
 
-        // const mapStyles = {
-        //     width: '40%',
-        //     height: '30%'
-        // };
-
+        let markers = [ // Just an example this should probably be in your state or props. 
+            {
+              name: "marker1",
+              position: { lat: 31.001,  lng: 29.9187, }
+            },
+            {
+              name: "marker2",
+              position: {lat: 31.1002,  lng: 29.9187, }
+            },
+            {
+              name: "marker3",
+              position: { lat: 31.0002,  lng: 29.9187, }
+            }
+        ];
 
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
             defaultZoom={15}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             >
-            <Marker
+            {/* <Marker
                 draggable={true}
                 onDragEnd={this.onMarkerDragEnd}
                 position={{ lat: 31.2001,  lng: 29.9187, }}               
+            >
+            
+                <InfoWindow>
+                    <div>Hello inside InfoWindow</div>
+                </InfoWindow>
+            </Marker> */}
+
+        {markers.map((marker, index) => (
+            <Marker
+            onClick={this.onMarkerClick}
+            position={marker.position}
+            
             >
                 <InfoWindow>
                     <div>Hello inside InfoWindow</div>
                 </InfoWindow>
             </Marker>
+            ))}
+            {/* <InfoWindow>
+                    <div>Hello inside InfoWindow</div>
+            </InfoWindow> */}
+                
             </GoogleMap>
         ));
-  
+            
+        
 
         return (
             <div className="container">
