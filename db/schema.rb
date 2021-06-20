@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_160831) do
+ActiveRecord::Schema.define(version: 2021061716083111) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -36,7 +39,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
   create_table "bookmarks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "short_story_id"
+    t.bigint "short_story_id"
     t.index ["short_story_id"], name: "index_bookmarks_on_short_story_id"
   end
 
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.string "book_title"
     t.string "book_isbn"
     t.string "cover"
-    t.integer "bookstore_id"
+    t.bigint "bookstore_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bookstore_id"], name: "index_bookstore_books_on_bookstore_id"
@@ -60,7 +63,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
   create_table "bookstore_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
-    t.integer "bookstore_id"
+    t.bigint "bookstore_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bookstore_id"], name: "index_bookstore_rate_reviews_on_bookstore_id"
@@ -77,7 +80,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.integer "short_stories_chapter_id"
+    t.bigint "short_stories_chapter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_stories_chapter_id"], name: "index_comments_on_short_stories_chapter_id"
@@ -102,6 +105,15 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "short_story_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_likes_on_short_story_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.string "type"
     t.text "body"
@@ -109,21 +121,38 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "short_stories" because of following StandardError
-#   Unknown type 'attachment' for column 'cover_image'
+  create_table "short_stories", force: :cascade do |t|
+    t.string "title"
+    t.string "cover"
+    t.string "target_audiance"
+    t.text "summary"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "short_stories_chapters", force: :cascade do |t|
     t.string "title"
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "shortStory_id"
-    t.index ["shortStory_id"], name: "index_short_stories_chapters_on_shortStory_id"
+    t.bigint "short_story_id"
+    t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
+  end
+
+  create_table "short_story_generes", force: :cascade do |t|
+    t.string "name"
+    t.bigint "genre_id"
+    t.bigint "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_short_story_generes_on_genre_id"
+    t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
   end
 
   create_table "short_story_genres", force: :cascade do |t|
-    t.integer "genre_id"
-    t.integer "short_story_id"
+    t.bigint "genre_id"
+    t.bigint "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_short_story_genres_on_genre_id"
@@ -133,7 +162,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
   create_table "story_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
-    t.integer "short_story_id"
+    t.bigint "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_story_id"], name: "index_story_rate_reviews_on_short_story_id"
@@ -155,4 +184,17 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookmarks", "short_stories"
+  add_foreign_key "bookstore_books", "bookstores"
+  add_foreign_key "bookstore_rate_reviews", "bookstores"
+  add_foreign_key "comments", "short_stories_chapters"
+  add_foreign_key "likes", "short_stories"
+  add_foreign_key "likes", "users"
+  add_foreign_key "short_stories_chapters", "short_stories"
+  add_foreign_key "short_story_generes", "genres"
+  add_foreign_key "short_story_generes", "short_stories"
+  add_foreign_key "short_story_genres", "genres"
+  add_foreign_key "short_story_genres", "short_stories"
+  add_foreign_key "story_rate_reviews", "short_stories"
 end
