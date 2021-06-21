@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import Likes from './Likes';
+import Comments from './Comments';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/community.css';
 import axios from 'axios';
+import Popup from "reactjs-popup";
+
+
 
 
 class Community extends Component {
@@ -25,6 +30,24 @@ class Community extends Component {
     }
 
     render() {
+        const popupStyle={
+            borderRadius:'10px 10px',
+            border:'4px solid #F8A488',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.7)',
+            padding:'2rem',
+            width:'25rem',
+            maxHeight:'30rem',
+            overflowY: 'scroll'
+
+        }
+        const commentPopup={
+            borderRadius:'10px 10px',
+            border:'4px solid #F8A488',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.7)',
+            padding:'2rem',
+            width:'25rem',
+
+        }
         const onSearch = () =>{ 
             let string=document.getElementById("form1").value;
             console.log(string);
@@ -69,7 +92,7 @@ class Community extends Component {
                     <div className="col-3">
                         <div className="communityCard sideCard">
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964',fontWeight:'bold'}}> <i className="fas fa-caret-right"></i> Stories Feed</a>
-                            <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/addpost') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a post</a>
+                            <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/addstory') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a Story</a>
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Bookmarks</a>
                             <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Downloads</a>
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/writer') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Profile</a>
@@ -86,7 +109,7 @@ class Community extends Component {
                                 <div className="d-flex">
                                     <img  className="  m-1 rounded-circle"  src="img/exPP.png"  />
                                     <div className="d-flex flex-column mt-2">
-                                        <strong style={{color:'#535964',fontSize:'1.3rem' }} className="mb-1"></strong>
+                                        <strong style={{color:'#535964',fontSize:'1.3rem' }} className="mb-1">{post.writer}</strong>
                                         <span>{post.story_title} <div className="chapterTag d-inline">{post.chapter_title}</div></span>
                                     </div>
                                 </div>
@@ -104,9 +127,25 @@ class Community extends Component {
                             </p>
                             <div className="communityCardFooter" >
                                 <div className="row  pt-2">
-                                    <a className="col-5 pl-5 ml-5" href="#" style={{color:'#535964' }}><i className="far fa-thumbs-up"></i> Like</a>
+                                <Popup
+                                        trigger={<a className="col-5 pl-5 ml-5"  style={{color:'#535964' }}><i className="far fa-thumbs-up"></i> Like</a>
+                                    }
+                                        modal
+                                        contentStyle={popupStyle}
+                                    >
+                                    <Likes users={post.liked_users}></Likes>
+                                </Popup >
                                     <div style={{height:'1.8rem',border:'0.8px solid gray'}}></div>
-                                    <a className="col-5 pl-5 ml-5" href="#" style={{color:'#535964'}}><i className="far fa-comment-alt"></i> Comment</a>
+                                
+                                <Popup
+                                        trigger={<a className="col-5 pl-5 ml-5" style={{color:'#535964'}}><i className="far fa-comment-alt"></i> Comment</a>
+
+                                    }
+                                        modal
+                                        contentStyle={commentPopup}
+                                    >
+                                    <Comments comments={post.comments}></Comments>
+                                </Popup >                                    
                                 </div>
 
                             </div>
