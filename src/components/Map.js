@@ -3,8 +3,69 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
 import '../style/map.css';
 import ReactDOM from 'react-dom';
-
+import {
+    InfoWindow,
+    GoogleMap,
+    withScriptjs,
+    withGoogleMap,
+    Marker,
+  }from "react-google-maps";
+  import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA")
 class Map extends Component {
+    state = {
+        address:'',
+        city:'',
+        area:'',
+        state:'',
+        zoom: 15,
+        height: 400,
+        mapPosition: {
+            lat: 0,
+            lng: 0,
+        },
+        markers: [ // Just an example this should probably be in your state or props. 
+            {
+              name: "marker1",
+              position: { lat: 31.001,  lng: 29.9187, }
+            },
+            {
+              name: "marker2",
+              position: {lat: 31.1002,  lng: 29.9187, }
+            },
+            {
+              name: "marker3",
+              position: { lat: 31.0002,  lng: 29.9187, }
+            }
+        ],
+
+        stores: [
+            {
+                src: "img/alef.png",
+                title: "Alef BookStores"
+            },
+            {
+                src: "img/alef.png",
+                title: "Alef BookStores"
+            },
+        ]
+
+    }
+
+    onMarkerDragEnd =(event) => {
+        let newLat = event.latLng.lat();
+        let newLng = event.latLng.lng();
+
+        Geocode.fromLatLng(newLat,newLng)
+            .then(response =>{
+                const address = response.results[0].formatted_address,
+                    addressArray = response.results[0].address_components,
+                    city = this.getCity()
+            console.log('response', response)
+        })
+
+        console.log('newlat', newLat);
+    }
 
     render() {
         const bookName = {
@@ -36,6 +97,29 @@ class Map extends Component {
             boxSizing: 'border-box',
           };
 
+        const MapWithAMarker = withScriptjs(withGoogleMap(props =>
+            <GoogleMap
+            defaultZoom={15}
+            defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
+            >
+                {this.state.markers.map((marker, index) => (
+                    <Marker
+                    onClick={this.onMarkerClick}
+                    // draggable={true}
+                    // onDragEnd={this.onMarkerDragEnd}
+                    position={marker.position}
+                    
+                    >
+                        <InfoWindow>
+                            <div>{marker.name}</div>
+                        </InfoWindow>
+                    </Marker>
+                    ))}
+            </GoogleMap>
+        ));
+            
+        
+
         return (
             <div className="container">
                 
@@ -54,7 +138,7 @@ class Map extends Component {
                 </div>
 
                 {/* distict search */}
-                <div  style={distictSearch} className="col-sm-3 col-xs-4 col-md-3 ">
+                <div  style={distictSearch} className="col-md-3 col-sm-3 col-xs-4 ">
                     <div  className="heading"><strong>Distict</strong></div>
                    <div class="input-group mb-3"> 
                         <div class="input-group-prepend">
@@ -98,58 +182,58 @@ class Map extends Component {
                 {/* cards */}
 
                 <br></br>
-                <div class="container mt-3 rounded-sm " style={distictSearch}>
-                    <br/>
-                    <div  className="card col-md-5 col-md-5 col-xs-4 col-xs-3 mt-1 shadow" style={{border: "none"}}>
-                        <div className="row">
-                            <div className="col-md-4 align-middle">
-                                <img src="img/alef.png" className="img-fluid  "/>
-                            </div>
-                            <div class="col-md-8">
-                                <h4 className="card-title">Alef Bookstores</h4>
-                                <span  className="fa fa-star checked"></span>
-                                <span  className="fa fa-star checked"></span>
-                                <span  className="fa fa-star checked"></span>
-                                <span  className="fa fa-star"></span>
-                                <span  className="fa fa-star"></span><br/>
-                                <span><i className="fas fa-map-marker-alt"></i> 1.2 km</span><br/>
-                                <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div  className="card col-md-5 mt-3 shadow" style={{border: "none"}}>
-                        <div className="row">
-                            <div className="col-md-4">
-                                <img src="img/alef.png" className="card-img-top embed-responsive-item"/>
-                            </div> 
-                            <div class="col-md-8">
-                                <h4 className="card-title">Alef Bookstores</h4>
-                                <span  className="fa fa-star checked"></span>
-                                <span  className="fa fa-star checked"></span>
-                                <span  className="fa fa-star checked"></span>
-                                <span  className="fa fa-star"></span>
-                                <span  className="fa fa-star"></span><br/>
-                                <span><i className="fas fa-map-marker-alt"></i> 1.2 km</span><br/>
-                                <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
+                <div className="row">
+                    <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
+                        <br/>
+                        {/**/}
+                        {this.state.stores.map((store, index) => (
+                            <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
+                            <div className="row">
+                                <div className="col-md-4 align-middle">
+                                    <img src={store.src} className="img-fluid  "/>
+                                </div>
+                                <div className="col-md-8">
+                                    <h4 className="card-title">{store.title}</h4>
+                                    <span  className="fa fa-star checked"></span>
+                                    <span  className="fa fa-star checked"></span>
+                                    <span  className="fa fa-star checked"></span>
+                                    <span  className="fa fa-star"></span>
+                                    <span  className="fa fa-star"></span><br/>
+                                    <span><i className="fas fa-map-marker-alt"></i> 1.2 km</span><br/>
+                                    <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br/>
+                            
+                        ))}
 
+                        {/**/}
+                        <br/>
+
+                    </div>
+
+                    {/* Maps */}
+                    {/* <div class="container"  style={distictSearch}>
+                        <div class="options-box">
+                    
+                        </div>
+                        <div id="map"></div>
+                    </div>   */}
+                    <div className="col-md-5" style={{}}>
+                        <MapWithAMarker
+                            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA&v=3.exp&libraries=geometry,drawing,places"
+                            loadingElement={<div style={{ height: `100%`, width:`100%` }} />}
+                            containerElement={<div style={{ height: `500px`, width:`400px` }} />}
+                            mapElement={<div style={{ height: `100%` }} />}
+                        />
+                       
+                    </div>
                 </div>
-                {/* Maps */}
-                <div class="container"  style={distictSearch}>
-                    <div class="options-box">
-                
-                    </div>
-                    <div id="map"></div>
-                </div>  
-     
+                <br/>
         </div>
     );
     }
 }
 
 
-    export default Map;
+export default Map;
