@@ -7,12 +7,30 @@ import '../style/headerFooter.css';
 
 
 class Header extends Component {
+    constructor(props){
+        super(props);
+
+    }
+    
 
     render() {
+        var avatar;
+        if (this.props.user.avatar){
+            avatar=this.props.user.avatar;
+        }
+        else{
+            avatar='avatar.jpeg';
+        }
+        var name;
+        if (Object.keys(this.props.user).length > 0){
+            name=this.props.user.name;
+        }
+        else{
+            name="Guest"
+        }
 
         return (
             <nav className="py-2">
-
             <div className="row" style={{marginRight: "-120px"}}>
                 
                 <div className="col-md-2  d-flex  align-items-center">
@@ -33,7 +51,7 @@ class Header extends Component {
                     <div className="writer"><a className="btn text-white" href="/writer">Writer</a></div>
                     <div >
                         <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a>
-                        <a  href="#" ><img  className="  m-1 rounded-circle"  src="img/exPP.png"  /></a>
+                        <a  href="#" className="text-light"><img  className="  m-1 rounded-circle"  src={avatar}  /> {name}  </a>
                         <a  href="#" ><img  className=" m-1 icondrop"  src="img/icons/iconDropdownWhite.png"  /></a>
                     </div>
                 </div>  

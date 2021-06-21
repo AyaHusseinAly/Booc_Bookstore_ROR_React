@@ -36,7 +36,10 @@ const BookDetails = (props) => {
                 `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
             ).then (result => {
                 console.log(result)
-                setBook([result.data.items[0]])
+                if(result.data.items)
+                    setBook([result.data.items[0]])
+                
+
             })
             // setBook(res.data.items)
             // console.log(res.data.items)
@@ -292,7 +295,7 @@ const BookDetails = (props) => {
                             <a href="#"><i class="fa fa-twitter" aria-hidden="true" style={{fontSize: '30px',marginLeft: '10px',color: '#f5b17b'}}></i></a> */}
                             {/* <TwitterIcon size={30} round={true} style={{marginTop: '-10px',marginLeft: '10px'}} /> */}
                             <EmailShareButton 
-                             url={window.location.href}
+                             url={book.length > 0 && book[0].volumeInfo.previewLink}
                              body="I Strong Recommend This Book For You!" 
                             >
                             <EmailIcon size={30} logoFillColor="#f5b17b" round={true} style={{marginTop: '10px',marginLeft: '10px'}} /> </EmailShareButton>

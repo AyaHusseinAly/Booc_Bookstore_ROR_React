@@ -1,0 +1,325 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import Popup from "reactjs-popup";
+import { Link } from "react-router-dom";
+import AddChapter from './addChapter';
+
+
+import '../style/admin.css';
+import '../style/BookDetails.css';
+import {
+    EmailIcon,
+    FacebookIcon,
+    LinkedinIcon,
+    TwitterIcon,
+    WhatsappIcon,
+} from "react-share";
+import {
+    EmailShareButton,
+    FacebookShareButton,
+    LinkedinShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
+
+} from "react-share";
+
+const contentStyle = {
+    maxWidth: "600px",
+    width: "90%"
+};
+class ShortStoryDetails extends Component {
+
+    constructor(props) {
+        super();
+        this.state = {
+            shortStory: {},
+            chapters: [],
+            genre: [],
+            date: ''
+        }
+
+    }
+    setStoryStatus = async (id) => {
+        let data = {
+            id: id
+        }
+        const res = await axios.post("http://localhost:3000/storyFinished", data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type",
+
+            }
+        });
+        window.location.reload();
+        console.log(res);
+    }
+    async componentDidMount() {
+        let data = {
+            id: this.props.match.params.id
+        }
+        const res = await axios.post("http://localhost:3000/shortStoryDetails", data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type",
+
+            }
+        });
+        console.log(res);
+        this.setState({ shortStory: res.data.shortStory });
+        this.setState({ chapters: res.data.chapters });
+        this.setState({ genre: res.data.genres });
+        this.setState({ date: res.data.date })
+
+    }
+    render() {
+        // return (<h1>short story details{this.props.match.params.id}</h1>)
+        // return (<div className="row m-5">
+        //     <div className="col col-3">
+        //         <img className="book mx-3 " style={{ width: '80%', height: "100%", maxHeight: '250px', display: 'inline-block', borderRadius: '10px' }} src={this.state.shortStory.cover} />
+        //     </div>
+        //     <div className="col col-9">
+        //         <div className='d-flex justify-content-between'>
+        //             <div>
+        //                 <h2>{this.state.shortStory.title}</h2>
+        //                 <p> <span>from : </span>
+        //                     {this.state.genre.map((genre, index) => {
+        //                         return <span style={{ color: '#535964' }} key={genre.id}>
+        //                             {genre.title}
+        //                             {index < this.state.genre.length - 1 && <span> _ </span>}
+        //                         </span>
+        //                     })}
+        //                 </p>
+        //                 <p>
+        //                     <span className="fa fa-star checked"></span>
+        //                     <span className="fa fa-star checked"></span>
+        //                     <span className="fa fa-star"></span>
+        //                     <span className="fa fa-star"></span>
+        //                     <span className="fa fa-star"></span>
+        //                     <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
+        //                 </p>
+        //             </div>
+        //             <div>
+        //                 {this.state.shortStory.status == 'Not finished yet' && <div> <AddChapter shortStory={this.state.shortStory.id} />
+        //                     <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
+        //                         onClick={() => this.setStoryStatus(this.state.shortStory.id)}>Finish</div>
+        //                 </div>}
+
+        //             </div>
+        //         </div>
+        //         <div>
+        //             <h4>About Story</h4>
+        //             <p>{this.state.shortStory.summary}</p>
+        //         </div>
+        //         <div>
+        //             <h4>Chapters</h4>
+        //             <div className="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+        //                 <table className="table table-striped">
+        //                     {this.state.chapters.map((chapter) => {
+        //                         return <tr><Chapters key={chapter.id} chapter={chapter} date={this.state.date} /></tr>
+
+        //                     })}
+        //                 </table>
+        //             </div>
+
+        //         </div>
+
+        //     </div>
+        // </div>)
+        return (
+
+            <>
+
+                <div className="product">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-12 col-md-5 col-lg-3">
+                                <div className="parent-box">
+                                    <div className="box-img text-center">
+                                        <img src={this.state.shortStory.cover} style={{ width: '400px' }} />
+                                        <div className="button">
+                                            {this.state.shortStory.status == 'Not finished yet' && <div> <AddChapter shortStory={this.state.shortStory.id} />
+                                                <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
+                                                    onClick={() => this.setStoryStatus(this.state.shortStory.id)}>Finish</div>
+                                            </div>}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-7 col-lg-6">
+                                <div className="box-info">
+                                    <div className="heading">
+                                        <h2>{this.state.shortStory.title}</h2>
+                                        <h5>from {this.state.genre.map((genre, index) => {
+                                            return <span style={{ color: '#535964' }} key={genre.id}>
+                                                {genre.title}
+                                                {index < this.state.genre.length - 1 && <span> _ </span>}
+                                            </span>
+                                        })} section</h5>
+                                    </div>
+                                    <p>
+                                        <span className="fa fa-star checked"></span>
+                                        <span className="fa fa-star checked"></span>
+                                        <span className="fa fa-star"></span>
+                                        <span className="fa fa-star"></span>
+                                        <span className="fa fa-star"></span>
+                                        <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>
+                                    </p>
+                                    <ul className="list-unstyled details" style={{}}>
+                                        {/* <li><span>Author</span> writer</li> */}
+                                        <li><span>No. Of Chapters</span>: {this.state.chapters.length}</li>
+                                        <li><span>Publication Date</span>: {this.state.date}</li>
+                                    </ul>
+                                    <div className="about-product">
+                                        <div className="about-info">
+                                            <h4>About Story</h4>
+                                            <p>{this.state.shortStory.summary}.</p>
+                                        </div>
+                                        {/* <div className="about-info">
+                                            <h4>About Author</h4>
+                                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                                quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
+                                                Accusantium eum consequuntur incidunt, sed quisquam delectus.</p>
+                                        </div> */}
+
+
+                                        <div className="reviews">
+                                            <h4>Chapters</h4>
+                                            {this.state.chapters.map((chapter) => {
+                                                return <div className="ml-3"><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+
+                                            })}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                <div className="replay">
+                                    <h4>Reviews</h4>
+                                    <div className="box-person">
+                                        <div className="img">
+                                            <i className="fa fa-user"></i>
+                                        </div>
+                                        <div className="info-details">
+                                            <h5>Ola Gamal</h5>
+                                            <div className="evaluation">
+                                                <i className="fa fa-star" style={{ color: 'orange' }}></i>
+                                                <i className="fa fa-star" style={{ color: 'orange' }} ></i>
+                                                <i className="fa fa-star"></i>
+                                                <i className="fa fa-star"></i>
+                                                <i className="fa fa-star"></i>
+                                            </div>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                            <a href="#" className="report">Report</a>
+                                        </div>
+                                    </div>
+                                    <div className="box-person">
+                                        <div className="img">
+                                            <i className="fa fa-user"></i>
+                                        </div>
+                                        <div className="info-details">
+                                            <h5>Ahmed Emara</h5>
+                                            <div className="evaluation ">
+                                                <i className="fa fa-star" style={{ color: 'orange' }}></i>
+                                                <i className="fa fa-star" style={{ color: 'orange' }} ></i>
+                                                <i className="fa fa-star"></i>
+                                                <i className="fa fa-star"></i>
+                                                <i className="fa fa-star"></i>
+
+                                            </div>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                            <a href="#" className="report">Report</a>
+                                        </div>
+                                    </div>
+                                    {/* <a href="#" className="more">See More..</a> */}
+
+                                </div>
+                                {/* <input type="text" name="mail" placeholder="Add review" style={{ width: '254px', marginBottom: '5px' }} /> */}
+
+                                {/* <div className="evaluation">
+                                    rate this book :
+                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray', marginLeft: '10px' }}></i>
+                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray' }}></i>
+                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray' }}></i>
+                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray' }}></i>
+                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray', marginRight: '10px' }}></i>
+                                    0/5
+                                </div>
+                                <div className="mail">
+                                    <h4>Share with Friends</h4>
+                                    <EmailShareButton
+                                        body="I Strong Recommend This Book For You!"
+                                    >
+                                        <EmailIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </EmailShareButton>
+
+                                    <TwitterShareButton
+                                        url={window.location.href}
+                                        quote="I Strong Recommend This Book For You!"
+                                    >
+                                        <TwitterIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </TwitterShareButton>
+
+
+                                    <FacebookShareButton
+                                        url={window.location.href}
+                                        quote={"I Strong Recommend This Book For You!"}
+                                        hashtag="#my favourite book"
+
+                                    >
+                                        <FacebookIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </FacebookShareButton>
+
+
+                                    <LinkedinShareButton
+                                        url={window.location.href}
+                                    >
+                                        <LinkedinIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </LinkedinShareButton>
+
+
+                                    <WhatsappShareButton
+                                        title="I Strong Recommend This Book For You!"
+                                        url={window.location.href}
+                                    >
+                                        <WhatsappIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /></WhatsappShareButton>
+                                </div> */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+
+    }
+}
+class Chapters extends Component {
+    render() {
+        return (<div className="row">
+            {/* <u className="mr-4" style={{ display: "inline-block", cursor: "pointer" }}>{this.props.chapter.title}</u> */}
+            <div className="col col-4"><ChapterDetails chapter={this.props.chapter} /></div>
+            <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
+            <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div>
+            <div className="col col-4"><span>{this.props.date}</span></div>
+        </div>)
+    }
+}
+
+class ChapterDetails extends Component {
+
+    render() {
+        return (<Popup
+            trigger={<u className="mr-4" style={{ display: "inline-block", cursor: "pointer", width: '100%' }}>{this.props.chapter.title}</u>}
+            modal
+            contentStyle={contentStyle}
+        >
+            <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>
+
+                <text style={{ textAlign: 'center' }}>
+                    {this.props.chapter.summary}
+                </text>
+            </div>
+        </Popup>
+        )
+    }
+}
+export default ShortStoryDetails;
