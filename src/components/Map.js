@@ -24,7 +24,7 @@ class Map extends Component {
             lat: 0,
             lng: 0,
         },
-        markers2: [ // Just an example this should probably be in your state or props. 
+        markers: [ // Just an example this should probably be in your state or props. 
             {
               name: "marker1",
               position: { lat: 31.001,  lng: 29.9187, }
@@ -37,6 +37,17 @@ class Map extends Component {
               name: "marker3",
               position: { lat: 31.0002,  lng: 29.9187, }
             }
+        ],
+
+        stores: [
+            {
+                src: "img/alef.png",
+                title: "Alef BookStores"
+            },
+            {
+                src: "img/alef.png",
+                title: "Alef BookStores"
+            },
         ]
 
     }
@@ -91,7 +102,7 @@ class Map extends Component {
             defaultZoom={15}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             >
-                {this.state.markers2.map((marker, index) => (
+                {this.state.markers.map((marker, index) => (
                     <Marker
                     onClick={this.onMarkerClick}
                     // draggable={true}
@@ -174,13 +185,15 @@ class Map extends Component {
                 <div className="row">
                     <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
                         <br/>
-                        <div  className="card col-md-12 col-md-5 col-xs-4 col-xs-3 mt-1 shadow" style={{border: "none"}}>
+                        {/**/}
+                        {this.state.stores.map((store, index) => (
+                            <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
                             <div className="row">
                                 <div className="col-md-4 align-middle">
-                                    <img src="img/alef.png" className="img-fluid  "/>
+                                    <img src={store.src} className="img-fluid  "/>
                                 </div>
                                 <div className="col-md-8">
-                                    <h4 className="card-title">Alef Bookstores</h4>
+                                    <h4 className="card-title">{store.title}</h4>
                                     <span  className="fa fa-star checked"></span>
                                     <span  className="fa fa-star checked"></span>
                                     <span  className="fa fa-star checked"></span>
@@ -191,24 +204,10 @@ class Map extends Component {
                                 </div>
                             </div>
                         </div>
+                            
+                        ))}
 
-                        <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <img src="img/alef.png" className="card-img-top embed-responsive-item"/>
-                                </div> 
-                                <div class="col-md-8">
-                                    <h4 className="card-title">Alef Bookstores</h4>
-                                    <span  className="fa fa-star checked"></span>
-                                    <span  className="fa fa-star checked"></span>
-                                    <span  className="fa fa-star checked"></span>
-                                    <span  className="fa fa-star"></span>
-                                    <span  className="fa fa-star"></span><br/>
-                                    <span><i className="fas fa-map-marker-alt"></i> 1.2 km</span><br/>
-                                    <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
-                                </div>
-                            </div>
-                        </div>
+                        {/**/}
                         <br/>
 
                     </div>
