@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.string "img"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "lat"
+    t.float "lng"
   end
 
   create_table "comments", force: :cascade do |t|

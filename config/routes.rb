@@ -29,6 +29,7 @@ get '/member-data', to: 'members#show'
   post '/createChapter' , to:'chapters#create'
   get '/communityPosts' , to:'chapters#posts'
 
+  post '/storyFinished' ,to:'short_stories#setStoryFinished'
   
 
 
