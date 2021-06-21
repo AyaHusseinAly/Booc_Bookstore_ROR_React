@@ -11,15 +11,8 @@ import {
     Marker,
   }from "react-google-maps";
   import Geocode from "react-geocode";
- //import { GoogleMap, useJsApiLoader,withScriptjs, withGoogleMap, Marker} from '@react-google-maps/api';
-
-
-
-
 Geocode.setApiKey("AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA")
 class Map extends Component {
-   
-
     state = {
         address:'',
         city:'',
@@ -30,7 +23,22 @@ class Map extends Component {
         mapPosition: {
             lat: 0,
             lng: 0,
-        }
+        },
+        markers2: [ // Just an example this should probably be in your state or props. 
+            {
+              name: "marker1",
+              position: { lat: 31.001,  lng: 29.9187, }
+            },
+            {
+              name: "marker2",
+              position: {lat: 31.1002,  lng: 29.9187, }
+            },
+            {
+              name: "marker3",
+              position: { lat: 31.0002,  lng: 29.9187, }
+            }
+        ]
+
     }
 
     onMarkerDragEnd =(event) => {
@@ -78,52 +86,24 @@ class Map extends Component {
             boxSizing: 'border-box',
           };
 
-        let markers = [ // Just an example this should probably be in your state or props. 
-            {
-              name: "marker1",
-              position: { lat: 31.001,  lng: 29.9187, }
-            },
-            {
-              name: "marker2",
-              position: {lat: 31.1002,  lng: 29.9187, }
-            },
-            {
-              name: "marker3",
-              position: { lat: 31.0002,  lng: 29.9187, }
-            }
-        ];
-
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
             defaultZoom={15}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             >
-            {/* <Marker
-                draggable={true}
-                onDragEnd={this.onMarkerDragEnd}
-                position={{ lat: 31.2001,  lng: 29.9187, }}               
-            >
-            
-                <InfoWindow>
-                    <div>Hello inside InfoWindow</div>
-                </InfoWindow>
-            </Marker> */}
-
-        {markers.map((marker, index) => (
-            <Marker
-            onClick={this.onMarkerClick}
-            position={marker.position}
-            
-            >
-                <InfoWindow>
-                    <div>Hello inside InfoWindow</div>
-                </InfoWindow>
-            </Marker>
-            ))}
-            {/* <InfoWindow>
-                    <div>Hello inside InfoWindow</div>
-            </InfoWindow> */}
-                
+                {this.state.markers2.map((marker, index) => (
+                    <Marker
+                    onClick={this.onMarkerClick}
+                    // draggable={true}
+                    // onDragEnd={this.onMarkerDragEnd}
+                    position={marker.position}
+                    
+                    >
+                        <InfoWindow>
+                            <div>{marker.name}</div>
+                        </InfoWindow>
+                    </Marker>
+                    ))}
             </GoogleMap>
         ));
             
