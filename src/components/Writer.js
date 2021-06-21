@@ -76,7 +76,7 @@ class Writer extends Component {
                 {this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length > 0 && <div className='ml-5'>
                     <div className='d-flex justify-content-end mr-2'>
 
-                        <button className="py-1 px-3  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button>
+                        <button className="py-1 px-3  my-4 mr-4 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button>
                     </div>
                     <h2 className='ml-3'>Previous Work</h2>
                     <br />

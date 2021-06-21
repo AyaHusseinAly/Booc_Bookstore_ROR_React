@@ -3,6 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
 import '../style/map.css';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 import {
     InfoWindow,
     GoogleMap,
@@ -13,42 +17,88 @@ import {
   import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA")
 class Map extends Component {
-    state = {
-        address:'',
-        city:'',
-        area:'',
-        state:'',
-        zoom: 15,
-        height: 400,
-        mapPosition: {
-            lat: 0,
-            lng: 0,
-        },
-        markers: [ // Just an example this should probably be in your state or props. 
-            {
-              name: "marker1",
-              position: { lat: 31.001,  lng: 29.9187, }
+    constructor(props) {
+        super(props);
+        this.state = {
+            bookName: '',
+            distict: '',
+            address:'',
+            city:'',
+            area:'',
+            state:'',
+            zoom: 15,
+            height: 400,
+            mapPosition: {
+                lat: 0,
+                lng: 0,
             },
-            {
-              name: "marker2",
-              position: {lat: 31.1002,  lng: 29.9187, }
-            },
-            {
-              name: "marker3",
-              position: { lat: 31.0002,  lng: 29.9187, }
-            }
-        ],
+            markers: [ // Just an example this should probably be in your state or props. 
+                {
+                name: "marker1",
+                position: { lat: 31.001,  lng: 29.9187, }
+                },
+                {
+                name: "marker2",
+                position: {lat: 31.1002,  lng: 29.9187, }
+                },
+                {
+                name: "marker3",
+                position: { lat: 31.0002,  lng: 29.9187, }
+                }
+            ],
 
-        stores: [
-            {
-                src: "img/alef.png",
-                title: "Alef BookStores"
-            },
-            {
-                src: "img/alef.png",
-                title: "Alef BookStores"
-            },
-        ]
+            stores: [
+                {
+                    src: "img/alef.png",
+                    title: "Alef BookStores"
+                },
+                {
+                    src: "img/Alex.png",
+                    title: "Alef BookStores"
+                },
+            ]
+
+        }
+    }
+
+    onValueChange= (event) => {
+        this.setState({
+          selectedOption: event.target.value
+        });
+    } 
+
+    handleSubmit = async e => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+       // const errors = this.validate();
+
+        //if (errors === null) {
+
+            const obj = {
+                bookName: this.state.bookName,
+                selectedOption: this.state.selectedOption,
+                distict: this.state.distict,
+
+            }
+            Object.keys(this.state).forEach((key, value) => {
+                 return data.append(key, this.state[key])
+            })
+
+            const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type",
+
+                }
+            });
+            console.log(res);
+         //   window.location.reload()
+        //}
+        // else {
+        //     console.log('no submit');
+        //     this.activeError = true;
+        // }
 
     }
 
@@ -97,6 +147,8 @@ class Map extends Component {
             boxSizing: 'border-box',
           };
 
+       
+
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
             defaultZoom={15}
@@ -122,59 +174,64 @@ class Map extends Component {
 
         return (
             <div className="container">
+                <form onSubmit={this.handleSubmit}>
+                    {/*  Book's Name  */}
+                    <br/> 
+                    <div style={bookName}  className="col-lg-4 col-xs-4">
+                        <div className="heading"><strong>Book's Name</strong></div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                            </div>
+                            <div  className="form-outline">
+                            <input type="text" class="form-control" placeholder="Enter a book name" aria-label="Disabled input example" value={this.state.bookName}
+                                onChange={(e) => this.setState({ bookName: e.currentTarget.value })} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* distict search */}
+                    <div  style={distictSearch} className="col-md-3 col-sm-3 col-xs-4 ">
+                        <div  className="heading"><strong>Distict</strong></div>
+                        <div class="input-group mb-3"> 
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                            <div className="form-outline">
+                                <select className="custom-select" id="inputGroupSelect03" value={this.state.distict}
+                                    onChange={(e) => this.setState({ distict: e.currentTarget.value })}>
+                                    <option selected>choose nearst spot</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>  
+                            </div>
+                        </div>
+
+                    </div>
                 
-                {/*  Book's Name  */}
-                <br/> 
-                <div style={bookName}  className="col-lg-4 col-xs-4">
-                    <div className="heading"><strong>Book's Name</strong></div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                        </div>
-                        <div  className="form-outline">
-                        <input type="text" class="form-control" placeholder="Enter a book name" aria-label="Disabled input example" />
-                        </div>
-                    </div>
-                </div>
-
-                {/* distict search */}
-                <div  style={distictSearch} className="col-md-3 col-sm-3 col-xs-4 ">
-                    <div  className="heading"><strong>Distict</strong></div>
-                   <div class="input-group mb-3"> 
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                        </div>
-                        <div className="form-outline">
-                            <select className="custom-select" id="inputGroupSelect03">
-                                <option selected>choose nearst spot</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-               
-                <button type="button" className="btn btn-default" style={{background : '#FEC7B5'}}><i class="fas fa-search"></i>  Search</button>
-               
-                {/* Radio buttons */}
-                <div style={distictSearch2} className="float-right">
-                    <br/>
+                    <button  className="btn btn-default" style={{background : '#FEC7B5'}} type='submit'><i class="fas fa-search"></i>  Search</button>
+                
+                    {/* Radio buttons */}
+                    <div style={distictSearch2} className="float-right">
+                        <br/>
                         <div className="custom-control custom-switch">
-                        <input type="checkbox" className="custom-control-input" id="switch1"/>
-                        <label className="custom-control-label" for="switch1">Share my Location</label>
-                    </div>            
-                    
-                    <div className="custom-control custom-radio custom-control-inline">
-                        <input type="radio" className="custom-control-input" id="customRadio" name="example" style={{background : '#FEC7B5'}} value="customEx"/>
-                        <label className="custom-control-label" for="customRadio">Bookstores</label>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation"/>
+                            <label className="custom-control-label" for="switch1">Share my Location</label>
+                        </div>            
+                        
+                        <div className="custom-control custom-radio custom-control-inline">
+                            <input type="radio" className="custom-control-input" id="customRadio" name="example" style={{background : '#FEC7B5'}} value="Bookstores" checked={this.state.selectedOption === "Bookstores"}
+                                onChange={this.onValueChange}/>
+                            <label className="custom-control-label" for="customRadio">Bookstores</label>
+                        </div>
+                        <div className="custom-control custom-radio custom-control-inline">
+                            <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="Libraries" checked={this.state.selectedOption === "Libraries"}
+                                onChange={this.onValueChange}/>
+                            <label className="custom-control-label" for="customRadio2">Libraries</label>
+                        </div>
                     </div>
-                    <div className="custom-control custom-radio custom-control-inline">
-                        <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="customEx"/>
-                        <label className="custom-control-label" for="customRadio2">Libraries</label>
-                    </div>
-                </div>
+                </form>
                 
                 <br></br>
                 <div className="heading" style={result} ><strong>Results</strong></div>
