@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/map.css';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 import {
     InfoWindow,
     GoogleMap,
@@ -72,8 +75,9 @@ class Map extends Component {
         //if (errors === null) {
 
             const obj = {
-                chapterTitle: this.state.chapterTitle,
-                chapterDescription: this.state.chapterDescription,
+                bookName: this.state.bookName,
+                selectedOption: this.state.selectedOption,
+                distict: this.state.distict,
 
             }
             Object.keys(this.state).forEach((key, value) => {
@@ -200,7 +204,7 @@ class Map extends Component {
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
-                                </select> 
+                                </select>  
                             </div>
                         </div>
 
@@ -212,7 +216,7 @@ class Map extends Component {
                     <div style={distictSearch2} className="float-right">
                         <br/>
                         <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" id="switch1"/>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation"/>
                             <label className="custom-control-label" for="switch1">Share my Location</label>
                         </div>            
                         
