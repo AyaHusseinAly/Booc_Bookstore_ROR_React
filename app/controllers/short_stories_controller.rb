@@ -39,7 +39,7 @@ class ShortStoriesController < ApplicationController
         
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
-           @chapters=ShortStoriesChapter.where(shortStory_id:params['id'])
+           @chapters=ShortStoriesChapter.where(short_story_id:params['id'])
            @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
            @genres=Genre.where(id:@genre_ids)
            @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')

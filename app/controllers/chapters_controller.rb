@@ -1,7 +1,7 @@
 class ChaptersController < ApplicationController
     def create
         # @shortStory=ShortStory.find(params['shortStory'])
-        @chapter=ShortStoriesChapter.create(title:params['chapterTitle'],summary:params['chapterDescription'],shortStory_id:params['shortStory'])
+        @chapter=ShortStoriesChapter.create(title:params['chapterTitle'],summary:params['chapterDescription'],short_story_id:params['shortStory'])
         if(params["lastChapter"]=="on")
             @shortStory=ShortStory.find(params['shortStory'])
             @shortStory.status='finished'
