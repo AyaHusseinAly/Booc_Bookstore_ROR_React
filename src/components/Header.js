@@ -48,8 +48,6 @@ class Header extends Component {
            
                 <div className="col-lg-5 col-sm-9 col-xs-8 d-flex align-items-center justify-content-around ">
                     <a className=" text-white my-2 " href="/">Home</a>
-                    <a className=" text-white my-2 " href="/FavoritesPage">My Favourite</a>
-                    <a className=" text-white my-2 " href="/BookShelf">My Shelf</a>
                     <a className=" text-white my-2 " href="/map">Map</a>
                     <a className=" text-white my-2 " href="/community">Community</a>
                     <div className="writer"><a className="btn text-white" href="/writer">Writer</a></div>
@@ -62,22 +60,22 @@ class Header extends Component {
                             </a>
 
                             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" >
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/1')}>{name}</a>
+                                <a className="dropdown-item" href='/writer'>{name}</a>
                                 <hr class="dropdown-divider"></hr>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/1')}>
+                                <a className="dropdown-item" href='/FavoritesPage'>
                                     My Favourites
                                 </a>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/1')}>
+                                <a className="dropdown-item" href='/BookShelf'>
                                     My Bookshelf
                                 </a>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/1')}>
+                                <a className="dropdown-item" href='/'>
                                     My Bookmarks
                                 </a>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/1')}>
+                                <a className="dropdown-item" href='/'>
                                     My Stories
                                 </a>
                                 <hr class="dropdown-divider"></hr>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/genre/1')}>
+                                <a className="dropdown-item" href='/'>
                                     Logout
                                 </a>
                             </div>
