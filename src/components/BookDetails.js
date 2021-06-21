@@ -27,6 +27,8 @@ const BookDetails = (props) => {
     const [book, setBook] = useState([]);
     // const location = useLocation();
     // const history = useHistory();
+    const [shelfs, setShelfs] = useState([]);
+   
 
     useEffect(() =>{
         const isbn = props.match.params.isbn;
@@ -42,6 +44,21 @@ const BookDetails = (props) => {
     }, [])
         
         console.log(book[0]) 
+
+        const saveShel = (items) => {
+            localStorage.setItem('book-shelf', JSON.stringify(items))
+        };
+    
+    
+        const addShelfBook = (book) =>{
+            const newShelfeRow = [...shelfs, book];
+            
+            setShelfs(newShelfeRow);
+            saveShel(newShelfeRow);
+            
+    
+        };
+
         
         return(
             
@@ -149,7 +166,7 @@ const BookDetails = (props) => {
                                 : <span> No rating yet </span>
                                 }
 
-                                <button className="btn-shelf" > <i className="fa fa-plus"></i> Add To Shelf Book</button>
+                                <button className="btn-shelf"> <i className="fa fa-plus" onClick={()=>addShelfBook(book[0])} ></i> Add To Shelf Book</button>
                             </div>
                          
                             <ul className="list-unstyled details" style={{margin: '70px 0'}}>
@@ -315,11 +332,11 @@ const BookDetails = (props) => {
             </div>
         </div>
      
-    <div className="slider">
+    {/* <div className="slider">
         <div className="container">
             <div className="info">
                 <span>Similar Books</span>
-                {/* <span>(5 Books)</span> */}
+                <span>(5 Books)</span>
             </div>
             <div className="up">
                 <div className="client active">
@@ -328,13 +345,13 @@ const BookDetails = (props) => {
                     <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
                     <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
                     <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    {/* <BookRow /> */}
+                    
                 </div>
               
          
             </div>
         </div>
-    </div>
+    </div> */}
             </>
         )   
 }

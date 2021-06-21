@@ -13,7 +13,8 @@ import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
 import Genre from './components/Genre';
 import GoogleAPI from './classes/GoogleAPI';
-
+import FavoritesPage from "./components/FavoritesPage";
+import BookShelf from "./components/BookShelf";
 
 
 
@@ -58,6 +59,8 @@ function App() {
           <Route path="/addstory" component={AddStory}/>
           <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
           <Route path="/userprofile" component={UserProfile}/>
+          <Route path="/FavoritesPage" component={FavoritesPage}/>
+          <Route path="/BookShelf" component={BookShelf}/>
           <Route path="/admin" component={Admin}/>
           {/* <Route path="/searchresults" component={SearchResults}/> */}
 
