@@ -3,7 +3,8 @@ import axios from 'axios';
 import Popup from "reactjs-popup";
 import { Link } from "react-router-dom";
 import AddChapter from './addChapter';
-
+import ChapterDetails from './chapterDetails';
+import Likes from './Likes';
 
 import '../style/admin.css';
 import '../style/BookDetails.css';
@@ -24,9 +25,19 @@ import {
 } from "react-share";
 
 const contentStyle = {
-    maxWidth: "600px",
-    width: "90%"
+    // maxWidth: "600px",
+    width: "60%"
 };
+const popupStyle = {
+    borderRadius: '10px 10px',
+    border: '4px solid #F8A488',
+    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.7)',
+    padding: '2rem',
+    width: '25rem',
+    maxHeight: '30rem',
+    overflowY: 'scroll'
+
+}
 class ShortStoryDetails extends Component {
 
     constructor(props) {
@@ -35,7 +46,17 @@ class ShortStoryDetails extends Component {
             shortStory: {},
             chapters: [],
             genre: [],
-            date: ''
+            date: '',
+            likes: [
+                { user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", user_id: '1' },
+                { user_name: 'Mona Youssef', user_img: "img/avatar.jpeg", user_id: '2' },
+                { user_name: 'Eman Hussein', user_img: "img/avatar.jpeg", user_id: '3' },
+                { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' },
+                { user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", user_id: '1' },
+                { user_name: 'Mona Youssef', user_img: "img/avatar.jpeg", user_id: '2' },
+                { user_name: 'Eman Hussein', user_img: "img/avatar.jpeg", user_id: '3' },
+                { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' }
+            ],
         }
 
     }
@@ -165,7 +186,8 @@ class ShortStoryDetails extends Component {
                                         <span className="fa fa-star"></span>
                                         <span className="fa fa-star"></span>
                                         <span className="fa fa-star"></span>
-                                        <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>
+                                        {/* <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a> */}
+                                        <StoryLikes likes={this.state.likes} />
                                     </p>
                                     <ul className="list-unstyled details" style={{}}>
                                         {/* <li><span>Author</span> writer</li> */}
@@ -184,13 +206,15 @@ class ShortStoryDetails extends Component {
                                                 Accusantium eum consequuntur incidunt, sed quisquam delectus.</p>
                                         </div> */}
 
-
-                                        <div className="reviews">
+                                        <div className="about-info">
                                             <h4>Chapters</h4>
+                                            {/* <div className="reviews"> */}
+
                                             {this.state.chapters.map((chapter) => {
-                                                return <div className="ml-3"><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+                                                return <div className="reviews my-6"><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
 
                                             })}
+                                            {/* </div> */}
                                         </div>
 
                                     </div>
@@ -294,7 +318,7 @@ class ShortStoryDetails extends Component {
 }
 class Chapters extends Component {
     render() {
-        return (<div className="row">
+        return (<div className="row my-6">
             {/* <u className="mr-4" style={{ display: "inline-block", cursor: "pointer" }}>{this.props.chapter.title}</u> */}
             <div className="col col-4"><ChapterDetails chapter={this.props.chapter} /></div>
             <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
@@ -303,23 +327,21 @@ class Chapters extends Component {
         </div>)
     }
 }
-
-class ChapterDetails extends Component {
-
+class StoryLikes extends Component {
     render() {
         return (<Popup
-            trigger={<u className="mr-4" style={{ display: "inline-block", cursor: "pointer", width: '100%' }}>{this.props.chapter.title}</u>}
+            trigger={<a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>}
             modal
-            contentStyle={contentStyle}
+            contentStyle={popupStyle}
         >
-            <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>
-
-                <text style={{ textAlign: 'center' }}>
-                    {this.props.chapter.summary}
-                </text>
+            <div>
+                <Likes users={this.props.likes} />
             </div>
-        </Popup>
-        )
+        </Popup >)
     }
+
+
 }
+
 export default ShortStoryDetails;
+
