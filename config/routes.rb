@@ -28,10 +28,13 @@ get '/member-data', to: 'members#show'
   get '/shortStories' ,to:'short_stories#getShortStories'
   post '/createChapter' , to:'chapters#create'
 
-  get 'bookstores/allbookstores', to:'bookstores#allbookstores'
-  get 'bookstores/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
+  get '/allbookstores', to:'bookstores#allbookstores'
+  get '/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
 
 
+  get '/communityPosts' , to:'chapters#posts'
+
+  post '/storyFinished' ,to:'short_stories#setStoryFinished'
   
 
 
