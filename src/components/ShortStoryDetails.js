@@ -47,7 +47,7 @@ class ShortStoryDetails extends Component {
             chapters: [],
             genre: [],
             date: '',
-            image:'',
+            image: '',
             likes: [
                 { user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", user_id: '1' },
                 { user_name: 'Mona Youssef', user_img: "img/avatar.jpeg", user_id: '2' },
@@ -58,6 +58,7 @@ class ShortStoryDetails extends Component {
                 { user_name: 'Eman Hussein', user_img: "img/avatar.jpeg", user_id: '3' },
                 { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' }
             ],
+            writer: {}
         }
 
     }
@@ -78,7 +79,8 @@ class ShortStoryDetails extends Component {
     }
     async componentDidMount() {
         let data = {
-            id: this.props.match.params.id
+            id: this.props.match.params.id,
+            login: localStorage.getItem("user_id")
         }
         const res = await axios.post("http://localhost:3000/shortStoryDetails", data, {
             headers: {
@@ -93,26 +95,32 @@ class ShortStoryDetails extends Component {
         this.setState({ chapters: res.data.chapters });
         this.setState({ genre: res.data.genres });
         this.setState({ date: res.data.date })
-        this.setState({image: res.data.image});
+        this.setState({ image: res.data.image });
+        this.setState({ writer: res.data.writer });
+
 
     }
-
-    render() {
-        const addToBookmark = async (id) => {
-            let data = {
-                id: id
-            }
-            const res = await axios.post("http://localhost:3000/addToBookmark", data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, PUT",
-                    "Access-Control-Allow-Headers": "Content-Type",
-
-                }
-            });
-            console.log(res);
+    addToBookmark = async (id) => {
+        let data = {
+            story_id: id,
+            user_id: localStorage.getItem('user_id')
 
         }
+        const res = await axios.post("http://localhost:3000/addToBookmark", data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type",
+
+            }
+        });
+
+        console.log(res);
+
+    }
+    render() {
+
+
         return (
 
             <>
@@ -125,7 +133,7 @@ class ShortStoryDetails extends Component {
                                     <div className="box-img text-center">
                                         <img src={this.state.image} style={{ width: '400px' }} />
                                         <div className="button">
-                                            {this.state.shortStory.status == 'Not finished yet' && <div> <AddChapter shortStory={this.state.shortStory.id} />
+                                            {this.state.shortStory.user_id == localStorage.getItem('user_id') && this.state.shortStory.status == 'Not finished yet' && <div> <AddChapter shortStory={this.state.shortStory.id} />
                                                 <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
                                                     onClick={() => this.setStoryStatus(this.state.shortStory.id)}>Finish</div>
                                             </div>}
@@ -157,16 +165,16 @@ class ShortStoryDetails extends Component {
                                                 </p>
                                             </div>
                                             <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-                                                <button className="btn-shelf mt-0" onClick={() => {
-                                                    addToBookmark(this.state.shortStory.id)
-                                                }}> <i className="fa fa-plus"></i> Add To Bookmark</button>
+                                                {this.state.shortStory.user_id != localStorage.getItem('user_id') && <button className="btn-shelf mt-0" onClick={() => {
+                                                    this.addToBookmark(this.state.shortStory.id)
+                                                }}> <i className="fa fa-plus"></i> Add To Bookmark</button>}
                                             </div>
                                         </div>
 
                                     </div>
 
                                     <ul className="list-unstyled details" style={{}}>
-                                        {/* <li><span>Author</span> writer</li> */}
+                                        {this.state.shortStory.user_id != localStorage.getItem('user_id') && <li><span>Author</span> {this.state.writer.name}_ <p style={{ color: "#263044", fontSize: ".85rem", margin: '0', padding: "0", tetxtAlign: "center", display: "inline-block" }}> {this.state.writer.username}</p> _</li>}
                                         <li><span>No. Of Chapters</span>: {this.state.chapters.length}</li>
                                         <li><span>Publication Date</span>: {this.state.date}</li>
                                     </ul>
