@@ -8,6 +8,7 @@ import Popper from 'popper.js';
 import '../style/headerFooter.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
+import  { useHistory } from 'react-router-dom'
 
 
 
@@ -16,6 +17,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 class Header extends Component {
     constructor(props){
         super(props);
+        this.handleLogout=this.handleLogout.bind(this);
+        // const handleRedirect=()=>{
+        //     this.props.history.push('/login');
+        // }
+    
     }
     handleLogout(){
         axios.delete("http://localhost:3000/users/sign_out",
@@ -30,11 +36,19 @@ class Header extends Component {
         //    avatar: ""
         //  })
          localStorage.removeItem("user_id");
+        //  let history = useHistory();
+        //  return <Redirect to='/login'  />
+        // this.props.history.push('/login')
+        // history.push("/login");
+            // this.props.handleRedirect()
+            window.location.reload()
+        //  this.props.history.push('/login')
          }
        })
        .catch(error=>{
          console.log(error);
        })
+    
     //    this.setState({
     //      loggedInStatus : "NOT_LOGGED_IN",
     //      user : {},
@@ -42,7 +56,7 @@ class Header extends Component {
     //    })
      }
     
-
+    
     render() {
         var avatar;
         if (this.props.avatar){

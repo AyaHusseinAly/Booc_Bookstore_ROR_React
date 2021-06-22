@@ -25,19 +25,37 @@ class Registration extends Component {
         
         
     }
+    handleImageStore = (e) => {
+
+        // const file = URL.createObjectURL(e.target.files[0]);
+        this.setState({ avatar: e.target.files[0] });
+    }
     
     handleSubmit(event){
+        event.preventDefault();
+        const data = new FormData(event.target);
+        const user= {
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation,
+            username: this.state.username,
+            name: this.state.name,
+            bio: this.state.bio,
+            avatar: this.state.avatar
+        }
+        console.log("user",user);
+
+        Object.keys(this.state).forEach((key, value) => {
+            console.log(key, this.state[key])
+            data.append(key, this.state[key])
+        })
+        for(const i in data.entries()){
+            console.log(i,i[0]);
+        }
+        console.log("data",data);
         console.log("submitted");
-        axios.post("http://localhost:3000/users", {
-            user: {
-                email: this.state.email,
-                password: this.state.password,
-                password_confirmation: this.state.password_confirmation,
-                username: this.state.username,
-                name: this.state.name,
-                bio: this.state.bio
-            }
-        },
+        axios.post("http://localhost:3000/users", data
+        ,
         {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}
@@ -49,7 +67,7 @@ class Registration extends Component {
             console.log(response.data);
             if (response.data.message === 'Register success'){
                 console.log("reg successful");
-                this.handleSuccessfulAuth(response.data.user);
+                this.handleSuccessfulAuth(response.data);
             }
             else if (response.data.message === 'Something went wrong'){
                 this.setState({
@@ -61,7 +79,7 @@ class Registration extends Component {
         .catch(error =>{
             console.log("reg error", error);
         });
-        event.preventDefault();
+        
     }
 
     handleChange(event){
@@ -92,7 +110,7 @@ class Registration extends Component {
                         {errors}
                     </div>
             }
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} enctype="multipart/form-data">
                 <h3>Register</h3>
                 <br/>
 
@@ -153,6 +171,14 @@ class Registration extends Component {
                     value={this.state.password_confirmation} 
                     onChange={this.handleChange}
                     required/>
+                </div>
+
+                <div className="form-group mb-5">
+                    <label>Avatar</label>
+                    <input 
+                    type="file"
+                    name="avatar"
+                    onChange={this.handleImageStore}/>
                 </div>
 
                 <div className="form-group mb-5">
