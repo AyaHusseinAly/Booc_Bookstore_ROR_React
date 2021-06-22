@@ -28,23 +28,40 @@ class Map extends Component {
             state:'',
             zoom: 15,
             height: 400,
-            mapPosition: {
-                lat: 0,
-                lng: 0,
-            },
-            position: [
-
-            ],
             stores: [
             ],
+            selectPark: false,
+            latitudeOfMyPosition: '',
+            longitudeOfMyPosition: '',
         }
     }
+
+    /******************** Share my Loction *****************************/
+    getLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.getCoordinates);
+        } else {
+           alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    getCoordinates = (position) => {
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+        this.setState({
+            latitudeOfMyPosition:position.coords.latitude,
+            longitudeOfMyPosition:position.coords.longitude,
+        })
+    }
+    /******************** End  Share my Loction *****************************/
+
     onValueChange= (event) => {
         this.setState({
           selectedOption: event.target.value
         });
     } 
 
+    /******************** Submit The Form *****************************/
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
@@ -76,7 +93,9 @@ class Map extends Component {
            //this: this.reset
           });
     }
+    /******************** End Submit The Form *****************************/
 
+    /******************** make marker Dragable *****************************/
     onMarkerDragEnd =(event) => {
         let newLat = event.latLng.lat();
         let newLng = event.latLng.lng();
@@ -88,11 +107,12 @@ class Map extends Component {
                     city = this.getCity()
             console.log('response', response)
         })
-
         console.log('newlat', newLat);
     }
+    /******************** End make marker Dragable *****************************/
 
     render() {
+        /******************** Styling ***********************************/
         const bookName = {
             display : 'inline-block',
            // marginLeft: '0px',
@@ -121,9 +141,9 @@ class Map extends Component {
             border: '1px solid blue',
             boxSizing: 'border-box',
           };
+        /******************** End of Styling ***********************************/
 
-       
-
+        /******************** Markers ***********************************/
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
             defaultZoom={15}
@@ -131,21 +151,22 @@ class Map extends Component {
             >
                 {this.state.stores.map((marker, index) => (
                     <Marker
-                    onClick={this.onMarkerClick}
+                    key={index}
+                    {...marker}
                     // draggable={true}
                     // onDragEnd={this.onMarkerDragEnd}
                     position={marker.position}
-                    >
+                    > 
                         <InfoWindow>
                             <div>{marker.name}</div>
                         </InfoWindow>
                     </Marker>
+
                     ))}
             </GoogleMap>
         ));
-            
+        /******************** End of  Markers ***********************************/   
         
-
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit}>
@@ -190,7 +211,7 @@ class Map extends Component {
                     <div style={distictSearch2} className="float-right">
                         <br/>
                         <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation"/>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation" onClick={this.getLocation}/>
                             <label className="custom-control-label" for="switch1">Share my Location</label>
                         </div>            
                         
@@ -259,7 +280,7 @@ class Map extends Component {
                         />
                        
 
-                       
+
                     </div>
                 </div>
                 <br/>
