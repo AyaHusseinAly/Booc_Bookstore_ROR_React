@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_003614) do
+ActiveRecord::Schema.define(version: 2021061716083111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,16 @@ ActiveRecord::Schema.define(version: 2021_06_21_003614) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.string "kind"
+    t.text "reason"
+    t.integer "related_record_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
   create_table "short_stories", force: :cascade do |t|
     t.string "title"
     t.string "cover"
@@ -138,6 +148,18 @@ ActiveRecord::Schema.define(version: 2021_06_21_003614) do
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "short_story_id"
+    t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
+  end
+
+  create_table "short_story_generes", force: :cascade do |t|
+    t.string "name"
+    t.bigint "genre_id"
+    t.bigint "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_short_story_generes_on_genre_id"
+    t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -181,6 +203,10 @@ ActiveRecord::Schema.define(version: 2021_06_21_003614) do
   add_foreign_key "comments", "short_stories_chapters"
   add_foreign_key "likes", "short_stories"
   add_foreign_key "likes", "users"
+  add_foreign_key "reports", "users"
+  add_foreign_key "short_stories_chapters", "short_stories"
+  add_foreign_key "short_story_generes", "genres"
+  add_foreign_key "short_story_generes", "short_stories"
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"

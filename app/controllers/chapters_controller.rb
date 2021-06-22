@@ -17,6 +17,7 @@ class ChaptersController < ApplicationController
         @stories.each do |story|
             postObj={
                 id: story.id,
+                kind: "story",
                 writer:"Islam Karim",
                 content: story.summary,
                 story_title:story.title,
@@ -31,6 +32,7 @@ class ChaptersController < ApplicationController
         @chapters.each do |chapter|
             postObj={
                 id: chapter.id,
+                kind:"chapter",
                 writer:"Aya Hussein",
                 content: chapter.summary,
                 story_title:chapter.short_story.title,

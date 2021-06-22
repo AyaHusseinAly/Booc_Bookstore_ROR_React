@@ -35,6 +35,9 @@ get '/member-data', to: 'members#show'
   get '/communityPosts' , to:'chapters#posts'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
+
+  post '/report' , to: 'reports#create'
+  get '/report' , to: 'reports#index'
   
 
 
