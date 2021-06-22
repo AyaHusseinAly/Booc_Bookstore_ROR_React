@@ -30,11 +30,32 @@ class Map extends Component {
             height: 400,
             stores: [
             ],
-            selectPark: false,
             latitudeOfMyPosition: '',
             longitudeOfMyPosition: '',
+            
+            showingInfoWindow: false,
+            activeMarker: false,
+            selectedPlace: {},
         }
     }
+
+    onMarkerClick = (props, marker,e) =>{
+        this.setState({
+            selectedPlace: props,
+            showingInfoWindow:  marker,
+            activeMarker: true
+            
+        });
+    }
+
+    onMapClicked = (props) => {
+        if(this.state.showingInfoWindow){
+            this.setState({
+                showingInfoWindow:  false,
+                activeMarker: null
+            })
+        }
+    };
 
     /******************** Share my Loction *****************************/
     getLocation = () => {
@@ -49,9 +70,10 @@ class Map extends Component {
         console.log(position.coords.latitude);
         console.log(position.coords.longitude);
         this.setState({
-            latitudeOfMyPosition:position.coords.latitude,
-            longitudeOfMyPosition:position.coords.longitude,
+            latitudeOfMyPosition: position.coords.latitude,
+            longitudeOfMyPosition: position.coords.longitude,
         })
+        this.reverseGeocodeCoordinates();
     }
 
     handleLocationError = (error) => {
@@ -72,6 +94,15 @@ class Map extends Component {
                 alert("An unknown error occurred.");
         }
     }
+
+    reverseGeocodeCoordinates = () =>{
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=false&key=AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA`)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => alert(error))
+    }
+
+
     /******************** End  Share my Loction *****************************/
 
     /******************** Submit The Form *****************************/
@@ -167,17 +198,22 @@ class Map extends Component {
             <GoogleMap
             defaultZoom={15}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
+            onClick={this.onMapClicked}
             >
                 {this.state.stores.map((marker, index) => (
                     <Marker
+                    onClick = {this.onMarkerClick}
                     key={index}
                     //{...marker}
                     // draggable={true}
                     // onDragEnd={this.onMarkerDragEnd}
                     position={marker.position}
                     > 
-                        <InfoWindow>
-                            <div>{marker.name}</div>
+                        <InfoWindow
+                            marker={this.state.activeMarker}
+                            visible={this.state.showingInfoWindow}
+                        >
+                            <div><h6>{marker.name}</h6></div>
                         </InfoWindow>
                     </Marker>
 
