@@ -17,7 +17,7 @@ import AddChapter from './addChapter';
 class ShortStory extends Component {
     render() {
         return (
-            <div className="row shadow pt-1 m-1" style={{ height: '220px', paddingBottom: 'none' }}>
+            <div className="row pt-1 m-1" style={{ height: '220px', paddingBottom: 'none' }}>
                 <img className="col-4 img-fluid embed-responsive-item my-2" style={{ width: '100%', height: "90%", display: 'inline-block', borderRadius: '20px', margin: 'none', paddingBottom: 'none' }} src={this.props.shortstory.cover} />
 
 

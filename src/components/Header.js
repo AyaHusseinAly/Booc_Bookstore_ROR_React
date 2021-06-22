@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import 'bootstrap/js/dist/dropdown.js';
+import $ from 'jquery';
+import Popper from 'popper.js';
 import '../style/headerFooter.css';
 
 
@@ -44,15 +48,38 @@ class Header extends Component {
            
                 <div className="col-lg-5 col-sm-9 col-xs-8 d-flex align-items-center justify-content-around ">
                     <a className=" text-white my-2 " href="/">Home</a>
-                    <a className=" text-white my-2 " href="/FavoritesPage">My Favourite</a>
-                    <a className=" text-white my-2 " href="/BookShelf">My Shelf</a>
                     <a className=" text-white my-2 " href="/map">Map</a>
                     <a className=" text-white my-2 " href="/community">Community</a>
                     <div className="writer"><a className="btn text-white" href="/writer">Writer</a></div>
-                    <div >
-                        <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a>
-                        <a  href="#" className="text-light"><img  className="  m-1 rounded-circle"  src={avatar}  /> {name}  </a>
-                        <a  href="#" ><img  className=" m-1 icondrop"  src="img/icons/iconDropdownWhite.png"  /></a>
+                   
+                        <div className="dropdown show" >
+                            <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a>
+                            <img  className="  m-1 rounded-circle"  src={avatar}  /> 
+                        
+                            <a className="dropdown-toggle ml-2"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{color:'white',fontSize:'2rem',backgroundColor:'#263044'}}>
+                            </a>
+
+                            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" >
+                                <a className="dropdown-item" href='/writer'>{name}</a>
+                                <hr class="dropdown-divider"></hr>
+                                <a className="dropdown-item" href='/FavoritesPage'>
+                                    My Favourites
+                                </a>
+                                <a className="dropdown-item" href='/BookShelf'>
+                                    My Bookshelf
+                                </a>
+                                <a className="dropdown-item" href='/'>
+                                    My Bookmarks
+                                </a>
+                                <a className="dropdown-item" href='/'>
+                                    My Stories
+                                </a>
+                                <hr class="dropdown-divider"></hr>
+                                <a className="dropdown-item" href='/'>
+                                    Logout
+                                </a>
+                            </div>
+                        
                     </div>
                 </div>  
         

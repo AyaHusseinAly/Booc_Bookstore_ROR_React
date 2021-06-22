@@ -6,7 +6,7 @@ body {
 html,
 body {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x:hidden;
 }
 
 nav {
@@ -22,6 +22,8 @@ img.rounded-circle {
     border-radius: 50%;
     width: 3.5rem;
 }
+
+
 
 img.icon {
     width: 1.3rem;
