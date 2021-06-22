@@ -13,9 +13,15 @@ import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
 import Genre from './components/Genre';
 import GoogleAPI from './classes/GoogleAPI';
+import FavoritesPage from "./components/FavoritesPage";
+import BookShelf from "./components/BookShelf";
+import ShortStoryDetails from './components/ShortStoryDetails';
+
+
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
 import axios from 'axios';
+
 
 import React, { Component } from 'react';
 
@@ -46,16 +52,36 @@ import { isConstructorDeclaration } from 'typescript';
 //   console.log(res)
 // })
 
-class App extends Component{
-  constructor(){
+// /<<<<<<< HEAD
+// function App() {
+
+//   return (
+//     <div>
+//       <Header></Header>
+
+//       <div style={{ minHeight: 400 }}>
+//         <Switch>
+//           <Route path="/" exact component={Home} />
+//           <Route path="/genre/:id" exact component={Genre} />
+//           <Route path="/map" component={Map} />
+//           <Route path="/writer" component={Writer} />
+//           <Route path="/community" component={Community} />
+//           <Route path="/mystories" component={MyStories} />
+//           <Route path="/addstory" component={AddStory} />
+//           <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
+//           <Route path="/userprofile" component={UserProfile} />
+//           <Route path="/admin" component={Admin} />
+// =======
+class App extends Component {
+  constructor() {
     super();
-    this.state={
+    this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
       user: {},
       avatar:""
     }
     this.handleLogin=this.handleLogin.bind(this);
-    this.handleLogout=this.handleLogout.bind(this);
+    // this.handleLogout=this.handleLogout.bind(this);
   }
    is_logged_in(user_id){
       axios.post("http://localhost:3000/logged_in",
@@ -100,27 +126,7 @@ class App extends Component{
     });
     localStorage.setItem("user_id",data.user.id);
   }
-  async handleLogout(){
-    await  axios.delete("http://localhost:3000/users")
-    .then(response=>{
-      if(response.data.message === 'signout success'){
-      this.setState({
-        loggedInStatus : "NOT_LOGGED_IN",
-        user : {},
-        avatar: ""
-      })
-      localStorage.removeItem("user_id");
-      }
-    })
-    .catch(error=>{
-      console.log(error);
-    })
-    this.setState({
-      loggedInStatus : "NOT_LOGGED_IN",
-      user : {},
-      avatar: ""
-    })
-  }
+  
   componentDidMount(){
     if(localStorage.getItem("user_id")){
        this.is_logged_in(localStorage.getItem("user_id"))
@@ -131,7 +137,7 @@ class App extends Component{
   return (
     <div>
       <Header
-        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleLogout={this.handleLogout}>
+        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar}>
       </Header>
       <div style={{minHeight:400}}>
       <Switch>
@@ -163,18 +169,18 @@ class App extends Component{
             <Login { ... props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin}/>
           )} 
           />
+           <Route path="/shortStory/:id" component={ShortStoryDetails} />
           {/* <Route path="/searchresults" component={SearchResults}/> */}
 
 
 
 
         </Switch>
+        </div>
+        <Footer></Footer>
+        </div>
 
-      </div>
-      <Footer></Footer>
-    </div>
-  );
-  }
-}
+  )}
+          }
 
 export default App;

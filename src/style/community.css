@@ -10,6 +10,10 @@ a {
     color: #263044;
 
 }
+a:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
 span {
     color: #ADB4C3;
 }

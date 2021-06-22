@@ -30,7 +30,7 @@
 		}
 
 
-		figure .hoverable{
+		.figure .hoverable{
 			content: "";
 			position: absolute;
 			left: 50%;
@@ -46,21 +46,25 @@
 			transition: var(--transition);
 			
 		}
-		figure:hover .hoverable {
+		.figure:hover .hoverable {
 			opacity: 1;
 		  }
-		  figure .hoverable .details {
+		  .figure .hoverable .details {
 			background-color: var(--primaryColor);
 			color: white;
 			border-radius: 0.5rem;
 			padding: 10px 20px;
+			margin-left: -30px;
 			
 		  }
 	
 		  .icon-heart{
 			position: absolute;
-			top: 30px;
-			left: 20px;
+			top: 20px;
+			left: 40px;
+			font-size: 20px;
+			color: var(--primaryColor);
+			z-index: 90;
 		}
 		 
 		.choose{
@@ -72,6 +76,33 @@
 		.choose > span {
 			color: var(--primaryColor);
 		}
+		.figure:hover  {
+			transform: scale(1.1);
+			transition: var(--transition);
+			
+        }
+		.figure:hover  .details{
+			margin-right: -100px;
+        }
+		.tooltiptextshel, .tooltiptextfav{
+			visibility: hidden;
+			width: 100px;
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 6px;
+			position: absolute;
+			z-index: 100;
+			font-size: 17px;
+		}
+
+		.fa-plus:hover .tooltiptextshel {
+			visibility: visible;
+		  }
+		  .fa-heart:hover .tooltiptextfav {
+			visibility: visible;
+		  }
 
 				
 	
