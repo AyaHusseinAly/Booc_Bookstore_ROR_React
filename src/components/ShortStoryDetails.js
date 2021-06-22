@@ -94,60 +94,23 @@ class ShortStoryDetails extends Component {
         this.setState({ date: res.data.date })
 
     }
+
     render() {
-        // return (<h1>short story details{this.props.match.params.id}</h1>)
-        // return (<div className="row m-5">
-        //     <div className="col col-3">
-        //         <img className="book mx-3 " style={{ width: '80%', height: "100%", maxHeight: '250px', display: 'inline-block', borderRadius: '10px' }} src={this.state.shortStory.cover} />
-        //     </div>
-        //     <div className="col col-9">
-        //         <div className='d-flex justify-content-between'>
-        //             <div>
-        //                 <h2>{this.state.shortStory.title}</h2>
-        //                 <p> <span>from : </span>
-        //                     {this.state.genre.map((genre, index) => {
-        //                         return <span style={{ color: '#535964' }} key={genre.id}>
-        //                             {genre.title}
-        //                             {index < this.state.genre.length - 1 && <span> _ </span>}
-        //                         </span>
-        //                     })}
-        //                 </p>
-        //                 <p>
-        //                     <span className="fa fa-star checked"></span>
-        //                     <span className="fa fa-star checked"></span>
-        //                     <span className="fa fa-star"></span>
-        //                     <span className="fa fa-star"></span>
-        //                     <span className="fa fa-star"></span>
-        //                     <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
-        //                 </p>
-        //             </div>
-        //             <div>
-        //                 {this.state.shortStory.status == 'Not finished yet' && <div> <AddChapter shortStory={this.state.shortStory.id} />
-        //                     <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
-        //                         onClick={() => this.setStoryStatus(this.state.shortStory.id)}>Finish</div>
-        //                 </div>}
+        const addToBookmark = async (id) => {
+            let data = {
+                id: id
+            }
+            const res = await axios.post("http://localhost:3000/addToBookmark", data, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type",
 
-        //             </div>
-        //         </div>
-        //         <div>
-        //             <h4>About Story</h4>
-        //             <p>{this.state.shortStory.summary}</p>
-        //         </div>
-        //         <div>
-        //             <h4>Chapters</h4>
-        //             <div className="col-xs-12 col-sm-12 col-md-10 col-lg-8">
-        //                 <table className="table table-striped">
-        //                     {this.state.chapters.map((chapter) => {
-        //                         return <tr><Chapters key={chapter.id} chapter={chapter} date={this.state.date} /></tr>
+                }
+            });
+            console.log(res);
 
-        //                     })}
-        //                 </table>
-        //             </div>
-
-        //         </div>
-
-        //     </div>
-        // </div>)
+        }
         return (
 
             <>
@@ -173,22 +136,33 @@ class ShortStoryDetails extends Component {
                                 <div className="box-info">
                                     <div className="heading">
                                         <h2>{this.state.shortStory.title}</h2>
-                                        <h5>from {this.state.genre.map((genre, index) => {
-                                            return <span style={{ color: '#535964' }} key={genre.id}>
-                                                {genre.title}
-                                                {index < this.state.genre.length - 1 && <span> _ </span>}
-                                            </span>
-                                        })} section</h5>
+                                        <div className='row'>
+                                            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                                                <h5>from {this.state.genre.map((genre, index) => {
+                                                    return <span style={{ color: '#535964' }} key={genre.id}>
+                                                        {genre.title}
+                                                        {index < this.state.genre.length - 1 && <span> _ </span>}
+                                                    </span>
+                                                })} section</h5>
+                                                <p>
+                                                    <span className="fa fa-star checked"></span>
+                                                    <span className="fa fa-star checked"></span>
+                                                    <span className="fa fa-star"></span>
+                                                    <span className="fa fa-star"></span>
+                                                    <span className="fa fa-star"></span>
+                                                    {/* <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a> */}
+                                                    <StoryLikes likes={this.state.likes} />
+                                                </p>
+                                            </div>
+                                            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                                                <button className="btn-shelf mt-0" onClick={() => {
+                                                    addToBookmark(this.state.shortStory.id)
+                                                }}> <i className="fa fa-plus"></i> Add To Bookmark</button>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <p>
-                                        <span className="fa fa-star checked"></span>
-                                        <span className="fa fa-star checked"></span>
-                                        <span className="fa fa-star"></span>
-                                        <span className="fa fa-star"></span>
-                                        <span className="fa fa-star"></span>
-                                        {/* <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a> */}
-                                        <StoryLikes likes={this.state.likes} />
-                                    </p>
+
                                     <ul className="list-unstyled details" style={{}}>
                                         {/* <li><span>Author</span> writer</li> */}
                                         <li><span>No. Of Chapters</span>: {this.state.chapters.length}</li>
