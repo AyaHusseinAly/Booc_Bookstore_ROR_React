@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 get '/member-data', to: 'members#show'
+get 'user/avatar', to: 'members#avatar'
+post '/logged_in', to: 'members#is_logged_in?'
   # resources :ping, only: [:index] do
   #   collection do
   #     get :auth
@@ -17,6 +19,8 @@ get '/member-data', to: 'members#show'
       get :available
     end
   end
+
+  # get 'api/shortStories', to:'api#shortStories'
 
   get 'api/shortStories', to:'short_stories#index'
   get 'api/bookmarks', to:'api#bookmarks'  # edit to accept user id
