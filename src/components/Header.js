@@ -18,25 +18,28 @@ class Header extends Component {
         super(props);
     }
     handleLogout(){
-        axios.delete("http://localhost:3000/users")
+        axios.delete("http://localhost:3000/users/sign_out",
+        {headers:{"Access-Control-Allow-Origin": "http://localhost:3001",
+        "Access-Control-Allow-Methods": "GET, POST, PUT",
+        "Access-Control-Allow-Headers": "Content-Type"}})
        .then(response=>{
          if(response.data.message === 'signout success'){
-         this.setState({
-           loggedInStatus : "NOT_LOGGED_IN",
-           user : {},
-           avatar: ""
-         })
+        //  this.setState({
+        //    loggedInStatus : "NOT_LOGGED_IN",
+        //    user : {},
+        //    avatar: ""
+        //  })
          localStorage.removeItem("user_id");
          }
        })
        .catch(error=>{
          console.log(error);
        })
-       this.setState({
-         loggedInStatus : "NOT_LOGGED_IN",
-         user : {},
-         avatar: ""
-       })
+    //    this.setState({
+    //      loggedInStatus : "NOT_LOGGED_IN",
+    //      user : {},
+    //      avatar: ""
+    //    })
      }
     
 
