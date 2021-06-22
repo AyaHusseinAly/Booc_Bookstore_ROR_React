@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 get '/member-data', to: 'members#show'
+get 'user/avatar', to: 'members#avatar'
+post '/logged_in', to: 'members#is_logged_in?'
   # resources :ping, only: [:index] do
   #   collection do
   #     get :auth
@@ -18,7 +20,8 @@ get '/member-data', to: 'members#show'
     end
   end
 
-  get 'api/shortStories', to:'api#shortStories'
+  # get 'api/shortStories', to:'api#shortStories'
+  get 'api/shortStories', to:'short_stories#index'
   get 'api/bookmarks', to:'api#bookmarks'  # edit to accept user id
   get 'api/bookshelves', to:'api#bookshelves' # edit to accept user id
   get 'api/bookstores', to:'api#bookstores'
