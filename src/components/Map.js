@@ -32,35 +32,13 @@ class Map extends Component {
                 lat: 0,
                 lng: 0,
             },
-            markers: [ // Just an example this should probably be in your state or props. 
-                {
-                name: "marker1",
-                position: { lat: 31.001,  lng: 29.9187, }
-                },
-                {
-                name: "marker2",
-                position: {lat: 31.1002,  lng: 29.9187, }
-                },
-                {
-                name: "marker3",
-                position: { lat: 31.0002,  lng: 29.9187, }
-                }
+            position: [
+
             ],
-
             stores: [
-                {
-                    src: "img/alef.png",
-                    title: "Alef BookStores"
-                },
-                {
-                    src: "img/Alex.png",
-                    title: "Alef BookStores"
-                },
-            ]
-
+            ],
         }
     }
-
     onValueChange= (event) => {
         this.setState({
           selectedOption: event.target.value
@@ -70,36 +48,33 @@ class Map extends Component {
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
-       // const errors = this.validate();
-
-        //if (errors === null) {
-
-            const obj = {
-                bookName: this.state.bookName,
-                selectedOption: this.state.selectedOption,
-                distict: this.state.distict,
-
+        const obj = {
+            bookName: this.state.bookName,
+            //selectedOption: this.state.selectedOption,
+            selectedOption: this.state.selectedValue,
+            distict: this.state.distict,
+        }
+        Object.keys(this.state).forEach((key, value) => {
+                return data.append(key, this.state[key])
+        })
+    
+        const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type",
             }
-            Object.keys(this.state).forEach((key, value) => {
-                 return data.append(key, this.state[key])
-            })
-
-            const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, PUT",
-                    "Access-Control-Allow-Headers": "Content-Type",
-
-                }
-            });
-            console.log(res);
-         //   window.location.reload()
-        //}
-        // else {
-        //     console.log('no submit');
-        //     this.activeError = true;
-        // }
-
+        });
+        this.setState({ stores: res.data.stores});
+        console.log(this.state.stores);
+        console.log(res);
+        console.log(this.state.selectedOption);
+        this.setState({
+            distict:'',
+            bookName:'',
+           //selectedOption: undefined,
+           //this: this.reset
+          });
     }
 
     onMarkerDragEnd =(event) => {
@@ -154,13 +129,12 @@ class Map extends Component {
             defaultZoom={15}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             >
-                {this.state.markers.map((marker, index) => (
+                {this.state.stores.map((marker, index) => (
                     <Marker
                     onClick={this.onMarkerClick}
                     // draggable={true}
                     // onDragEnd={this.onMarkerDragEnd}
                     position={marker.position}
-                    
                     >
                         <InfoWindow>
                             <div>{marker.name}</div>
@@ -210,13 +184,13 @@ class Map extends Component {
 
                     </div>
                 
-                    <button  className="btn btn-default" style={{background : '#FEC7B5'}} type='submit'><i class="fas fa-search"></i>  Search</button>
+                    <button  className="btn btn-default" style={{background : '#FEC7B5'}} type='submit' disabled={!this.state.selectedOption && !this.state.bookName && !this.state.distict} ><i class="fas fa-search"></i>  Search</button>
                 
                     {/* Radio buttons */}
                     <div style={distictSearch2} className="float-right">
                         <br/>
                         <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation"/>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation"/>
                             <label className="custom-control-label" for="switch1">Share my Location</label>
                         </div>            
                         
@@ -229,7 +203,8 @@ class Map extends Component {
                             <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="Libraries" checked={this.state.selectedOption === "Libraries"}
                                 onChange={this.onValueChange}/>
                             <label className="custom-control-label" for="customRadio2">Libraries</label>
-                        </div>
+                        </div> 
+                        
                     </div>
                 </form>
                 
@@ -237,20 +212,21 @@ class Map extends Component {
                 <div className="heading" style={result} ><strong>Results</strong></div>
 
                 {/* cards */}
-
                 <br></br>
                 <div className="row">
-                    <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
+                     <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
                         <br/>
                         {/**/}
-                        {this.state.stores.map((store, index) => (
-                            <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
+                        {/* {this.state.stores.length > 0} */}
+                        {this.state.stores.length >0 ? this.state.stores.map((store, index) => {
+
+                            return <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
                             <div className="row">
                                 <div className="col-md-4 align-middle">
-                                    <img src={store.src} className="img-fluid  "/>
+                                    <img src={store.img} className="img-fluid  "/>
                                 </div>
                                 <div className="col-md-8">
-                                    <h4 className="card-title">{store.title}</h4>
+                                    <h4 className="card-title">{store.name}</h4>
                                     <span  className="fa fa-star checked"></span>
                                     <span  className="fa fa-star checked"></span>
                                     <span  className="fa fa-star checked"></span>
@@ -260,14 +236,12 @@ class Map extends Component {
                                     <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
                                 </div>
                             </div>
-                        </div>
-                            
-                        ))}
-
+                        </div>    
+                    }): <div></div>}
                         {/**/}
                         <br/>
-
                     </div>
+                
 
                     {/* Maps */}
                     {/* <div class="container"  style={distictSearch}>
@@ -283,6 +257,8 @@ class Map extends Component {
                             containerElement={<div style={{ height: `500px`, width:`400px` }} />}
                             mapElement={<div style={{ height: `100%` }} />}
                         />
+                       
+
                        
                     </div>
                 </div>

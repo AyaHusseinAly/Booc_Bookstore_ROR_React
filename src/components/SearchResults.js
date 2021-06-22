@@ -50,6 +50,7 @@ class SearchResults extends Component {
         
         this.setState({genres:res.data.short_stories});
         console.log(this.state.genres);
+        
        
     }
 
