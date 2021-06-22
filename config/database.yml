@@ -6,6 +6,7 @@
 #
 default: &default
 
+
   # adapter: postgresql
   # encoding: unicode
   # username: postgres
@@ -15,12 +16,13 @@ default: &default
   timeout: 5000
 
 
+
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
 
-  database: bookstore_development1
+  database: bookstore_development
 
   # database: db/development.sqlite3
 
@@ -29,10 +31,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: bookstore_test1
+  database: bookstore_test
   # database: db/test.sqlite3
 
 production:
   <<: *default
-  database: bookstore_production1
+  database: bookstore_production
   # database: db/production.sqlite3

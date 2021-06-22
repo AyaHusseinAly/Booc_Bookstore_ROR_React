@@ -24,11 +24,11 @@ class ShortStoriesController < ApplicationController
         render :json=> @genres
     end
 
-    def index
-        @stories = ShortStory.all().order("created_at DESC");
-        render :json => {stories:@stories}
+    # def index
+    #     @stories = ShortStory.all().order("created_at DESC");
+    #     render :json => {stories:@stories}
 
-    end
+    # end
 
     def getShortStories
         @NotFinishedYet=ShortStory.where(status:'Not finished yet')
@@ -39,9 +39,10 @@ class ShortStoriesController < ApplicationController
         
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
-           @chapters=ShortStoriesChapter.where(shortStory_id:params['id'])
+           @chapters=ShortStoriesChapter.where(short_story_id:params['id'])
            @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
            @genres=Genre.where(id:@genre_ids)
+
            @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')
            render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate}
         else 
@@ -54,6 +55,11 @@ class ShortStoriesController < ApplicationController
         @shortStory.save
         render :json=>{message:"request successfully"}
 
+    end
+    def addToBookmark
+        # add params['id'] of story to book mark of user 
+        #####################################################################still need to handle it
+        render :json=>{message:"request successfully"}
     end
     
 

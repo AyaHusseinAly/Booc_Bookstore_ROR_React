@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_160831) do
+ActiveRecord::Schema.define(version: 2021_06_22_122747) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -37,7 +37,9 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "short_story_id"
+    t.integer "user_id"
     t.index ["short_story_id"], name: "index_bookmarks_on_short_story_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "bookshelves", force: :cascade do |t|
@@ -73,6 +75,8 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.string "img"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "lat"
+    t.float "lng"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -102,6 +106,15 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "short_story_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_likes_on_short_story_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.string "type"
     t.text "body"
@@ -109,16 +122,25 @@ ActiveRecord::Schema.define(version: 2021_06_17_160831) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "short_stories" because of following StandardError
-#   Unknown type 'attachment' for column 'cover_image'
+  create_table "short_stories", force: :cascade do |t|
+    t.string "title"
+    t.string "cover"
+    t.string "target_audiance"
+    t.text "summary"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_short_stories_on_user_id"
+  end
 
   create_table "short_stories_chapters", force: :cascade do |t|
     t.string "title"
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "shortStory_id"
-    t.index ["shortStory_id"], name: "index_short_stories_chapters_on_shortStory_id"
+    t.integer "short_story_id"
+    t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
   create_table "short_story_genres", force: :cascade do |t|

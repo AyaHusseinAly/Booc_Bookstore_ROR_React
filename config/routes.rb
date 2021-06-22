@@ -27,8 +27,10 @@ get '/member-data', to: 'members#show'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
   get '/shortStories' ,to:'short_stories#getShortStories'
   post '/createChapter' , to:'chapters#create'
+  get '/communityPosts' , to:'chapters#posts'
+
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
-  
+  post '/addToBookmark' ,to:'short_stories#addToBookmark'
 
 
 end
