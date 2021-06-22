@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_18_142643) do
+
+ActiveRecord::Schema.define(version: 202106171608311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,19 +42,17 @@ ActiveRecord::Schema.define(version: 2021_06_18_142643) do
     t.string "jti", null: false
     t.string "aud", null: false
     t.datetime "exp", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_allowlist_jwts_on_user_id"
   end
 
-  create_table "allowlisted_jwts", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "jti", null: false
-    t.string "aud", null: false
-    t.datetime "exp", null: false
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -96,6 +95,8 @@ ActiveRecord::Schema.define(version: 2021_06_18_142643) do
     t.string "img"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "lat"
+    t.float "lng"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -125,6 +126,15 @@ ActiveRecord::Schema.define(version: 2021_06_18_142643) do
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "short_story_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_likes_on_short_story_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.string "type"
     t.text "body"
@@ -147,6 +157,8 @@ ActiveRecord::Schema.define(version: 2021_06_18_142643) do
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "short_story_id"
+    t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -184,12 +196,15 @@ ActiveRecord::Schema.define(version: 2021_06_18_142643) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "allowlist_jwts", "users", on_delete: :cascade
-  add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
   add_foreign_key "bookmarks", "short_stories"
   add_foreign_key "bookstore_books", "bookstores"
   add_foreign_key "bookstore_rate_reviews", "bookstores"
   add_foreign_key "comments", "short_stories_chapters"
+
+  add_foreign_key "likes", "short_stories"
+  add_foreign_key "likes", "users"
+  add_foreign_key "short_stories_chapters", "short_stories"
+
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
