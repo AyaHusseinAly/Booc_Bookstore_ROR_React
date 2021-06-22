@@ -7,6 +7,7 @@
 default: &default
 
 
+
   # adapter: postgresql
   # encoding: unicode
   # username: postgres
@@ -14,7 +15,6 @@ default: &default
   # host: localhost
   adapter: sqlite3
   timeout: 5000
-
 
 
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
