@@ -34,12 +34,16 @@ class Map extends Component {
             longitudeOfMyPosition: '',
             
             showingInfoWindow: false,
-            activeMarker: false,
+            activeMarker: true,
             selectedPlace: {},
+            isOpen: false,
+            markerInfoWindow: [0],
         }
     }
 
-    onMarkerClick = (props, marker,e) =>{
+    
+
+    onMarkerClick = (props, marker) =>{
         this.setState({
             selectedPlace: props,
             showingInfoWindow:  marker,
@@ -47,6 +51,7 @@ class Map extends Component {
             
         });
     }
+   
 
     onMapClicked = (props) => {
         if(this.state.showingInfoWindow){
@@ -134,6 +139,11 @@ class Map extends Component {
         });
         this.setState({ stores: res.data.stores});
         console.log(this.state.stores);
+        // for (let i =0;i<res.data.stores.length;i++){
+
+        // }
+        this.setState({markerInfoWindow:Array(res.data.stores.length).fill(0)})
+        console.log(this.state.markerInfoWindow)
         console.log(res);
         console.log(this.state.selectedOption);
         this.setState({
@@ -185,12 +195,12 @@ class Map extends Component {
           
         };
 
-        const bordeer = {
-            width: '1500px',
-            height: '100px',
-            border: '1px solid blue',
-            boxSizing: 'border-box',
+        const border = {
+           // borderRadius: '10px 10px',
+            border: '4px solid #F8A488',
+            //boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.7)',
           };
+
         /******************** End of Styling ***********************************/
 
         /******************** Markers ***********************************/
@@ -202,7 +212,7 @@ class Map extends Component {
             >
                 {this.state.stores.map((marker, index) => (
                     <Marker
-                    onClick = {this.onMarkerClick}
+                    onClick = {() => this.onMarkerClick(props, marker)}
                     key={index}
                     //{...marker}
                     // draggable={true}
@@ -286,59 +296,72 @@ class Map extends Component {
                 </form>
                 
                 <br></br>
-                <div className="heading" style={result} ><strong>Results</strong></div>
+                {this.state.stores.length >0 ?
+                    <div>
+                        <div className="heading" style={result} ><strong>Results</strong></div>
 
-                {/* cards */}
-                <br></br>
-                <div className="row">
-                     <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
-                        <br/>
-                        {/**/}
-                        {/* {this.state.stores.length > 0} */}
-                        {this.state.stores.length >0 ? this.state.stores.map((store, index) => {
-
-                            return <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
-                            <div className="row">
-                                <div className="col-md-4 align-middle">
-                                    <img src={store.img} className="img-fluid  "/>
-                                </div>
-                                <div className="col-md-8">
-                                    <h4 className="card-title">{store.name}</h4>
-                                    <span  className="fa fa-star checked"></span>
-                                    <span  className="fa fa-star checked"></span>
-                                    <span  className="fa fa-star checked"></span>
-                                    <span  className="fa fa-star"></span>
-                                    <span  className="fa fa-star"></span><br/>
-                                    <span><i className="fas fa-map-marker-alt"></i> 1.2 km</span><br/>
-                                    <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
-                                </div>
+                        {/* cards */}
+                        <br></br>
+                        <div className="row">
+                            <div className="container mt-3 rounded-sm col-lg-7 col-md-7" style={distictSearch}>
+                                <br/>
+                                {/**/}
+                                {/* {this.state.stores.length > 0} */}
+                                {this.state.stores.length >0 ? this.state.stores.map((store, index) => {
+                                    return <div  className="card col-md-12 mt-3 shadow" style={{border: "none"}}>
+                                    <div className="row">
+                                        <div className="col-md-4 align-middle">
+                                            <img src={store.img} className="img-fluid  "/>
+                                        </div>
+                                        <div className="col-md-8">
+                                            <h4 className="card-title">{store.name}</h4>
+                                            <span  className="fa fa-star checked"></span>
+                                            <span  className="fa fa-star checked"></span>
+                                            <span  className="fa fa-star checked"></span>
+                                            <span  className="fa fa-star"></span>
+                                            <span  className="fa fa-star"></span><br/>
+                                            <span><i className="fas fa-map-marker-alt"></i> 1.2 km</span><br/>
+                                            <span><i className="fa fa-phone" aria-hidden="true"></i> +03 4875921</span>
+                                        </div>
+                                    </div>
+                                </div>    
+                                }): <div></div>}
+                                
+                                {/**/}
+                                <br/>
                             </div>
-                        </div>    
-                    }): <div></div>}
-                        {/**/}
-                        <br/>
-                    </div>
-                
+                        
 
-                    {/* Maps */}
-                    {/* <div class="container"  style={distictSearch}>
-                        <div class="options-box">
-                    
+                            {/* Maps */}
+                            {/* <div class="container"  style={distictSearch}>
+                                <div class="options-box">
+                            
+                                </div>
+                                <div id="map"></div>
+                            </div>   */}
+                            <div className="col-md-5 d-flex justify-content-center" style={{}}>
+                                <MapWithAMarker
+                                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA&v=3.exp&libraries=geometry,drawing,places"
+                                    loadingElement={<div style={{ height: `100%`, width:`100%` }} />}
+                                    containerElement={<div style={{ height: `500px`, width:`800px` }} />}
+                                    mapElement={<div style={{ height: `100%` }} />}
+                                />
+                            </div>
                         </div>
-                        <div id="map"></div>
-                    </div>   */}
-                    <div className="col-md-5" style={{}}>
-                        <MapWithAMarker
-                            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA&v=3.exp&libraries=geometry,drawing,places"
-                            loadingElement={<div style={{ height: `100%`, width:`100%` }} />}
-                            containerElement={<div style={{ height: `500px`, width:`400px` }} />}
-                            mapElement={<div style={{ height: `100%` }} />}
-                        />
-                       
+                    </div>:
 
-
+                    <div>
+                        <br/>
+                        <div className='d-flex justify-content-center ' style={{border: '2px solid #F8A488',borderRadius: '5px!important'}}>
+                            <MapWithAMarker
+                                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA&v=3.exp&libraries=geometry,drawing,places"
+                                loadingElement={<div style={{ height: `100%`, width:`100%` }} />}
+                                containerElement={<div style={{ height: `500px`, width:`1150px` }} />}
+                                mapElement={<div style={{ height: `100%` }} />}
+                            />
+                        </div>
                     </div>
-                </div>
+                    }
                 <br/>
         </div>
     );
