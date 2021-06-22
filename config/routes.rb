@@ -27,6 +27,11 @@ get '/member-data', to: 'members#show'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
   get '/shortStories' ,to:'short_stories#getShortStories'
   post '/createChapter' , to:'chapters#create'
+
+  get 'bookstores/allbookstores', to:'bookstores#allbookstores'
+  get 'bookstores/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
+
+
   
 
 
