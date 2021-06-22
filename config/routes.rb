@@ -41,6 +41,6 @@ post '/logged_in', to: 'members#is_logged_in?'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
   post '/addToBookmark' ,to:'short_stories#addToBookmark'
-
+  post '/removeFromBookmark' ,to: 'short_stories#removeFromBookmark'
 
 end

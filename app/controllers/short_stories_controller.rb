@@ -77,8 +77,12 @@ class ShortStoriesController < ApplicationController
             @login=User.find(params[:login])
            end
            @writer=User.find(@shortStory.user_id)
+           @bookmarked_flag=false
+           if Bookmark.where(short_story_id: params[:id], user_id:params[:login]).length>0
+            @bookmarked_flag=true
+           end
            @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')
-           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login}
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag}
         else 
             render :json=>{message:"bad request"}  
         end     
@@ -95,6 +99,15 @@ class ShortStoriesController < ApplicationController
         #####################################################################still need to handle it
         @bookmark=Bookmark.create( short_story_id: params[:story_id], user_id:params[:user_id])
         render :json=>{message:"added to bookmark successfully",Bookmark:@bookmark}
+    end
+    
+    def removeFromBookmark
+        if Bookmark.where( short_story_id: params[:story_id], user_id:params[:user_id]).length > 0
+            Bookmark.where( short_story_id: params[:story_id], user_id:params[:user_id]).delete_all
+            render :json=>{message:"removed from bookmark successfully"}
+        else 
+            render :json=>{message:"it is not in your bookmark already"}
+        end
     end
     
 
