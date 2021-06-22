@@ -30,6 +30,7 @@ get '/member-data', to: 'members#show'
 
   get '/allbookstores', to:'bookstores#allbookstores'
   get '/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
+  post 'bookStoreSearchFromMap', to:'bookstores#search'
 
 
   get '/communityPosts' , to:'chapters#posts'
