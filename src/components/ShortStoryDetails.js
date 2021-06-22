@@ -47,6 +47,7 @@ class ShortStoryDetails extends Component {
             chapters: [],
             genre: [],
             date: '',
+            image:'',
             likes: [
                 { user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", user_id: '1' },
                 { user_name: 'Mona Youssef', user_img: "img/avatar.jpeg", user_id: '2' },
@@ -92,6 +93,7 @@ class ShortStoryDetails extends Component {
         this.setState({ chapters: res.data.chapters });
         this.setState({ genre: res.data.genres });
         this.setState({ date: res.data.date })
+        this.setState({image: res.data.image});
 
     }
     render() {
@@ -158,7 +160,7 @@ class ShortStoryDetails extends Component {
                             <div className="col-xs-12 col-sm-12 col-md-5 col-lg-3">
                                 <div className="parent-box">
                                     <div className="box-img text-center">
-                                        <img src={this.state.shortStory.cover} style={{ width: '400px' }} />
+                                        <img src={this.state.image} style={{ width: '400px' }} />
                                         <div className="button">
                                             {this.state.shortStory.status == 'Not finished yet' && <div> <AddChapter shortStory={this.state.shortStory.id} />
                                                 <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}

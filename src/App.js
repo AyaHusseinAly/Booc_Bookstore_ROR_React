@@ -81,6 +81,7 @@ class App extends Component {
       avatar:""
     }
     this.handleLogin=this.handleLogin.bind(this);
+    // this.handleRedirect=this.handleRedirect.bind(this);
     // this.handleLogout=this.handleLogout.bind(this);
   }
    is_logged_in(user_id){
@@ -126,6 +127,9 @@ class App extends Component {
     });
     localStorage.setItem("user_id",data.user.id);
   }
+  // handleRedirect(){
+  //       this.props.history.push('/login');
+  // }
   
   componentDidMount(){
     if(localStorage.getItem("user_id")){
@@ -137,7 +141,7 @@ class App extends Component {
   return (
     <div>
       <Header
-        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar}>
+        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect}>
       </Header>
       <div style={{minHeight:400}}>
       <Switch>
@@ -146,6 +150,13 @@ class App extends Component {
           exact 
           render={props => (
             <Home { ... props} loggedInStatus={this.state.loggedInStatus} />
+          )}
+          />
+           <Route 
+          path="/meh"
+          exact 
+          render={props => (
+            <Header { ... props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
           )}
           />
           <Route path="/genre/:id" exact component={Genre}/>

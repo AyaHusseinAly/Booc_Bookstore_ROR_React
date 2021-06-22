@@ -212,6 +212,7 @@ class Map extends Component {
                         <InfoWindow
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}
+                            position={marker.position}
                         >
                             <div><h6>{marker.name}</h6></div>
                         </InfoWindow>
