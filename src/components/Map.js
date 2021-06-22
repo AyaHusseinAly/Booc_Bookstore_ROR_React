@@ -37,10 +37,8 @@ class Map extends Component {
             ],
             stores: [
             ],
-
         }
     }
-
     onValueChange= (event) => {
         this.setState({
           selectedOption: event.target.value
@@ -52,14 +50,14 @@ class Map extends Component {
         const data = new FormData(e.target);
         const obj = {
             bookName: this.state.bookName,
-            selectedOption: this.state.selectedOption,
+            //selectedOption: this.state.selectedOption,
+            selectedOption: this.state.selectedValue,
             distict: this.state.distict,
-
         }
         Object.keys(this.state).forEach((key, value) => {
                 return data.append(key, this.state[key])
         })
-
+    
         const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -70,6 +68,13 @@ class Map extends Component {
         this.setState({ stores: res.data.stores});
         console.log(this.state.stores);
         console.log(res);
+        console.log(this.state.selectedOption);
+        this.setState({
+            distict:'',
+            bookName:'',
+           //selectedOption: undefined,
+           //this: this.reset
+          });
     }
 
     onMarkerDragEnd =(event) => {
@@ -179,13 +184,13 @@ class Map extends Component {
 
                     </div>
                 
-                    <button  className="btn btn-default" style={{background : '#FEC7B5'}} type='submit'><i class="fas fa-search"></i>  Search</button>
+                    <button  className="btn btn-default" style={{background : '#FEC7B5'}} type='submit' disabled={!this.state.selectedOption && !this.state.bookName && !this.state.distict} ><i class="fas fa-search"></i>  Search</button>
                 
                     {/* Radio buttons */}
                     <div style={distictSearch2} className="float-right">
                         <br/>
                         <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation"/>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation"/>
                             <label className="custom-control-label" for="switch1">Share my Location</label>
                         </div>            
                         
@@ -198,7 +203,8 @@ class Map extends Component {
                             <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="Libraries" checked={this.state.selectedOption === "Libraries"}
                                 onChange={this.onValueChange}/>
                             <label className="custom-control-label" for="customRadio2">Libraries</label>
-                        </div>
+                        </div> 
+                        
                     </div>
                 </form>
                 
@@ -251,6 +257,8 @@ class Map extends Component {
                             containerElement={<div style={{ height: `500px`, width:`400px` }} />}
                             mapElement={<div style={{ height: `100%` }} />}
                         />
+                       
+
                        
                     </div>
                 </div>
