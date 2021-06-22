@@ -12,7 +12,18 @@ class Community extends Component {
     state={
         posts:[],
     }
+    
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
+
+
+        // const res=await axios.get('http://localhost:3000/api/shortStories',
+        // {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
+        // "Access-Control-Allow-Methods": "GET, POST, PUT",
+        // "Access-Control-Allow-Headers": "Content-Type"}})
+        
+        // this.setState({stories:res.data.stories});
+        
+        // console.log(this.state.stories);
 
         axios.get('http://localhost:3000/communityPosts',
         {headers: {"Access-Control-Allow-Origin": "*",
@@ -22,10 +33,9 @@ class Community extends Component {
             console.log(this.state.posts);        
 
         });
-     
-        
        
     }
+   
 
     render() {
 
