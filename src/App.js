@@ -15,6 +15,7 @@ import Genre from './components/Genre';
 import GoogleAPI from './classes/GoogleAPI';
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
+import axios from 'axios';
 
 import React, { Component } from 'react';
 
@@ -50,23 +51,87 @@ class App extends Component{
     super();
     this.state={
       loggedInStatus: "NOT_LOGGED_IN",
-      user: {}
+      user: {},
+      avatar:""
     }
     this.handleLogin=this.handleLogin.bind(this);
+    this.handleLogout=this.handleLogout.bind(this);
   }
+   is_logged_in(user_id){
+      axios.post("http://localhost:3000/logged_in",
+      {
+        member:{
+          id: user_id
+        }
+      },
+      {headers: {"Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT",
+      "Access-Control-Allow-Headers": "Content-Type"}}
+        // {headers:
+        //    {
+        //    "Access-Control-Allow-Origin": "*",
+        //   "Access-Control-Allow-Methods": "GET, POST, PUT",
+        //   "Access-Control-Allow-Headers": "Content-Type",
+        // "Access-Control-Allow-Credentials":"true"}},
+        // {withCredentials:true}
+        )
+        .then(response=>{
+          if(Object.keys(response.data.user).length>0){
+          console.log(response);
+          this.setState({
+            user:response.data.user,
+            avatar: response.data.avatar,
+            loggedInStatus: true
+          })
+          }
+        })
+        .catch(error=>{
+          console.log(error);
+        })
+      
+  }
+  
   handleLogin(data){
-    console.log(data.user);
+    console.log(data);
     this.setState({
       loggedInStatus : "LOGGED_IN",
-      user: data.user
+      user: data.user,
+      avatar: data.avatar
     });
+    localStorage.setItem("user_id",data.user.id);
+  }
+  async handleLogout(){
+    await  axios.delete("http://localhost:3000/users")
+    .then(response=>{
+      if(response.data.message === 'signout success'){
+      this.setState({
+        loggedInStatus : "NOT_LOGGED_IN",
+        user : {},
+        avatar: ""
+      })
+      localStorage.removeItem("user_id");
+      }
+    })
+    .catch(error=>{
+      console.log(error);
+    })
+    this.setState({
+      loggedInStatus : "NOT_LOGGED_IN",
+      user : {},
+      avatar: ""
+    })
+  }
+  componentDidMount(){
+    if(localStorage.getItem("user_id")){
+       this.is_logged_in(localStorage.getItem("user_id"))
+    }
   }
   
   render(){
   return (
     <div>
       <Header
-        loggedInStatus={this.state.loggedInStatus} user={this.state.user}>
+        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleLogout={this.handleLogout}>
       </Header>
       <div style={{minHeight:400}}>
       <Switch>

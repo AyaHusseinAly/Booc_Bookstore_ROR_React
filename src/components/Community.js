@@ -8,17 +8,20 @@ class Community extends Component {
     state={
         stories:[]
     }
+    
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
 
         const res=await axios.get('http://localhost:3000/api/shortStories',
-        {headers: {"Access-Control-Allow-Origin": "*",
+        {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
-        "Access-Control-Allow-Headers": "Content-Type"}});
+        "Access-Control-Allow-Headers": "Content-Type"}})
         
         this.setState({stories:res.data.stories});
+        
         console.log(this.state.stories);
        
     }
+   
 
     render() {
         const onSearch = () =>{ 

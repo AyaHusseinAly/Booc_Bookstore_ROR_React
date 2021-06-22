@@ -38,13 +38,18 @@ class Registration extends Component {
                 bio: this.state.bio
             }
         },
-        {withCredentials: false}
+        {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
+        "Access-Control-Allow-Methods": "GET, POST, PUT",
+        "Access-Control-Allow-Headers": "Content-Type"}}
+        // {headers: {
+        //     "Access-Control-Allow-Credentials":"true"}},
+        // {withCredentials: true}
         )
         .then(response => {
             console.log(response.data);
             if (response.data.message === 'Register success'){
                 console.log("reg successful");
-                this.handleSuccessfulAuth(response.data);
+                this.handleSuccessfulAuth(response.data.user);
             }
             else if (response.data.message === 'Something went wrong'){
                 this.setState({
@@ -79,12 +84,14 @@ class Registration extends Component {
             }
         }
         return ( 
-            <div className="outer">
+            <div className="outer" style={{background: `url('${process.env.PUBLIC_URL}/img/home_backgrnd.png')`}}>
                     
             <div className="mt-3 inner">
+            { errors.length > 0 &&
             <div className="alert alert-danger m-4">
                         {errors}
                     </div>
+            }
                 <form onSubmit={this.handleSubmit}>
                 <h3>Register</h3>
                 <br/>
@@ -158,7 +165,7 @@ class Registration extends Component {
                     onChange={this.handleChange}></textarea>
                 </div>
 
-                <div className="form-group mb-5">
+                {/* <div className="form-group mb-5">
                     <label>Date of birth</label>
                     <DatePicker
                     className="form-control" 
@@ -166,7 +173,7 @@ class Registration extends Component {
                     onChange={this.handleChange}
                     value={this.state.dob} 
                     />
-                </div>
+                </div> */}
                 
 
                 <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
