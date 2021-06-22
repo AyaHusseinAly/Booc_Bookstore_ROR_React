@@ -58,7 +58,11 @@ class ShortStoryDetails extends Component {
                 { user_name: 'Eman Hussein', user_img: "img/avatar.jpeg", user_id: '3' },
                 { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' }
             ],
-            writer: {}
+            writer: {},
+            bookmark_flag: false,
+            bookmark_style: {},
+            bookmark_method: "",
+            bookmark_string: ""
         }
 
     }
@@ -97,16 +101,27 @@ class ShortStoryDetails extends Component {
         this.setState({ date: res.data.date })
         this.setState({ image: res.data.image });
         this.setState({ writer: res.data.writer });
+        this.setState({ bookmark_flag: res.data.bookmarked_flag })
+        if (res.data.bookmarked_flag == false) {
+            this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
+            this.setState({ bookmark_string: "Add To Bookmark" });
+            this.setState({ bookmark_method: "addToBookmark" });
+        }
+        else if (res.data.bookmarked_flag == true) {
+            this.setState({ bookmark_style: { backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', borderColor: "#F8A488" } });
+            this.setState({ bookmark_string: "Remove from Bookmark" });
+            this.setState({ bookmark_method: "removeFromBookmark" });
+        }
 
 
     }
-    addToBookmark = async (id) => {
+    addToBookmark = async (id, url) => {
         let data = {
             story_id: id,
             user_id: localStorage.getItem('user_id')
 
         }
-        const res = await axios.post("http://localhost:3000/addToBookmark", data, {
+        const res = await axios.post(`http://localhost:3000/${url}`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -116,8 +131,19 @@ class ShortStoryDetails extends Component {
         });
 
         console.log(res);
+        if (url == "addToBookmark") {
+            this.setState({ bookmark_style: { backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', borderColor: "#F8A488" } });
+            this.setState({ bookmark_string: "Remove from Bookmark" });
+            this.setState({ bookmark_method: "removeFromBookmark" });
+        }
+        else if (url == "removeFromBookmark") {
+            this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
+            this.setState({ bookmark_string: "Add To Bookmark" });
+            this.setState({ bookmark_method: "addToBookmark" });
+        }
 
     }
+
     render() {
 
 
@@ -137,6 +163,10 @@ class ShortStoryDetails extends Component {
                                                 <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
                                                     onClick={() => this.setStoryStatus(this.state.shortStory.id)}>Finish</div>
                                             </div>}
+                                            {this.state.shortStory.user_id != localStorage.getItem('user_id') && <div className="btn rounded-corners" style={this.state.bookmark_style}
+                                                onClick={() => {
+                                                    this.addToBookmark(this.state.shortStory.id, this.state.bookmark_method)
+                                                }}> <i className="fa fa-heart mr-3"></i>{this.state.bookmark_string}</div>}
 
                                         </div>
                                     </div>
@@ -174,7 +204,7 @@ class ShortStoryDetails extends Component {
                                     </div>
 
                                     <ul className="list-unstyled details" style={{}}>
-                                        {this.state.shortStory.user_id != localStorage.getItem('user_id') && <li><span>Author</span> {this.state.writer.name}_ <p style={{ color: "#263044", fontSize: ".85rem", margin: '0', padding: "0", tetxtAlign: "center", display: "inline-block" }}> {this.state.writer.username}</p> _</li>}
+                                        {this.state.shortStory.user_id != localStorage.getItem('user_id') && <li><span>Author</span>: {this.state.writer.name}_ <p style={{ color: "#263044", fontSize: ".85rem", margin: '0', padding: "0", tetxtAlign: "center", display: "inline-block" }}> {this.state.writer.username}</p> _</li>}
                                         <li><span>No. Of Chapters</span>: {this.state.chapters.length}</li>
                                         <li><span>Publication Date</span>: {this.state.date}</li>
                                     </ul>
