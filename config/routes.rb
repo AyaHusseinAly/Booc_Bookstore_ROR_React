@@ -50,5 +50,6 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/removeFromBookmark' ,to: 'short_stories#removeFromBookmark'
   post '/followWriter',to:'short_stories#followWriter'
   post '/unFollowWriter',to:'short_stories#unFollowWriter'
+  post '/addRateReviewStory',to:'short_stories#addRateReviewStory'
 
 end

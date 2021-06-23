@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_23_091336) do
+ActiveRecord::Schema.define(version: 2021_06_23_160156) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -189,6 +189,17 @@ ActiveRecord::Schema.define(version: 2021_06_23_091336) do
     t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
+  create_table "short_stories_rating_reviews", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "short_story_id"
+    t.string "review"
+    t.float "rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_short_stories_rating_reviews_on_short_story_id"
+    t.index ["user_id"], name: "index_short_stories_rating_reviews_on_user_id"
+  end
+
   create_table "short_story_genres", force: :cascade do |t|
     t.integer "genre_id"
     t.integer "short_story_id"
@@ -205,6 +216,17 @@ ActiveRecord::Schema.define(version: 2021_06_23_091336) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_story_id"], name: "index_story_rate_reviews_on_short_story_id"
+  end
+
+  create_table "story_rating_reviews", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "short_story_id"
+    t.string "review"
+    t.float "rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_story_rating_reviews_on_short_story_id"
+    t.index ["user_id"], name: "index_story_rating_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

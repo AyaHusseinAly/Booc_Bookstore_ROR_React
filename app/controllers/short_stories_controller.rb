@@ -10,13 +10,6 @@ class ShortStoriesController < ApplicationController
 
     end
     def create 
-        # @shortstory=ShortStory.create(title:params['shortStoryTitle'],summary:params['shortStoryDescription'], cover:params['shortStoryCover'],target_audiance:params['shortStoryAudience'],status:'Not finished yet')
-        # params['shortStoryGenre'].each do |genre|
-        #     @genre=Genre.find(genre)
-        #     ShortStoryGenre.create(genre:@genre,short_story:@shortstory)
-        # end
-        # @shortstory.cover_image.attach(params['shortStoryCover'])
-        # rails_blob_path(object.images, only_path: true)
         @shortstory=ShortStory.create(title:params['shortStoryTitle'],summary:params['shortStoryDescription'], cover:'',target_audiance:params['shortStoryAudience'],status:'Not finished yet',user_id:params['writer'])
         params['shortStoryGenre'].split(',').each do |genre|
             @genre=Genre.find(genre)
@@ -61,8 +54,7 @@ class ShortStoriesController < ApplicationController
         end
         render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
     end
-    def show
-        
+    def show    
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
            @chapters=ShortStoriesChapter.where(short_story_id:params['id'])
@@ -86,7 +78,36 @@ class ShortStoriesController < ApplicationController
             @followed_flag=true
            end
            @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')
-           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag}
+           @reviews=[];
+           StoryRatingReview.where(short_story_id:params['id'] ).each do |rateReview|
+            user=User.find(rateReview.user_id)
+            if user&.avatar&.attached?
+                objreview={
+                    id:rateReview.id,
+                    user_id:rateReview.user_id,
+                    user_name:User.find(rateReview.user_id).name,
+                    user_avatar:rails_blob_url(user.avatar),
+                    review:rateReview.review,
+                    rate:rateReview.rate
+            }
+            else
+                objreview={
+                    id:rateReview.id,
+                    user_id:rateReview.user_id,
+                    user_name:User.find(rateReview.user_id).name,
+                    user_avatar:"",
+                    review:rateReview.review,
+                    rate:rateReview.rate
+            }
+            end
+            
+            @reviews.push(objreview);
+           end
+           @review_flag=false
+           if StoryRatingReview.where(short_story_id:params['id'] ,user_id:params[:login])
+            @review_flag=true
+           end
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag,reviews:@reviews,review_flag:@review_flag}
         else 
             render :json=>{message:"bad request"}  
         end     
@@ -124,6 +145,26 @@ class ShortStoriesController < ApplicationController
         else 
             render :json=>{message:"you already don't follow this writer"}
         end
+    end
+    def addRateReviewStory
+        @message=""
+        @rewiew={}
+        if params[:rating] 
+            if User.where(id:params[:user_id]).length > 0 && ShortStory.where(id:params[:story_id]).length > 0 
+                @review=StoryRatingReview.create(user_id:params[:user_id],short_story_id:params[:story_id],rate:params[:rating])
+                if params[:review] 
+                    @review.review=params[:review]
+                    @review.save
+                end
+                @message="successfully add rate and review"
+            else
+            @message="bad request ,user or short story not found" 
+            end
+
+        else
+            @message="bad request ,rating is requred"  
+        end
+        render :json=>{message:@message,rate_review:@reviewrails}
     end
     
 
