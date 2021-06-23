@@ -35,23 +35,79 @@ class ShortStoriesController < ApplicationController
     # end
 
     def getShortStories
-        @Finished=ShortStory.where(status:'finished')
-        @NotFinishedYet=ShortStory.where(status:'Not finished yet')
-        @NotFinishedYet.each do |story|
+        @Finished=[]
+        @NotFinishedYet=[]
+        ShortStory.where(status:'Not finished yet').each do |story|
             @image=""
             if story&.image&.attached?
              @image= rails_blob_url(story.image)
             end 
-            story[:cover]=@image
+            @allReviews=StoryRatingReview.where(short_story_id:story.id )
+            @storyRate=StoryRatingReview.where(short_story_id:story.id ).sum(:rate)
+            if @allReviews.length > 0
+                @storyRate = @storyRate/@allReviews.length
+                if @storyRate - @storyRate.to_i < 0.25
+                    @storyRate=@storyRate.to_i 
+                elsif @storyRate - @storyRate.to_i < 0.75
+                    @storyRate=@storyRate.to_i + 0.5
+                else
+                    @storyRate=@storyRate.to_i +1
+                end    
+            end
+            obj={
+                id:story.id,
+                title:story.title,
+                cover:@image,
+                target_audiance:story.target_audiance,
+                summary:story.summary,
+                status:story.status,
+                created_at:story.created_at,
+                user_id:story.user_id,
+                rate:@storyRate
+
+            }
+            @NotFinishedYet.push(obj);
             
         end
-        @Finished.each do |story|
-            @image=""
-            if story&.image&.attached?
-             @image= rails_blob_url(story.image)
-            end 
-            story[:cover]=@image
+        # @Finished.each do |story|
+        #     @image=""
+        #     if story&.image&.attached?
+        #      @image= rails_blob_url(story.image)
+        #     end 
+        #     story[:cover]=@image
+        # end
+        ShortStory.where(status:'finished').each do |story|
+        @image=""
+        if story&.image&.attached?
+         @image= rails_blob_url(story.image)
+        end 
+        @allReviews=StoryRatingReview.where(short_story_id:story.id )
+        @storyRate=StoryRatingReview.where(short_story_id:story.id ).sum(:rate)
+        if @allReviews.length > 0
+            @storyRate = @storyRate/@allReviews.length
+            if @storyRate - @storyRate.to_i < 0.25
+                @storyRate=@storyRate.to_i 
+            elsif @storyRate - @storyRate.to_i < 0.75
+                @storyRate=@storyRate.to_i + 0.5
+            else
+                @storyRate=@storyRate.to_i +1
+            end    
         end
+        obj={
+            id:story.id,
+            title:story.title,
+            cover:@image,
+            target_audiance:story.target_audiance,
+            summary:story.summary,
+            status:story.status,
+            created_at:story.created_at,
+            user_id:story.user_id,
+            rate:@storyRate
+
+        }
+        @Finished.push(obj);
+        
+    end
         render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
     end
     def show    
@@ -78,36 +134,49 @@ class ShortStoriesController < ApplicationController
             @followed_flag=true
            end
            @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')
-           @reviews=[];
-           StoryRatingReview.where(short_story_id:params['id'] ).each do |rateReview|
-            user=User.find(rateReview.user_id)
-            if user&.avatar&.attached?
-                objreview={
-                    id:rateReview.id,
-                    user_id:rateReview.user_id,
-                    user_name:User.find(rateReview.user_id).name,
-                    user_avatar:rails_blob_url(user.avatar),
-                    review:rateReview.review,
-                    rate:rateReview.rate
-            }
-            else
-                objreview={
-                    id:rateReview.id,
-                    user_id:rateReview.user_id,
-                    user_name:User.find(rateReview.user_id).name,
-                    user_avatar:"",
-                    review:rateReview.review,
-                    rate:rateReview.rate
-            }
-            end
+           @reviews=[]
+           @storyRate=0
+           @allReviews=StoryRatingReview.where(short_story_id:params['id'] )
+           @allReviews.each do |rateReview|
+                user=User.find(rateReview.user_id)
+                @storyRate=@storyRate+rateReview.rate
+                if user&.avatar&.attached?
+                    objreview={
+                        id:rateReview.id,
+                        user_id:rateReview.user_id,
+                        user_name:User.find(rateReview.user_id).name,
+                        user_avatar:rails_blob_url(user.avatar),
+                        review:rateReview.review,
+                        rate:rateReview.rate
+                }
+                else
+                    objreview={
+                        id:rateReview.id,
+                        user_id:rateReview.user_id,
+                        user_name:User.find(rateReview.user_id).name,
+                        user_avatar:"",
+                        review:rateReview.review,
+                        rate:rateReview.rate
+                }
+                end
             
-            @reviews.push(objreview);
+                @reviews.push(objreview);
+           end
+           if @allReviews.length > 0
+            @storyRate = @storyRate/@allReviews.length
+            if @storyRate - @storyRate.to_i < 0.25
+                @storyRate=@storyRate.to_i 
+            elsif @storyRate - @storyRate.to_i < 0.75
+                @storyRate=@storyRate.to_i + 0.5
+            else
+                @storyRate=@storyRate.to_i +1
+            end    
            end
            @review_flag=false
-           if StoryRatingReview.where(short_story_id:params['id'] ,user_id:params[:login])
+           if StoryRatingReview.where(short_story_id:params['id'] ,user_id:params[:login]).length >0
             @review_flag=true
            end
-           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag,reviews:@reviews,review_flag:@review_flag}
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag,reviews:@reviews,review_flag:@review_flag,storyRate:@storyRate}
         else 
             render :json=>{message:"bad request"}  
         end     
