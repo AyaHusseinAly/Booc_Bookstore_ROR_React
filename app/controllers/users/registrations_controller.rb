@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def registration_params
-    params.require(:user).permit(:email, :name, :bio, :dob, 
+    params.permit(:email, :name, :bio, :dob, 
       :username, :password, :password_confirmation, :avatar)
   end
   
