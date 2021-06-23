@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../style/admin.css';
 import BookRow from './BookRow';
 import AdminReports from './AdminReports';
+import AdminBookStores from './AdminBookStores';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import { Tabs } from 'antd';
@@ -42,7 +43,7 @@ class Admin extends Component {
                           <AdminReports></AdminReports>
                     </TabPane>  
                     <TabPane tab="Bookstores" key="2">
-                    <div className="container books_container">
+                    {/* <div className="container books_container">
                             <BookRow items={this.state.fiction.slice(0,6)}></BookRow>
                             <BookRow items={this.state.thriller.slice(0,6)}></BookRow>
                             <BookRow items={this.state.horror.slice(0,6)}></BookRow>
@@ -52,9 +53,8 @@ class Admin extends Component {
                           <a href="#collapse" style={{textAlign: "center"}} >  More... </a>
 
                         </div>
-
-                        
-                      </div>
+                      </div> */}
+                      <AdminBookStores></AdminBookStores>
                     </TabPane>
                                       
           </Tabs>

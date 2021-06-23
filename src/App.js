@@ -16,7 +16,8 @@ import GoogleAPI from './classes/GoogleAPI';
 import FavoritesPage from "./components/FavoritesPage";
 import BookShelf from "./components/BookShelf";
 import ShortStoryDetails from './components/ShortStoryDetails';
-import BookRowSlide from './components/BookRowSlide'
+import BookRowSlide from './components/BookRowSlide';
+
 
 
 import Registration from './components/auth/Registration';

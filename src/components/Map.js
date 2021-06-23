@@ -150,7 +150,6 @@ class Map extends Component {
           selectedOption: event.target.value
         });
     } 
-
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
