@@ -40,7 +40,9 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "short_story_id"
+    t.bigint "user_id"
     t.index ["short_story_id"], name: "index_bookmarks_on_short_story_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "bookshelves", force: :cascade do |t|
@@ -94,6 +96,13 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "follows", force: :cascade do |t|
+    t.integer "reader_id"
+    t.integer "writer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -141,6 +150,8 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_short_stories_on_user_id"
   end
 
   create_table "short_stories_chapters", force: :cascade do |t|
@@ -198,12 +209,14 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarks", "short_stories"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "bookstore_books", "bookstores"
   add_foreign_key "bookstore_rate_reviews", "bookstores"
   add_foreign_key "comments", "short_stories_chapters"
   add_foreign_key "likes", "short_stories"
   add_foreign_key "likes", "users"
   add_foreign_key "reports", "users"
+  add_foreign_key "short_stories", "users"
   add_foreign_key "short_stories_chapters", "short_stories"
   add_foreign_key "short_story_generes", "genres"
   add_foreign_key "short_story_generes", "short_stories"

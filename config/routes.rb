@@ -44,6 +44,9 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/report' , to: 'reports#create'
   get '/reports' , to: 'reports#index'
   
-
+  post '/addToBookmark' ,to:'short_stories#addToBookmark'
+  post '/removeFromBookmark' ,to: 'short_stories#removeFromBookmark'
+  post '/followWriter',to:'short_stories#followWriter'
+  post '/unFollowWriter',to:'short_stories#unFollowWriter'
 
 end
