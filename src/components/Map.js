@@ -54,7 +54,7 @@ class Map extends Component {
     handleToggle = () => {
         this.setState({
             isOpen1: !false,
-            showInfoIndex: ''
+            showInfoIndex: -1
         });
     }
 
@@ -250,16 +250,12 @@ class Map extends Component {
                    // onClick = {() => this.onMarkerClick(props, marker)}
                     onClick={()=>{ this.showInfo(index)} }
                     key={index}
-                    //{...marker}
                     // draggable={true}
                     // onDragEnd={this.onMarkerDragEnd}
                     position={marker.position}
-                    >  { (this.state.showInfoIndex == index ) && 
+                    >  { (this.state.showInfoIndex === index ) && 
                         <InfoWindow
                             onCloseClick={this.handleToggle}
-                            marker={this.state.activeMarker}
-                            visible={this.state.showingInfoWindow}
-                            position={marker.position}
                         >
                             <div><h6>{marker.name}</h6></div>
                         </InfoWindow> }
