@@ -37,6 +37,7 @@ class Map extends Component {
             activeMarker: true,
             selectedPlace: {},
             isOpen: false,
+            isOpen1: false,
             markerInfoWindow: [0],
 
             //for InfoWindow
@@ -46,13 +47,21 @@ class Map extends Component {
             myLocation:[],
             flagOfMyLocation: false,
 
-            showInfoIndex: 0
+            showInfoIndex: ''
         }
     }
 
     handleToggle = () => {
         this.setState({
-            isOpen: !false
+            isOpen1: !false,
+            showInfoIndex: ''
+        });
+    }
+
+    handleToggleForMyLocation= () => {
+        this.setState({
+            isOpen: !false,
+            showInfoIndex: ''
         });
     }
     
@@ -174,6 +183,7 @@ class Map extends Component {
         this.setState({
             distict:'',
             bookName:'',
+            zoom: 10,
            //selectedOption: undefined,
            //this: this.reset
           });
@@ -231,7 +241,7 @@ class Map extends Component {
         /******************** Markers ***********************************/
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
-            defaultZoom={15}
+            defaultZoom={this.state.zoom}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             onClick={this.onMapClicked}
             >
@@ -258,7 +268,7 @@ class Map extends Component {
                     ))}
                     {this.state.flagOfMyLocation &&
                         <Marker
-                        onClick={this.handleToggle}
+                        onClick={this.handleToggleForMyLocation}
                         position={this.state.Myposition}
                         >
                             {this.state.isOpen &&
