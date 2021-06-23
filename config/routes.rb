@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 get '/member-data', to: 'members#show'
+get 'user/avatar', to: 'members#avatar'
+post '/logged_in', to: 'members#is_logged_in?'
   # resources :ping, only: [:index] do
   #   collection do
   #     get :auth
@@ -18,6 +20,8 @@ get '/member-data', to: 'members#show'
     end
   end
 
+  # get 'api/shortStories', to:'api#shortStories'
+
   get 'api/shortStories', to:'short_stories#index'
   get 'api/bookmarks', to:'api#bookmarks'  # edit to accept user id
   get 'api/bookshelves', to:'api#bookshelves' # edit to accept user id
@@ -30,6 +34,7 @@ get '/member-data', to: 'members#show'
 
   get '/allbookstores', to:'bookstores#allbookstores'
   get '/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
+  post 'bookStoreSearchFromMap', to:'bookstores#search'
 
 
   get '/communityPosts' , to:'chapters#posts'
@@ -37,7 +42,7 @@ get '/member-data', to: 'members#show'
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
 
   post '/report' , to: 'reports#create'
-  get '/report' , to: 'reports#index'
+  get '/reports' , to: 'reports#index'
   
 
 
