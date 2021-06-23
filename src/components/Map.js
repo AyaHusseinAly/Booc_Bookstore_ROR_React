@@ -45,6 +45,8 @@ class Map extends Component {
             Myposition: {},
             myLocation:[],
             flagOfMyLocation: false,
+
+            showInfoIndex: 0
         }
     }
 
@@ -54,6 +56,9 @@ class Map extends Component {
         });
     }
     
+    showInfo(a){
+       this.setState({showInfoIndex: a })
+    }
 
     onMarkerClick = (props, marker) =>{
         this.setState({
@@ -232,20 +237,22 @@ class Map extends Component {
             >
                 {this.state.stores.map((marker, index) => (
                     <Marker
-                    onClick = {() => this.onMarkerClick(props, marker)}
+                   // onClick = {() => this.onMarkerClick(props, marker)}
+                    onClick={()=>{ this.showInfo(index)} }
                     key={index}
                     //{...marker}
                     // draggable={true}
                     // onDragEnd={this.onMarkerDragEnd}
                     position={marker.position}
-                    > 
+                    >  { (this.state.showInfoIndex == index ) && 
                         <InfoWindow
+                            onCloseClick={this.handleToggle}
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}
                             position={marker.position}
                         >
                             <div><h6>{marker.name}</h6></div>
-                        </InfoWindow>
+                        </InfoWindow> }
                     </Marker>
                 
                     ))}
