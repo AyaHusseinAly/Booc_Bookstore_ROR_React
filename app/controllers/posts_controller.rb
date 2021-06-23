@@ -9,10 +9,18 @@ class PostsController < ApplicationController
             likes=[]
             comments=[]
             Array(likes_db).each do |like| 
-                likes.push({user_name:like.user.username,user_img:"img/exPP.png", user_id: like.user.id})
+                avatar=""
+                if like.user&.avatar&.attached?
+                    avatar = rails_blob_url(like.user.avatar)
+                end
+                likes.push({user_name:like.user.username,user_img:avatar, user_id: like.user.id})
             end    
-            Array(comments_db).each do |comment| 
-                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:"img/exPP.png",comment_content:comment.body})
+            Array(comments_db).each do |comment|
+                avatar=""
+                if comment.user&.avatar&.attached?
+                    avatar = rails_blob_url(comment.user.avatar)
+                end
+                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
             liked_bool=is_current_user_likes_this_story(story.id,params['user_id'])
             
@@ -37,10 +45,18 @@ class PostsController < ApplicationController
             likes=[]
             comments=[]
             Array(likes_db).each do |like| 
-                likes.push({user_name:like.user.username,user_img:"img/exPP.png", user_id: like.user.id})
+                avatar=""
+                if like.user&.avatar&.attached?
+                    avatar = rails_blob_url(like.user.avatar)
+                end
+                likes.push({user_name:like.user.username,user_img:avatar, user_id: like.user.id})
             end    
-            Array(comments_db).each do |comment| 
-                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:"img/exPP.png",comment_content:comment.body})
+            Array(comments_db).each do |comment|
+                avatar=""
+                if comment.user&.avatar&.attached?
+                    avatar = rails_blob_url(comment.user.avatar)
+                end
+                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
             liked_bool=is_current_user_likes_this_chapter(chapter.id,params['user_id'])
 
