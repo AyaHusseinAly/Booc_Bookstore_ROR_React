@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   def is_logged_in?
-    # user=User.find(params[:member][:id])
-    user=User.find(params[:id])
+    user=User.find(params[:member][:id])
+    # user=User.find(params[:id])
     avatar=""
     if user&.avatar&.attached?
       avatar = rails_blob_url(user.avatar)
