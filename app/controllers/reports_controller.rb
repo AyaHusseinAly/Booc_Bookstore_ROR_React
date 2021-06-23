@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
 
     def create
         @report=Report.create(kind:params['kind'],reason:params['reason'],related_record_id:params['related_record_id'],user:User.find(params['user_id'])
-        );
+        )
         if @report.persisted?
 
             render :json => {message:" Thank you, your response is recorded and sent to admins"}

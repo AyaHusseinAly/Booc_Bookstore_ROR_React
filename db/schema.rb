@@ -82,6 +82,26 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.float "lng"
   end
 
+  create_table "comment_chapters", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "short_stories_chapter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_stories_chapter_id"], name: "index_comment_chapters_on_short_stories_chapter_id"
+    t.index ["user_id"], name: "index_comment_chapters_on_user_id"
+  end
+
+  create_table "comment_stories", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_comment_stories_on_short_story_id"
+    t.index ["user_id"], name: "index_comment_stories_on_user_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.bigint "short_stories_chapter_id"
@@ -116,13 +136,22 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.bigint "short_story_id"
+  create_table "like_chapters", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "short_stories_chapter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["short_story_id"], name: "index_likes_on_short_story_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
+    t.index ["short_stories_chapter_id"], name: "index_like_chapters_on_short_stories_chapter_id"
+    t.index ["user_id"], name: "index_like_chapters_on_user_id"
+  end
+
+  create_table "like_stories", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_story_id"], name: "index_like_stories_on_short_story_id"
+    t.index ["user_id"], name: "index_like_stories_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -212,9 +241,15 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
   add_foreign_key "bookmarks", "users"
   add_foreign_key "bookstore_books", "bookstores"
   add_foreign_key "bookstore_rate_reviews", "bookstores"
+  add_foreign_key "comment_chapters", "short_stories_chapters"
+  add_foreign_key "comment_chapters", "users"
+  add_foreign_key "comment_stories", "short_stories"
+  add_foreign_key "comment_stories", "users"
   add_foreign_key "comments", "short_stories_chapters"
-  add_foreign_key "likes", "short_stories"
-  add_foreign_key "likes", "users"
+  add_foreign_key "like_chapters", "short_stories_chapters"
+  add_foreign_key "like_chapters", "users"
+  add_foreign_key "like_stories", "short_stories"
+  add_foreign_key "like_stories", "users"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
   add_foreign_key "short_stories_chapters", "short_stories"

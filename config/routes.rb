@@ -38,12 +38,12 @@ post '/logged_in', to: 'members#is_logged_in?'
 
 
   get '/communityPosts' , to:'chapters#posts'
-
-  post '/storyFinished' ,to:'short_stories#setStoryFinished'
-
+  post '/comment', to: 'comments_likes#commentChapter'
+  post '/like', to: 'comments_likes#likeChapter' 
   post '/report' , to: 'reports#create'
   get '/reports' , to: 'reports#index'
-  
+
+  post '/storyFinished' ,to:'short_stories#setStoryFinished'
   post '/addToBookmark' ,to:'short_stories#addToBookmark'
   post '/removeFromBookmark' ,to: 'short_stories#removeFromBookmark'
   post '/followWriter',to:'short_stories#followWriter'

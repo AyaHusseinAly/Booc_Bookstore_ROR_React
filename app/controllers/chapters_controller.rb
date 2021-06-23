@@ -46,8 +46,7 @@ class ChaptersController < ApplicationController
         end
 
         @posts.sort! { |a, b|  b[:created_at].to_i <=> a[:created_at].to_i }
-        # @posts.sort! { |a, b|  DateTime.parse(b[:created_at].to_s) <=> DateTime.parse(a[:created_at].to_s)}
-        # @posts.reverse!
+
 
         render :json => {posts:@posts}
 
