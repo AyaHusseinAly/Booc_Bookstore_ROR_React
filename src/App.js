@@ -168,6 +168,8 @@ class App extends Component {
           <Route path="/addstory" component={AddStory}/>
           <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
           <Route path="/userprofile" component={UserProfile}/>
+          <Route path="/FavoritesPage" component={FavoritesPage}/>
+          <Route path="/BookShelf" component={BookShelf}/>
           <Route path="/admin" component={Admin}/>
           <Route 
           path="/sign_up" 
