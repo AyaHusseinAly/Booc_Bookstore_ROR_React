@@ -5,17 +5,12 @@ import '../style/community.css';
 import axios from 'axios';
 import CommunityCard from './CommunityCard';
 
-
-
-
 class Community extends Component {
     state={
         posts:[],
     }
     
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
-
-
         // const res=await axios.get('http://localhost:3000/api/shortStories',
         // {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
         // "Access-Control-Allow-Methods": "GET, POST, PUT",

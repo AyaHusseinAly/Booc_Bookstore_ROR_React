@@ -9,6 +9,7 @@
 	  
 	  width:100%;
 	  height:200px;
+	  
 		 
 		
 	}
@@ -30,12 +31,12 @@
 		}
 
 
-		.figure .hoverable{
+		.one .hovable{
 			content: "";
 			position: absolute;
-			left: 50%;
+			left: 70%;
 			top: 40%;
-			width: 100%;
+			width: 110%;
 			height: 100%;
 			display: flex;
 			align-items: center;
@@ -46,23 +47,23 @@
 			transition: var(--transition);
 			
 		}
-		.figure:hover .hoverable {
+		.one:hover .hovable {
 			opacity: 1;
 		  }
-		  .figure .hoverable .details {
+		  .one .hovable .det {
 			background-color: var(--primaryColor);
 			color: white;
 			border-radius: 0.5rem;
 			padding: 10px 20px;
-			margin-left: -30px;
+			margin-left: -40px;
 			
 		  }
 	
-		  .icon-heart{
+		  .icon-ht{
 			position: absolute;
-			top: 20px;
-			left: 40px;
-			font-size: 20px;
+			top: 60px;
+			left: 30px;
+			font-size: 25px;
 			color: var(--primaryColor);
 			z-index: 90;
 		}
@@ -76,12 +77,12 @@
 		.choose > span {
 			color: var(--primaryColor);
 		}
-		.figure:hover  {
-			transform: scale(1.1);
+		.one:hover  {
+			
 			transition: var(--transition);
 			
         }
-		.figure:hover  .details{
+		.one:hover  .det{
 			margin-right: -100px;
         }
 		.tooltiptextshel, .tooltiptextfav{
@@ -94,7 +95,7 @@
 			border-radius: 6px;
 			position: absolute;
 			z-index: 100;
-			font-size: 10px;
+			font-size: 20px;
 		}
 
 		.fa-plus:hover .tooltiptextshel {
@@ -104,5 +105,6 @@
 			visibility: visible;
 		  }
 
-				
-	
+		
+	 
+

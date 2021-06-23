@@ -32,11 +32,11 @@ class ShortStory extends Component {
                         <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
                     </p>
                     <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>
-                        <span>{this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 80) + '....' : this.props.shortstory.summary}</span>
+                        <span>{this.props.shortstory.summary && this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 80) + '....' : this.props.shortstory.summary}</span>
                     </div>
 
                     <div className='mt-3'>
-                        {this.props.shortstory.status == 'Not finished yet' && <AddChapter shortStory={this.props.shortstory.id} />}
+                        {this.props.shortstory.user_id == localStorage.getItem('user_id') && this.props.shortstory.status == 'Not finished yet' && <AddChapter shortStory={this.props.shortstory.id} />}
                         {/* <ViewShortStory /> */}
                         <Link className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
                             to={`/shortStory/${this.props.shortstory.id}`}>View</Link>
