@@ -6,36 +6,44 @@ import { Link } from "react-router-dom";
 const BookRow = (props) =>{
     const [favorites, setFavorites] = useState([]);
     const [shelfs, setShelfs] = useState([]);
-    const [Color, setColor] = useState('#263044');
-    const [isBlack, setIsBlack] = useState(true);
-
-    const save = (items) => {
-        localStorage.setItem('book-favourite', JSON.stringify(items))
-    };
+    // const [Color, setColor] = useState('#263044');
+    // const [isBlack, setIsBlack] = useState(true);
 
     const addFavouriteBook = (book) =>{
-        const newFavouriteRow = [...favorites, book];
-        setFavorites(newFavouriteRow);
-        save(newFavouriteRow); 
-        // const newColor ="red";
-        // setColor(newColor);
+      const getFav = JSON.parse(localStorage.getItem('book-favourite'))
 
-    };
+      if(!getFav.some(bk => bk.id === book.id)){
+      const newFavouriteRow = [...favorites, book];
+      setFavorites(newFavouriteRow);
+      const newFav = [...getFav,...newFavouriteRow]
+      localStorage.setItem('book-favourite', JSON.stringify(newFav))}
+      else{
+          alert("added before");
+      }
+      
 
+  };
     
-    const saveShel = (items) => {
-        localStorage.setItem('book-shelf', JSON.stringify(items))
-    };
-
-
     const addShelfBook = (book) =>{
+            
+      const getShelfs = JSON.parse(localStorage.getItem('book-shelf'))
+     
+     console.log(getShelfs)
+    
+  
+        if(!getShelfs.some(bk => bk.id === book.id)){
         const newShelfeRow = [...shelfs, book];
-        
         setShelfs(newShelfeRow);
-        saveShel(newShelfeRow);
-        
-
+      
+        const newShelf = [...getShelfs,...newShelfeRow]
+      localStorage.setItem('book-shelf', JSON.stringify(newShelf))
+    }
+      else{
+        alert("added before");
+    }
+  
     };
+
     // const handleChnageTextColor = (e) => {
     //     setColor(Color === '#263044' ? 'red' : '#263044');
     //    };

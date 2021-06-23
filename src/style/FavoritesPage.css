@@ -27,7 +27,7 @@
  
 
 
-		.fig .hovert{
+		.fig .hov{
 			content: "";
 			position: absolute;
 			left: 50%;
@@ -43,10 +43,10 @@
 			transition: 0.5s ease-in;
 			
 		}
-		.fig:hover .hovert {
+		.fig:hover .hov {
 			opacity: 1;
 		  }
-		  .fig .hovert .details {
+		  .fig .hov .details {
 			background-color: var(--primaryColor);
 			color: white;
 			border-radius: 0.5rem;

@@ -55,11 +55,12 @@ class AddStory extends Component {
                 shortStoryLanguage: this.state.shortStoryLanguage,
                 shortStoryAudience: this.state.shortStoryAudience,
                 shortStoryGenre: this.state.shortStoryGenre,
-                // shortStoryCover: this.state.shortStoryCover,
+                writer: localStorage.getItem('user_id'),
+                shortStoryCover: this.state.shortStoryCover,
 
             }
-            Object.keys(this.state).forEach((key, value) => {
-                return data.append(key, this.state[key])
+            Object.keys(obj).forEach((key, value) => {
+                return data.append(key, obj[key])
             })
             // data.append("shortStoryCover", this.state.shortStoryCover);
             // const submitdata = { obj, data }
@@ -114,6 +115,7 @@ class AddStory extends Component {
         this.setState({ genres: res.data.short_stories });
         // console.log("herrrrrrrrrrrrrrrrr");
         console.log(this.state.genres);
+        console.log(localStorage.getItem('user_id'))
 
     }
 

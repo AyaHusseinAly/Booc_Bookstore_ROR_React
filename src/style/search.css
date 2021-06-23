@@ -54,7 +54,7 @@
 			color: white;
 			border-radius: 0.5rem;
 			padding: 10px 20px;
-			margin-left: 10px;
+			margin-left: 15px;
 			margin-bottom: 70px;
 			
 		  }
@@ -94,4 +94,19 @@
 			visibility: visible;
 		  }
 				
-	
+		  /* .spanTrue{
+			color: var(--primaryColor);
+			position: absolute;
+			top: 40px;
+			left: 20px;
+			z-index: 90;
+
+		}	
+		.spanFalse{
+			color: rgb(228, 15, 15);
+			position: absolute;
+			top: 40px;
+			left: 20px;
+			z-index: 90;
+
+		}	 */
