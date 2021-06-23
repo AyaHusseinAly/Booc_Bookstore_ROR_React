@@ -18,11 +18,11 @@ form .btn {
 .inner {
     width: 800px;
     margin: auto;
-    background: #ffffff;
     box-shadow: 0px 14px 80px rgba(26, 27, 43, 0.6);
     padding: 40px 55px 45px 55px;
     border-radius: 15px;
     transition: all .3s;
+    background-color: whitesmoke;
 }
 /* .form-group textarea{
     width: 100%;

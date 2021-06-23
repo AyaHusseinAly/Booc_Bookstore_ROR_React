@@ -40,7 +40,7 @@ const BookShelf = (props) => {
                 <>
                  <h2 style={{textAlign: "center",marginBottom: "20px"}}><span style={{color: "var(--secondaryColor)"}}>M</span>y Shelf B<span style={{color: "var(--secondaryColor)"}}>oo</span>k</h2>
                  <div className="row ">
-                 {shelfs.map(bk=> 
+                 {shelfs?.map(bk=> 
                    <div className="col-7 col-md-2 main" >
                     <figure  className="fig" style={{width: "150px",height: "100px",marginBottom: "200px"}}>
                     < div className="book_img"  >

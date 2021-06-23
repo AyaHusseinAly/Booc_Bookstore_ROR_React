@@ -21,6 +21,7 @@ import BookRowSlide from './components/BookRowSlide'
 
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
+import axios from 'axios';
 
 
 import React, { Component } from 'react';
@@ -77,71 +78,121 @@ class App extends Component {
     super();
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
-      user: {}
+      user: {},
+      avatar:""
     }
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogin=this.handleLogin.bind(this);
+    // this.handleRedirect=this.handleRedirect.bind(this);
+    // this.handleLogout=this.handleLogout.bind(this);
   }
-  handleLogin(data) {
-    console.log(data.user);
+   is_logged_in(user_id){
+      axios.post("http://localhost:3000/logged_in",
+      {
+        member:{
+          id: user_id
+        }
+      },
+      {headers: {"Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT",
+      "Access-Control-Allow-Headers": "Content-Type"}}
+        // {headers:
+        //    {
+        //    "Access-Control-Allow-Origin": "*",
+        //   "Access-Control-Allow-Methods": "GET, POST, PUT",
+        //   "Access-Control-Allow-Headers": "Content-Type",
+        // "Access-Control-Allow-Credentials":"true"}},
+        // {withCredentials:true}
+        )
+        .then(response=>{
+          if(Object.keys(response.data.user).length>0){
+          console.log(response);
+          this.setState({
+            user:response.data.user,
+            avatar: response.data.avatar,
+            loggedInStatus: true
+          })
+          }
+        })
+        .catch(error=>{
+          console.log(error);
+        })
+      
+  }
+  
+  handleLogin(data){
+    console.log(data);
     this.setState({
-      loggedInStatus: "LOGGED_IN",
-      user: data.user
+      loggedInStatus : "LOGGED_IN",
+      user: data.user,
+      avatar: data.avatar
     });
+    localStorage.setItem("user_id",data.user.id);
   }
+  // handleRedirect(){
+  //       this.props.history.push('/login');
+  // }
+  
+  componentDidMount(){
+    if(localStorage.getItem("user_id")){
+       this.is_logged_in(localStorage.getItem("user_id"))
+    }
+  }
+  
+  render(){
+  return (
+    <div>
+      <Header
+        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect}>
+      </Header>
+      <div style={{minHeight:400}}>
+      <Switch>
+          <Route 
+          path="/"
+          exact 
+          render={props => (
+            <Home { ... props} loggedInStatus={this.state.loggedInStatus} />
+          )}
+          />
+           <Route 
+          path="/meh"
+          exact 
+          render={props => (
+            <Header { ... props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
+          )}
+          />
+          <Route path="/genre/:id" exact component={Genre}/>
+          <Route path="/map" component={Map}/>
+          <Route path="/writer" component={Writer}/>
+          <Route path="/community" component={Community}/>
+          <Route path="/mystories" component={MyStories}/>
+          <Route path="/addstory" component={AddStory}/>
+          <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
+          <Route path="/userprofile" component={UserProfile}/>
+          <Route path="/admin" component={Admin}/>
+          <Route 
+          path="/sign_up" 
+          render={props => (
+            <Registration { ... props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin}/>
+          )} 
+          />
+          <Route 
+          path="/login" 
+          render={props => (
+            <Login { ... props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin}/>
+          )} 
+          />
+           <Route path="/shortStory/:id" component={ShortStoryDetails} />
+          {/* <Route path="/searchresults" component={SearchResults}/> */}
 
-  render() {
-    return (
-      <div>
-        <Header
-          loggedInStatus={this.state.loggedInStatus} user={this.state.user}>
-        </Header>
-        <div style={{ minHeight: 400 }}>
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={props => (
-                <Home {...props} loggedInStatus={this.state.loggedInStatus} />
-              )}
-            />
-            <Route path="/genre/:id" exact component={Genre} />
-            <Route path="/map" component={Map} />
-            <Route path="/writer" component={Writer} />
-            <Route path="/community" component={Community} />
-            <Route path="/mystories" component={MyStories} />
-            <Route path="/addstory" component={AddStory} />
-            <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
-            <Route path="/FavoritesPage" component={FavoritesPage}/>
-            <Route path="/BookShelf" component={BookShelf}/>
-            <Route path="/userprofile" component={UserProfile} />
-            <Route path="/admin" component={Admin} />
-            {/* <Route path="/BookRowSlide/:category" render={(props) => <BookRowSlide {...props} />}  /> */}
-            <Route
-              path="/sign_up"
-              render={props => (
-                <Registration {...props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin} />
-              )}
-            />
-            <Route
-              path="/login"
-              render={props => (
-                <Login {...props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin} />
-              )}
-            />
-            {/* <Route path="/searchresults" component={SearchResults}/> */}
-            <Route path="/shortStory/:id" component={ShortStoryDetails} />
-            {/* <Route path="/story/:id" render={(props) => <ShortStoryDetails {...props} />} /> */}
 
 
 
-
-          </Switch>
-
+        </Switch>
         </div>
         <Footer></Footer>
-      </div>
-    );
-  }
-}
+        </div>
+
+  )}
+          }
 
 export default App;
