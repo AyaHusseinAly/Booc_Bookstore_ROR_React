@@ -38,6 +38,10 @@ class Map extends Component {
             selectedPlace: {},
             isOpen: false,
             markerInfoWindow: [0],
+
+            //for InfoWindow
+            selected: null,
+            setSelected: null,
         }
     }
 
@@ -262,9 +266,9 @@ class Map extends Component {
                                 <select className="custom-select" id="inputGroupSelect03" value={this.state.distict}
                                     onChange={(e) => this.setState({ distict: e.currentTarget.value })}>
                                     <option selected>choose nearst spot</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="Cairo">Cairo</option>
+                                    <option value="Alexandria">Alexandria</option>
+                                    <option value="Giza">Giza</option>
                                 </select>  
                             </div>
                         </div>
@@ -349,7 +353,7 @@ class Map extends Component {
                             </div>
                         </div>
                     </div>:
-
+                    // if no result or search yet
                     <div>
                         <br/>
                         <div className='d-flex justify-content-center ' style={{border: '2px solid #F8A488',borderRadius: '5px!important'}}>
