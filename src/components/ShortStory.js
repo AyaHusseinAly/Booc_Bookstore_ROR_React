@@ -4,15 +4,8 @@ import Popup from "reactjs-popup";
 import '../style/shortStory.css';
 import { Link } from "react-router-dom";
 import AddChapter from './addChapter';
+import Rating from './Rating';
 
-
-
-// const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-// const arrowStyle = { color: '#000' }; // style for an svg element
-// const contentStyle = {
-//     maxWidth: "600px",
-//     width: "90%"
-// };
 
 class ShortStory extends Component {
     render() {
@@ -24,11 +17,7 @@ class ShortStory extends Component {
                 <div className="col col-7 mt-2" style={{ width: '100%', heigth: '100%', display: 'inline-block' }}>
                     <h5>{this.props.shortstory.title}</h5>
                     <p>
-                        <span className="fa fa-star checked"></span>
-                        <span className="fa fa-star checked"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
+                        <Rating rate={this.props.shortstory.rate} />
                         <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
                     </p>
                     <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>

@@ -68,7 +68,8 @@ class ShortStoryDetails extends Component {
             follow_string: "",
             follow_icon: "",
             review_flag: false,
-            reviews: []
+            reviews: [],
+            storyRate: 0
 
         }
 
@@ -109,7 +110,8 @@ class ShortStoryDetails extends Component {
         this.setState({ image: res.data.image });
         this.setState({ writer: res.data.writer });
         this.setState({ review_flag: res.data.review_flag });
-        this.setState({ reviews: res.data.reviews })
+        this.setState({ reviews: res.data.reviews });
+        this.setState({ storyRate: res.data.storyRate })
         if (res.data.bookmarked_flag == false) {
             this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
             this.setState({ bookmark_string: "Add To Bookmark" });
@@ -234,11 +236,7 @@ class ShortStoryDetails extends Component {
                                                     </span>
                                                 })} section</h5>
                                                 <p>
-                                                    <span className="fa fa-star checked"></span>
-                                                    <span className="fa fa-star checked"></span>
-                                                    <span className="fa fa-star"></span>
-                                                    <span className="fa fa-star"></span>
-                                                    <span className="fa fa-star"></span>
+                                                    <Rating rate={this.state.storyRate} />
                                                     {/* <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a> */}
                                                     <StoryLikes likes={this.state.likes} />
                                                 </p>
@@ -302,7 +300,7 @@ class ShortStoryDetails extends Component {
 
                                                     </div>
                                                     <p>{review.review}</p>
-                                                    <a href="#" className="report">Report</a>
+                                                    {this.state.shortStory.user_id == localStorage.getItem('user_id') && <ReviewReport review={review} />}
                                                 </div>
 
                                             </div>
@@ -311,7 +309,7 @@ class ShortStoryDetails extends Component {
 
                                     <div className="box-person" style={{ margin: '0', padding: '3px', width: '100%', backgroundColor: '#F8F8F8' }}>
                                         {this.state.shortStory.user_id != localStorage.getItem('user_id') &&
-                                            this.state.review_flag == false && < MakeRating story_id={this.state.shortStory.id} />}
+                                            this.state.review_flag == false && < MakeRating story_id={this.state.shortStory.id} changeRateFlag={() => window.location.reload()} />}
                                     </div>
                                     {/* <a href="#" className="more">See More..</a> */}
 
@@ -431,6 +429,7 @@ class MakeRating extends Component {
             console.log(res.data);
             this.setState({ rating: 0 });
             this.setState({ review: "" });
+            this.props.changeRateFlag();
 
         }
         else {
@@ -449,33 +448,6 @@ class MakeRating extends Component {
 
     render() {
         return (
-            // <div style={{ backgroundColor: 'white', border: '2px #535964 solid' }} >
-            //     <div className="d-flex justify-content-center py-1" style={{ width: '254px', marginBottom: '5px', borderWidth: '0px' }}>
-            //         <label className="px-1" style={{ display: 'inline-block' }}>Add Review:</label>
-            //         <input className="px-1" type="text" name="review" placeholder="Add review..." style={{ display: 'inline-block', width: '60%' }} />
-            //     </div>
-
-
-            //     <div className="row ml-1" >
-            //         <div className='px-1'>Add Rate:</div>
-            //         <div style={{ display: 'inline-block', textAlign: 'end' }} className='col col-5 pr-0 mr-0'>
-            //             <ReactStars
-            //                 count={5}
-            //                 onChange={this.ratingChanged}
-            //                 size={20}
-            //                 isHalf={true}
-            //                 emptyIcon={<i className="far fa-star"></i>}
-            //                 halfIcon={< i className="fa fa-star-half-alt" ></i >}
-            //                 fullIcon={< i className="fa fa-star" ></i >}
-            //                 activeColor="#ffd700"
-
-            //             />
-            //         </div>
-
-            //         <span className='col col-1 pl-0 ml-0 mt-1'>{this.state.rating}/5</span>
-
-            //     </div>
-            // </div>
             <div className="m-0" style={{ backgroundColor: '#F8F8F8' }}>
                 <form onSubmit={this.handleSubmit}>
                     <h4 className="pb-2 pl-1" style={{ color: '#2630044' }}>Add Rating & Review :
@@ -517,6 +489,70 @@ class MakeRating extends Component {
     }
 
 }
+
+class ReviewReport extends Component {
+
+    render() {
+        const sendReport = (post) => {
+            if (document.getElementById("reportReason").value != "") {
+
+                let data = {
+                    kind: "review",
+                    reason: document.getElementById("reportReason").value,
+                    related_record_id: post.id,
+                    user_id: window.localStorage.getItem('user_id')
+                };
+                axios.post("http://localhost:3000/report", data, {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT",
+                        "Access-Control-Allow-Headers": "Content-Type",
+
+                    }
+                }).then(response => {
+                    if (response) {
+                        console.log(response);
+                        document.getElementById("thanksMsg").innerText = response.data.message
+                    }
+                    else {
+                        console.log(response);
+                    }
+                });
+            }
+            else {
+                document.getElementById("thanksMsg").innerText = "Please Enter the reason";
+
+            }
+
+        }
+
+
+        return (
+            <Popup
+                trigger={<a style={{ color: '#CD3700', marginRight: '1.2rem' }}><strong >Report</strong></a>
+                }
+                modal
+                contentStyle={popupStyle}
+            >
+                <React.Fragment>
+
+                    <div className="form-outline" >
+                        <textarea rows="3" id="reportReason" placeholder="Please mention reasons for reporting this post" className="form-control" style={{ backgroundColor: '#F8F8F8', paddingLeft: '0.5rem' }}></textarea>
+                    </div>
+                    <div className="row m-2">
+                        <div className="col-9 " id="thanksMsg" style={{ color: '#F8A488' }}></div>
+                        <button type="button" onClick={() => { sendReport(this.props.review) }} className=" btn ml-1 col-2" style={{ backgroundColor: '#F8F8F8', border: "1px solid #F8A488" }}>
+                            <i class="fa fa-paper-plane" aria-hidden="true" style={{ color: '#F8A488' }}></i>
+                        </button>
+                    </div>
+                </React.Fragment>
+            </Popup >
+
+
+        );
+    }
+}
+
 
 export default ShortStoryDetails;
 

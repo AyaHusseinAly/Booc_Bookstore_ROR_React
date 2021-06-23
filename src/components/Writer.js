@@ -6,6 +6,7 @@ import ShortStory from './ShortStory';
 
 
 
+
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 const arrowStyle = { color: '#000' }; // style for an svg element
 const contentStyle = {
