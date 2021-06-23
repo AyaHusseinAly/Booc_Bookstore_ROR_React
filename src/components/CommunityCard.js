@@ -4,6 +4,8 @@ import '../style/community.css';
 import Likes from './Likes';
 import Comments from './Comments';
 import ReportPopup from './ReportPopup'
+import axios from 'axios';
+
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
@@ -47,6 +49,52 @@ class CommunityCard extends Component {
 
 
         }
+        const likeStory = (story_id) =>{ 
+            let data={
+                story_id:story_id,
+                user_id:window.localStorage.getItem('user_id')
+            };
+            axios.post("http://localhost:3000/likeStory", data, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type",
+
+                }
+            }).then(response => {
+                if(response){
+                    console.log(response);
+                }
+                else{
+                    console.log(response);
+                }
+            });
+
+
+        }
+        
+        const likeChapter = (chapter_id) =>{ 
+            let data={
+                chapter_id:chapter_id,
+                user_id:window.localStorage.getItem('user_id')
+            };
+            axios.post("http://localhost:3000/likeChapter", data, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type",
+
+                }
+            }).then(response => {
+                if(response){
+                    console.log(response);
+                }
+                else{
+                    console.log(response);
+                }
+            });
+
+        }
         return(       
 
                 <div className="communityCard " >
@@ -81,7 +129,7 @@ class CommunityCard extends Component {
                             <div className="communityCardFooter" >
                                 <div className="row  pt-2">
                                     <div className="col-5 pl-5 ml-5" >
-                                    <a className="mx-2 "  style={{color:'#535964' }}><i className="far fa-thumbs-up"></i></a>
+                                    <a className="mx-2 " onClick={()=>{post.kind=='story'&&likeStory(post.id)||post.kind=='chapter'&&likeChapter(post.id)}} style={{color:'#535964' }}><i className="far fa-thumbs-up"></i></a>
                                 <Popup
                                         trigger={<a   className="countsLink">{post.liked_users.length} Likes</a>
                                     }
