@@ -42,6 +42,9 @@ class Map extends Component {
             //for InfoWindow
             selected: null,
             setSelected: null,
+            Myposition: {},
+            myLocation:[],
+            flagOfMyLocation: false,
         }
     }
 
@@ -81,11 +84,19 @@ class Map extends Component {
         this.setState({
             latitudeOfMyPosition: position.coords.latitude,
             longitudeOfMyPosition: position.coords.longitude,
+            Myposition: {lat: position.coords.latitude, lng:position.coords.longitude},
+            
+            
         })
+        if (this.state.flagOfMyLocation){
+            this.state.flagOfMyLocation = false}
+        else{this.state.flagOfMyLocation = true}
+
         this.reverseGeocodeCoordinates();
     }
 
     handleLocationError = (error) => {
+        this.state.flagOfMyLocation = false
         switch(error.code) {
             case error.PERMISSION_DENIED:
                alert("User denied the request for Share my.");
@@ -231,8 +242,17 @@ class Map extends Component {
                             <div><h6>{marker.name}</h6></div>
                         </InfoWindow>
                     </Marker>
-
+                
                     ))}
+                    {this.state.flagOfMyLocation &&
+                        <Marker
+                        position={this.state.Myposition}
+                        >
+                            <InfoWindow>
+                                <div><h6>Your Position</h6></div>
+                            </InfoWindow>
+                        </Marker>
+                     }
             </GoogleMap>
         ));
         /******************** End of  Markers ***********************************/   
@@ -281,7 +301,7 @@ class Map extends Component {
                     <div style={distictSearch2} className="float-right">
                         <br/>
                         <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation" onClick={this.getLocation}/>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation" onClick={this.getLocation} />
                             <label className="custom-control-label" for="switch1">Share my Location</label>
                         </div>            
                         
