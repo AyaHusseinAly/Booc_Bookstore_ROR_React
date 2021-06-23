@@ -19,8 +19,8 @@ class Community extends Component {
         // this.setState({stories:res.data.stories});
         
         // console.log(this.state.stories);
-
-        axios.get('http://localhost:3000/communityPosts',
+        let data={user_id:window.localStorage.getItem('user_id')};
+        axios.post('http://localhost:3000/communityPosts',data,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
@@ -39,6 +39,17 @@ class Community extends Component {
             console.log(string);
 
 
+        }
+        const refresh= () =>{ 
+            let data={user_id:window.localStorage.getItem('user_id')};
+            axios.post('http://localhost:3000/communityPosts',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+                this.setState({posts:response.data.posts});
+                console.log(this.state.posts);        
+    
+            });
         }
  
         return (
@@ -77,7 +88,7 @@ class Community extends Component {
 
                         {this.state.posts && this.state.posts.map(post=> 
 
-                        <CommunityCard post={post}></CommunityCard>
+                        <CommunityCard post={post} refresh={() => this.forceUpdate()} refresh_data={refresh}></CommunityCard>
 
                         )}
 
