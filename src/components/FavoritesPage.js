@@ -41,11 +41,13 @@ const FavoritesPage = (props) => {
                  <h2 style={{textAlign: "center",marginBottom: "20px"}}><span style={{color: "var(--secondaryColor)"}}>M</span>y Favourites B<span style={{color: "var(--secondaryColor)"}}>oo</span>k</h2>
                  <div className="row ">
                  {favorites.map(book=> 
+                  
                    <div className="col-7 col-md-2 main" >
-                    <figure  className="fig" style={{width: "150px",height: "100px"}}>
+                      
+                    <figure  className="fig" style={{width: "150px",height: "100px",marginBottom: "200px"}} >
                     < div className="book_img">
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-                       <div className="hovert">
+                       <div className="hov">
                          <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="details">details</span>
                           </Link>

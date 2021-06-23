@@ -1,7 +1,8 @@
-.main{
-
+.book{
+	
+	
+	margin-bottom:25px;
 	border-image: 5px round;
-    margin-right:-80px
 	}
 	
 	.book_image{
@@ -25,15 +26,17 @@
 		text-align: center;
 	}
 	
- 
+  .checked {
+  color: goldenrod;
+		}
 
 
-		.fig .hovert{
+		.one .hovable{
 			content: "";
 			position: absolute;
-			left: 50%;
+			left: 70%;
 			top: 40%;
-			width: 100%;
+			width: 110%;
 			height: 100%;
 			display: flex;
 			align-items: center;
@@ -41,31 +44,28 @@
 			transform: translate(-50%, -50%);
 			background-color: rgba(255, 255, 255, 0.6);
 			opacity: 0;
-			transition: 0.5s ease-in;
+			transition: var(--transition);
 			
 		}
-		.fig:hover .hovert {
+		.one:hover .hovable {
 			opacity: 1;
 		  }
-		  .fig .hovert .details {
+		  .one .hovable .det {
 			background-color: var(--primaryColor);
 			color: white;
 			border-radius: 0.5rem;
 			padding: 10px 20px;
-           
-            margin-left: -100px;
+			margin-left: -40px;
 			
 		  }
 	
-		  .remove-fav{
+		  .icon-ht{
 			position: absolute;
-			top: 10px;
-			left: 10px;
+			top: 60px;
+			left: 30px;
 			font-size: 25px;
 			color: var(--primaryColor);
 			z-index: 90;
-            
-
 		}
 		 
 		.choose{
@@ -77,15 +77,34 @@
 		.choose > span {
 			color: var(--primaryColor);
 		}
-		/* .fig:hover  {
-			 transform: scale(1.1);
-			transition: 0.1s ease-in; 
-			cursor: pointer;
-
+		.one:hover  {
+			
+			transition: var(--transition);
+			
         }
-        .fig:hover .details{
-           
-            margin-right: -500px;
-       } */
-				
-	
+		.one:hover  .det{
+			margin-right: -100px;
+        }
+		.tooltiptextshel, .tooltiptextfav{
+			visibility: hidden;
+			width: 100px;
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 6px;
+			position: absolute;
+			z-index: 100;
+			font-size: 20px;
+		}
+
+		.fa-plus:hover .tooltiptextshel {
+			visibility: visible;
+		  }
+		  .fa-heart:hover .tooltiptextfav {
+			visibility: visible;
+		  }
+
+		
+	 
+

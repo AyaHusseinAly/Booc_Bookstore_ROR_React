@@ -27,11 +27,13 @@ class SearchResults extends Component {
           selectRatingVal:"",
           favorites: [],
           shelfs:[],
+          
 
           
 
         
         }
+       
       }
 
       state={
@@ -87,28 +89,47 @@ class SearchResults extends Component {
     
 
 
-      addFavouriteBook = (book) =>{
-        const newFavouriteRow = [...this.state.favorites, book];
-        
-        this.setState({
-          favorites: newFavouriteRow
-      });
-      localStorage.setItem('book-favourite', JSON.stringify(newFavouriteRow))
-        
+    
 
-    };
+    addFavouriteBook = (book) =>{
+      const getFav = JSON.parse(localStorage.getItem('book-favourite'))
+
+      if(!getFav.some(bk => bk.id === book.id)){
+      const newFavouriteRow = [...this.state.favorites, book];
+      this.setState({
+        favorites: newFavouriteRow
+    });
+      const newFav = [...getFav,...newFavouriteRow]
+      localStorage.setItem('book-favourite', JSON.stringify(newFav))}
+      else{
+          alert("added before");
+      }
+      
+
+  };
 
 
 
   addShelfBook = (book) =>{
+
+    const getShelfs = JSON.parse(localStorage.getItem('book-shelf'))
+
+    if(!getShelfs.some(bk => bk.id === book.id)){
       const newShelfeRow = [...this.state.shelfs, book];
       
          
       this.setState({
         shelfs: newShelfeRow
     });
+
+    
+      const newShelf = [...getShelfs,...newShelfeRow]
       
-      localStorage.setItem('book-shelf', JSON.stringify(newShelfeRow))
+      localStorage.setItem('book-shelf', JSON.stringify(newShelf))
+    }
+    else{
+      alert("added before");
+  }
 
   };
 
@@ -300,7 +321,7 @@ class SearchResults extends Component {
                           <span  onClick={()=>this.addShelfBook(book)} 
                            
                           >
-                           <i className="fa fa-plus" style={{fontSize: "20px",color: "var(--primaryColor)",marginTop: "80px",position: "relative",right: "58px",bottom: "5px",
+                           <i className="fa fa-plus" style={{fontSize: "20px",color: "var(--primaryColor)",marginTop: "80px",position: "relative",right: "56px",bottom: "3px",
                            display: "inline-block"}}>
                            <span class="tooltiptextshel">add to shelf</span>
                            </i>

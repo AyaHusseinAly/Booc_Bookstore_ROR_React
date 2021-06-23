@@ -42,8 +42,8 @@ const BookShelf = (props) => {
                  <div className="row ">
                  {shelfs.map(bk=> 
                    <div className="col-7 col-md-2 main" >
-                    <figure  className="fig" style={{width: "150px",height: "100px"}}>
-                    < div className="book_img">
+                    <figure  className="fig" style={{width: "150px",height: "100px",marginBottom: "200px"}}>
+                    < div className="book_img"  >
                     <img style={{width:'100%'}} src={bk&&bk.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                        <div className="hovert">
                          <Link to={`/BookDetails/${bk.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>

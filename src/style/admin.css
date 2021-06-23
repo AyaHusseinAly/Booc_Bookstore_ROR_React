@@ -79,7 +79,7 @@
 		.figure:hover  {
 			transform: scale(1.1);
 			transition: var(--transition);
-			cursor: pointer;
+			
         }
 		.figure:hover  .details{
 			margin-right: -100px;
@@ -94,7 +94,7 @@
 			border-radius: 6px;
 			position: absolute;
 			z-index: 100;
-			font-size: 17px;
+			font-size: 10px;
 		}
 
 		.fa-plus:hover .tooltiptextshel {
@@ -104,5 +104,22 @@
 			visibility: visible;
 		  }
 
-				
+		/* .spanTrue{
+			color: var(--primaryColor);
+			position: absolute;
+			top: 30px;
+			left: 10px;
+			font-size: 20px;
+			z-index: 90;
+
+		}	
+		.spanFalse{
+			color: rgb(228, 15, 15);
+			position: absolute;
+			top: 30px;
+			left: 10px;
+			font-size: 20px;
+			z-index: 90;
+
+		}	 */
 	

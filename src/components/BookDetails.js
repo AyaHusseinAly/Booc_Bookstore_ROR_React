@@ -4,7 +4,7 @@ import React, {useState,useEffect } from 'react';
 import '../style/admin.css';
 import '../style/BookDetails.css';
 import { Link } from "react-router-dom";
-import BookRow from './BookRow';
+import BookRowSlide from './BookRowSlide';
 import axios from 'axios';
 import {
     EmailIcon,
@@ -47,20 +47,32 @@ const BookDetails = (props) => {
     }, [])
         
         console.log(book[0]) 
-
-        const saveShel = (items) => {
-            localStorage.setItem('book-shelf', JSON.stringify(items))
-        };
+        // console.log(book[0].volumeInfo.categories[0])
+      
     
     
         const addShelfBook = (book) =>{
-            const newShelfeRow = [...shelfs, book];
             
-            setShelfs(newShelfeRow);
-            saveShel(newShelfeRow);
+                const getShelfs = JSON.parse(localStorage.getItem('book-shelf'))
+               
+               console.log(getShelfs)
+              
+            
+                  if(!getShelfs.some(bk => bk.id === book.id)){
+                  const newShelfeRow = [...shelfs, book];
+                  setShelfs(newShelfeRow);
+                
+                  const newShelf = [...getShelfs,...newShelfeRow]
+                localStorage.setItem('book-shelf', JSON.stringify(newShelf))
+              }
+                else{
+                  alert("added before");
+              }
+            
+              };
             
     
-        };
+       
 
         
         return(
@@ -80,7 +92,7 @@ const BookDetails = (props) => {
                                      <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
                                     <button><i className="fa fa-microphone"></i> Find near me</button>
                                     {book.length > 0 && book[0].accessInfo.pdf.isAvailable ? 
-                                    <button><i className="fa fa-download"></i> <a href={book.length > 0 && book[0].accessInfo.pdf.acsTokenLink}>Download as PDF</a></button>:<span>  </span>}
+                                    <button><i className="fa fa-download"></i> <a href={book.length > 0 && book[0].accessInfo.pdf.acsTokenLink}>Download</a></button>:<span>  </span>}
                                   
                                 </div>
                             </div>
@@ -92,7 +104,8 @@ const BookDetails = (props) => {
                             <span>Free</span>:<span>Not Free</span>}
                             <div className="heading">
                                 <h2>{book.length > 0 && book[0].volumeInfo.title}</h2>
-                                <h5>from {book.length > 0 && book[0].volumeInfo.categories} section</h5>
+                                {book.length > 0 && book[0].volumeInfo.categories ?
+                                <h5>from {book.length > 0 && book[0].volumeInfo.categories} section</h5> : <span></span>}
 
                                  {book.length > 0 && book[0].volumeInfo.averageRating ?
                                 
@@ -186,9 +199,17 @@ const BookDetails = (props) => {
                                 </div>
                                 <div className="about-info">
                                     <h4>About Author</h4>
-                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                    <p>{book.length > 0 && book[0].volumeInfo.authors[0]}, sit amet consectetur adipisicing elit. Quia nemo atque porro,
                                         quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
-                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.</p>
+                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.
+                                        {book.length > 0 && book[0].volumeInfo.authors[0]}, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                        quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
+                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.
+                                        {book.length > 0 && book[0].volumeInfo.authors[0]}, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                        quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
+                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.
+                                        
+                                        </p>
                                 </div>
                             </div>
                         </div>
@@ -334,28 +355,265 @@ const BookDetails = (props) => {
                 </div>
             </div>
         </div>
-     
-    {/* <div className="slider">
+
+     {/* <div>  <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} /> </div> */}
+
+     {book.length > 0 && book[0].volumeInfo.categories ?
+     <div className="slid">
         <div className="container">
-            <div className="info">
-                <span>Similar Books</span>
-                <span>(5 Books)</span>
-            </div>
-            <div className="up">
-                <div className="client active">
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    
+                 <div className="info">
+                 {/* <span>Similar Books</span> */}
+                 {/* <span>(5 books)</span> */}
+                  </div>
+                 <div className="up">
+                 <div className="client active">
+                 <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} />
                 </div>
+                </div>
+             </div>
+     </div>:
+     <div className="slid">
+     <div className="container">
+         </div> </div>}
+
+
+     
+    {/* <div className="slid">
+        <div className="container">
+      
+
+            {book.length > 0 && book[0].volumeInfo.categories ?
+
+                  (((book[0].volumeInfo.categories == "Malay fiction" || book[0].volumeInfo.categories == "Young Adult Fiction" ) &&
+                  <>
+                    <div className="info">
+                    <span>Similar Books</span>
+                  
+                    </div>
+                   <div className="up">
+                    <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=8_YIEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=LkwqEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=ah0pEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=ZKgBEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=4GoFEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    </div>
+                  </div>
+                 </>)
+                       
+                   || 
+
+                ((book.length > 0 && book[0].volumeInfo.categories == "COMICS & GRAPHIC NOVELS" || book.length > 0 && book[0].volumeInfo.categories == "Comics & Graphic Novels")  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
               
-         
-            </div>
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=OcoDQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Tr-YQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=FF1w24VC3H0C&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=_vqmachvT1oC&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=ivBjtgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+                
+                (book.length > 0 && book[0].volumeInfo.categories == "COMICS & GRAPHIC NOVELS" || book.length > 0 && book[0].volumeInfo.categories == "Comics & Graphic Novels"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=OcoDQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Tr-YQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=FF1w24VC3H0C&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=_vqmachvT1oC&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=ivBjtgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+
+                (book.length > 0 && book[0].volumeInfo.categories == "Literary Criticism"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=2EgqAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=MA4KAQAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=-676AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=r6JkAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=w-xYAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+
+                (book.length > 0 && book[0].volumeInfo.categories == "Performing Arts"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=PFMdBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=qMikAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=euPwn7HQ1CsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=L0qVDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Dgi1sAy0_WEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+
+                (book.length > 0 && book[0].volumeInfo.categories == "Juvenile Fiction"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=YK6IjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=nDyNnAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=HEmJngEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=sEAZiIiZEJYC&printsec=frontcover&img=1&zoom=1&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Dgi1sAy0_WEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+                
+                
+                ((book.length > 0 && book[0].volumeInfo.categories == "Science"  ||  book.length > 0 && book[0].volumeInfo.categories == "Social Science") &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=zKkdEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=qGMBEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Nl8IEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=cPT4DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Bqz8DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+        
+                (book.length > 0 && book[0].volumeInfo.categories == "Nature"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=PDFfzgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=zKkdEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=wyL9DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=8Db6DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=VrHWDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+
+                (book.length > 0 && book[0].volumeInfo.categories == "Crafts & Hobbies"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=JzscugEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=4vA8DgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=-tEEDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=VGFWCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=j7OsREicjn4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+
+                
+                ((book.length > 0 && book[0].volumeInfo.categories == "Language Arts & Disciplines" || book.length > 0 && book[0].volumeInfo.categories == "Education") &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=NkjzDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=l2XcDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=HxYynQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Mib-CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=aoOICgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+                ||
+
+                
+                (book.length > 0 && book[0].volumeInfo.categories == "History"  &&
+                <>
+                <div className="info">
+                <span>Similar Books</span>
+              
+                </div>
+               <div className="up">
+                <div className="client active">
+                    <a href="#"><img src="http://books.google.com/books/content?id=pG4BEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=zKkdEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=hUslEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=qGMBEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=ch0pEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </>)
+
+
+              
+            
+                  ):
+                  <>
+                  <div className="info">
+                  
+                  </div>
+                 <div className="up">
+                 <div className="client active">
+                 {/* <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]}/>  
+                </div>
+                </div>
+                 </>
+                 }
+
+            
         </div>
-    </div> */}
-            </>
+    </div>*/}
+            </> 
         )   
 }
 

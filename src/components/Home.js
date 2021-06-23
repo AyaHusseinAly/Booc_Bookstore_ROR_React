@@ -24,15 +24,15 @@ class Home extends Component {
 
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
 
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
         .then(response => {
             this.setState({fiction:response.data.items});
         });
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
         .then(response => {
             this.setState({thriller:response.data.items});
         });
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&maxResults=6&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
         .then(response => {
             this.setState({horror:response.data.items});
         });
@@ -51,7 +51,7 @@ class Home extends Component {
         const { Search } = Input;
         const onSearch = () =>{ 
             let string=document.getElementById("form1").value;
-            axios.get("https://www.googleapis.com/books/v1/volumes?q="+ string +"+intitle:"+ string +"&startIndex=0&maxResults=40&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
+            axios.get("https://www.googleapis.com/books/v1/volumes?q="+ string +"+intitle:"+ string +"&startIndex=0&maxResults=40&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
             .then(response => {
                 this.setState({searchData:response.data.items});
                 this.setState({search:'true'})
