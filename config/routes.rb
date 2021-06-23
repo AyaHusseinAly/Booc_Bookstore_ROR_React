@@ -37,10 +37,12 @@ post '/logged_in', to: 'members#is_logged_in?'
   post 'bookStoreSearchFromMap', to:'bookstores#search'
 
 
-  get '/communityPosts' , to:'chapters#posts'
+  post '/communityPosts' , to:'posts#posts'
   post '/commentChapter', to: 'comments_likes#commentChapter'
   post '/likeChapter', to: 'comments_likes#likeChapter' 
   post '/commentStory', to: 'comments_likes#commentStory'
+  post '/unlikeChapter', to: 'comments_likes#unlikeChapter' 
+  post '/unlikeStory', to: 'comments_likes#unlikeStory'
   post '/likeStory', to: 'comments_likes#likeStory'  
   post '/report' , to: 'reports#create'
   get '/reports' , to: 'reports#index'

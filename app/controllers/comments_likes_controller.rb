@@ -48,4 +48,24 @@ class CommentsLikesController < ApplicationController
         end
     end
 
+
+  
+    def unlikeStory
+        records =LikeStory.where(short_story_id:params['story_id'],user_id:params['user_id'])
+        if records.length>0
+           records.each do |record|
+                record.delete()
+           end
+           end
+    end
+
+    def unlikeChapter
+       records= LikeChapter.where(short_stories_chapter_id:params['chapter_id'],user_id:params['user_id'])
+       if records.length>0
+        records.each do |record|
+            record.delete()
+        end
+        end
+    end
+
 end
