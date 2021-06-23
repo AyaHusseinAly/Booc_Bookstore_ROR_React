@@ -51,7 +51,7 @@ class ShortStoriesController < ApplicationController
                 elsif @storyRate - @storyRate.to_i < 0.75
                     @storyRate=@storyRate.to_i + 0.5
                 else
-                    @storyRate=@storyRate.to_i +1
+                    @storyRate=@storyRate.to_i + 1.0
                 end    
             end
             obj={
@@ -90,7 +90,7 @@ class ShortStoriesController < ApplicationController
             elsif @storyRate - @storyRate.to_i < 0.75
                 @storyRate=@storyRate.to_i + 0.5
             else
-                @storyRate=@storyRate.to_i +1
+                @storyRate=@storyRate.to_i + 1.0
             end    
         end
         obj={
@@ -169,7 +169,7 @@ class ShortStoriesController < ApplicationController
             elsif @storyRate - @storyRate.to_i < 0.75
                 @storyRate=@storyRate.to_i + 0.5
             else
-                @storyRate=@storyRate.to_i +1
+                @storyRate=@storyRate.to_i + 1.0
             end    
            end
            @review_flag=false

@@ -27,7 +27,7 @@ class CommentsLikesController < ApplicationController
 
 
     def commentStory
-        @comment=CommentStory.create(body:params['body'],short_story_id:params['chapter_id'],user_id:params['user_id'])
+        @comment=CommentStory.create(body:params['body'],short_story_id:params['story_id'],user_id:params['user_id'])
         if @comment.persisted?
             render :json => {message:"Success"}       
         else
@@ -45,6 +45,26 @@ class CommentsLikesController < ApplicationController
         
         else
             render :json => {message:"Error Occured"}
+        end
+    end
+
+
+  
+    def unlikeStory
+        records =LikeStory.where(short_story_id:params['story_id'],user_id:params['user_id'])
+        if records.length>0
+           records.each do |record|
+                record.delete()
+           end
+           end
+    end
+
+    def unlikeChapter
+       records= LikeChapter.where(short_stories_chapter_id:params['chapter_id'],user_id:params['user_id'])
+       if records.length>0
+        records.each do |record|
+            record.delete()
+        end
         end
     end
 
