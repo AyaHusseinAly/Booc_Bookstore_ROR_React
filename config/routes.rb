@@ -38,8 +38,10 @@ post '/logged_in', to: 'members#is_logged_in?'
 
 
   get '/communityPosts' , to:'chapters#posts'
-  post '/comment', to: 'comments_likes#commentChapter'
-  post '/like', to: 'comments_likes#likeChapter' 
+  post '/commentChapter', to: 'comments_likes#commentChapter'
+  post '/likeChapter', to: 'comments_likes#likeChapter' 
+  post '/commentStory', to: 'comments_likes#commentStory'
+  post '/likeStory', to: 'comments_likes#likeStory'  
   post '/report' , to: 'reports#create'
   get '/reports' , to: 'reports#index'
 
