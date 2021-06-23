@@ -102,7 +102,10 @@ class Registration extends Component {
             }
         }
         return ( 
-            <div className="outer" style={{background: `url('${process.env.PUBLIC_URL}/img/home_backgrnd.png')`}}>
+            <div className="outer" style={{background: `url('${process.env.PUBLIC_URL}/img/home_backgrnd.png')`,backgroundAttachment: 'fixed',  backgroundRepeat: 'no-repeat',    backgroundSize: 'cover'
+
+        }}
+        >
                     
             <div className="mt-3 inner">
             { errors.length > 0 &&
