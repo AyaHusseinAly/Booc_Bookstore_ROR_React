@@ -59,10 +59,15 @@ class ShortStoryDetails extends Component {
                 { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' }
             ],
             writer: {},
-            bookmark_flag: false,
+            // bookmark_flag: false,
             bookmark_style: {},
             bookmark_method: "",
-            bookmark_string: ""
+            bookmark_string: "",
+            // followed_flag: false
+            follow_style: {},
+            follow_method: "",
+            follow_string: "",
+            follow_icon: ""
         }
 
     }
@@ -101,7 +106,8 @@ class ShortStoryDetails extends Component {
         this.setState({ date: res.data.date })
         this.setState({ image: res.data.image });
         this.setState({ writer: res.data.writer });
-        this.setState({ bookmark_flag: res.data.bookmarked_flag })
+        // this.setState({ bookmark_flag: res.data.bookmarked_flag });
+        // this.setState({ followed_flag: res.data.followed_flag });
         if (res.data.bookmarked_flag == false) {
             this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
             this.setState({ bookmark_string: "Add To Bookmark" });
@@ -111,6 +117,18 @@ class ShortStoryDetails extends Component {
             this.setState({ bookmark_style: { backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', borderColor: "#F8A488" } });
             this.setState({ bookmark_string: "Remove from Bookmark" });
             this.setState({ bookmark_method: "removeFromBookmark" });
+        }
+        if (res.data.followed_flag == false) {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
+            this.setState({ follow_string: "Follow" });
+            this.setState({ follow_method: "followWriter" });
+            this.setState({ follow_icon: "fas fa-user-plus mr-2" });
+        }
+        else if (res.data.followed_flag == true) {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', borderColor: "#F8A488" } });
+            this.setState({ follow_string: "UnFollow" });
+            this.setState({ follow_method: "unFollowWriter" });
+            this.setState({ follow_icon: "fas fa-user-minus mr-2" });
         }
 
 
@@ -140,6 +158,35 @@ class ShortStoryDetails extends Component {
             this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
             this.setState({ bookmark_string: "Add To Bookmark" });
             this.setState({ bookmark_method: "addToBookmark" });
+        }
+
+    }
+    followWriter = async (url) => {
+        let data = {
+            writer_id: this.state.writer.id,
+            reader_id: localStorage.getItem('user_id')
+
+        }
+        const res = await axios.post(`http://localhost:3000/${url}`, data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type",
+
+            }
+        });
+        console.log(res.data);
+        if (url == "followWriter") {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', borderColor: "#F8A488" } });
+            this.setState({ follow_string: "UnFollow" });
+            this.setState({ follow_method: "unFollowWriter" });
+            this.setState({ follow_icon: "fas fa-user-minus mr-2" });
+        }
+        else if (url == "unFollowWriter") {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
+            this.setState({ follow_string: "Follow" });
+            this.setState({ follow_method: "followWriter" });
+            this.setState({ follow_icon: "fas fa-user-plus mr-2" });
         }
 
     }
@@ -177,7 +224,7 @@ class ShortStoryDetails extends Component {
                                     <div className="heading">
                                         <h2>{this.state.shortStory.title}</h2>
                                         <div className='row'>
-                                            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
                                                 <h5>from {this.state.genre.map((genre, index) => {
                                                     return <span style={{ color: '#535964' }} key={genre.id}>
                                                         {genre.title}
@@ -194,10 +241,9 @@ class ShortStoryDetails extends Component {
                                                     <StoryLikes likes={this.state.likes} />
                                                 </p>
                                             </div>
-                                            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
-                                                {this.state.shortStory.user_id != localStorage.getItem('user_id') && <button className="btn-shelf mt-0" onClick={() => {
-                                                    this.addToBookmark(this.state.shortStory.id)
-                                                }}> <i className="fa fa-plus"></i> Add To Bookmark</button>}
+                                            <div className='col-xs-12 col-sm-12 col-md-5 col-lg-5'>
+                                                {this.state.shortStory.user_id != localStorage.getItem('user_id') && <div className="" style={this.state.follow_style}
+                                                    onClick={() => this.followWriter(this.state.follow_method)}><i class={this.state.follow_icon}></i>{this.state.follow_string}</div>}
                                             </div>
                                         </div>
 
@@ -213,14 +259,12 @@ class ShortStoryDetails extends Component {
                                             <h4>About Story</h4>
                                             <p>{this.state.shortStory.summary}.</p>
                                         </div>
-                                        {/* <div className="about-info">
+                                        {this.state.writer.id != localStorage.getItem('user_id') && <div className="about-info">
                                             <h4>About Author</h4>
-                                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia nemo atque porro,
-                                                quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
-                                                Accusantium eum consequuntur incidunt, sed quisquam delectus.</p>
-                                        </div> */}
+                                            <p>{this.state.writer.bio}</p>
+                                        </div>}
 
-                                        <div className="about-info">
+                                        {this.state.chapters.length > 0 ? <div className="about-info">
                                             <h4>Chapters</h4>
                                             {/* <div className="reviews"> */}
 
@@ -229,7 +273,8 @@ class ShortStoryDetails extends Component {
 
                                             })}
                                             {/* </div> */}
-                                        </div>
+                                        </div> : <div className="about-info">
+                                            <h4>No Chapters Yet</h4></div>}
 
                                     </div>
                                 </div>
