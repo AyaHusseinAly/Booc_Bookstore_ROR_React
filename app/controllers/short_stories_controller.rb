@@ -81,8 +81,12 @@ class ShortStoriesController < ApplicationController
            if Bookmark.where(short_story_id: params[:id], user_id:params[:login]).length>0
             @bookmarked_flag=true
            end
+           @followed_flag=false
+           if Follow.where(reader_id: params[:login], writer_id:@writer).length>0
+            @followed_flag=true
+           end
            @createdDate=ShortStory.find(params['id']).created_at.strftime('%d %b %Y')
-           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag}
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag}
         else 
             render :json=>{message:"bad request"}  
         end     
@@ -107,6 +111,18 @@ class ShortStoriesController < ApplicationController
             render :json=>{message:"removed from bookmark successfully"}
         else 
             render :json=>{message:"it is not in your bookmark already"}
+        end
+    end
+    def followWriter
+        @follow=Follow.create(reader_id:params[:reader_id],writer_id:params[:writer_id])
+        render :json=>{message:"followed successfully",following:@follow}
+    end
+    def unFollowWriter
+        if Follow.where(reader_id:params[:reader_id],writer_id:params[:writer_id]).length > 0
+            Follow.where(reader_id:params[:reader_id],writer_id:params[:writer_id]).delete_all
+            render :json=>{message:"removed following successfully"}
+        else 
+            render :json=>{message:"you already don't follow this writer"}
         end
     end
     
