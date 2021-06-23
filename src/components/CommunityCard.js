@@ -194,7 +194,7 @@ class CommunityCard extends Component {
                                         modal
                                         contentStyle={commentPopup}
                                     >
-                                    <Comments comments={post.comments}></Comments>
+                                    <Comments comments={post.comments} post={post} refresh={this.props.refresh_data}></Comments>
                                 </Popup >
                                     </div>                                    
                                 </div>

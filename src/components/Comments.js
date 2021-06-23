@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
 
@@ -9,13 +10,75 @@ class Comments extends Component {
             maxHeight:'25rem',
             overflowY: 'scroll'
         }
-        const addComment = () =>{ 
-            let string=document.getElementById("form1").value;
-            console.log(string);
+        const addComment = (record_id,kind) =>{
+            if(window.localStorage.getItem('user_id')){
+                let string=document.getElementById("commentContent").value;
 
+                if(string!=""){
+                        
+                    if(kind=='story'){
+                            let data={
+                                body:string,
+                                story_id:record_id,
+                                user_id:window.localStorage.getItem('user_id')
+                            };
+                            axios.post("http://localhost:3000/commentStory", data, {
+                            headers: {
+                                "Access-Control-Allow-Origin": "*",
+                                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                                "Access-Control-Allow-Headers": "Content-Type",
 
-        }        
+                            }
+                        }).then(response => {
+                            if(response){
+                                console.log(response);
+                                this.props.refresh();
+                                this.forceUpdate();
+                                document.getElementById("commentContent").value="";
+                                document.getElementById("loginfirst").innerText="";
+                            }
+                            
+                        });
+                    }
+                    else{
+                        let data={
+                            body:string,
+                            chapter_id:record_id,
+                            user_id:window.localStorage.getItem('user_id')
+                        };
+                        axios.post("http://localhost:3000/commentChapter", data, {
+                            headers: {
+                                "Access-Control-Allow-Origin": "*",
+                                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                                "Access-Control-Allow-Headers": "Content-Type",
 
+                            }
+                        }).then(response => {
+                            if(response){
+                                console.log(response);
+                                this.props.refresh();
+                                this.forceUpdate();
+                                document.getElementById("commentContent").value="";                                
+                                document.getElementById("loginfirst").innerText="";
+                            }
+                            
+                        });
+
+                    }
+                }    
+                else{
+                    document.getElementById("loginfirst").innerText="Type your comment first";
+
+                }
+        }
+        else{
+            document.getElementById("loginfirst").innerText="please log in first";
+
+            
+        }
+
+        }
+        
         return (
             <React.Fragment>
                 <div style={scrollableContainer}>
@@ -33,12 +96,13 @@ class Comments extends Component {
                 </div>
                 <div className="d-flex m-2">
                     <div className="form-outline col-9" >
-                            <input type="search" id="form1" placeholder="Write your comment" className="form-control" style={{backgroundColor:'#F8F8F8',paddingLeft:'0.5rem',height:'3rem'}} />
+                            <input type="search" id="commentContent" placeholder="Write your comment" className="form-control" style={{backgroundColor:'#F8F8F8',paddingLeft:'0.5rem',height:'3rem'}} />
                     </div>
-                    <button type="button" onClick={addComment} className=" btn ml-1" style={{backgroundColor:'#F8F8F8'}}>
-                        <i class="fa fa-paper-plane" aria-hidden="true" style={{color:'#F8A488'}}></i>
+                    <button type="button" onClick={()=>{addComment(this.props.post.id,this.props.post.kind)}} className=" btn ml-1" style={{backgroundColor:'#F8F8F8'}}>
+                       <i class="fa fa-paper-plane" aria-hidden="true" style={{color:'#F8A488'}}></i>
                     </button>
                 </div>
+                <p id="loginfirst"style={{color:'#F8A488'}} className="pl-2"></p>
             </React.Fragment>
 
     );
