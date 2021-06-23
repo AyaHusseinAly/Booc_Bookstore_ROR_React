@@ -48,6 +48,11 @@ class Map extends Component {
         }
     }
 
+    handleToggle = () => {
+        this.setState({
+            isOpen: !false
+        });
+    }
     
 
     onMarkerClick = (props, marker) =>{
@@ -246,11 +251,13 @@ class Map extends Component {
                     ))}
                     {this.state.flagOfMyLocation &&
                         <Marker
+                        onClick={this.handleToggle}
                         position={this.state.Myposition}
                         >
+                            {this.state.isOpen &&
                             <InfoWindow>
                                 <div><h6>Your Position</h6></div>
-                            </InfoWindow>
+                            </InfoWindow>}
                         </Marker>
                      }
             </GoogleMap>
