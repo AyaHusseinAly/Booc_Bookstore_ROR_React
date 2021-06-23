@@ -27,7 +27,7 @@ class CommentsLikesController < ApplicationController
 
 
     def commentStory
-        @comment=CommentStory.create(body:params['body'],short_story_id:params['chapter_id'],user_id:params['user_id'])
+        @comment=CommentStory.create(body:params['body'],short_story_id:params['story_id'],user_id:params['user_id'])
         if @comment.persisted?
             render :json => {message:"Success"}       
         else
