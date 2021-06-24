@@ -11,8 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021061716083111) do
-
-  # These are extensions that must be enabled in order to support this database
+# These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -193,6 +192,7 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_short_story_generes_on_genre_id"
     t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
+
   end
 
   create_table "short_story_genres", force: :cascade do |t|
