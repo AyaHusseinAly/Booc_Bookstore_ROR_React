@@ -41,17 +41,23 @@ class AddStory extends Component {
     } 
     /******************* End Change value of Radio button belong to type of store*****************************/
     
-    // handleChange = (e) => {
-    //     let value = Array.from(e.target.selectedOptions, option => option.value);
-    //     this.setState({ shortStoryGenre: value });
-    // }
+    clearDataAfterSumbit = () =>{
+        this.setState({
+            StoreTitle: "",
+            BookStoreCover: "",
+            StorePhone:"",
+            StoreAddress:"",
+            StoreCity:"",
+            StoreStreet:"",
+          });
+    }
 
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
-        //const errors = this.validate();
+        const errors = this.validate();
 
-        //if (errors === null) {
+        if (errors === null) {
             const obj = {
                 ///Fatma////
                 StoreTitle: this.state.StoreTitle,
@@ -75,33 +81,34 @@ class AddStory extends Component {
                 }
             });
             console.log(res);
-            
-        // }
-        // else {
-        //     console.log('no submit');
-        //     this.activeError = true;
-        // }
+            window.location.reload();
+           
+        }
+        else {
+           console.log('no submit');
+           this.activeError = true;
+        }
 
     }
 
-    // validate = () => {
-    //     const errors = {};
-    //     //console.log(this.state.StoreTitle, this.state.shortStoryGenre)
-    //     if (this.state.StoreTitle.trim() === "")
-    //         errors.name = "Please enter Store name."
-    //     if (this.state.StorePhone.trim() === "")
-    //         errors.phone = "Please enter Store phone."
-    //     if (this.state.StoreAddress.trim() === "")
-    //         errors.address = "Please enter Store address"
-    //     if (this.state.StoreCity.trim() === "")
-    //         errors.city = "Please enter Store city"
-    //     if (this.state.StoreStreet.trim() === "")
-    //         errors.street= "Please enter Store street"
-    //     if (this.state.selectedValue.trim() === "")
-    //         errors.kind= "Please select type of store"
-    //     this.setState({ errors });
-    //     return Object.keys(errors).length === 0 ? null : errors;
-    // }
+    validate = () => {
+        const errors = {};
+        //console.log(this.state.StoreTitle, this.state.shortStoryGenre)
+        if (this.state.StoreTitle.trim() === "")
+            errors.name = "Please enter Store name."
+        if (this.state.StorePhone.trim() === "")
+            errors.phone = "Please enter Store phone."
+        if (this.state.StoreAddress.trim() === "")
+           errors.address = "Please enter Store address"
+        if (this.state.StoreCity.trim() === "")
+           errors.city = "Please enter Store city"
+        if (this.state.StoreStreet.trim() === "")
+            errors.street= "Please enter Store street"
+        //if (this.state.selectedValue  !== "Libraries" || this.state.selectedValue  !== "Bookstores")
+        //   errors.kind= "Please select type of store"
+        this.setState({ errors });
+        return Object.keys(errors).length === 0 ? null : errors;
+    }
 
    
     
@@ -134,7 +141,7 @@ class AddStory extends Component {
                         <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's name.." aria-label=" your store's name.." aria-describedby="basic-addon1" id='StoreTitle' value={this.state.StoreTitle}
                             onChange={(e) => this.setState({StoreTitle: e.currentTarget.value })}></input>
                         {/*Show Error If Exit related to Name Of Store */}
-                        {/* {this.state.errors.name && (<div className="alert alert-danger" role="alert">{this.state.errors.name}</div>)} */}
+                        {this.state.errors.name && (<div className="alert alert-danger" role="alert">{this.state.errors.name}</div>)}
 
                         {/* Phone */}
                         <br/>
@@ -142,54 +149,55 @@ class AddStory extends Component {
                         <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's phone.." aria-label=" your store's phone.." aria-describedby="basic-addon1" id='StorePhone' value={this.state.StorePhone}
                             onChange={(e) => this.setState({StorePhone: e.currentTarget.value })}></input>
                         {/* Show Error If Exit related to Phone Of Store */}
-                        {/* {this.state.errors.phone && (<div className="alert alert-danger" role="alert">{this.state.errors.phone}</div>)} */}
+                        {this.state.errors.phone && (<div className="alert alert-danger" role="alert">{this.state.errors.phone}</div>)}
                 {/************************************************************************************************/}
-                    {/* Address Of Store  */}
-                    <br/>
+                        {/* Address Of Store  */}
+                        <br/>
                         <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreAdress'><h5><strong>Address</strong></h5></label>
                         <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's phone.." aria-label=" your store's name.." aria-describedby="basic-addon1" id='StoreAddress' value={this.state.StoreAddress}
                             onChange={(e) => this.setState({StoreAddress: e.currentTarget.value })}></input>
                         {/* Show Error If Exit related to Phone Of Store */}
-                        {/* {this.state.errors.address && (<div className="alert alert-danger" role="alert">{this.state.errors.address}</div>)} */}
+                        {this.state.errors.address && (<div className="alert alert-danger" role="alert">{this.state.errors.address}</div>)}
 
-                    <br/>
-                    <div class="form-row">
+                        <br/>
+                        <div class="form-row">
 
                             <div class="form-group col-md-6">
                                 <label className="formLabel heading" style={{ display: 'block' }} htmlFor='city'><h5><strong>City</strong></h5></label>
                                 <div className="form-outline">
                                     <select className="custom-select" id="inputGroupSelect03" value={this.state.StoreCity}
-                                        onChange={(e) => this.setState({StoreCity: e.currentTarget.value })}> 
-                                        {cities.map(str => {return(<option value={str}>{str}</option>)})}               
-                                    </select>  
+                                        onChange={(e) => this.setState({StoreCity: e.currentTarget.value })}>
+                                        <option>pick a city </option>
+                                        {cities.map(str => {return(<option value={str}>{str}</option>)})} 
+                                    </select> 
+                                    {this.state.errors.city && (<div className="alert alert-danger" role="alert">{this.state.errors.city}</div>)}
                                 </div>
                             </div>
 
                             {/* street */}
                             <div class="form-group col-md-6">
                                 <label className="formLabel heading" style={{ display: 'block' }} htmlFor='street'><h5><strong>Street</strong></h5></label>
-                                <input type="text" className="form-control" id="StoreStreet" placeholder="Street"  value={this.state.StoreStreet} onChange={(e) => this.setState({StoreStreet: e.currentTarget.value })} required/>
-                                {/* {this.state.errors.street && (<div className="alert alert-danger" role="alert">{this.state.errors.street}</div>)} */}
+                                <input type="text" className="form-control" id="StoreStreet" placeholder="Street"  value={this.state.StoreStreet} onChange={(e) => this.setState({StoreStreet: e.currentTarget.value })} />
+                                {this.state.errors.street && (<div className="alert alert-danger" role="alert">{this.state.errors.street}</div>)}
                             </div>
-                    </div>
-                    
+                        </div> 
                 {/************************************************************************************************/}
-                {/* Type Of Store Radio Button  */}
-                <div  className="float-left">
-                        <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreAdress'><h5><strong>Type of Store</strong></h5></label>                     
-                        <div className="custom-control custom-radio custom-control-inline">
-                            <input type="radio" className="custom-control-input" id="customRadio" name="example" style={{background : '#FEC7B5'}} value="Bookstores" checked={this.state.selectedOption === "Bookstores"}
-                              onChange={this.onValueChange}  />
-                            <label className="custom-control-label" htmlFor="customRadio">Bookstores</label>
-                        </div>
-                        <div className="custom-control custom-radio custom-control-inline">
-                            <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="Libraries" checked={this.state.selectedOption === "Libraries"}
-                              onChange={this.onValueChange}  />
-                            <label className="custom-control-label" htmlFor="customRadio2">Libraries</label>
-                        </div>         
-                </div>
-                {/* {this.state.errors.kind && (<div className="alert alert-danger" role="alert">{this.state.errors.kind}</div>)} */}
-                <br/><br/><br/>
+                        {/* Type Of Store Radio Button  */}
+                        <div  className="float-left">
+                                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreAdress'><h5><strong>Type of Store</strong></h5></label>                     
+                                <div className="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" className="custom-control-input" id="customRadio" name="example" style={{background : '#FEC7B5'}} value="Bookstores" checked={this.state.selectedOption === "Bookstores"}
+                                    onChange={this.onValueChange}  />
+                                    <label className="custom-control-label" htmlFor="customRadio">Bookstores</label>
+                                </div>
+                                <div className="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="Libraries" checked={this.state.selectedOption === "Libraries"}
+                                    onChange={this.onValueChange}  />
+                                    <label className="custom-control-label" htmlFor="customRadio2">Libraries</label>
+                                </div>
+                                {/* {this.state.errors.kind && (<div className="alert alert-danger" role="alert">{this.state.errors.kind}</div>)}       */}
+                        </div><br/><br/>
+                        
                 {/*******************************************************************************************/}
                     </div>
                     <div className="d-flex justify-content-end" style={{ width: '90%' }}>
