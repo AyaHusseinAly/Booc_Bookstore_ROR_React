@@ -68,9 +68,9 @@ class Home extends Component {
                 <div>
                     <div className="bckgnd" >
                     <div className="input-group d-flex flex-column justify-content-center align-items-center text-center" style={{color:'rgba(255,255,255,0.95)',height:'650px'}}>
-                        <h2 >Books Shopping online with <strong style={{fontWeight:'bold',color:'#263044',opacity:'1'}}>B<span style={{color: '#F8A488',fontWeight:'bold',fontSize: '3rem'}}>oo</span>C</strong></h2>
-                        <h4>support local Bookstores</h4>
-                        <h4>open a door to become a writer</h4> <br/>
+                        <h2 style={{color:'white'}}>Books Shopping online with <strong style={{fontWeight:'bold',color:'#263044',opacity:'1'}}>B<span style={{color: '#F8A488',fontWeight:'bold',fontSize: '3rem'}}>oo</span>C</strong></h2>
+                        <h4 style={{color:'white'}}>support local Bookstores</h4>
+                        <h4 style={{color:'white'}}>open a door to become a writer</h4> <br/>
                         <div className="d-flex ">
                         <div className="form-outline" >
                             <input type="search" id="form1" placeholder="Search for a Book .." className="form-control" style={{width:'40rem',height:'4.5rem',fontSize: '1.5rem',paddingLeft:'1.5rem'}} />
