@@ -31,11 +31,16 @@ class BookstoresController < ApplicationController
 
     ################## Search From Map ############################
     def search
-        my_array = ["Giza","Alexandria","Cairo"]
+        # Location.where(["id = ?", id]).select("name, website, city")
+        if params['bookName'] != ""
+           @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['bookName']+"%").select("bookstore_id")
+        end    
+
+        my_array = ["Cairo","Alexandria","Giza","Port Said","Suez","Luxor","al-Mansura","Damanhur","6th of October City","Kafr el-Dawwar"]
         if my_array.include? params["distict"]
-        #if params["distict"] != nil
             if params['bookName'] != "" && params['selectedOption'] == nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(distict: params[ "distict"])
+                #@Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(distict: params[ "distict"])
+                @Bookstore = Bookstore.where(id: @bookstores_id).where(distict: params[ "distict"])
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -57,7 +62,7 @@ class BookstoresController < ApplicationController
                 end
                 render :json =>{stores: @stores}
             elsif params['bookName'] != "" && params['selectedOption'] != nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(kind: params['selectedOption']).where(distict: params[ "distict"])
+                @Bookstore = Bookstore.where(id: @bookstores_id).where(kind: params['selectedOption']).where(distict: params[ "distict"])
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -127,7 +132,7 @@ class BookstoresController < ApplicationController
         else
             ################ No Distinct ####################
             if params['bookName'] != "" && params['selectedOption'] == nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%")
+                @Bookstore = Bookstore.where(id: @bookstores_id)
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -149,7 +154,7 @@ class BookstoresController < ApplicationController
                 end
                 render :json =>{stores: @stores}
             elsif params['bookName'] != "" && params['selectedOption'] != nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(kind: params['selectedOption'])
+                @Bookstore = Bookstore.where(id: @bookstores_id).where(kind: params['selectedOption'])
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -198,4 +203,8 @@ class BookstoresController < ApplicationController
             end
         end
     end
+
+
+    
+
 end
