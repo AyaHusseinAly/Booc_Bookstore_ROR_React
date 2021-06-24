@@ -10,6 +10,8 @@ const BookRow = (props) =>{
     // const [isBlack, setIsBlack] = useState(true);
 
     const addFavouriteBook = (book) =>{
+      
+     
       const getFav = JSON.parse(localStorage.getItem('book-favourite'))
 
       if(!getFav.some(bk => bk.id === book.id)){
@@ -25,12 +27,12 @@ const BookRow = (props) =>{
   };
     
     const addShelfBook = (book) =>{
-            
+     
       const getShelfs = JSON.parse(localStorage.getItem('book-shelf'))
      
      console.log(getShelfs)
     
-  
+        
         if(!getShelfs.some(bk => bk.id === book.id)){
         const newShelfeRow = [...shelfs, book];
         setShelfs(newShelfeRow);

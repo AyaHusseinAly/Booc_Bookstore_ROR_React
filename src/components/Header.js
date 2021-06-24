@@ -125,11 +125,17 @@ class Header extends Component {
                                 <a className="dropdown-item" href='/BookShelf'>
                                     My Bookshelf
                                 </a>
+                                <a className="dropdown-item" href='/DownloadsPage'>
+                                    My Downloads
+                                </a>
                                 <a className="dropdown-item" href='/'>
                                     My Bookmarks
                                 </a>
                                 <a className="dropdown-item" href='/'>
                                     My Stories
+                                </a>
+                                <a className="dropdown-item" href='/UserPage'>
+                                    My Page
                                 </a>
                                 <hr class="dropdown-divider"></hr>
                                     {account_btn}
