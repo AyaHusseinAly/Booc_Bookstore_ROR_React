@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2021_06_23_160156) do
 
   # These are extensions that must be enabled in order to support this database
@@ -160,6 +161,11 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "sender_id_id"
+    t.bigint "reciever_id_id"
+    t.bigint "instance_id"
+    t.index ["reciever_id_id"], name: "index_notifications_on_reciever_id_id"
+    t.index ["sender_id_id"], name: "index_notifications_on_sender_id_id"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -234,6 +240,7 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.string "name"
     t.text "bio"
     t.date "dob"
+    t.string "role", default: "user"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -248,6 +255,10 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
   add_foreign_key "comment_stories", "short_stories"
   add_foreign_key "comment_stories", "users"
   add_foreign_key "comments", "short_stories_chapters"
+  add_foreign_key "likes", "short_stories"
+  add_foreign_key "likes", "users"
+  add_foreign_key "notifications", "users", column: "reciever_id_id"
+  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "like_chapters", "short_stories_chapters"
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"

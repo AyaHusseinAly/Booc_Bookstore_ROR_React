@@ -209,7 +209,12 @@ class BookstoresController < ApplicationController
         end
     end
 
-
-    
-
+    def get_bookstore_from_seller_id
+        bookstore=Bookstore.where(seller_id: parapms[:seller_id])
+        if bookstore.present?
+            render json: {message: "Bookstore Found", bookstore_id: bookstore.id}, status: ok
+        else
+            render json: {message: "No Bookstore Found"}, status:not_found
+        end
+    end
 end
