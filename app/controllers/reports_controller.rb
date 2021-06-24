@@ -5,13 +5,26 @@ class ReportsController < ApplicationController
         )
         if @report.persisted?
 
-            render :json => {message:" Thank you, your response is recorded and sent to admins"}
+            render :json => {message:" Thank you, your response"}
         
         else
             render :json => {message:"Error Occured"}
         end
 
     end
+    ########################### admin delete reports #########################################
+    def deleteReport
+        @report=Report.find(params['id']).destroy()
+        
+        if @report.destroyed
+
+            render :json => {message:" deleted successfullye"}
+        
+        else
+            render :json => {message:"Error Occured"}
+        end
+    end
+    ######################################### admin display reports ###########################
     def index
         @objArr=[]
         @reports=Report.all()
@@ -32,7 +45,7 @@ class ReportsController < ApplicationController
             end
             
             @obj={
-                "id": 1,
+                "id": report.id,
                 "kind": report.kind,
                 "reason": report.reason,
                 "related_record_id": report.related_record_id,
