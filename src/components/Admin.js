@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import '../style/admin.css';
 import BookRow from './BookRow';
+import AdminReports from './AdminReports';
+import AdminBookStores from './AdminBookStores';
+import 'antd/dist/antd.css';
 import axios from 'axios';
-
+import { Tabs } from 'antd';
+const TabPane = Tabs.TabPane;
 
 
 class Admin extends Component {
@@ -10,7 +14,6 @@ class Admin extends Component {
         fiction:[],
         thriller:[],
         horror:[]
-
     }
 
     componentDidMount(){
@@ -26,47 +29,39 @@ class Admin extends Component {
         .then(response => {
             this.setState({horror:response.data.items});
         });
-      
-}
+ 
+
+
+      }
     render() {
 
         return (
-            
-<div>
-<div className="container books_container">
-                    <BookRow items={this.state.fiction.slice(0,6)}></BookRow>
-                    <BookRow items={this.state.thriller.slice(0,6)}></BookRow>
-                    <BookRow items={this.state.horror.slice(0,6)}></BookRow>
+                      
+        <div className="p-5">
+          <Tabs defaultActiveKey="1" type="card" size='large'>
+                    <TabPane tab="Reports" key="1">
+                          <AdminReports></AdminReports>
+                    </TabPane>  
+                    <TabPane tab="Bookstores" key="2">
+                    {/* <div className="container books_container">
+                            <BookRow items={this.state.fiction.slice(0,6)}></BookRow>
+                            <BookRow items={this.state.thriller.slice(0,6)}></BookRow>
+                            <BookRow items={this.state.horror.slice(0,6)}></BookRow>
 
-  <div className="row d-flex justify-content-center " style={{textAlign: "center"}} >
+                        <div className="row d-flex justify-content-center " style={{textAlign: "center"}} >
 
-`		<a href="#collapse" style={{textAlign: "center"}} >  More... </a>
+                          <a href="#collapse" style={{textAlign: "center"}} >  More... </a>
 
-  </div>
+                        </div>
+                      </div> */}
+                      <AdminBookStores></AdminBookStores>
+                    </TabPane>
+                                      
+          </Tabs>
+      
+        <hr/>
 
-  
-</div>
-
-<hr/>
-<h5> Reports </h5>
-<ul title="reports">
-	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
-	<li>A user reports <a href="#collapse">Shimaa Adel </a> Comment</li>
-	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
-	<li>A user reports <a href="#collapse">Shimaa Adel </a> Comment</li>
-	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
-	<li>A user reports <a href="#collapse">Shimaa Adel </a> Comment</li>
-	<li>A user reports <a href="#collapse">Ahmed Kmael </a> Story</li>
-
-
-</ul>
-<div className="row d-flex justify-content-center " style={{textAlign: "center"}}>
-
-	<a href="#collapse" style={{textAlign: "center"}} >  More... </a>
-
-  </div>
-
-</div>
+        </div>
 
   	
 	

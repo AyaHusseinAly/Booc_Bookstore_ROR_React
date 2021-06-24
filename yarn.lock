@@ -2466,10 +2466,10 @@
   dependencies:
     "color-convert" "^2.0.1"
 
-"antd@^4.16.2":
-  "integrity" "sha512-8aRrhzVz0Z32PptW9syq0eQqjc9wfJn3nxgVqqxGNH5BkFr1LRiqM0wJ6FNiYc6XVbpnqP20z5gufYFHC7BHqw=="
-  "resolved" "https://registry.npmjs.org/antd/-/antd-4.16.2.tgz"
-  "version" "4.16.2"
+"antd@^4.16.3":
+  "integrity" "sha512-goFcDw8MB9PKgb+fHjUEOwoseL5iuMNelzcdFJOJaG1LXPm9d/ZQhQWdYbzQf5l7v6bmvvvi91WNB1rDsuXh3w=="
+  "resolved" "https://registry.npmjs.org/antd/-/antd-4.16.3.tgz"
+  "version" "4.16.3"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.6.2"
@@ -10182,6 +10182,11 @@
     "react-fast-compare" "^3.0.1"
     "warning" "^4.0.2"
 
+"react-rating-stars-component@^2.2.0":
+  "integrity" "sha512-A3lgLxumfFQQicKQmxacZ91fq/zRaVWlCPnVodJmJV6obvod4/yCotetN9WuyBiUfnKsEFDBo/8B85ocwmL7ng=="
+  "resolved" "https://registry.npmjs.org/react-rating-stars-component/-/react-rating-stars-component-2.2.0.tgz"
+  "version" "2.2.0"
+
 "react-refresh@^0.8.3", "react-refresh@>=0.8.3 <0.10.0":
   "version" "0.8.3"
 
@@ -10305,7 +10310,7 @@
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
 
-"react@^16.3.0":
+"react@^16.12.0":
   "version" "16.14.0"
   dependencies:
     "loose-envify" "^1.1.0"

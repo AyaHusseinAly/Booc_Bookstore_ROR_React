@@ -5,17 +5,12 @@ import '../style/community.css';
 import axios from 'axios';
 import CommunityCard from './CommunityCard';
 
-
-
-
 class Community extends Component {
     state={
         posts:[],
     }
     
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
-
-
         // const res=await axios.get('http://localhost:3000/api/shortStories',
         // {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
         // "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -24,8 +19,8 @@ class Community extends Component {
         // this.setState({stories:res.data.stories});
         
         // console.log(this.state.stories);
-
-        axios.get('http://localhost:3000/communityPosts',
+        let data={user_id:window.localStorage.getItem('user_id')};
+        axios.post('http://localhost:3000/communityPosts',data,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
@@ -44,6 +39,17 @@ class Community extends Component {
             console.log(string);
 
 
+        }
+        const refresh= () =>{ 
+            let data={user_id:window.localStorage.getItem('user_id')};
+            axios.post('http://localhost:3000/communityPosts',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+                this.setState({posts:response.data.posts});
+                console.log(this.state.posts);        
+    
+            });
         }
  
         return (
@@ -82,7 +88,7 @@ class Community extends Component {
 
                         {this.state.posts && this.state.posts.map(post=> 
 
-                        <CommunityCard post={post}></CommunityCard>
+                        <CommunityCard post={post} refresh={() => this.forceUpdate()} refresh_data={refresh}></CommunityCard>
 
                         )}
 

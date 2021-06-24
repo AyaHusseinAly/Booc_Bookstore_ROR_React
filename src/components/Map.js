@@ -16,6 +16,8 @@ import {
   }from "react-google-maps";
   import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA")
+const cities= ["Cairo","Alexandria","Giza","Port Said","Suez","Luxor","al-Mansura","Damanhur","6th of October City","Kafr el-Dawwar"]
+
 class Map extends Component {
     constructor(props) {
         super(props);
@@ -37,11 +39,37 @@ class Map extends Component {
             activeMarker: true,
             selectedPlace: {},
             isOpen: false,
+            isOpen1: false,
             markerInfoWindow: [0],
+
+            //for InfoWindow
+            selected: null,
+            setSelected: null,
+            Myposition: {},
+           // myLocation:[],
+            flagOfMyLocation: false,
+
+            showInfoIndex: ''
         }
     }
 
+    handleToggle = () => {
+        this.setState({
+            //isOpen1: !false,
+            showInfoIndex: -1
+        });
+    }
+
+    handleToggleForMyLocation= () => {
+        this.setState({
+            isOpen: !false,
+            //showInfoIndex: ''
+        });
+    }
     
+    showInfo(a){
+       this.setState({showInfoIndex: a })
+    }
 
     onMarkerClick = (props, marker) =>{
         this.setState({
@@ -77,11 +105,19 @@ class Map extends Component {
         this.setState({
             latitudeOfMyPosition: position.coords.latitude,
             longitudeOfMyPosition: position.coords.longitude,
+            Myposition: {lat: position.coords.latitude, lng:position.coords.longitude},
+            
+            
         })
+        if (this.state.flagOfMyLocation){
+            this.state.flagOfMyLocation = false}
+        else{this.state.flagOfMyLocation = true}
+
         this.reverseGeocodeCoordinates();
     }
 
     handleLocationError = (error) => {
+        this.state.flagOfMyLocation = false
         switch(error.code) {
             case error.PERMISSION_DENIED:
                alert("User denied the request for Share my.");
@@ -116,13 +152,11 @@ class Map extends Component {
           selectedOption: event.target.value
         });
     } 
-
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
         const obj = {
             bookName: this.state.bookName,
-            //selectedOption: this.state.selectedOption,
             selectedOption: this.state.selectedValue,
             distict: this.state.distict,
         }
@@ -149,6 +183,7 @@ class Map extends Component {
         this.setState({
             distict:'',
             bookName:'',
+            zoom: 10,
            //selectedOption: undefined,
            //this: this.reset
           });
@@ -206,29 +241,38 @@ class Map extends Component {
         /******************** Markers ***********************************/
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
-            defaultZoom={15}
+            defaultZoom={this.state.zoom}
             defaultCenter={{ lat: 31.2001, lng: 29.9187, }}
             onClick={this.onMapClicked}
             >
                 {this.state.stores.map((marker, index) => (
                     <Marker
-                    onClick = {() => this.onMarkerClick(props, marker)}
+                   // onClick = {() => this.onMarkerClick(props, marker)}
+                    onClick={()=>{ this.showInfo(index)} }
                     key={index}
-                    //{...marker}
                     // draggable={true}
                     // onDragEnd={this.onMarkerDragEnd}
                     position={marker.position}
-                    > 
+                    >  { (this.state.showInfoIndex === index ) && 
                         <InfoWindow
-                            marker={this.state.activeMarker}
-                            visible={this.state.showingInfoWindow}
-                            position={marker.position}
+                            onCloseClick={this.handleToggle}
                         >
                             <div><h6>{marker.name}</h6></div>
-                        </InfoWindow>
+                        </InfoWindow> }
                     </Marker>
-
+                
                     ))}
+                    {this.state.flagOfMyLocation &&
+                        <Marker
+                        onClick={this.handleToggleForMyLocation}
+                        position={this.state.Myposition}
+                        >
+                            {this.state.isOpen &&
+                            <InfoWindow>
+                                <div><h6>Your Position</h6></div>
+                            </InfoWindow>}
+                        </Marker>
+                     }
             </GoogleMap>
         ));
         /******************** End of  Markers ***********************************/   
@@ -262,9 +306,7 @@ class Map extends Component {
                                 <select className="custom-select" id="inputGroupSelect03" value={this.state.distict}
                                     onChange={(e) => this.setState({ distict: e.currentTarget.value })}>
                                     <option selected>choose nearst spot</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    {cities.map(str => {return(<option value={str}>{str}</option>)})}  
                                 </select>  
                             </div>
                         </div>
@@ -277,7 +319,7 @@ class Map extends Component {
                     <div style={distictSearch2} className="float-right">
                         <br/>
                         <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation" onClick={this.getLocation}/>
+                            <input type="checkbox" className="custom-control-input" id="switch1" name="sharemyLocation" value="sharemyLocation" onClick={this.getLocation} />
                             <label className="custom-control-label" for="switch1">Share my Location</label>
                         </div>            
                         
@@ -349,7 +391,7 @@ class Map extends Component {
                             </div>
                         </div>
                     </div>:
-
+                    // if no result or search yet
                     <div>
                         <br/>
                         <div className='d-flex justify-content-center ' style={{border: '2px solid #F8A488',borderRadius: '5px!important'}}>

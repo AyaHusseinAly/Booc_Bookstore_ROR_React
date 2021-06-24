@@ -19,6 +19,10 @@ import DownloadsPage from "./components/DownloadsPage";
 import UserPage from "./components/UserPage";
 import Favr from "./components/Favr";
 import ShortStoryDetails from './components/ShortStoryDetails';
+import BookRowSlide from './components/BookRowSlide';
+
+
+
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
 import axios from 'axios';
@@ -172,8 +176,7 @@ class App extends Component {
           <Route path="/BookShelf" component={BookShelf}/>
           <Route path="/DownloadsPage" component={DownloadsPage}/>
           <Route path="/UserPage" component={UserPage}/>
-          <Route path="/admin" component={Admin}/>
-          <Route path="/Favr" component={Favr}/>
+          
           
 
           <Route 
