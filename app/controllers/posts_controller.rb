@@ -2,7 +2,44 @@ class PostsController < ApplicationController
     def posts
         @chapters = ShortStoriesChapter.all().order("created_at DESC");
         @stories = ShortStory.all().order("created_at DESC");
-        @posts=[];
+        @posts=mapChapterStoryToPost(@chapters,@stories,params['user_id'])
+
+        render :json => {posts:@posts}
+
+    end
+
+    def is_current_user_likes_this_story(story_id,user_id)
+        check = LikeStory.where(short_story_id:story_id,user_id:user_id)
+        if check.length>0         
+            return true
+            
+        end
+        return false
+    end
+
+    def is_current_user_likes_this_chapter(story_id,user_id)
+        check = LikeChapter.where(short_stories_chapter_id:story_id,user_id:user_id)
+        if check.length>0         
+            return true
+            
+        end
+        return false
+    end
+
+
+     ########################################## Search #################################
+     def search
+
+        @chapters = ShortStoriesChapter.where("title LIKE ?", "%" + params[:q] + "%") + ShortStoriesChapter.where("summary LIKE ?", "%" + params[:q] + "%")
+        @stories = ShortStory.where("title LIKE ?", "%" + params[:q] + "%") +  ShortStory.where("summary LIKE ?", "%" + params[:q] + "%") 
+        @posts =mapChapterStoryToPost(@chapters,@stories,params['user_id'])
+
+        render :json => {posts:@posts}
+     end
+     
+
+     def mapChapterStoryToPost(chapters, stories, id)
+        @posts=[]
         @stories.each do |story|
             likes_db = LikeStory.where(short_story_id: story.id)
             comments_db = CommentStory.where(short_story_id: story.id)
@@ -22,7 +59,7 @@ class PostsController < ApplicationController
                 end
                 comments.push({id:comment.id,user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
-            liked_bool=is_current_user_likes_this_story(story.id,params['user_id'])
+            liked_bool=is_current_user_likes_this_story(story.id,id)
             writer_avatar=""
                 if story.user&.avatar&.attached?
                     writer_avatar = rails_blob_url(story.user.avatar)
@@ -63,7 +100,7 @@ class PostsController < ApplicationController
                 end
                 comments.push({id:comment.id,user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
-            liked_bool=is_current_user_likes_this_chapter(chapter.id,params['user_id'])
+            liked_bool=is_current_user_likes_this_chapter(chapter.id,id)
             writer_avatar=""
                 if chapter.short_story.user&.avatar&.attached?
                     writer_avatar = rails_blob_url(chapter.short_story.user.avatar)
@@ -86,27 +123,7 @@ class PostsController < ApplicationController
         end
 
         @posts.sort! { |a, b|  b[:created_at].to_i <=> a[:created_at].to_i }
+        return @posts
 
-
-        render :json => {posts:@posts}
-
-    end
-
-    def is_current_user_likes_this_story(story_id,user_id)
-        check = LikeStory.where(short_story_id:story_id,user_id:user_id)
-        if check.length>0         
-            return true
-            
-        end
-        return false
-    end
-
-    def is_current_user_likes_this_chapter(story_id,user_id)
-        check = LikeChapter.where(short_stories_chapter_id:story_id,user_id:user_id)
-        if check.length>0         
-            return true
-            
-        end
-        return false
-    end
+     end
 end

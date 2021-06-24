@@ -41,6 +41,7 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/admin/BookStores', to:'bookstores#create'
 
   post '/communityPosts' , to:'posts#posts'
+  post '/searchStoryChapter' , to:'posts#search'
   post '/commentChapter', to: 'comments_likes#commentChapter'
   post '/likeChapter', to: 'comments_likes#likeChapter' 
   post '/commentStory', to: 'comments_likes#commentStory'
