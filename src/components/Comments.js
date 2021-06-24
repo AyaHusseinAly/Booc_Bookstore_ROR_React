@@ -78,7 +78,37 @@ class Comments extends Component {
         }
 
         }
-        
+// ////////////////////////////////// Report  ////////////////////////////////////////////////////
+        const sendReport = (id) =>{ 
+            let kind="";
+                if(this.props.post.kind=='story'){
+                    kind="commentStory";
+                }else{
+                    kind="commentChapter";
+                }
+                let data={
+                    kind:kind,
+                    reason:"not appropriate",
+                    related_record_id:id,
+                    user_id: window.localStorage.getItem('user_id')
+                };
+                axios.post("http://localhost:3000/report", data, {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT",
+                        "Access-Control-Allow-Headers": "Content-Type",
+
+                    }
+                }).then(response => {
+                    if(response){
+                        console.log(response);
+                        document.getElementById("loginfirst").innerText=response.data.message}
+                    else{
+                        console.log(response);
+                    }
+                });
+
+        }  
         return (
             <React.Fragment>
                 <div style={scrollableContainer}>
@@ -88,7 +118,7 @@ class Comments extends Component {
                         <img  className="  m-1 py-2  rounded-circle"  src={comment.user_img}  />
                         <div className="d-flex flex-column mt-2 p-1">
                             <strong style={{color:'#535964',fontSize:'1.3rem'}} className="mb-1">{comment.user_name}</strong>
-                            <h6 style={{border:'0.1rem solid #e4e0e0',borderRadius:'3px 3px',padding:'0.5rem',width:'13rem',backgroundColor: '#F8F8F8'}}>{comment.comment_content}</h6>
+                            <h6 style={{border:'0.1rem solid #e4e0e0',borderRadius:'3px 3px',padding:'0.5rem',width:'13rem',backgroundColor: '#F8F8F8'}}>{comment.comment_content} <span style={{color:'red',cursor:'pointer'}} onClick={()=>{sendReport(comment.id)}}>report</span></h6>
                         </div>                    
                     </div>
                     

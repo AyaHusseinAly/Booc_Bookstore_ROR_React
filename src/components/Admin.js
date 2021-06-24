@@ -16,23 +16,23 @@ class Admin extends Component {
         horror:[]
     }
 
-    componentDidMount(){
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
-        .then(response => {
-            this.setState({fiction:response.data.items});
-        });
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
-        .then(response => {
-            this.setState({thriller:response.data.items});
-        });
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
-        .then(response => {
-            this.setState({horror:response.data.items});
-        });
+    // componentDidMount(){
+    //     axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
+    //     .then(response => {
+    //         this.setState({fiction:response.data.items});
+    //     });
+    //     axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
+    //     .then(response => {
+    //         this.setState({thriller:response.data.items});
+    //     });
+    //     axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
+    //     .then(response => {
+    //         this.setState({horror:response.data.items});
+    //     });
  
 
 
-      }
+    //   }
     render() {
 
         return (
@@ -40,7 +40,7 @@ class Admin extends Component {
         <div className="p-5">
           <Tabs defaultActiveKey="1" type="card" size='large'>
                     <TabPane tab="Reports" key="1">
-                          <AdminReports></AdminReports>
+                          <AdminReports ></AdminReports>
                     </TabPane>  
                     <TabPane tab="Bookstores" key="2">
                     {/* <div className="container books_container">

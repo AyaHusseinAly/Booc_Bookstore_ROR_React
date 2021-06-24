@@ -176,7 +176,8 @@ class App extends Component {
           <Route path="/BookShelf" component={BookShelf}/>
           <Route path="/DownloadsPage" component={DownloadsPage}/>
           <Route path="/UserPage" component={UserPage}/>
-          
+          <Route path="/admin" component={Admin} />
+         
           
 
           <Route 
