@@ -25,13 +25,18 @@ class BookstoresController < ApplicationController
         render :json => {message:" destroy book  succefully"}
     end
 
+    ################## Create BookStore  ############################
     def create  
+        # Create Book Store
+        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:31.239811473864638,lng:29.96107643895042,kind: params['selectedOption'], distict:params['StoreCity']) 
+        
+        # Create Admin To Store
         render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
     end
 
     ################## Search From Map ############################
     def search
-        # Location.where(["id = ?", id]).select("name, website, city")
+        
         if params['bookName'] != ""
            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['bookName']+"%").select("bookstore_id")
         end    
