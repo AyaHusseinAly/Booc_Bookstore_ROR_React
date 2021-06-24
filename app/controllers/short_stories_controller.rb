@@ -113,7 +113,54 @@ class ShortStoriesController < ApplicationController
     def show    
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
-           @chapters=ShortStoriesChapter.where(short_story_id:params['id'])
+           @chapters=[]
+           if ShortStoriesChapter.where(short_story_id:params['id']).length >0
+            ShortStoriesChapter.where(short_story_id:params['id']).each do |chapter|
+            @likesCh=[]
+            LikeChapter.where(short_stories_chapter_id:chapter.id ).each do |likeRecord|
+                user=User.find(likeRecord.user_id)
+                @likesCh.push(user)
+            end
+            @commentsCh=[]
+            if CommentChapter.where(short_stories_chapter_id:params['id']).length >0
+                CommentChapter.where(short_stories_chapter_id:params['id']).each do |comment|
+                    user=User.find(comment.user_id)
+                    commentObj={
+                        user_id:comment.user_id,
+                        user_name:user.name,
+                        user_img:"",
+                        comment_content:comment.body,
+
+                    }
+                    if user&.avatar&.attached?
+                        commentObj[:user_img] = rails_blob_url(user.avatar)
+                    end
+                    @commentsCh.push(commentObj);
+                end
+            end
+            @likeChFlag=false
+            if LikeChapter.where(short_stories_chapter_id:chapter.id,user_id:params[:login]).length >0
+              @likeChFlag=true
+            end
+            chapterObj={
+                id: chapter.id,
+                title: chapter.title,
+                summary: chapter.summary, 
+                created_at: chapter.created_at, 
+                updated_at: chapter.updated_at, 
+                short_story_id: chapter.short_story_id,
+                likes: @likesCh,
+                comments:@commentsCh,
+                userLikeFlag:@likeChFlag
+            }
+            @chapters.push(chapterObj);
+            end
+           end 
+
+
+
+
+
            @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
            @genres=Genre.where(id:@genre_ids)
            @image=""

@@ -3,23 +3,69 @@ class CommentsLikesController < ApplicationController
    
     def commentChapter
         @comment=CommentChapter.create(body:params['body'],short_stories_chapter_id:params['chapter_id'],user_id:params['user_id'])
+        @comments=[]
+        if CommentChapter.where(short_stories_chapter_id:params['chapter_id']).length >0
+            CommentChapter.where(short_stories_chapter_id:params['chapter_id']).each do |comment|
+                user=User.find(comment.user_id)
+                commentObj={
+                    user_id:comment.user_id,
+                    user_name:user.name,
+                    user_img:"",
+                    comment_content:comment.body,
+
+                }
+                if user&.avatar&.attached?
+                    commentObj[:user_img] = rails_blob_url(user.avatar)
+                end
+                @comments.push(commentObj);
+            end
+        end
         if @comment.persisted?
-            render :json => {message:" Success"}       
+            render :json => {message:" Success",comments:@comments}       
         else
-            render :json => {message:"Error Occured"}
+            render :json => {message:"Error Occured",comments:@comments}
         end
 
     end
 
 
+    # def likeChapter
+    #     @like=LikeChapter.create(short_stories_chapter_id:params['chapter_id'],user_id:params['user_id'])
+    #     if @like.persisted?
+
+    #         render :json => {message:"Success"}
+        
+    #     else
+    #         render :json => {message:"Error Occured"}
+    #     end
+    # end
+
+
     def likeChapter
         @like=LikeChapter.create(short_stories_chapter_id:params['chapter_id'],user_id:params['user_id'])
+        @chLikes=[]
+        LikeChapter.where(short_stories_chapter_id:params['chapter_id']).each do |like|
+            user=User.find(like.user_id)
+            likeObj={
+                user_id:like.user_id,
+                user_name:user.name,
+                user_img:""
+            }
+            if user&.avatar&.attached?
+                likeObj[:user_img] = rails_blob_url(user.avatar)
+            end
+            @chLikes.push(likeObj);
+        end
+        @likeFlag=false
+        if LikeChapter.where(short_stories_chapter_id:params['chapter_id'],user_id:params['user_id']).length >0
+            @likeFlag=true
+        end
         if @like.persisted?
 
-            render :json => {message:"Success"}
+            render :json => {message:"Success",storyLikes:@chLikes,likeFlag:@likeFlag}
         
         else
-            render :json => {message:"Error Occured"}
+            render :json => {message:"Error Occured",storyLikes:@chLikes,likeFlag:@likeFlag}
         end
     end
 
@@ -137,6 +183,24 @@ class CommentsLikesController < ApplicationController
             record.delete()
         end
         end
+        @chLikes=[]
+        LikeChapter.where(short_stories_chapter_id:params['chapter_id']).each do |like|
+            user=User.find(like.user_id)
+            likeObj={
+                user_id:like.user_id,
+                user_name:user.name,
+                user_img:""
+            }
+            if user&.avatar&.attached?
+                likeObj[:user_img] = rails_blob_url(user.avatar)
+            end
+            @chLikes.push(likeObj);
+        end
+        @likeFlag=false
+        if LikeChapter.where(short_stories_chapter_id:params['chapter_id'],user_id:params['user_id']).length >0
+            @likeFlag=true
+        end
+        render :json => {message:"Successfully unlike chapter",storyLikes:@chLikes,likeFlag:@likeFlag}
     end
 
     def listStoryComments
