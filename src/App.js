@@ -12,6 +12,10 @@ import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
 import Genre from './components/Genre';
+import BookStoreBooks from './components/BookStoreBooks';
+import AddBook from './components/AddBook';
+
+
 import GoogleAPI from './classes/GoogleAPI';
 
 import ShortStoryDetails from './components/ShortStoryDetails';
@@ -110,6 +114,11 @@ class App extends Component {
             <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
             <Route path="/userprofile" component={UserProfile} />
             <Route path="/admin" component={Admin} />
+            <Route path="/bookstorebooks/:id" component={BookStoreBooks} />
+            <Route path="/addbook/:id" component={AddBook} />
+
+
+
             <Route
               path="/sign_up"
               render={props => (
