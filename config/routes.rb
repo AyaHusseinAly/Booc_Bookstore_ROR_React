@@ -48,6 +48,10 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/unlikeStory', to: 'comments_likes#unlikeStory'
   post '/likeStory', to: 'comments_likes#likeStory'  
   post '/report' , to: 'reports#create'
+  post '/deleteReport' , to: 'reports#deleteReport'
+  post '/deleteRecord' , to: 'reports#deleteRecord'
+
+
   get '/reports' , to: 'reports#index'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
@@ -56,5 +60,6 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/followWriter',to:'short_stories#followWriter'
   post '/unFollowWriter',to:'short_stories#unFollowWriter'
   post '/addRateReviewStory',to:'short_stories#addRateReviewStory'
+  post '/listStoryComments', to: 'comments_likes#listStoryComments'
 
 end

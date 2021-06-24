@@ -20,14 +20,18 @@ class PostsController < ApplicationController
                 if comment.user&.avatar&.attached?
                     avatar = rails_blob_url(comment.user.avatar)
                 end
-                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
+                comments.push({id:comment.id,user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
             liked_bool=is_current_user_likes_this_story(story.id,params['user_id'])
-            
+            writer_avatar=""
+                if story.user&.avatar&.attached?
+                    writer_avatar = rails_blob_url(story.user.avatar)
+                end
             postObj={
                 id: story.id,
                 kind: "story",
-                writer:"Islam Karim",
+                writer:story.user.username,
+                writer_avatar:writer_avatar,
                 content: story.summary,
                 story_title:story.title,
                 chapter_title:"Summary",
@@ -39,6 +43,7 @@ class PostsController < ApplicationController
             }
             @posts.push(postObj);
         end
+        ###################################### Chapters ############################################
         @chapters.each do |chapter|
             likes_db = LikeChapter.where(short_stories_chapter_id: chapter.id)
             comments_db = CommentChapter.where(short_stories_chapter_id: chapter.id)
@@ -56,14 +61,18 @@ class PostsController < ApplicationController
                 if comment.user&.avatar&.attached?
                     avatar = rails_blob_url(comment.user.avatar)
                 end
-                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
+                comments.push({id:comment.id,user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
             liked_bool=is_current_user_likes_this_chapter(chapter.id,params['user_id'])
-
+            writer_avatar=""
+                if chapter.short_story.user&.avatar&.attached?
+                    writer_avatar = rails_blob_url(chapter.short_story.user.avatar)
+                end
             postObj={
                 id: chapter.id,
                 kind:"chapter",
-                writer:"Aya Hussein",
+                writer:chapter.short_story.user.username,
+                writer_avatar:writer_avatar,
                 content: chapter.summary,
                 story_title:chapter.short_story.title,
                 chapter_title:chapter.title,

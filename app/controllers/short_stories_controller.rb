@@ -63,7 +63,8 @@ class ShortStoriesController < ApplicationController
                 status:story.status,
                 created_at:story.created_at,
                 user_id:story.user_id,
-                rate:@storyRate
+                rate:@storyRate,
+                noReviews:@allReviews.length
 
             }
             @NotFinishedYet.push(obj);
@@ -102,7 +103,8 @@ class ShortStoriesController < ApplicationController
             status:story.status,
             created_at:story.created_at,
             user_id:story.user_id,
-            rate:@storyRate
+            rate:@storyRate,
+            noReviews:@allReviews.length
 
         }
         @Finished.push(obj);
@@ -113,7 +115,58 @@ class ShortStoriesController < ApplicationController
     def show    
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
-           @chapters=ShortStoriesChapter.where(short_story_id:params['id'])
+        #    ###############data of each chapter######################
+           @chapters=[]
+           if ShortStoriesChapter.where(short_story_id:params['id']).length >0
+            ShortStoriesChapter.where(short_story_id:params['id']).each do |chapter|
+            @likesCh=[]
+            LikeChapter.where(short_stories_chapter_id:chapter.id ).each do |likeRecord|
+                user=User.find(likeRecord.user_id)
+                objChUserLike={
+                    user_id:likeRecord.user_id,
+                    user_name:user.name,
+                    user_img:""
+                }
+                if user&.avatar&.attached?
+                    objChUserLike[:user_img] = rails_blob_url(user.avatar)
+                end
+                @likesCh.push(objChUserLike)
+            end
+            @commentsCh=[]
+            if CommentChapter.where(short_stories_chapter_id:chapter.id).length >0
+                CommentChapter.where(short_stories_chapter_id:chapter.id).each do |comment|
+                    user=User.find(comment.user_id)
+                    commentObj={
+                        user_id:comment.user_id,
+                        user_name:user.name,
+                        user_img:"",
+                        comment_content:comment.body,
+
+                    }
+                    if user&.avatar&.attached?
+                        commentObj[:user_img] = rails_blob_url(user.avatar)
+                    end
+                    @commentsCh.push(commentObj);
+                end
+            end
+            @likeChFlag=false
+            if LikeChapter.where(short_stories_chapter_id:chapter.id,user_id:params[:login]).length >0
+              @likeChFlag=true
+            end
+            chapterObj={
+                id: chapter.id,
+                title: chapter.title,
+                summary: chapter.summary, 
+                created_at: chapter.created_at, 
+                updated_at: chapter.updated_at, 
+                short_story_id: chapter.short_story_id,
+                likes: @likesCh,
+                comments:@commentsCh,
+                userLikeFlag:@likeChFlag
+            }
+            @chapters.push(chapterObj);
+            end
+           end 
            @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
            @genres=Genre.where(id:@genre_ids)
            @image=""
@@ -176,7 +229,43 @@ class ShortStoriesController < ApplicationController
            if StoryRatingReview.where(short_story_id:params['id'] ,user_id:params[:login]).length >0
             @review_flag=true
            end
-           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag,reviews:@reviews,review_flag:@review_flag,storyRate:@storyRate}
+           @likeStory=[]
+           if LikeStory.where(short_story_id:params['id']).length >0
+            LikeStory.where(short_story_id:params['id']).each do |like|
+                user=User.find(like.user_id)
+                likeObj={
+                    user_id:like.user_id,
+                    user_name:user.name,
+                    user_img:""
+                }
+                if user&.avatar&.attached?
+                    likeObj[:user_img] = rails_blob_url(user.avatar)
+                end
+                @likeStory.push(likeObj);
+            end
+           end
+           @likeFlag=false
+           if LikeStory.where(short_story_id:params['id'],user_id:params[:login]).length >0
+            @likeFlag=true
+           end
+           @commentStory=[]
+           if CommentStory.where(short_story_id:params['id']).length >0
+            CommentStory.where(short_story_id:params['id']).each do |comment|
+                user=User.find(comment.user_id)
+                commentObj={
+                    user_id:comment.user_id,
+                    user_name:user.name,
+                    user_img:"",
+                    comment_content:comment.body,
+
+                }
+                if user&.avatar&.attached?
+                    commentObj[:user_img] = rails_blob_url(user.avatar)
+                end
+                @commentStory.push(commentObj);
+            end
+           end
+           render :json=>{message:"request successfully",shortStory:@shortStory,chapters:@chapters,genres:@genres,date:@createdDate,image:@image,writer:@writer,logIn:@login,bookmarked_flag:@bookmarked_flag,followed_flag:@followed_flag,reviews:@reviews,review_flag:@review_flag,storyRate:@storyRate,storyLikes:@likeStory,likeFlag:@likeFlag,commentStory:@commentStory}
         else 
             render :json=>{message:"bad request"}  
         end     
@@ -189,8 +278,6 @@ class ShortStoriesController < ApplicationController
 
     end
     def addToBookmark
-        # add params['id'] of story to book mark of user 
-        #####################################################################still need to handle it
         @bookmark=Bookmark.create( short_story_id: params[:story_id], user_id:params[:user_id])
         render :json=>{message:"added to bookmark successfully",Bookmark:@bookmark}
     end
@@ -235,6 +322,5 @@ class ShortStoriesController < ApplicationController
         end
         render :json=>{message:@message,rate_review:@reviewrails}
     end
-    
 
 end
