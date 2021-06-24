@@ -44,7 +44,7 @@ class Map extends Component {
             selected: null,
             setSelected: null,
             Myposition: {},
-            myLocation:[],
+           // myLocation:[],
             flagOfMyLocation: false,
 
             showInfoIndex: ''
@@ -155,7 +155,6 @@ class Map extends Component {
         const data = new FormData(e.target);
         const obj = {
             bookName: this.state.bookName,
-            //selectedOption: this.state.selectedOption,
             selectedOption: this.state.selectedValue,
             distict: this.state.distict,
         }

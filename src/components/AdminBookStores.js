@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ImageUploader from 'react-images-upload';
-
-
+const cities= ["Cairo","Alexandria","Giza","Port Said","Suez","Luxor","al-Mansura","Damanhur","6th of October City","Kafr el-Dawwar"]
 class AddStory extends Component {
     constructor(props) {
 
         super(props);
         this.state = {
-            shortStoryTitle: "",
+            
             shortStoryDescription: "",
             shortStoryLanguage: "",
             shortStoryAudience: "",
@@ -19,7 +18,12 @@ class AddStory extends Component {
             genres: [],
 
             //Fatma
+            StoreTitle: "",
             BookStoreCover: "",
+            StorePhone:"",
+            StoreAddress:"",
+            StoreCity:"",
+            StoreStreet:"",
 
         }
         this.inputReference = React.createRef();
@@ -34,10 +38,14 @@ class AddStory extends Component {
     // Action of cover uploaded 
     fileUploadAction = () => this.inputReference.current.click();
     /******************* End add cover for Store ********************/
-    // handleImage = (e) => {
-    //     const file = e.target.files[0];
-    //     console.log(e.currentTarget.value);
-    // }
+    
+    /******************* Change value of Radio button belong to type of store*****************************/
+    onValueChange= (event) => {
+        this.setState({
+          selectedOption: event.target.value
+        });
+    } 
+    /******************* End Change value of Radio button belong to type of store*****************************/
     
     handleChange = (e) => {
         let value = Array.from(e.target.selectedOptions, option => option.value);
@@ -49,9 +57,8 @@ class AddStory extends Component {
         const errors = this.validate();
 
         if (errors === null) {
-            console.log(this.state.shortStoryCover);
+            //console.log(this.state.shortStoryCover);
             const obj = {
-                shortStoryTitle: this.state.shortStoryTitle,
                 shortStoryDescription: this.state.shortStoryDescription,
                 shortStoryLanguage: this.state.shortStoryLanguage,
                 shortStoryAudience: this.state.shortStoryAudience,
@@ -59,6 +66,13 @@ class AddStory extends Component {
                 writer: localStorage.getItem('user_id'),
                 shortStoryCover: this.state.shortStoryCover,
 
+                ///Fatma////
+                StoreTitle: this.state.StoreTitle,
+                phone: this.state.StorePhone,
+                address: this.state.StoreAddress,
+                city: this.state.StoreCity,
+                street: this.state.StoreStreet,
+                selectedOption: this.state.selectedValue,
             }
             Object.keys(obj).forEach((key, value) => {
                 return data.append(key, obj[key])
@@ -85,11 +99,20 @@ class AddStory extends Component {
     }
     validate = () => {
         const errors = {};
-        console.log(this.state.shortStoryTitle, this.state.shortStoryGenre)
-        if (this.state.shortStoryTitle.trim() === "")
-            errors.title = "Title is required"
-        if (this.state.shortStoryDescription.trim() === "")
-            errors.description = "Description is required"
+        //console.log(this.state.StoreTitle, this.state.shortStoryGenre)
+        if (this.state.StoreTitle.trim() === "")
+            errors.name = "Please enter Store name."
+        if (this.state.StorePhone.trim() === "")
+            errors.phone = "Please enter Store phone."
+        if (this.state.StoreAddress.trim() === "")
+            errors.address = "Please enter Store address"
+        if (this.state.StoreCity.trim() === "")
+            errors.city = "Please enter Store city"
+        if (this.state.StoreStreet.trim() === "")
+            errors.street= "Please enter Store street"
+        if (this.state.selectedValue.trim() === "")
+            errors.kind= "Please select type of store"
+
         if (this.state.shortStoryAudience === "")
             errors.audience = "Audience is required"
         if (this.state.shortStoryCover.length === 0)
@@ -99,8 +122,9 @@ class AddStory extends Component {
         this.setState({ errors });
         return Object.keys(errors).length === 0 ? null : errors;
     }
+
     async componentDidMount() {
-        const res = await axios.get('http://localhost:3000/shortStoriesGenres',
+        const res = await axios.get('http://localhost:3000/',
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -109,17 +133,14 @@ class AddStory extends Component {
                 }
             });
 
-        this.setState({ genres: res.data.short_stories });
-        console.log(this.state.genres);
-        console.log(localStorage.getItem('user_id'))
+       // this.setState({ genres: res.data.short_stories });
     }
 
     
     
     render() {
-
+      
         return (
-
             <React.Fragment>
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
                     {/************************* Cover of Store****************************** */}
@@ -139,49 +160,70 @@ class AddStory extends Component {
                     {/************************* End of Cover of Store****************************** */}
 
                     <div className='col col-1'></div>
-                    <div className='col col-7'>
-                        <label className="formLabel" style={{ display: 'block' }} htmlFor='shortstorytitle'>Title</label>
-                        <input type="text" className="formControl p-1" style={{ borderRadius: '4px' }} placeholder=" your story's name.." id='shortstorytitle' value={this.state.shortStoryTitle}
-                            onChange={(e) => this.setState({ shortStoryTitle: e.currentTarget.value })} />
-                        {this.state.errors.title && (<div className="alert alert-danger" role="alert">{this.state.errors.title}</div>)}
+                    <div className='col col-7 col-lg-7 col-md-9 col-sm-11 col-xs-11'>
+                        <label className="formLabel heading" style={{ display: 'block' }}><h3><strong>Information About Store</strong></h3></label><hr style={{borderColor: '#F8A488',}}/>
+                        {/* Name of Your Store */}
+                        <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreTitle'><h5><strong>Store Name</strong></h5></label>
+                        <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's name.." aria-label=" your store's name.." aria-describedby="basic-addon1" id='StoreTitle' value={this.state.StoreTitle}
+                            onChange={(e) => this.setState({StoreTitle: e.currentTarget.value })}></input>
+                        {/*Show Error If Exit related to Name Of Store */}
+                        {this.state.errors.name && (<div className="alert alert-danger" role="alert">{this.state.errors.name}</div>)}
 
-                        <label className="formLabel mt-4" style={{ display: 'block' }}
-                            htmlFor='shortstorydescription'>Description</label>
-                        <textarea className="formControl" rows="4" style={{ borderRadius: '4px', width: '100%' }} placeholder=" your story's summary.." id='shortstorydescription' value={this.state.shortStoryDescription}
-                            onChange={(e) => this.setState({ shortStoryDescription: e.currentTarget.value })} />
-                        {this.state.errors.description && (<div className="alert alert-danger" role="alert">{this.state.errors.description}</div>)}
-                        <div className='d-flex justify-content-between mt-4'>
-                            <div>
-                                <label className="formLabel" style={{ display: 'block' }}
-                                    htmlFor='shortstorygenre'>Genre</label>
-                                <select className="formControl p-1" style={{ borderRadius: '4px', display: 'inlineBlock' }} id='shortstorygenre' value={this.state.shortStoryGenre} onChange={this.handleChange} multiple size="3">
-                                    <option value="" disabled defaultValue >Choose a literature kind ..</option>
-                                    {this.state.genres.map(option => {
-                                        return <option value={option.id}>{option.title}</option>
-                                    })}
-                                </select>
-                                {this.state.errors.genre && (<div className="alert alert-danger" role="alert">{this.state.errors.genre}</div>)}
+                        {/* Phone */}
+                        <br/>
+                        <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StorePhone'><h5><strong>Phone</strong></h5></label>
+                        <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's phone.." aria-label=" your store's name.." aria-describedby="basic-addon1" id='StorePhone' value={this.state.StorePhone}
+                            onChange={(e) => this.setState({StorePhone: e.currentTarget.value })}></input>
+                        {/* Show Error If Exit related to Phone Of Store */}
+                        {this.state.errors.phone && (<div className="alert alert-danger" role="alert">{this.state.errors.phone}</div>)}
+                {/************************************************************************************************/}
+                    {/* Address Of Store  */}
+                    <br/>
+                        <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreAdress'><h5><strong>Address</strong></h5></label>
+                        <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's phone.." aria-label=" your store's name.." aria-describedby="basic-addon1" id='StoreAddress' value={this.state.StoreAddress}
+                            onChange={(e) => this.setState({StoreAddress: e.currentTarget.value })}></input>
+                        {/* Show Error If Exit related to Phone Of Store */}
+                        {this.state.errors.address && (<div className="alert alert-danger" role="alert">{this.state.errors.address}</div>)}
+
+                    <br/>
+                    <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='city'><h5><strong>City</strong></h5></label>
+                                <div className="form-outline">
+                                    <select className="custom-select" id="inputGroupSelect03" value={this.state.StoreCity}
+                                        onChange={(e) => this.setState({StoreCity: e.currentTarget.value })}> 
+                                        {cities.map(str => {return(<option value={str}>{str}</option>)})}               
+                                    </select>  
+                                </div>
                             </div>
-                            <div>
-                                <label className="formLabel" style={{ display: 'block' }}
-                                    htmlFor='shortstorylanguage'>Language</label>
-                                <select className="formControl py-1 px-5" style={{ borderRadius: '4px', display: 'inlineBlock' }} id='shortstorylanguage' value={this.state.shortStoryLanguage}
-                                    onChange={(e) => this.setState({ shortStoryLanguage: e.currentTarget.value })}>
-                                    <option>English</option>
-                                    <option>Arabic</option>
-                                </select>
+
+                            {/* street */}
+                            <div class="form-group col-md-6">
+                                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='street'><h5><strong>Street</strong></h5></label>
+                                <input type="text" className="form-control" id="StoreStreet" placeholder="Street"  value={this.state.StoreStreet} onChange={(e) => this.setState({StoreStreet: e.currentTarget.value })} required/>
+                                {this.state.errors.street && (<div className="alert alert-danger" role="alert">{this.state.errors.street}</div>)}
                             </div>
+                    </div>
+                    
+                {/************************************************************************************************/}
+                {/* Type Of Store Radio Button  */}
+                <div  className="float-left">
+                        <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreAdress'><h5><strong>Type of Store</strong></h5></label>                     
+                        <div className="custom-control custom-radio custom-control-inline">
+                            <input type="radio" className="custom-control-input" id="customRadio" name="example" style={{background : '#FEC7B5'}} value="Bookstores" checked={this.state.selectedOption === "Bookstores"}
+                              onChange={this.onValueChange}  />
+                            <label className="custom-control-label" for="customRadio">Bookstores</label>
                         </div>
-                        <label className="formLabel mt-4" style={{ display: 'block' }} htmlFor='shortstoryAudience'>Target Audience</label>
-                        <select className="formControl " style={{ borderRadius: '4px', display: 'inlineBlock' }} id='shortstoryAudience' value={this.state.shortStoryAudience}
-                            onChange={(e) => this.setState({ shortStoryAudience: e.currentTarget.value })}  >
-                            <option value="" disabled defaultValue>Your primary readers ..</option>
-                            <option value="less than 10" >less than 10</option>
-                            <option value="10-18" >10-18 </option>
-                            <option value="all" >All </option>
-                        </select>
-                        {this.state.errors.audience && (<div className="alert alert-danger" role="alert">{this.state.errors.audience}</div>)}
-
+                        <div className="custom-control custom-radio custom-control-inline">
+                            <input type="radio" className="custom-control-input" id="customRadio2" name="example" value="Libraries" checked={this.state.selectedOption === "Libraries"}
+                              onChange={this.onValueChange}  />
+                            <label className="custom-control-label" for="customRadio2">Libraries</label>
+                        </div>         
+                </div>
+                {this.state.errors.kind && (<div className="alert alert-danger" role="alert">{this.state.errors.kind}</div>)}
+                <br/><br/><br/>
+                {/*******************************************************************************************/}
                     </div>
                     <div className="d-flex justify-content-end" style={{ width: '90%' }}>
                         <button className="py-2 px-5 m-3 btn btn-lg" style={{ backgroundColor: 'white', borderColor: '#F8A488' }} onClick={() => this.props.history.push('/writer')}>cancel</button>
@@ -189,7 +231,6 @@ class AddStory extends Component {
                     </div>
 
                 </form>
-
             </React.Fragment>
         );
     }
