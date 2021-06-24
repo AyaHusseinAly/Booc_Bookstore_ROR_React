@@ -42,10 +42,20 @@ class LikeCommentStory extends Component {
 
     }
     likeStory = async (story_id, url) => {
-        let data = {
-            story_id: story_id,
-            user_id: window.localStorage.getItem('user_id')
-        };
+        let data = {};
+        if (this.props.kind == 'Story') {
+            data = {
+                story_id: story_id,
+                user_id: window.localStorage.getItem('user_id')
+            };
+        }
+        else {
+            data = {
+                chapter_id: story_id,
+                user_id: window.localStorage.getItem('user_id')
+            };
+        }
+
         let response = await axios.post(`http://localhost:3000/${url}`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -58,32 +68,12 @@ class LikeCommentStory extends Component {
         this.setState({ stroylikeflag: response.data.likeFlag });
 
     }
-    // refresh = async () => {
-    //     let data = {
-    //         story_id: this.props.story.id,
-    //         user_id: window.localStorage.getItem('user_id')
-    //     };
-    //     let response = await axios.post(`http://localhost:3000/listStoryComments`, data, {
-    //         headers: {
-    //             "Access-Control-Allow-Origin": "*",
-    //             "Access-Control-Allow-Methods": "GET, POST, PUT",
-    //             "Access-Control-Allow-Headers": "Content-Type"
-    //         }
-    //     });
-    //     console.log(response);
-    //     this.setState({ commentStory: response.data.comments });
-
-    // }
     render() {
-        const comments = [
-            { user_id: 1, user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", comment_content: "nice work!" },
-            { user_id: 2, user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", comment_content: "Great story" }
-        ];
         return (
 
-            <div className="row ">
+            <div className="row p-0 m-0">
                 <div className="col-6" >
-                    {this.state.stroylikeflag == false ? <a className="mr-2" style={{ color: '#535964' }} onClick={() => { this.likeStory(this.props.story.id, 'likeStory') }}><i className="far fa-thumbs-up"></i></a> : <a className="mr-2" style={{ color: '#F8A488' }} onClick={() => { this.likeStory(this.props.story.id, "unlikeStory") }}><i className="fas fa-thumbs-up" ></i></a>}
+                    {this.state.stroylikeflag == false ? <a className="mr-2" style={{ color: '#535964' }} onClick={() => { this.likeStory(this.props.story.id, `like${this.props.kind}`) }}><i className="far fa-thumbs-up"></i></a> : <a className="mr-2" style={{ color: '#F8A488' }} onClick={() => { this.likeStory(this.props.story.id, `unlike${this.props.kind}`) }}><i className="fas fa-thumbs-up" ></i></a>}
                     <Popup
                         trigger={<a>{this.state.storyLikeUsers.length} Likes</a>
                         }
@@ -95,15 +85,15 @@ class LikeCommentStory extends Component {
                 </div>
 
                 <div className="col-6 " >
-                    <a className=" mr-2" style={{ color: '#535964' }} onClick={() => { }}><i className="far fa-comment-alt"></i></a>
+
                     <Popup
-                        trigger={<a>{this.state.commentStorylength} Comments</a>
+                        trigger={<div><a className=" mr-2" style={{ color: '#535964' }} onClick={() => { }}><i className="far fa-comment-alt"></i></a> {this.state.commentStorylength} </div>
 
                         }
                         modal
                         contentStyle={commentPopup}
                     >
-                        <Comments comments={this.props.commentStory} post={this.props.story} kind='story' setNoComments={(len) => { this.setState({ commentStorylength: len }) }}></Comments>
+                        <Comments comments={this.props.commentStory} post={this.props.story} kind={this.props.kind} setNoComments={(len) => { this.setState({ commentStorylength: len }) }}></Comments>
                     </Popup >
                 </div>
             </div >
@@ -134,7 +124,7 @@ class Comments extends Component {
                 let string = this.state.string;
                 if (string != "") {
 
-                    if (kind == 'story') {
+                    if (kind == 'Story') {
                         let data = {
                             body: string,
                             story_id: record_id,
@@ -167,6 +157,10 @@ class Comments extends Component {
 
                             }
                         });
+                        console.log(res.data);
+                        this.setState({ comments: res.data.comments });
+                        this.setState({ string: "" });
+                        this.props.setNoComments(this.state.comments.length);
                     }
                 }
                 else {

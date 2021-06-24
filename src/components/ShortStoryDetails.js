@@ -262,7 +262,7 @@ class ShortStoryDetails extends Component {
                                         <div className="about-info">
                                             <div className='row mb-3'>
                                                 <h4 className='col col-4'>About Story</h4>
-                                                <div className='col col-8 mt-2' style={{ display: 'inline-block' }}><LikeCommentStory users={this.state.likes} story={this.state.shortStory} stroylikeflag={this.state.stroylikeflag} commentStory={this.state.commentStory} /></div>
+                                                <div className='col col-8 mt-2' style={{ display: 'inline-block' }}><LikeCommentStory users={this.state.likes} story={this.state.shortStory} stroylikeflag={this.state.stroylikeflag} commentStory={this.state.commentStory} kind="Story" /></div>
                                             </div>
 
                                             <p>{this.state.shortStory.summary}.</p>
@@ -277,7 +277,7 @@ class ShortStoryDetails extends Component {
                                             {/* <div className="reviews"> */}
 
                                             {this.state.chapters.map((chapter) => {
-                                                return <div className="reviews my-6"><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+                                                return <div className="reviews my-6" style={{}}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
 
                                             })}
                                             {/* </div> */}
@@ -369,10 +369,14 @@ class Chapters extends Component {
     render() {
         return (<div className="row my-6">
             {/* <u className="mr-4" style={{ display: "inline-block", cursor: "pointer" }}>{this.props.chapter.title}</u> */}
-            <div className="col col-4"><ChapterDetails chapter={this.props.chapter} /></div>
-            <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
-            <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div>
-            <div className="col col-4"><span>{this.props.date}</span></div>
+            <div className="col col-3 "><ChapterDetails chapter={this.props.chapter} /></div>
+            {/* <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
+            <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div> */}
+            <div className='col col-6 px-0'>
+                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments} kind="Chapter" />
+            </div>
+
+            <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span></div>
         </div>)
     }
 }
