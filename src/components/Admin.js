@@ -14,6 +14,9 @@ class Admin extends Component {
     }
 
     componentDidMount(){
+      if ( this.props.user.role != 'admin'){
+        this.props.history.push('/404')
+      }
         axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
         .then(response => {
             this.setState({fiction:response.data.items});

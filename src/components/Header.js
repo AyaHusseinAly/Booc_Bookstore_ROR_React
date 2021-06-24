@@ -85,7 +85,7 @@ class Header extends Component {
         console.log(response.notifications);
         console.log(this.state);
         this.setState({
-            notifications: [... this.state.notifications, response.notifications]
+            notifications: [ ... this.state.notifications, response.notifications]
         })
      }
     

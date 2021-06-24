@@ -67,7 +67,12 @@ class Login extends Component {
     }
     handleSuccessfulAuth(data){
         this.props.handleLogin(data);
-        this.props.history.push("/");
+        if(data.user.role == 'admin'){
+            this.props.history.push("/admin");
+        }
+        else{
+            this.props.history.push("/");
+        }
     }
    
     render() { 

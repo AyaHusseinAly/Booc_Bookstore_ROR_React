@@ -21,6 +21,7 @@ import { ActionCableProvider, ActionCableConsumer } from 'react-actioncable-prov
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
 import axios from 'axios';
+import NotFound from './components/NotFound';
 
 
 import React, { Component } from 'react';
@@ -173,7 +174,12 @@ class App extends Component {
             <Route path="/addstory" component={AddStory} />
             <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
             <Route path="/userprofile" component={UserProfile} />
-            <Route path="/admin" component={Admin} />
+            <Route 
+              path="/admin"
+              exact
+              render={props => (
+                <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} />
+              )} />
             <Route
               path="/sign_up"
               render={props => (
@@ -188,7 +194,7 @@ class App extends Component {
             />
             <Route path="/shortStory/:id" component={ShortStoryDetails} />
             {/* <Route path="/searchresults" component={SearchResults}/> */}
-
+            <Route path="/404" component={NotFound} />
 
 
 
