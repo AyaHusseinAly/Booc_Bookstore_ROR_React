@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {ActionCableProvider} from 'react-actioncable-provider';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -9,6 +10,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
+import { API_WS_ROOT } from './constants';
 
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css'
 
@@ -20,7 +22,9 @@ import {
 
 ReactDOM.render(
     <Router>
+      <ActionCableProvider url={API_WS_ROOT}>
       <App />
+      </ActionCableProvider>
     </Router>,
   document.getElementById('root')
 );
