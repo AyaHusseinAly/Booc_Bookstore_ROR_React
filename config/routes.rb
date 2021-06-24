@@ -38,7 +38,7 @@ post '/logged_in', to: 'members#is_logged_in?'
   delete '/destroyBook/:id', to:'bookstores#destroy_book'
 
   post 'bookStoreSearchFromMap', to:'bookstores#search'
-
+  post '/admin/BookStores', to:'bookstores#create'
 
   post '/communityPosts' , to:'posts#posts'
   post '/commentChapter', to: 'comments_likes#commentChapter'

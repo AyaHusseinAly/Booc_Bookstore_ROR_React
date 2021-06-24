@@ -10,9 +10,7 @@ class BookstoresController < ApplicationController
         @bookstore_books = BookstoreBook.where(bookstore_id:params[:id])
 
         render :json => @bookstore_books
-  
-    end
-    
+      end
     
     def Add_book 
     @book=BookstoreBook.create!(book_title:params['bookTitle'],price:params['bookPrice'],book_isbn:params['bookIsbn'],bookstore_id:params['bookstoreId'])
@@ -27,10 +25,10 @@ class BookstoresController < ApplicationController
         render :json => {message:" destroy book  succefully"}
     end
 
+    def create  
+        render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
+    end
 
-
-
-      
     ################## Search From Map ############################
     def search
         my_array = ["Giza","Alexandria","Cairo"]

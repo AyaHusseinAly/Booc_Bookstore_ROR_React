@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.datetime "updated_at", null: false
     t.bigint "short_story_id"
     t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
+
   end
 
   create_table "short_story_generes", force: :cascade do |t|
@@ -192,7 +193,6 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_short_story_generes_on_genre_id"
     t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
-
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -255,9 +255,9 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
   add_foreign_key "like_stories", "users"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
-  add_foreign_key "short_stories_chapters", "short_stories", on_delete: :cascade
   add_foreign_key "short_story_generes", "genres"
   add_foreign_key "short_story_generes", "short_stories", on_delete: :cascade
+  add_foreign_key "short_stories_chapters", "short_stories"
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
