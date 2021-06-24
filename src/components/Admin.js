@@ -32,10 +32,10 @@ class Admin extends Component {
       
 }
     render() {
-      if ( this.props.user.role != 'admin'){
-        console.log(this.props.user)
-        // this.props.history.push('/404')
-      }
+      // if ( this.props.user.role != 'admin'){
+      //   console.log(this.props.user)
+      //   // this.props.history.push('/404')
+      // }
         return (
                     
         <div className="p-5">

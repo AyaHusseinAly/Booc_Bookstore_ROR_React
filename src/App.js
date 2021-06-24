@@ -191,14 +191,16 @@ class App extends Component {
           <Route path="/DownloadsPage" component={DownloadsPage}/>
           <Route path="/UserPage" component={UserPage}/>
 
-          <Route path="/bookstorebooks/:id" component={BookStoreBooks} />
+          { this.state.user.role == 'seller' &&
+          <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
           <Route path="/addbook/:id" component={AddBook} />
+          { this.state.user.role == 'admin' &&
           <Route 
               path="/admin"
               exact
               render={props => (
                 <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} />
-              )} />
+              )} /> }
           <Route 
           path="/sign_up" 
           render={props => (
