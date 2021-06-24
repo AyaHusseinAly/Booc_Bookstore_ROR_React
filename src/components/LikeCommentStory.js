@@ -30,7 +30,7 @@ class LikeCommentStory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            storyLikeUsers: [],
+            storyLikeUsers: this.props.users,
             stroylikeflag: false,
             commentStorylength: 0
         }

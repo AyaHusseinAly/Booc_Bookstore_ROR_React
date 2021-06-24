@@ -242,7 +242,8 @@ class ShortStoryDetails extends Component {
                                                 })} section</h5>
                                                 <p>
                                                     <Rating rate={this.state.storyRate} />
-                                                    <StoryLikes likes={this.state.likes} />
+                                                    {/* <StoryLikes likes={this.state.likes} /> */}
+                                                    <span className=' m-2 ' style={{ fontSize: '1rem' }}>{this.state.reviews.length} Reviews</span>
                                                 </p>
                                             </div>
                                             <div className='col-xs-12 col-sm-12 col-md-5 col-lg-5'>
@@ -380,21 +381,21 @@ class Chapters extends Component {
         </div>)
     }
 }
-class StoryLikes extends Component {
-    render() {
-        return (<Popup
-            trigger={<a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>}
-            modal
-            contentStyle={popupStyle}
-        >
-            <div>
-                <Likes users={this.props.likes} />
-            </div>
-        </Popup >)
-    }
+// class StoryLikes extends Component {
+//     render() {
+//         return (<Popup
+//             trigger={<a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>}
+//             modal
+//             contentStyle={popupStyle}
+//         >
+//             <div>
+//                 <Likes users={this.props.likes} />
+//             </div>
+//         </Popup >)
+//     }
 
 
-}
+// }
 class MakeRating extends Component {
     constructor(props) {
         super();
