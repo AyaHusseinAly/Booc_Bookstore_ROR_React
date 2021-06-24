@@ -15,28 +15,29 @@ class Admin extends Component {
         thriller:[],
         horror:[]
     }
-
-    // componentDidMount(){
-    //     axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
-    //     .then(response => {
-    //         this.setState({fiction:response.data.items});
-    //     });
-    //     axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
-    //     .then(response => {
-    //         this.setState({thriller:response.data.items});
-    //     });
-    //     axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
-    //     .then(response => {
-    //         this.setState({horror:response.data.items});
-    //     });
- 
-
-
-    //   }
+    componentDidMount(){
+      
+        // axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:Fiction&startIndex=0&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
+        // .then(response => {
+        //     this.setState({fiction:response.data.items});
+        // });
+        // axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:thriller&startIndex=0&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
+        // .then(response => {
+        //     this.setState({thriller:response.data.items});
+        // });
+        // axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:horror&startIndex=0&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U")
+        // .then(response => {
+        //     this.setState({horror:response.data.items});
+        // });
+      
+}
     render() {
-
+      // if ( this.props.user.role != 'admin'){
+      //   console.log(this.props.user)
+      //   // this.props.history.push('/404')
+      // }
         return (
-                      
+                    
         <div className="p-5">
           <Tabs defaultActiveKey="1" type="card" size='large'>
                     <TabPane tab="Reports" key="1">

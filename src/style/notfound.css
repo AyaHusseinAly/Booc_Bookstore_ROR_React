@@ -1,0 +1,51 @@
+.body-404{
+    margin: 0;
+	padding: 0;
+	width: 100%;
+	min-height: 100vh;
+	background-color: #F2EEE8;
+	font-family: 'Open Sans';
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+/* .btn-404 {
+	font-family: "Open Sans";
+	font-weight: 400;
+	padding: 20px;
+	background-color: rgba($blue,1.0);
+	color: white;
+	width: 320px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 1.2em;
+	border-radius: 5px;
+	cursor: pointer; 
+	margin-top: 80px;
+	margin-bottom: 50px;
+	transition: all .2s linear;
+	
+	@media screen and (max-width: $break) {
+		margin: 0 auto;
+		margin-top: 60px;
+		margin-bottom: 50px;
+    	width: 200px;
+  	} */
+.btn-404 {
+        font-family: "Open Sans";
+        font-weight: 400;
+        padding: 20px;
+        background-color: #263044;
+        color: white;
+        width: 320px;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 1.2em;
+        border-radius: 5px;
+        cursor: pointer; 
+        margin-top: 80px;
+        margin-bottom: 50px;
+        transition: all .2s linear;
+        
+}	
+
