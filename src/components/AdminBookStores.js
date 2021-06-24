@@ -144,7 +144,7 @@ class AddStory extends Component {
             <React.Fragment>
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
                     {/************************* Cover of Store****************************** */}
-                    {this.state.BookStoreCover && <img className='col-lg-4 col-sm-6 col-xs-12' style={{ width: '100%' }} src={this.state.BookStoreCover} alt="image of store" />}
+                    {this.state.BookStoreCover && <img className='col-lg-3 col-sm-6 col-xs-12' style={{ width: '100%' }} src={this.state.BookStoreCover} alt="image of store" />}
                     {/* if there is no cover for store */}
                     {!this.state.BookStoreCover &&
                         <div className='col-lg-3 col-md-4 col-xs-12 ' style={{ width: '100%', backgroundColor: '#ADB4C3'}}>

@@ -23,6 +23,7 @@
     "react-geocode": "^0.2.3",
     "react-google-maps": "^9.4.5",
     "react-images-upload": "^1.2.8",
+    "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-share": "^4.4.0",

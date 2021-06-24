@@ -4,8 +4,9 @@ import Popup from "reactjs-popup";
 import { Link } from "react-router-dom";
 import AddChapter from './addChapter';
 import ChapterDetails from './chapterDetails';
+import ReactStars from "react-rating-stars-component";
 import Likes from './Likes';
-
+import Rating from './Rating';
 import '../style/admin.css';
 import '../style/BookDetails.css';
 import {
@@ -59,15 +60,17 @@ class ShortStoryDetails extends Component {
                 { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' }
             ],
             writer: {},
-            // bookmark_flag: false,
             bookmark_style: {},
             bookmark_method: "",
             bookmark_string: "",
-            // followed_flag: false
             follow_style: {},
             follow_method: "",
             follow_string: "",
-            follow_icon: ""
+            follow_icon: "",
+            review_flag: false,
+            reviews: [],
+            storyRate: 0
+
         }
 
     }
@@ -106,8 +109,9 @@ class ShortStoryDetails extends Component {
         this.setState({ date: res.data.date })
         this.setState({ image: res.data.image });
         this.setState({ writer: res.data.writer });
-        // this.setState({ bookmark_flag: res.data.bookmarked_flag });
-        // this.setState({ followed_flag: res.data.followed_flag });
+        this.setState({ review_flag: res.data.review_flag });
+        this.setState({ reviews: res.data.reviews });
+        this.setState({ storyRate: res.data.storyRate })
         if (res.data.bookmarked_flag == false) {
             this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
             this.setState({ bookmark_string: "Add To Bookmark" });
@@ -232,11 +236,7 @@ class ShortStoryDetails extends Component {
                                                     </span>
                                                 })} section</h5>
                                                 <p>
-                                                    <span className="fa fa-star checked"></span>
-                                                    <span className="fa fa-star checked"></span>
-                                                    <span className="fa fa-star"></span>
-                                                    <span className="fa fa-star"></span>
-                                                    <span className="fa fa-star"></span>
+                                                    <Rating rate={this.state.storyRate} />
                                                     {/* <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a> */}
                                                     <StoryLikes likes={this.state.likes} />
                                                 </p>
@@ -282,90 +282,76 @@ class ShortStoryDetails extends Component {
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-3">
                                 <div className="replay">
                                     <h4>Reviews</h4>
-                                    <div className="box-person">
-                                        <div className="img">
-                                            <i className="fa fa-user"></i>
-                                        </div>
-                                        <div className="info-details">
-                                            <h5>Ola Gamal</h5>
-                                            <div className="evaluation">
-                                                <i className="fa fa-star" style={{ color: 'orange' }}></i>
-                                                <i className="fa fa-star" style={{ color: 'orange' }} ></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                            <a href="#" className="report">Report</a>
-                                        </div>
-                                    </div>
-                                    <div className="box-person">
-                                        <div className="img">
-                                            <i className="fa fa-user"></i>
-                                        </div>
-                                        <div className="info-details">
-                                            <h5>Ahmed Emara</h5>
-                                            <div className="evaluation ">
-                                                <i className="fa fa-star" style={{ color: 'orange' }}></i>
-                                                <i className="fa fa-star" style={{ color: 'orange' }} ></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
+                                    <div style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                                        {this.state.reviews.map(review => {
+                                            return <div className="box-person">
+                                                <div className="img">
+                                                    {review.user_avatar == "" ? <i className="fa fa-user"></i> :
+                                                        // <div className="rounded-circle" style={{
+                                                        //     height: '25px',
+                                                        //     width: '25px'
+                                                        // }}><img className="img-fluid" src={review.user_avatar} /></div>
+                                                        <img className="rounded-circle" style={{ width: '40px', height: '40px', borderRadius: '50%' }} src={review.user_avatar} />}
+                                                </div>
+                                                <div className="info-details">
+                                                    <h5>{review.user_name}</h5>
+                                                    <div className="evaluation ">
+                                                        <Rating rate={review.rate} />
+
+                                                    </div>
+                                                    <p>{review.review}</p>
+                                                    {this.state.shortStory.user_id == localStorage.getItem('user_id') && <ReviewReport review={review} />}
+                                                </div>
 
                                             </div>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                            <a href="#" className="report">Report</a>
-                                        </div>
+                                        })}
+                                    </div>
+
+                                    <div className="box-person" style={{ margin: '0', padding: '3px', width: '100%', backgroundColor: '#F8F8F8' }}>
+                                        {this.state.shortStory.user_id != localStorage.getItem('user_id') &&
+                                            this.state.review_flag == false && < MakeRating story_id={this.state.shortStory.id} changeRateFlag={() => window.location.reload()} />}
                                     </div>
                                     {/* <a href="#" className="more">See More..</a> */}
 
                                 </div>
-                                {/* <input type="text" name="mail" placeholder="Add review" style={{ width: '254px', marginBottom: '5px' }} /> */}
-
-                                {/* <div className="evaluation">
-                                    rate this book :
-                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray', marginLeft: '10px' }}></i>
-                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray' }}></i>
-                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray' }}></i>
-                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray' }}></i>
-                                    <i className="fa fa-star" style={{ fontSize: '20px', color: 'gray', marginRight: '10px' }}></i>
-                                    0/5
-                                </div>
-                                <div className="mail">
-                                    <h4>Share with Friends</h4>
-                                    <EmailShareButton
-                                        body="I Strong Recommend This Book For You!"
-                                    >
-                                        <EmailIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </EmailShareButton>
-
-                                    <TwitterShareButton
-                                        url={window.location.href}
-                                        quote="I Strong Recommend This Book For You!"
-                                    >
-                                        <TwitterIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </TwitterShareButton>
+                                {this.state.shortStory.user_id != localStorage.getItem('user_id') && <div>
 
 
-                                    <FacebookShareButton
-                                        url={window.location.href}
-                                        quote={"I Strong Recommend This Book For You!"}
-                                        hashtag="#my favourite book"
+                                    <div className="mail">
+                                        <h4>Share with Friends</h4>
+                                        <EmailShareButton
+                                            body="I Strong Recommend This Book For You!"
+                                        >
+                                            <EmailIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </EmailShareButton>
 
-                                    >
-                                        <FacebookIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </FacebookShareButton>
+                                        <TwitterShareButton
+                                            url={window.location.href}
+                                            quote="I Strong Recommend This Book For You!"
+                                        >
+                                            <TwitterIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </TwitterShareButton>
 
 
-                                    <LinkedinShareButton
-                                        url={window.location.href}
-                                    >
-                                        <LinkedinIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </LinkedinShareButton>
+                                        <FacebookShareButton
+                                            url={window.location.href}
+                                            quote={"I Strong Recommend This Book For You!"}
+                                            hashtag="#my favourite book"
+
+                                        >
+                                            <FacebookIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </FacebookShareButton>
 
 
-                                    <WhatsappShareButton
-                                        title="I Strong Recommend This Book For You!"
-                                        url={window.location.href}
-                                    >
-                                        <WhatsappIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /></WhatsappShareButton>
-                                </div> */}
+                                        <LinkedinShareButton
+                                            url={window.location.href}
+                                        >
+                                            <LinkedinIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </LinkedinShareButton>
+
+
+                                        <WhatsappShareButton
+                                            title="I Strong Recommend This Book For You!"
+                                            url={window.location.href}
+                                        >
+                                            <WhatsappIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /></WhatsappShareButton>
+                                    </div> </div>}
                             </div>
                         </div>
                     </div>
@@ -401,6 +387,172 @@ class StoryLikes extends Component {
 
 
 }
+class MakeRating extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            rating: 0,
+            review: "",
+            errors: []
+        }
+    }
+    ratingChanged = (newRating) => {
+        console.log(newRating);
+        this.setState({ rating: newRating });
+    }
+    handleSubmit = async e => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const errors = this.validate();
+
+        if (errors === null) {
+            const obj = {
+                rating: this.state.rating,
+                review: this.state.review,
+                user_id: localStorage.getItem('user_id'),
+                story_id: this.props.story_id
+
+
+            }
+            Object.keys(obj).forEach((key, value) => {
+                return data.append(key, obj[key])
+            })
+
+            const res = await axios.post("http://localhost:3000/addRateReviewStory", data, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type",
+
+                }
+            });
+            console.log(res.data);
+            this.setState({ rating: 0 });
+            this.setState({ review: "" });
+            this.props.changeRateFlag();
+
+        }
+        else {
+            console.log('no submit');
+            this.activeError = true;
+        }
+
+    }
+    validate = () => {
+        const errors = {};
+        if (this.state.rating == 0)
+            errors.rate = "Rate is required"
+        this.setState({ errors });
+        return Object.keys(errors).length === 0 ? null : errors;
+    }
+
+    render() {
+        return (
+            <div className="m-0" style={{ backgroundColor: '#F8F8F8' }}>
+                <form onSubmit={this.handleSubmit}>
+                    <h4 className="pb-2 pl-1" style={{ color: '#2630044' }}>Add Rating & Review :
+                        <button type='submit' className=" btn ml-4" style={{ backgroundColor: '#F8F8F8' }}>
+                            <i class="fa fa-paper-plane" aria-hidden="true" style={{ color: '#F8A488' }}></i>
+                        </button>
+                    </h4>
+                    <div classNmae='ml-5'>
+                        {this.state.errors.rate && (<div className="alert alert-danger" role="alert">{this.state.errors.rate}</div>)}
+                        <input className="px-1 ml-4" type="text" name="review" placeholder="Add review..." style={{ display: 'inline-block', width: '80%' }} value={this.state.review} onChange={(e) => this.setState({ review: e.currentTarget.value })} />
+                        {/* <input type='hidden' name='rating' value={this.state.rating} /> */}
+                        {/* <input type='hidden' name='user_id' value={localStorage.getItem('user_id')} />
+                        <input type='hidden' name='story_id' value={this.props.story_id} /> */}
+
+                        <div className="row ml-2" >
+                            <div style={{ display: 'inline-block', textAlign: 'end' }} className='col col-8 pr-0 mr-0'>
+                                <ReactStars
+                                    count={5}
+                                    onChange={(e) => this.setState({ rating: e })}
+                                    value={this.state.rating}
+                                    size={25}
+                                    isHalf={true}
+                                    emptyIcon={<i className="far fa-star"></i>}
+                                    halfIcon={< i className="fa fa-star-half-alt" ></i >}
+                                    fullIcon={< i className="fa fa-star" ></i >}
+                                    activeColor="#ffd700"
+
+                                />
+                            </div>
+
+                            <span className='col col-1 pl-0 ml-0 mt-2'>{this.state.rating}/5</span>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        )
+    }
+
+}
+
+class ReviewReport extends Component {
+
+    render() {
+        const sendReport = (post) => {
+            if (document.getElementById("reportReason").value != "") {
+
+                let data = {
+                    kind: "review",
+                    reason: document.getElementById("reportReason").value,
+                    related_record_id: post.id,
+                    user_id: window.localStorage.getItem('user_id')
+                };
+                axios.post("http://localhost:3000/report", data, {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT",
+                        "Access-Control-Allow-Headers": "Content-Type",
+
+                    }
+                }).then(response => {
+                    if (response) {
+                        console.log(response);
+                        document.getElementById("thanksMsg").innerText = response.data.message
+                    }
+                    else {
+                        console.log(response);
+                    }
+                });
+            }
+            else {
+                document.getElementById("thanksMsg").innerText = "Please Enter the reason";
+
+            }
+
+        }
+
+
+        return (
+            <Popup
+                trigger={<a style={{ color: '#CD3700', marginRight: '1.2rem' }}><strong >Report</strong></a>
+                }
+                modal
+                contentStyle={popupStyle}
+            >
+                <React.Fragment>
+
+                    <div className="form-outline" >
+                        <textarea rows="3" id="reportReason" placeholder="Please mention reasons for reporting this post" className="form-control" style={{ backgroundColor: '#F8F8F8', paddingLeft: '0.5rem' }}></textarea>
+                    </div>
+                    <div className="row m-2">
+                        <div className="col-9 " id="thanksMsg" style={{ color: '#F8A488' }}></div>
+                        <button type="button" onClick={() => { sendReport(this.props.review) }} className=" btn ml-1 col-2" style={{ backgroundColor: '#F8F8F8', border: "1px solid #F8A488" }}>
+                            <i class="fa fa-paper-plane" aria-hidden="true" style={{ color: '#F8A488' }}></i>
+                        </button>
+                    </div>
+                </React.Fragment>
+            </Popup >
+
+
+        );
+    }
+}
+
 
 export default ShortStoryDetails;
 
