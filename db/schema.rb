@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 2021061716083111) do
 
   # These are extensions that must be enabled in order to support this database
@@ -104,14 +103,6 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.index ["user_id"], name: "index_comment_stories_on_user_id"
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.text "body"
-    t.bigint "short_stories_chapter_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["short_stories_chapter_id"], name: "index_comments_on_short_stories_chapter_id"
-  end
-
   create_table "downloads", force: :cascade do |t|
     t.string "isbn"
     t.datetime "created_at", null: false
@@ -194,17 +185,6 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
-<<<<<<< HEAD
-  create_table "short_stories_rating_reviews", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "short_story_id"
-    t.string "review"
-    t.float "rate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["short_story_id"], name: "index_short_stories_rating_reviews_on_short_story_id"
-    t.index ["user_id"], name: "index_short_stories_rating_reviews_on_user_id"
-=======
   create_table "short_story_generes", force: :cascade do |t|
     t.string "name"
     t.bigint "genre_id"
@@ -213,7 +193,6 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_short_story_generes_on_genre_id"
     t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
->>>>>>> 7d31ba6f05c589ae570c4a58768329362b987832
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -235,8 +214,8 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
   end
 
   create_table "story_rating_reviews", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "short_story_id"
+    t.bigint "user_id"
+    t.bigint "short_story_id"
     t.string "review"
     t.float "rate"
     t.datetime "created_at", null: false
@@ -270,17 +249,18 @@ ActiveRecord::Schema.define(version: 2021061716083111) do
   add_foreign_key "comment_chapters", "users"
   add_foreign_key "comment_stories", "short_stories"
   add_foreign_key "comment_stories", "users"
-  add_foreign_key "comments", "short_stories_chapters"
   add_foreign_key "like_chapters", "short_stories_chapters"
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"
   add_foreign_key "like_stories", "users"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
-  add_foreign_key "short_stories_chapters", "short_stories"
+  add_foreign_key "short_stories_chapters", "short_stories", on_delete: :cascade
   add_foreign_key "short_story_generes", "genres"
-  add_foreign_key "short_story_generes", "short_stories"
+  add_foreign_key "short_story_generes", "short_stories", on_delete: :cascade
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
+  add_foreign_key "story_rating_reviews", "short_stories"
+  add_foreign_key "story_rating_reviews", "users"
 end
