@@ -34,8 +34,11 @@ post '/logged_in', to: 'members#is_logged_in?'
 
   get '/allbookstores', to:'bookstores#allbookstores'
   get '/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
-  post 'bookStoreSearchFromMap', to:'bookstores#search'
+  post '/addbook', to:'bookstores#Add_book'
+  delete '/destroyBook/:id', to:'bookstores#destroy_book'
 
+  post 'bookStoreSearchFromMap', to:'bookstores#search'
+  post '/admin/BookStores', to:'bookstores#create'
 
   post '/communityPosts' , to:'posts#posts'
   post '/commentChapter', to: 'comments_likes#commentChapter'
