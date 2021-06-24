@@ -184,6 +184,7 @@ class App extends Component {
           <Route path="/UserPage" component={UserPage}/>
           <Route path="/bookstorebooks/:id" component={BookStoreBooks} />
           <Route path="/addbook/:id" component={AddBook} />
+          <Route path="/admin" component={Admin} />
 
           
           
