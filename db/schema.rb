@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2021_06_23_160156) do
+ActiveRecord::Schema.define(version: 2021061716083111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,14 +103,6 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.index ["user_id"], name: "index_comment_stories_on_user_id"
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.text "body"
-    t.bigint "short_stories_chapter_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["short_stories_chapter_id"], name: "index_comments_on_short_stories_chapter_id"
-  end
-
   create_table "downloads", force: :cascade do |t|
     t.string "isbn"
     t.datetime "created_at", null: false
@@ -199,6 +190,16 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
+  create_table "short_story_generes", force: :cascade do |t|
+    t.string "name"
+    t.bigint "genre_id"
+    t.bigint "short_story_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_short_story_generes_on_genre_id"
+    t.index ["short_story_id"], name: "index_short_story_generes_on_short_story_id"
+  end
+
   create_table "short_story_genres", force: :cascade do |t|
     t.bigint "genre_id"
     t.bigint "short_story_id"
@@ -254,18 +255,17 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
   add_foreign_key "comment_chapters", "users"
   add_foreign_key "comment_stories", "short_stories"
   add_foreign_key "comment_stories", "users"
-  add_foreign_key "comments", "short_stories_chapters"
-  add_foreign_key "likes", "short_stories"
-  add_foreign_key "likes", "users"
-  add_foreign_key "notifications", "users", column: "reciever_id_id"
-  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "like_chapters", "short_stories_chapters"
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"
   add_foreign_key "like_stories", "users"
+  add_foreign_key "notifications", "users", column: "reciever_id_id"
+  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
-  add_foreign_key "short_stories_chapters", "short_stories"
+  add_foreign_key "short_stories_chapters", "short_stories", on_delete: :cascade
+  add_foreign_key "short_story_generes", "genres"
+  add_foreign_key "short_story_generes", "short_stories", on_delete: :cascade
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
