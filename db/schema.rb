@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_003614) do
+ActiveRecord::Schema.define(version: 2021_06_23_160641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,11 @@ ActiveRecord::Schema.define(version: 2021_06_21_003614) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "sender_id_id"
+    t.bigint "reciever_id_id"
+    t.bigint "instance_id"
+    t.index ["reciever_id_id"], name: "index_notifications_on_reciever_id_id"
+    t.index ["sender_id_id"], name: "index_notifications_on_sender_id_id"
   end
 
   create_table "short_stories", force: :cascade do |t|
@@ -205,6 +210,8 @@ ActiveRecord::Schema.define(version: 2021_06_21_003614) do
   add_foreign_key "comments", "short_stories_chapters"
   add_foreign_key "likes", "short_stories"
   add_foreign_key "likes", "users"
+  add_foreign_key "notifications", "users", column: "reciever_id_id"
+  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "short_stories_chapters", "short_stories"
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"

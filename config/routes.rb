@@ -36,7 +36,9 @@ post '/logged_in', to: 'members#is_logged_in?'
   get '/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
   post 'bookStoreSearchFromMap', to:'bookstores#search'
 
-
+  resources :notifications, only: [:create] 
+  post '/notifications/get_notifications', to:'notifications#index'
+  mount ActionCable.server, at: "/cable"
   get '/communityPosts' , to:'chapters#posts'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
