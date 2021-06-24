@@ -40,7 +40,14 @@ post '/logged_in', to: 'members#is_logged_in?'
   post 'bookStoreSearchFromMap', to:'bookstores#search'
   post '/admin/BookStores', to:'bookstores#create'
 
+
+  resources :notifications, only: [:create] 
+  post '/get_bookstore_from_seller', to: 'bookstores#get_bookstore_from_seller_id'
+  post '/notifications/get_notifications', to:'notifications#index'
+  mount ActionCable.server, at: "/cable"
+  get '/communityPosts' , to:'chapters#posts'
   post '/communityPosts' , to:'posts#posts'
+  post '/searchStoryChapter' , to:'posts#search'
   post '/commentChapter', to: 'comments_likes#commentChapter'
   post '/likeChapter', to: 'comments_likes#likeChapter' 
   post '/commentStory', to: 'comments_likes#commentStory'
@@ -50,8 +57,6 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/report' , to: 'reports#create'
   post '/deleteReport' , to: 'reports#deleteReport'
   post '/deleteRecord' , to: 'reports#deleteRecord'
-
-
   get '/reports' , to: 'reports#index'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
