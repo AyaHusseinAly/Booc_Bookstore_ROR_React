@@ -16,6 +16,8 @@ import {
   }from "react-google-maps";
   import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyC653P3SNsyeeby7PcvMCfbwoMZZogQ2dA")
+const cities= ["Cairo","Alexandria","Giza","Port Said","Suez","Luxor","al-Mansura","Damanhur","6th of October City","Kafr el-Dawwar"]
+
 class Map extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +46,7 @@ class Map extends Component {
             selected: null,
             setSelected: null,
             Myposition: {},
-            myLocation:[],
+           // myLocation:[],
             flagOfMyLocation: false,
 
             showInfoIndex: ''
@@ -53,7 +55,7 @@ class Map extends Component {
 
     handleToggle = () => {
         this.setState({
-            isOpen1: !false,
+            //isOpen1: !false,
             showInfoIndex: -1
         });
     }
@@ -61,7 +63,7 @@ class Map extends Component {
     handleToggleForMyLocation= () => {
         this.setState({
             isOpen: !false,
-            showInfoIndex: ''
+            //showInfoIndex: ''
         });
     }
     
@@ -150,18 +152,16 @@ class Map extends Component {
           selectedOption: event.target.value
         });
     } 
-
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
         const obj = {
             bookName: this.state.bookName,
-            //selectedOption: this.state.selectedOption,
             selectedOption: this.state.selectedValue,
             distict: this.state.distict,
         }
         Object.keys(this.state).forEach((key, value) => {
-                return data.append(key, this.state[key])
+            return data.append(key, this.state[key])
         })
     
         const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {
@@ -306,9 +306,7 @@ class Map extends Component {
                                 <select className="custom-select" id="inputGroupSelect03" value={this.state.distict}
                                     onChange={(e) => this.setState({ distict: e.currentTarget.value })}>
                                     <option selected>choose nearst spot</option>
-                                    <option value="Cairo">Cairo</option>
-                                    <option value="Alexandria">Alexandria</option>
-                                    <option value="Giza">Giza</option>
+                                    {cities.map(str => {return(<option value={str}>{str}</option>)})}  
                                 </select>  
                             </div>
                         </div>

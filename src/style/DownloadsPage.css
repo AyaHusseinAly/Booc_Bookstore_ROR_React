@@ -1,0 +1,90 @@
+.main{
+
+	border-image: 5px round;
+    margin-right:-80px
+	}
+	
+	.book_image{
+	  
+	  width:100%;
+	  height:200px;
+		 
+		
+	}
+	
+	.books_container
+	{
+		
+		padding:50px;
+	
+	}
+	.book_title
+	{
+	
+		text-align: center;
+	}
+	
+ 
+
+
+		.fig-do .hovi{
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 40%;
+			width: 90%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform: translate(-50%, -50%);
+			background-color: rgba(255, 255, 255, 0.6);
+			opacity: 0;
+			transition: 0.5s ease-in;
+			
+		}
+		.fig-do:hover .hovi {
+			opacity: 1;
+		  }
+		  .fig-do .hovi .details {
+			background-color: var(--primaryColor);
+			color: white;
+			border-radius: 0.5rem;
+			padding: 10px 20px;
+           
+            margin-left: -100px;
+			
+		  }
+	
+		  .remove-do{
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			font-size: 25px;
+			color: var(--primaryColor);
+			z-index: 90;
+            
+
+		}
+		 
+		.choose{
+			margin-top: 20px;
+			text-align: center;
+			color: var(--secondaryColor); 
+		}
+	
+		.choose > span {
+			color: var(--primaryColor);
+		}
+		/* .fig:hover  {
+			 transform: scale(1.1);
+			transition: 0.1s ease-in; 
+			cursor: pointer;
+
+        }
+        .fig:hover .details{
+           
+            margin-right: -500px;
+       } */
+				
+	

@@ -1,0 +1,196 @@
+.info-person {
+    padding: 20px 0 30px
+}
+
+.info-person .content-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center
+}
+
+.info-person .content-info .img {
+    flex-basis: 20%
+}
+
+.info-person .content-info .img img {
+    display: block;
+    border-radius: 100px;
+    max-width: 70%;
+    margin: auto;
+    padding: 3px;
+    border: 1px solid #c1c1c1
+}
+
+.info-person .content-info .text-content h3 {
+    margin: 0 0 15px;
+    font-weight: bold
+}
+
+.info-person .content-info .text-content span {
+    margin-right: 12px
+}
+
+.info-person .section-select {
+    display: flex;
+    margin: 15px 0;
+    justify-content: center
+}
+
+.info-person .section-select div {
+    background-color: #f7f7f7;
+    border: 1px solid #d4d4d4;
+    padding: 10px 0;
+    flex: 1;
+    font-weight: bold;
+    color: #a7a7a7;
+    cursor: pointer
+}
+
+.info-person .section-select div.active {
+    color: #000
+}
+
+.info-person .section-select div:nth-child(2) {
+    border-left: 3px solid #d4d4d4
+}
+
+.info-person .select-div > div:not(.book) {
+    display: none
+}
+
+.info-person .select-div .box-books,
+.info-person .select-div .person-follow {
+    border: 1px solid #d4d4d4;
+    padding: 20px 15px 0;
+    border-radius: 10px;
+    margin: 25px 0;
+    
+}
+.info-person .select-div .box-books{
+    height: 930px
+}
+
+
+
+
+
+
+
+.info-person .select-div .box-books .add-book {
+    margin-bottom: 30px
+}
+
+
+
+.info-person .select-div .box-books .add-book h3,
+.info-person .select-div .person-follow h3 {
+    font-size: 20px;
+    margin: 0 0 10px;
+    font-weight: bold
+}
+
+.info-person .select-div .box-books .add-book .img,
+.info-person .select-div .person-follow .text-img {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer
+}
+
+.info-person .select-div .box-books .add-book img {
+    max-width: 100%;
+    margin: 7px 0
+}
+
+.info-person .select-div .box-books .add-book .See-More,
+.info-person .select-div .person-follow .See-More {
+    display: block;
+    font-size: 20px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px auto 0
+}
+
+.info-person .select-div .person-follow {
+    background: #f7f7f7;
+    padding-bottom: 30px;
+    height: 930px;
+}
+
+.info-person .select-div .person-follow .text-img {
+    margin-top: 6px
+}
+
+.info-person .select-div .person-follow .text-img img {
+    /* max-width: 100%; */
+    width: 120px;
+}
+
+.info-person .select-div .person-follow .text-img h4 {
+    font-size: 15px;
+    margin: 5px 0 0
+}
+
+.info-person .select-div .person-follow .text-img span {
+    font-size: 15px;
+    color: #888
+}
+
+/* End info-person */
+/* Media */
+
+ /* Start info-person */
+ .info-person .content-info .img img {
+    max-width: 80%
+}
+.info-person .content-info .text-content h3 {
+    margin: 0 0 7px;
+    font-size: 22px
+}
+.info-person .content-info .text-content span {
+    margin-right: 8px
+}
+.info-person .select-div .person-follow .text-img {
+    margin-bottom: 10px
+}
+/* End info-person */
+
+
+
+/* Small Screen */
+
+@media (min-width:769px) and (max-width:991px) {
+.product .parent-box .box-img {
+    margin: auto
+}
+.product .parent-box img {
+    margin: 0
+}
+.product .box-info .heading button {
+    right: -40px;
+}
+.product .reviews .info-details p, .product .replay .info-details p {
+    font-size: 18px
+}
+.product .mail {
+    margin-top: 30px;
+    text-align: center
+}
+.product .mail p {
+    font-size: 18px
+}
+.product .mail form input[type="email"] {
+    width: 65%
+}
+.product .mail form input[type="submit"] {
+    margin-left: -5px
+}
+}
+
+/* Medium Screen */
+
+@media (min-width:992px) and (max-width:1199px) {}
+
+/* Large Screen */
+
+@media (min-width:1200px) {}

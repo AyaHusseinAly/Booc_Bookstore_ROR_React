@@ -19,4 +19,7 @@ input,.dropdown-toggle{
     -webkit-text-stroke-color: rgb(155, 155, 155);
 
   }
- 
+ h2,h4{
+    -webkit-text-stroke-width: 0.3px;
+    -webkit-text-stroke-color: #263044;
+ }
