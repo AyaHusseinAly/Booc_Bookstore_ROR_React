@@ -8,8 +8,11 @@ class BookstoresController < ApplicationController
     def show_bookstore_books
         @bookstore_books = BookstoreBook.find_by(bookstore_id:params[:id])
         render :json => @bookstore_books
-  
       end
+
+    def create  
+        render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption']}
+    end
     ################## Search From Map ############################
     def search
         my_array = ["Giza","Alexandria","Cairo"]
