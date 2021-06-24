@@ -27,7 +27,7 @@
  
 
 
-		.fig .hov{
+		.fig-do .hovi{
 			content: "";
 			position: absolute;
 			left: 50%;
@@ -43,10 +43,10 @@
 			transition: 0.5s ease-in;
 			
 		}
-		.fig:hover .hov {
+		.fig-do:hover .hovi {
 			opacity: 1;
 		  }
-		  .fig .hov .details {
+		  .fig-do .hovi .details {
 			background-color: var(--primaryColor);
 			color: white;
 			border-radius: 0.5rem;
@@ -56,7 +56,7 @@
 			
 		  }
 	
-		  .remove-fav{
+		  .remove-do{
 			position: absolute;
 			top: 10px;
 			left: 10px;

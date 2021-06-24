@@ -15,6 +15,9 @@ import Genre from './components/Genre';
 import GoogleAPI from './classes/GoogleAPI';
 import FavoritesPage from "./components/FavoritesPage";
 import BookShelf from "./components/BookShelf";
+import DownloadsPage from "./components/DownloadsPage";
+import UserPage from "./components/UserPage";
+import Favr from "./components/Favr";
 import ShortStoryDetails from './components/ShortStoryDetails';
 import BookRowSlide from './components/BookRowSlide';
 
@@ -171,7 +174,11 @@ class App extends Component {
           <Route path="/userprofile" component={UserProfile}/>
           <Route path="/FavoritesPage" component={FavoritesPage}/>
           <Route path="/BookShelf" component={BookShelf}/>
-          <Route path="/admin" component={Admin}/>
+          <Route path="/DownloadsPage" component={DownloadsPage}/>
+          <Route path="/UserPage" component={UserPage}/>
+          
+          
+
           <Route 
           path="/sign_up" 
           render={props => (
