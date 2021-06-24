@@ -20,7 +20,7 @@ class PostsController < ApplicationController
                 if comment.user&.avatar&.attached?
                     avatar = rails_blob_url(comment.user.avatar)
                 end
-                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
+                comments.push({id:comment.id,user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
             liked_bool=is_current_user_likes_this_story(story.id,params['user_id'])
             writer_avatar=""
@@ -61,7 +61,7 @@ class PostsController < ApplicationController
                 if comment.user&.avatar&.attached?
                     avatar = rails_blob_url(comment.user.avatar)
                 end
-                comments.push({user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
+                comments.push({id:comment.id,user_id:comment.user.id,user_name:comment.user.username,user_img:avatar,comment_content:comment.body})
             end
             liked_bool=is_current_user_likes_this_chapter(chapter.id,params['user_id'])
             writer_avatar=""

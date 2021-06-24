@@ -30,7 +30,8 @@ class ReportsController < ApplicationController
         @reports=Report.all()
         @reports.each do |report|
             title="no title"
-            content="no content"
+            content=""
+            story_title = ""
             user_name="ayahussein"
             if report.kind=='story'
                 title=ShortStory.find(report.related_record_id).title
@@ -38,9 +39,15 @@ class ReportsController < ApplicationController
                 chapter=ShortStoriesChapter.find(report.related_record_id)
                 title=chapter.title
                 content=chapter.summary
-            elsif report.kind=='comment'
-                Comment.find(report.related_record_id)
-                title="no title"
+                story_title=chapter.short_story.title
+            elsif report.kind=='commentStory'
+                comment=CommentStory.find(report.related_record_id)
+                content=comment.body
+
+            elsif report.kind=='commentChapter'
+                comment=CommentChapter.find(report.related_record_id)
+                content=comment.body
+
                 
             end
             
@@ -52,6 +59,7 @@ class ReportsController < ApplicationController
                 "user_id": report.user_id,
                 "user_name":user_name,
                 "title":title,
+                "story_title":story_title,                               #for story name of reported is chapter
                 "content":content,
                 "created_at": report.created_at,
                 "updated_at": report.updated_at
