@@ -63,7 +63,8 @@ class ShortStoriesController < ApplicationController
                 status:story.status,
                 created_at:story.created_at,
                 user_id:story.user_id,
-                rate:@storyRate
+                rate:@storyRate,
+                noReviews:@allReviews.length
 
             }
             @NotFinishedYet.push(obj);
@@ -102,7 +103,8 @@ class ShortStoriesController < ApplicationController
             status:story.status,
             created_at:story.created_at,
             user_id:story.user_id,
-            rate:@storyRate
+            rate:@storyRate,
+            noReviews:@allReviews.length
 
         }
         @Finished.push(obj);
@@ -113,17 +115,26 @@ class ShortStoriesController < ApplicationController
     def show    
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
+        #    ###############data of each chapter######################
            @chapters=[]
            if ShortStoriesChapter.where(short_story_id:params['id']).length >0
             ShortStoriesChapter.where(short_story_id:params['id']).each do |chapter|
             @likesCh=[]
             LikeChapter.where(short_stories_chapter_id:chapter.id ).each do |likeRecord|
                 user=User.find(likeRecord.user_id)
-                @likesCh.push(user)
+                objChUserLike={
+                    user_id:likeRecord.user_id,
+                    user_name:user.name,
+                    user_img:""
+                }
+                if user&.avatar&.attached?
+                    objChUserLike[:user_img] = rails_blob_url(user.avatar)
+                end
+                @likesCh.push(objChUserLike)
             end
             @commentsCh=[]
-            if CommentChapter.where(short_stories_chapter_id:params['id']).length >0
-                CommentChapter.where(short_stories_chapter_id:params['id']).each do |comment|
+            if CommentChapter.where(short_stories_chapter_id:chapter.id).length >0
+                CommentChapter.where(short_stories_chapter_id:chapter.id).each do |comment|
                     user=User.find(comment.user_id)
                     commentObj={
                         user_id:comment.user_id,
@@ -156,11 +167,6 @@ class ShortStoriesController < ApplicationController
             @chapters.push(chapterObj);
             end
            end 
-
-
-
-
-
            @genre_ids=ShortStoryGenre.select('genre_id').where(short_story:@shortStory)
            @genres=Genre.where(id:@genre_ids)
            @image=""
@@ -233,7 +239,7 @@ class ShortStoriesController < ApplicationController
                     user_img:""
                 }
                 if user&.avatar&.attached?
-                    likeObj[:user_img] = rails_blob_url(@shortStory.image)
+                    likeObj[:user_img] = rails_blob_url(user.avatar)
                 end
                 @likeStory.push(likeObj);
             end
