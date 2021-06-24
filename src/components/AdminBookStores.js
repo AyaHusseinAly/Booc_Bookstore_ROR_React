@@ -7,10 +7,7 @@ class AddStory extends Component {
 
         super(props);
         this.state = {
-            //shortStoryCoverPreview: "",
             errors: {},
-            genres: [],
-
             //Fatma
             StoreTitle: "",
             BookStoreCover: "",
@@ -18,6 +15,10 @@ class AddStory extends Component {
             StoreAddress:"",
             StoreCity:"",
             StoreStreet:"",
+            //admin Registeration
+            AdminEmail:"",
+            AdminPassword:"",
+            ReAdminPassword:"",
 
         }
         this.inputReference = React.createRef();
@@ -59,13 +60,17 @@ class AddStory extends Component {
 
         if (errors === null) {
             const obj = {
-                ///Fatma////
+                ///Store///
                 StoreTitle: this.state.StoreTitle,
                 StorePhone: this.state.StorePhone,
                 StoreAddress: this.state.StoreAddress,
                 StoreCity: this.state.StoreCity,
                 StoreStreet: this.state.StoreStreet,
                 selectedOption: this.state.selectedValue,
+                //Admin///
+                AdminEmail: this.state.selectedValue,
+                AdminPassword: this.state.AdminPassword,
+                ReAdminPassword: this.state.ReAdminPassword,
             }
             console.log(obj);
             Object.keys(obj).forEach((key, value) => {
@@ -81,7 +86,7 @@ class AddStory extends Component {
                 }
             });
             console.log(res);
-            window.location.reload();
+            //window.location.reload();
            
         }
         else {
@@ -106,6 +111,15 @@ class AddStory extends Component {
             errors.street= "Please enter Store street"
         //if (this.state.selectedValue  !== "Libraries" || this.state.selectedValue  !== "Bookstores")
         //   errors.kind= "Please select type of store"
+
+        // Admin Section 
+        if (this.state.AdminEmail.trim() === "")
+            errors.email= "Please enter Admin store name"
+        if (this.state.AdminPassword.trim() === "")
+            errors.password= "Please enter password of admin "
+        if (this.state.ReAdminPassword.trim() === "")
+            errors.repassword= "Please Confirm password of admin "
+        
         this.setState({ errors });
         return Object.keys(errors).length === 0 ? null : errors;
     }
@@ -113,7 +127,6 @@ class AddStory extends Component {
    
     
     render() {
-      
         return (
             <React.Fragment>
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
@@ -146,7 +159,7 @@ class AddStory extends Component {
                         {/* Phone */}
                         <br/>
                         <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StorePhone'><h5><strong>Phone</strong></h5></label>
-                        <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's phone.." aria-label=" your store's phone.." aria-describedby="basic-addon1" id='StorePhone' value={this.state.StorePhone}
+                        <input type="text"   pattern="[0-9]*" style={{ borderRadius: '4px' }} className="form-control" placeholder=" your store's phone.." aria-label=" your store's phone.." aria-describedby="basic-addon1" id='StorePhone' value={this.state.StorePhone}
                             onChange={(e) => this.setState({StorePhone: e.currentTarget.value })}></input>
                         {/* Show Error If Exit related to Phone Of Store */}
                         {this.state.errors.phone && (<div className="alert alert-danger" role="alert">{this.state.errors.phone}</div>)}
@@ -199,12 +212,39 @@ class AddStory extends Component {
                         </div><br/><br/>
                         
                 {/*******************************************************************************************/}
-                    </div>
+                <br/><br/><br/><br/>
+                {/************************* Store Admin *****************************/}
+                <label className="formLabel heading" style={{ display: 'block' }}><h3><strong>Store Admin</strong></h3></label><hr style={{borderColor: '#F8A488',}}/>
+                {/* Name of Your Admin Store */}
+                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminEmail'><h5><strong>Store Name</strong></h5></label>
+                <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Admin's name.." aria-label=" Admin's name.." aria-describedby="basic-addon1" id='AdminEmail' value={this.state.AdminEmail}
+                    onChange={(e) => this.setState({AdminEmail: e.currentTarget.value })}></input>
+                {/*Show Error If Exit related to Name Of Admin Store */}
+                {this.state.errors.email && (<div className="alert alert-danger" role="alert">{this.state.errors.email}</div>)}
+
+
+                <br/>
+                {/* password of  Admin Store */}
+                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminEmail'><h5><strong>Password</strong></h5></label>
+                <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Admin's password.." aria-label=" Admin's password.." aria-describedby="basic-addon1" id='AdminPassword' value={this.state.AdminPassword}
+                    onChange={(e) => this.setState({AdminPassword: e.currentTarget.value })}></input>
+                {/*Show Error If Exit related to password */}
+                {this.state.errors.password && (<div className="alert alert-danger" role="alert">{this.state.errors.password}</div>)}
+
+                <br/>
+                {/* repassword of  Admin Store */}
+                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='ReAdminPassword'><h5><strong>Confirm Password</strong></h5></label>
+                <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Confirm Password.." aria-label="Confirm Password.." aria-describedby="basic-addon1" id='ReAdminPassword' value={this.state.ReAdminPassword}
+                    onChange={(e) => this.setState({ReAdminPassword: e.currentTarget.value })}></input>
+                {/*Show Error If Exit related to confirm password */}
+                {this.state.errors.repassword && (<div className="alert alert-danger" role="alert">{this.state.errors.repassword}</div>)}
+
+                {/************************************************************************/}
+                </div>
                     <div className="d-flex justify-content-end" style={{ width: '90%' }}>
                         <button className="py-2 px-5 m-3 btn btn-lg" style={{ backgroundColor: 'white', borderColor: '#F8A488' }}>cancel</button>
                         <button className="py-2 px-5  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} type='submit'>start</button>
                     </div>
-
                 </form>
             </React.Fragment>
         );
