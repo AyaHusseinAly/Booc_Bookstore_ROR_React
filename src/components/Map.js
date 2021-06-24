@@ -161,7 +161,7 @@ class Map extends Component {
             distict: this.state.distict,
         }
         Object.keys(this.state).forEach((key, value) => {
-                return data.append(key, this.state[key])
+            return data.append(key, this.state[key])
         })
     
         const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {

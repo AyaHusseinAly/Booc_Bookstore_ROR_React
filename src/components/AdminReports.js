@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Popup from "reactjs-popup";
 import '../style/community.css';
 import axios from 'axios';
-import Comments from './Comments';
 
 class AdminReports extends Component {
     state={
@@ -53,6 +52,23 @@ class AdminReports extends Component {
                  
             });  
         }
+        const deleteRecord=(id)=>{
+            let data={id:id}
+            axios.post("http://localhost:3000/deleteRecord",data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}})
+            .then(response => {
+                console.log(response)
+                axios.get("http://localhost:3000/reports")
+                .then(response => {
+                    console.log(response)
+
+                    this.setState({reports:response.data.reports});
+                });
+                 
+            });  
+        }
 
         return (
         <div className="px-5 py-2">
@@ -88,7 +104,7 @@ class AdminReports extends Component {
                         {report.kind!='story'&&<p>{report.content}</p>
                         }
                     </Popup >}
-                    <a href="#" className="adminLink"> delete record </a> 
+                    <a href="#" onClick={()=>{deleteRecord(report.id)}} className="adminLink"> delete record </a> 
                     <a href="#" onClick={()=>{deleteReport(report.id)}} className="adminLink"> delete report </a>
                 </div>
 

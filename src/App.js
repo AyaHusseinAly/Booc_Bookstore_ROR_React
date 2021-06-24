@@ -12,6 +12,10 @@ import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import BookDetails from './components/BookDetails';
 import Genre from './components/Genre';
+import BookStoreBooks from './components/BookStoreBooks';
+import AddBook from './components/AddBook';
+
+
 import GoogleAPI from './classes/GoogleAPI';
 import FavoritesPage from "./components/FavoritesPage";
 import BookShelf from "./components/BookShelf";
@@ -132,6 +136,8 @@ class App extends Component {
     });
     localStorage.setItem("user_id",data.user.id);
   }
+
+ 
   // handleRedirect(){
   //       this.props.history.push('/login');
   // }
@@ -176,8 +182,11 @@ class App extends Component {
           <Route path="/BookShelf" component={BookShelf}/>
           <Route path="/DownloadsPage" component={DownloadsPage}/>
           <Route path="/UserPage" component={UserPage}/>
+
+          <Route path="/bookstorebooks/:id" component={BookStoreBooks} />
+          <Route path="/addbook/:id" component={AddBook} />
           <Route path="/admin" component={Admin} />
-         
+
           
 
           <Route 
