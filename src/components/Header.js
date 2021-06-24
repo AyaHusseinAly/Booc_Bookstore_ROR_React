@@ -158,7 +158,7 @@ class Header extends Component {
                    
                         <div className="dropdown show" >
                         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                        <Button ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></Button>
+                        <img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" />
                         </OverlayTrigger>
                             {/* <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a> */}
                             <img  className="  m-1 rounded-circle"  src={avatar}  /> 
