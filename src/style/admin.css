@@ -94,7 +94,7 @@
 			border-radius: 6px;
 			position: absolute;
 			z-index: 100;
-			font-size: 17px;
+			font-size: 10px;
 		}
 
 		.fa-plus:hover .tooltiptextshel {

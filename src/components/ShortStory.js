@@ -4,15 +4,8 @@ import Popup from "reactjs-popup";
 import '../style/shortStory.css';
 import { Link } from "react-router-dom";
 import AddChapter from './addChapter';
+import Rating from './Rating';
 
-
-
-// const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-// const arrowStyle = { color: '#000' }; // style for an svg element
-// const contentStyle = {
-//     maxWidth: "600px",
-//     width: "90%"
-// };
 
 class ShortStory extends Component {
     render() {
@@ -23,20 +16,16 @@ class ShortStory extends Component {
 
                 <div className="col col-7 mt-2" style={{ width: '100%', heigth: '100%', display: 'inline-block' }}>
                     <h5>{this.props.shortstory.title}</h5>
-                    <p>
-                        <span className="fa fa-star checked"></span>
-                        <span className="fa fa-star checked"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
+                    <p className='row'>
+                        <div style={{ display: 'inline-block' }}><Rating rate={this.props.shortstory.rate} /></div>
+                        <span className="mx-2" style={{ color: '#ADB4C3', display: 'inline-block' }}>({this.props.shortstory.noReviews} Reviews)</span>
                     </p>
                     <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>
-                        <span>{this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 80) + '....' : this.props.shortstory.summary}</span>
+                        <span>{this.props.shortstory.summary && this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 70) + '....' : this.props.shortstory.summary}</span>
                     </div>
 
                     <div className='mt-3'>
-                        {this.props.shortstory.status == 'Not finished yet' && <AddChapter shortStory={this.props.shortstory.id} />}
+                        {this.props.shortstory.user_id == localStorage.getItem('user_id') && this.props.shortstory.status == 'Not finished yet' && <AddChapter shortStory={this.props.shortstory.id} />}
                         {/* <ViewShortStory /> */}
                         <Link className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
                             to={`/shortStory/${this.props.shortstory.id}`}>View</Link>

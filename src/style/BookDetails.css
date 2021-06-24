@@ -67,7 +67,7 @@
 .product .parent-box .button button:last-child {
     /* background: #f5b17b; */
     border: 1px solid #f5b17b;
-    width: 200px;
+    width: 150px;
     color: #000;
     margin-top: 5px;
 }
@@ -88,6 +88,7 @@
 .product .box-info .heading .evaluation  {
     float: left;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .product .box-info .heading .evaluation span {
@@ -318,35 +319,37 @@
     margin: 20px 0
 }
 
-.slider .info span {
+.slid .info span {
     position: absolute;
     top: 0;
     display: inline-block;
     font-weight: bold
 }
 
-.slider .info span:first-child {
+.slid .info span:first-child {
     left: 10px
 }
 
-.slider .info span:last-child {
+.slid .info span:last-child {
     right: 10px
 }
 
-.slider .up {
+.slid .up {
     position: relative
 }
 
-.slider .client {
-    padding: 40px 0
+.slid .client {
+    padding: 40px 0;
+    
 }
 
-.slider .client img {
+.slid .client img {
     display: inline-block;
     margin: 0 10px 15px;
     width: 198px;
     border: 1px solid #eee;
-    padding: 3px
+    padding: 3px;
+    height: 300px
 }
 
 
@@ -355,6 +358,9 @@
     margin: 50px;
     display: inline-block;
     margin-right: -5px;
+    font-size: 20px;
+    margin-top: 70px;
+  
 }
 
 

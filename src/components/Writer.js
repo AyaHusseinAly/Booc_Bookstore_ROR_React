@@ -6,6 +6,7 @@ import ShortStory from './ShortStory';
 
 
 
+
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 const arrowStyle = { color: '#000' }; // style for an svg element
 const contentStyle = {
@@ -51,12 +52,13 @@ class Writer extends Component {
                 }
             })
             .then(response => {
+                console.log(response.data.NotFinishedYet.length);
                 this.setState({ shortstoiesNotFinished: response.data.NotFinishedYet });
                 this.setState({ shortstoiesFinished: response.data.Finished });
-                console.log(response.data.NotFinishedYet);
-                if (response.data.NotFinishedYet.length + response.data.Finished.length > 0) {
-                    this.setState({ empty: false });
-                }
+                console.log(response.data);
+                // if (response.data.NotFinishedYet.length + response.data.Finished.length > 0) {
+                //     this.setState({ empty: false });
+                // }
             });
 
     }
@@ -87,6 +89,7 @@ class Writer extends Component {
 
                             {this.state.shortstoiesNotFinished.map(shortstory => {
                                 return <ShortStory shortstory={shortstory} chapters={this.state.chapters} />
+
 
                             })}
                         </div>

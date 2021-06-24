@@ -4,7 +4,7 @@ import React, {useState,useEffect } from 'react';
 import '../style/admin.css';
 import '../style/BookDetails.css';
 import { Link } from "react-router-dom";
-import BookRow from './BookRow';
+import BookRowSlide from './BookRowSlide';
 import axios from 'axios';
 import {
     EmailIcon,
@@ -28,6 +28,7 @@ const BookDetails = (props) => {
     // const location = useLocation();
     // const history = useHistory();
     const [shelfs, setShelfs] = useState([]);
+    const [downloads, setDownloads] = useState([]);
    
 
     useEffect(() =>{
@@ -47,20 +48,39 @@ const BookDetails = (props) => {
     }, [])
         
         console.log(book[0]) 
-
-        const saveShel = (items) => {
-            localStorage.setItem('book-shelf', JSON.stringify(items))
-        };
+        // console.log(book[0].volumeInfo.categories[0])
+      
     
     
         const addShelfBook = (book) =>{
-            const newShelfeRow = [...shelfs, book];
+                const getShelfs = JSON.parse(localStorage.getItem('book-shelf'))
+               console.log(getShelfs)
+                  if(!getShelfs.some(bk => bk.id === book.id)){
+                  const newShelfeRow = [...shelfs, book];
+                  setShelfs(newShelfeRow);
+                  const newShelf = [...getShelfs,...newShelfeRow]
+                localStorage.setItem('book-shelf', JSON.stringify(newShelf))
+              }
+                else{
+                  alert("added before");
+              }
             
-            setShelfs(newShelfeRow);
-            saveShel(newShelfeRow);
+              };
+
+              const addDownloadBook = (book) =>{
+            
+                  const newDownloadRow = [...downloads, book];
+                  setDownloads(newDownloadRow);
+                   const getDownloads = JSON.parse(localStorage.getItem('book-download'))
+                //   console.log(getDownloads)
+                   const newDown = [...getDownloads,...newDownloadRow]
+                localStorage.setItem('book-download', JSON.stringify(newDown))
+             
+            
+              };
             
     
-        };
+       
 
         
         return(
@@ -80,8 +100,9 @@ const BookDetails = (props) => {
                                      <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
                                     <button><i className="fa fa-microphone"></i> Find near me</button>
                                     {book.length > 0 && book[0].accessInfo.pdf.isAvailable ? 
-                                    <button><i className="fa fa-download"></i> <a href={book.length > 0 && book[0].accessInfo.pdf.acsTokenLink}>Download as PDF</a></button>:<span>  </span>}
-                                  
+                                    <button style={{border: "1px solid #F8A488"}}><i className="fa fa-download" ></i> <a href={book.length > 0 && book[0].accessInfo.pdf.acsTokenLink} onClick={()=>addDownloadBook(book[0])} style={{color: "black"}}>Download</a></button>:<span></span>}
+                                    {book.length > 0 && book[0].saleInfo.isEbook && !book[0].accessInfo.pdf.isAvailable  ? 
+                                    <button><i className="fa fa-money" ></i> <a href={book.length > 0 && book[0].saleInfo.buyLink}>Buy</a></button>:<span></span>}
                                 </div>
                             </div>
                         </div>
@@ -92,7 +113,8 @@ const BookDetails = (props) => {
                             <span>Free</span>:<span>Not Free</span>}
                             <div className="heading">
                                 <h2>{book.length > 0 && book[0].volumeInfo.title}</h2>
-                                <h5>from {book.length > 0 && book[0].volumeInfo.categories} section</h5>
+                                {book.length > 0 && book[0].volumeInfo.categories ?
+                                <h5>from {book.length > 0 && book[0].volumeInfo.categories} section</h5> : <span></span>}
 
                                  {book.length > 0 && book[0].volumeInfo.averageRating ?
                                 
@@ -186,9 +208,17 @@ const BookDetails = (props) => {
                                 </div>
                                 <div className="about-info">
                                     <h4>About Author</h4>
-                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                    <p>{book.length > 0 && book[0].volumeInfo.authors[0]}, sit amet consectetur adipisicing elit. Quia nemo atque porro,
                                         quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
-                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.</p>
+                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.
+                                        {book.length > 0 && book[0].volumeInfo.authors[0]}, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                        quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
+                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.
+                                        {book.length > 0 && book[0].volumeInfo.authors[0]}, sit amet consectetur adipisicing elit. Quia nemo atque porro,
+                                        quod cum odio consectetur architecto veritatis vel incidunt dolore at corporis!
+                                        Accusantium eum consequuntur incidunt, sed quisquam delectus.
+                                        
+                                        </p>
                                 </div>
                             </div>
                         </div>
@@ -334,30 +364,81 @@ const BookDetails = (props) => {
                 </div>
             </div>
         </div>
-     
-    {/* <div className="slider">
-        <div className="container">
-            <div className="info">
-                <span>Similar Books</span>
-                <span>(5 Books)</span>
-            </div>
-            <div className="up">
-                <div className="client active">
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    <a href="#"><img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg" /></a>
-                    
-                </div>
+
+     {/* <div>  <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} /> </div> 
+ 
+     {(book.length > 0 && book[0].volumeInfo.categories == "COMICS & GRAPHIC NOVELS"  ||  book.length > 0 && book[0].volumeInfo.categories == "Social Science" ||  book.length > 0 && book[0].volumeInfo.categories == "Juvenile Fiction") &&
+                <>
+                <div className="slid">
+                <div className="container">
+                <div className="info">
+                <span>Similar Books</span> 
               
-         
-            </div>
-        </div>
-    </div> */}
-            </>
+                </div>
+               <div className="up">
+                <div className="client active" >
+                    <a href="#"><img src="http://books.google.com/books/content?id=zKkdEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=qGMBEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Nl8IEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=cPT4DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"/></a>
+                    <a href="#"><img src="http://books.google.com/books/content?id=Bqz8DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" /></a>
+                </div>
+                </div>
+                </div>
+                </div>
+                </>}
+
+
+
+
+     {book.length > 0 && book[0].volumeInfo.categories && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "COMICS & GRAPHIC NOVELS" && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "Juvenile Fiction" ?
+     <div className="slid">
+        <div className="container">
+                 <div className="info">
+                  <span>Similar Books</span> 
+                 <span>(5 books)</span> 
+                  </div>
+                 <div className="up">
+                 <div className="client active">
+                 <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} />
+                </div>
+                </div>
+             </div>
+     </div>:(book.length > 0 && book[0].volumeInfo.categories === "Social Science" &&
+     <div className="slid">
+     <div className="container">
+         </div> </div>)}  */}
+
+
+
+
+
+
+         {book.length > 0 && book[0].volumeInfo.categories && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "COMICS & GRAPHIC NOVELS" && book[0].volumeInfo.categories != "Comics & Graphic Novels"?
+     <div className="slid">
+        <div className="container">
+                 <div className="info">
+                 {/* <span>Similar Books</span> */}
+                 {/* <span>(5 books)</span> */}
+                  </div>
+                 <div className="up">
+                 <div className="client active">
+                 <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} />
+                </div>
+                </div>
+             </div>
+     </div>:(book.length > 0 && book[0].volumeInfo.categories === "Social Science" &&
+     <div className="slid">
+     <div className="container">
+         </div> </div>)}
+
+
+     
+   
+            </> 
         )   
 }
 
 
 export default BookDetails;
+
