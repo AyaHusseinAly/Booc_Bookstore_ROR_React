@@ -35,7 +35,9 @@ class ReportsController < ApplicationController
         elsif report.kind=='commentStory'
             CommentStory.find(report.related_record_id).destroy()
         elsif report.kind=='commentChapter'
-            CommentChapter.find(report.related_record_id).destroy()            
+            CommentChapter.find(report.related_record_id).destroy()
+        elsif report.kind=='review'
+            StoryRatingReview.find(report.related_record_id).destroy()            
         end
         report.destroy()
         
@@ -92,6 +94,11 @@ class ReportsController < ApplicationController
                 comment=CommentChapter.find(report.related_record_id)
                 content=comment.body
                 user_name=comment.user.username
+            elsif report.kind=='review'
+                review=StoryRatingReview.find(report.related_record_id)
+                content=review.review
+                user_name=review.user.username
+                story_title=review.short_story.title
 
                 
             end
