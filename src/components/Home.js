@@ -43,6 +43,10 @@ class Home extends Component {
         
         this.setState({genres:res.data.short_stories});
         console.log(this.state.genres);
+        
+         localStorage.setItem('book-favourite', JSON.stringify([]))
+        localStorage.setItem('book-shelf', JSON.stringify([]))
+        localStorage.setItem('book-download', JSON.stringify([]))
        
     }
 

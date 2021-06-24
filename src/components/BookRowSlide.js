@@ -88,7 +88,7 @@ const BookRowSlide = (props) => {
                     <figure className="one" style={{width: "200px"}}>
                     
                     < div className="bk_img">
-                    <img style={{width:'100%'}} src={books.length > 0&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                    <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                        <div className="hovable">
                          <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="det">details</span>

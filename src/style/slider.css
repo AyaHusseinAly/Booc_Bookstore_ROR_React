@@ -1,0 +1,29 @@
+/* body {
+    background: #3498db;
+  } */
+  
+  .Appi {
+    font-family: sans-serif;
+    padding: 10px 30px;
+    width: 40%;
+    transform: translate(50%, 50%);
+	
+  }
+  
+  .Appi > div {
+    /* background-color: var(--secondaryColor); */
+    background-color: #fff;
+    color: #fff;
+    color: #3498db;
+    text-align: center;
+  }
+  
+  .slick-dots li.slick-active button:before {
+    color: var(--primaryColor);
+  }
+  
+  .slick-prev:before,
+  .slick-next:before {
+    color: var(--primaryColor);
+  }
+  

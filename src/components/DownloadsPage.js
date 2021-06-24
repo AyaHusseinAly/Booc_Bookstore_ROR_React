@@ -1,35 +1,35 @@
 import React, {useState,useEffect } from 'react';
-import '../style/FavoritesPage.css';
+import '../style/DownloadsPage.css';
 import { Link } from "react-router-dom";
 
 
 
 
 
-const FavoritesPage = (props) => {
-    const [favorites, setFavorites] = useState([]);
+const DownloadsPage = (props) => {
+    const [downloads, setDownloads] = useState([]);
 
     useEffect(() =>{
-        const bookFavourites = JSON.parse(
-           localStorage.getItem('book-favourite')
+        const bookDownloads = JSON.parse(
+           localStorage.getItem('book-download')
         );
 
-        setFavorites(bookFavourites);
+        setDownloads(bookDownloads);
 
     },[]);
 
    
     
     const save = (items) => {
-        localStorage.setItem('book-favourite', JSON.stringify(items))
+        localStorage.setItem('book-download', JSON.stringify(items))
     };
-    const removeFavouriteBook = (book) =>{
-        const newFavouriteRow = favorites.filter(
-            (favorite) => favorite.id !== book.id
+    const removeDownloadBook = (book) =>{
+        const newDownloadRow = downloads.filter(
+            (download) => download.id !== book.id
         );
        
-        setFavorites(newFavouriteRow);
-        save(newFavouriteRow);
+        setDownloads(newDownloadRow);
+        save(newDownloadRow);
     };
         
         
@@ -38,20 +38,20 @@ const FavoritesPage = (props) => {
                
 
                 <>
-                 <h2 style={{textAlign: "center",marginBottom: "20px"}}><span style={{color: "var(--secondaryColor)"}}>M</span>y Favourites B<span style={{color: "var(--secondaryColor)"}}>oo</span>k</h2>
+                 <h2 style={{textAlign: "center",marginBottom: "20px"}}><span style={{color: "var(--secondaryColor)"}}>M</span>y Downloads B<span style={{color: "var(--secondaryColor)"}}>oo</span>k</h2>
                  <div className="row ">
-                 {favorites.map(book=> 
+                 {downloads.map(book=> 
                  
                    <div className="col-7 col-md-2 main" >
                       
-                    <figure  className="fig" style={{width: "150px",height: "100px",marginBottom: "200px"}} >
+                    <figure  className="fig-do" style={{width: "150px",height: "100px",marginBottom: "200px"}} >
                     < div className="book_img">
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-                       <div className="hov">
+                       <div className="hovi">
                          <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="details">details</span>
                           </Link>
-                          <span className="remove-fav" onClick={()=>removeFavouriteBook(book)}>
+                          <span className="remove-do" onClick={()=>removeDownloadBook(book)}>
                            <i className="fa fa-window-close" style={{padding: "18px",lineHeight: "50px"}}>remove</i>
                            
                           </span>
@@ -70,4 +70,4 @@ const FavoritesPage = (props) => {
 }
 
 
-export default FavoritesPage;
+export default DownloadsPage;
