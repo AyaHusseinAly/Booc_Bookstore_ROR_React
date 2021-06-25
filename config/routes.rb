@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 get '/member-data', to: 'members#show'
+get 'user/avatar', to: 'members#avatar'
+post '/logged_in', to: 'members#is_logged_in?'
   # resources :ping, only: [:index] do
   #   collection do
   #     get :auth
@@ -17,6 +19,8 @@ get '/member-data', to: 'members#show'
       get :available
     end
   end
+
+  # get 'api/shortStories', to:'api#shortStories'
 
   get 'api/shortStories', to:'short_stories#index'
   get 'api/bookmarks', to:'api#bookmarks'  # edit to accept user id
@@ -33,12 +37,24 @@ get '/member-data', to: 'members#show'
   post '/addbook', to:'bookstores#Add_book'
   delete '/destroyBook/:id', to:'bookstores#destroy_book'
 
+  post 'bookStoreSearchFromMap', to:'bookstores#search'
 
 
-  get '/communityPosts' , to:'chapters#posts'
+  post '/communityPosts' , to:'posts#posts'
+  post '/commentChapter', to: 'comments_likes#commentChapter'
+  post '/likeChapter', to: 'comments_likes#likeChapter' 
+  post '/commentStory', to: 'comments_likes#commentStory'
+  post '/unlikeChapter', to: 'comments_likes#unlikeChapter' 
+  post '/unlikeStory', to: 'comments_likes#unlikeStory'
+  post '/likeStory', to: 'comments_likes#likeStory'  
+  post '/report' , to: 'reports#create'
+  get '/reports' , to: 'reports#index'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
-  
-
+  post '/addToBookmark' ,to:'short_stories#addToBookmark'
+  post '/removeFromBookmark' ,to: 'short_stories#removeFromBookmark'
+  post '/followWriter',to:'short_stories#followWriter'
+  post '/unFollowWriter',to:'short_stories#unFollowWriter'
+  post '/addRateReviewStory',to:'short_stories#addRateReviewStory'
 
 end

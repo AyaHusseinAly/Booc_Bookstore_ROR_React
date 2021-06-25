@@ -7,7 +7,7 @@
 # Ignore bundler config.
 /.bundle
 
-
+/config/credentials.yml.enc
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -32,3 +32,4 @@
 /config/master.key
 /config/local_env.yml
 /config/credentials.yml.enc
+

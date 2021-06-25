@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-
+    
     # before_action :configure_permitted_parameters, if: :devise_controller?
 
     # protected
@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     #     devise_parameter_sanitizer.permit(:sign_in, keys: [:login])
     #     devise_parameter_sanitizer.permit(:sign_up, keys: [:username,:email,:bio,:name,:dob,:password,:password_confirmation])
     # end
+    respond_to :json
 
     protect_from_forgery with: :null_session
 

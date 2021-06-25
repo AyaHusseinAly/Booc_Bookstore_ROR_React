@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  short_story: one
+  review: MyString
+  rate: 1.5
+
+two:
+  user: two
+  short_story: two
+  review: MyString
+  rate: 1.5
