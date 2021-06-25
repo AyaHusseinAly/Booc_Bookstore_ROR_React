@@ -67,7 +67,7 @@ class WriterStories extends Component {
                     <h3 className='d-flex justify-content-center'>You haven't add any stories </h3>
                     <div className='d-flex justify-content-center'> <button className="py-2 px-5  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button></div>
                 </div>} */}
-                {this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length > 0 && <div className='ml-5'>
+                <div className='ml-5'>
                     {/* <div className='d-flex justify-content-end mr-2'>
 
                         <button className="py-1 px-3  my-4 mr-4 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button>
@@ -85,10 +85,13 @@ class WriterStories extends Component {
                                     <span><strong>{this.state.user.follower}</strong> Followers</span>
                                 </div>
                             </div>
+
                             <div className="section-select text-center">
                                 <div className="active" >Writer Previous Work</div>
 
                             </div>
+                            {/* {this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length > 0 && */}
+
                             <div className="container light" style={{ border: '2px #ADB4C3 solid' }}>
                                 <div >
                                     <div >
@@ -146,10 +149,11 @@ class WriterStories extends Component {
                                     </div>
                                 </div>
                             </div>
+                            {/* } */}
 
                         </div>
                     </div>
-                </div>}
+                </div>
 
             </div>
 
