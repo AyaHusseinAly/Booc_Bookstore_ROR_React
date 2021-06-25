@@ -1,8 +1,10 @@
 class NotificationsController < ApplicationController
     def create
         @notification = Notification.new notification_params
+        user= User.where(reciever_id_id: notification_params['reciever_id'])
         if @notification.save
-            ActionCable.server.broadcast "notification_channel", {data: @notification}
+            # ActionCable.server.broadcast "notification_channel", {data: @notification}
+            NotificationChannel.broadcast_to user, @notification
             flash[:success] = "new notification sent"
             render json: { message: 'sent' ,
                 notification: @notification
@@ -16,8 +18,8 @@ class NotificationsController < ApplicationController
 
     def index
         if params[:reciever_id].present?
-            notifications = Notification.where(reciever_id: params[:reciever_id])
-            if notification.present?
+            notifications = Notification.where(reciever_id_id: params[:reciever_id])
+            if notifications.present?
                 render json: {message: "notifications found", notifications: notifications}, status: :ok 
             else
                 render json: {message: "no notifications", data: []}, status: :not_found

@@ -220,6 +220,7 @@ class BookstoresController < ApplicationController
             render json: {message: "Bookstore Found", bookstore_id: bookstore.id, status: "ok"}
         else
             render json: {message: "No Bookstore Found", status:"not_found"}
+
         end
     end
 end
