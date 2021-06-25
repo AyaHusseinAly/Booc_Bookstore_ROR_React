@@ -186,10 +186,6 @@ class App extends Component {
           <Route path="/DownloadsPage" component={DownloadsPage}/>
           <Route path="/UserPage" component={UserPage}/>
           <Route path="/FreeBook" component={FreeBook}/>
-          
-          
-
-
           { this.state.user.role == 'seller' &&
           <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
           <Route path="/addbook/:id" component={AddBook} />

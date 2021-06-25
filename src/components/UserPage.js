@@ -1,22 +1,83 @@
 import React, {useState,useEffect } from 'react';
 import '../style/UserPage.css';
 import Favr from './Favr';
-
+import axios from 'axios';
 
 
 const UserPage = (props) => {
     const [downloads, setDownloads] = useState([]);
     const [shelfs, setShelfs] = useState([]);
     const [favorites, setFavorites] = useState([]);
+    const [user,setUser] = useState([]);
 
-    useEffect(() =>{
+    useEffect(async () =>{
+        const bookDownloads = JSON.parse(
+           localStorage.getItem('book-download')
+        );
+        
+            //  set state user as res.data.user
+           setDownloads(bookDownloads);
+    // ///axiox post data id localstroge
+
+
+
+    },[]);
+
+
+
+  useEffect(() =>{
+      const fetchUser = async() => {
+
+    let data ={
+            user_id:localStorage.getItem('user_id')
+        }
+        // let res = await axios.post("http://localhost:3000/myProfileData",data,
+        //     {
+        //         headers: {
+        //             "Access-Control-Allow-Origin": "*",
+        //             "Access-Control-Allow-Methods": "GET, POST, PUT",
+        //             "Access-Control-Allow-Headers": "Content-Type"
+        //         }
+                
+
+
+        //     });
+        //     setUser(res.data.user);
+         axios.post("http://localhost:3000/myProfileData",data,
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type"
+                }
+                
+
+
+            })
+            .then(response=>{
+                console.log(response.data.user)
+                setUser(response.data.user);
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+            
+      }
+      fetchUser();
+         },[]);
+
+
+
+
+      useEffect(() =>{
         const bookDownloads = JSON.parse(
            localStorage.getItem('book-download')
         );
 
         setDownloads(bookDownloads);
-
+    
     },[]);
+
 
 
 
@@ -57,12 +118,12 @@ const UserPage = (props) => {
         <div className="container">
             <div className="content-info">
                 <div className="img">
-                    <img src="img/info-pic.jpg" />
+                    <img src={user.avatar} />
                 </div>
                 <div className="text-content">
-                    <h3>Suzan Naeem</h3>
-                    <span><strong>15</strong> Following</span>
-                    <span><strong>0</strong> Followers</span>
+                    <h3>{user.name}</h3>
+                    <span><strong>{user.following}</strong> Following</span>
+                    <span><strong>{user.follower}</strong> Followers</span>
                 </div>
             </div>
             <div className="section-select text-center">
