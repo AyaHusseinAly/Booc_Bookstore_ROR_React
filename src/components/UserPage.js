@@ -3,6 +3,8 @@ import '../style/UserPage.css';
 import Favr from './Favr';
 import axios from 'axios';
 import Followers from './Followers';
+import { Tabs } from 'antd';
+const TabPane = Tabs.TabPane;
 
 
 
@@ -107,9 +109,11 @@ const UserPage = (props) => {
             </div>
             <div className="section-select text-center">
                 <div className="active" data-className=".book">My Bookshelf</div>
-                <div data-className=".story">My Stories</div>
+                <div data-className=".story"><a style={{color:"black",textDecoration: "none"}} href='/MyStories'>My Stories</a></div>
             </div>
+             
             <div className="select-div">
+           
                 <div className="book">
                     <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6">
@@ -199,11 +203,15 @@ const UserPage = (props) => {
 
                             </div>
                         </div>
+                   
                         <div className="story">
                     // Write Your Code Here //
                             story
                         </div>
+                        
                     </div>
+
+
                 </div>
             </div>
 
