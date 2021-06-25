@@ -254,7 +254,6 @@ ActiveRecord::Schema.define(version: 2021_06_24_182153) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-<<<<<<< HEAD
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarks", "short_stories"
   add_foreign_key "bookmarks", "users"
@@ -281,6 +280,4 @@ ActiveRecord::Schema.define(version: 2021_06_24_182153) do
   add_foreign_key "story_rate_reviews", "short_stories"
   add_foreign_key "story_rating_reviews", "short_stories"
   add_foreign_key "story_rating_reviews", "users"
-=======
->>>>>>> 23b98e317145d4d1b73c786853abed437ea46d08
 end
