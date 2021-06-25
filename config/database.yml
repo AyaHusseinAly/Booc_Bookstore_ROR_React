@@ -8,18 +8,18 @@ default: &default
 
 
 
-  adapter: postgresql
-  encoding: unicode
-  username: user1
-  password: 147258
-  host: localhost
-  # adapter: sqlite3
-
   # adapter: postgresql
   # encoding: unicode
-  # username: postgres
-  # password: 123
+  # username: user1
+  # password: 147258
   # host: localhost
+  # adapter: sqlite3
+
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password: 123
+  host: localhost
   # adapter: sqlite3
 
 
@@ -32,7 +32,7 @@ default: &default
 development:
   <<: *default
 
-  database: bookstore_development
+  database: bookstore_development2
 
   # database: db/development.sqlite3
 
@@ -41,10 +41,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: bookstore_test
+  database: bookstore_test2
   # database: db/test.sqlite3
 
 production:
   <<: *default
-  database: bookstore_production
+  database: bookstore_production2
   # database: db/production.sqlite3
