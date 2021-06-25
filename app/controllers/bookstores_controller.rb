@@ -28,7 +28,7 @@ class BookstoresController < ApplicationController
     ################## Create BookStore  ############################
     def create  
         # Create Book Store
-        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:31.239811473864638,lng:29.96107643895042,kind: params['selectedOption'], distict:params['StoreCity']) 
+        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
         
         # Create Admin To Store
         render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
@@ -210,11 +210,12 @@ class BookstoresController < ApplicationController
     end
 
     def get_bookstore_from_seller_id
-        bookstore=Bookstore.where(user_id: parapms[:seller_id])
+        bookstore=Bookstore.find_by(user_id: params[:seller_id])
         if bookstore.present?
-            render json: {message: "Bookstore Found", bookstore_id: bookstore.id}, status: :ok
+            render json: {message: "Bookstore Found", bookstore_id: bookstore.id, status: "ok"}
         else
-            render json: {message: "No Bookstore Found"}, status: :not_found
+            render json: {message: "No Bookstore Found", status:"not_found"}
+
         end
     end
 end
