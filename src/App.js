@@ -45,6 +45,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import { isConstructorDeclaration } from 'typescript';
+import AllStories from './components/AllStories';
 
 
 
@@ -202,10 +203,12 @@ class App extends Component {
             />
             <Route path="/genre/:id" exact component={Genre} />
             <Route path="/map" component={Map} />
-            <Route path="/writer" component={Writer} />
+            {/* <Route path="/writer" component={Writer} /> */}
+            <Route path="/writer" component={MyStories} />
             <Route path="/community" component={Community} />
             <Route path="/mystories" component={MyStories} />
             <Route path="/addstory" component={AddStory} />
+
             <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
             <Route path="/userprofile" component={UserProfile} />
             <Route path="/FavoritesPage" component={FavoritesPage} />
@@ -273,6 +276,7 @@ class App extends Component {
             {/* <Route path="/searchresults" component={SearchResults}/> */}
             <Route path="/404" component={NotFound} />
             <Route path="/writerStories/:id" render={(props) => <WriterStories {...props} />} />
+            <Route path="/AllStories" component={AllStories} />
 
 
           </Switch >
