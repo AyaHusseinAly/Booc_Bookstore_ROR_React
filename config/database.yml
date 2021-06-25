@@ -8,12 +8,12 @@ default: &default
 
 
 
-  adapter: postgresql
-  encoding: unicode
-  username: user1
-  password: 147258
-  host: localhost
-  # adapter: sqlite3
+  # adapter: postgresql
+  # encoding: unicode
+  # username: user1
+  # password: 147258
+  # host: localhost
+  adapter: sqlite3
 
   # adapter: postgresql
   # encoding: unicode
