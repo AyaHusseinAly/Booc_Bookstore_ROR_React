@@ -250,5 +250,10 @@ class BookstoresController < ApplicationController
             render :json =>{stores: @stores}
         end
      end
+
+    def getAllStores
+        @stores = Bookstore.all
+        render :json =>{stores: @stores}
+    end
      
 end
