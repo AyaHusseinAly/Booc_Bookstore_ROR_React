@@ -3,10 +3,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
 
   def create
-    build_resource(registration_params)
-    resource.save
-    sign_up(resource_name, resource)
-    respond_with resource
+   
+    # build_resource(registration_params)
+    resource=User.new(name: registration_params[:name],
+                  username: registration_params[:username],
+                  email: registration_params[:email] ,
+                  password: registration_params[:password],
+                  password_confirmation: registration_params[:password_confirmation] ,
+                  bio: registration_params[:bio],
+                  dob: registration_params[:dob] )
+    # if resource.persisted?
+    if resource.save
+      if registration_params[:avatar].present?
+        resource.avatar.attach(registration_params[:avatar])
+      end
+      sign_up(resource_name, resource)
+      register_success
+    else
+      register_failed(resource)
+    end
+    # respond_with resource
   end  
 
   private
@@ -39,10 +55,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       {
         status: '400',
         title: 'Bad Request',
-        detail: resource.errors,
+        details: resource.errors,
         code: '100'
       }
     ]
-  }, status: :bad_request
+  }, status: :ok
   end
 end
