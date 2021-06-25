@@ -30,6 +30,9 @@ get '/member-data', to: 'members#show'
 
   get '/allbookstores', to:'bookstores#allbookstores'
   get '/show_bookstore_books/:id', to:'bookstores#show_bookstore_books'
+  post '/addbook', to:'bookstores#Add_book'
+  delete '/destroyBook/:id', to:'bookstores#destroy_book'
+
 
 
   get '/communityPosts' , to:'chapters#posts'
