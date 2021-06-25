@@ -1,13 +1,16 @@
 class NotificationsController < ApplicationController
     def create
-        @notification = Notification.new notification_params
-        user= User.where(reciever_id_id: notification_params['reciever_id'])
-        if @notification.save
-            # ActionCable.server.broadcast "notification_channel", {data: @notification}
-            NotificationChannel.broadcast_to user, @notification
+        notification = Notification.new(sender_id_id:notification_params[:sender_id],
+                                        instance_id:notification_params[:instance_id],
+                                        reciever_id_id:notification_params[:reciever_id],
+                                        body:notification_params[:body])
+        user= User.find(notification_params[:reciever_id])
+        if notification.save
+            ActionCable.server.broadcast "notification_channel_#{user.id}", {data: notification}
+            # NotificationChannel.broadcast_to user, @notification
             flash[:success] = "new notification sent"
             render json: { message: 'sent' ,
-                notification: @notification
+                notification: notification
                 }, status: :ok
             
         else
@@ -30,6 +33,6 @@ class NotificationsController < ApplicationController
     end
     private
     def notification_params
-        params.require(:notification).permit(:sender_id,:reciever_id,:instance_id,:type,:body)
+        params.permit(:sender_id,:reciever_id,:instance_id,:type,:body)
     end
 end
