@@ -10,15 +10,7 @@ class Community extends Component {
         posts:[],
     }
     
-    async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
-        // const res=await axios.get('http://localhost:3000/api/shortStories',
-        // {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
-        // "Access-Control-Allow-Methods": "GET, POST, PUT",
-        // "Access-Control-Allow-Headers": "Content-Type"}})
-        
-        // this.setState({stories:res.data.stories});
-        
-        // console.log(this.state.stories);
+    async componentDidMount(){ 
         let data={user_id:window.localStorage.getItem('user_id')};
         axios.post('http://localhost:3000/communityPosts',data,
         {headers: {"Access-Control-Allow-Origin": "*",
@@ -60,6 +52,18 @@ class Community extends Component {
     
             });
         }
+        const followedWriters= () =>{
+            let data={user_id:window.localStorage.getItem('user_id')};
+            axios.post('http://localhost:3000/followerPosts',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+                this.setState({posts:response.data.posts});
+                console.log(this.state.posts);        
+    
+            }); 
+
+        }
  
         return (
             <div className="pl-5 py-5">
@@ -75,8 +79,8 @@ class Community extends Component {
                                 Order By
                             </a>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/community')}>By Latest</a>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/community')}>Followed writers</a>
+                                <a className="dropdown-item" onClick={refresh}>By Latest</a>
+                                <a className="dropdown-item" onClick={followedWriters}>Followed writers</a>
                         
                         </div>
                         </div>

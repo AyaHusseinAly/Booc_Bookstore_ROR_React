@@ -226,8 +226,8 @@ class App extends Component {
 
                 exact
                 render={props => (
-                  <Header {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
-                )
+                    <Admin></Admin>
+                  )
                 }
               />
   /* < Route path = "/genre/:id" exact component = { Genre } />

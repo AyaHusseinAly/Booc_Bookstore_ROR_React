@@ -144,7 +144,7 @@ class CommunityCard extends Component {
                                 <div className="d-flex">
                                     <img  className="  m-1 rounded-circle"  src={post.writer_avatar}  />
                                     <div className="d-flex flex-column mt-2">
-                                        <strong style={{color:'#535964',fontSize:'1.3rem' }} className="mb-1">{post.writer}</strong>
+                                        <a href={"/writerStories/"+post.writer_id} style={{color:'#535964',fontSize:'1.3rem' }} className="mb-1"><strong>{post.writer}</strong></a>
                                         <span>{post.story_title} <div className="chapterTag d-inline">{post.chapter_title}</div></span>
                                     </div>
                                 </div>
