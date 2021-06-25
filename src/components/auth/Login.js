@@ -67,7 +67,30 @@ class Login extends Component {
     }
     handleSuccessfulAuth(data){
         this.props.handleLogin(data);
-        this.props.history.push("/");
+        if(data.user.role == 'admin'){
+            this.props.history.push("/admin");
+        }
+        else if(data.user.role == 'seller'){
+            axios.post('http://localhost:3000/get_bookstore_from_seller',{
+                seller_id: data.user.id
+            })
+            .then(response =>{
+                if (response.data.message === "Bookstore Found"){
+                    var store_id = response.data.bookstore_id
+                    this.props.history.push(`/bookstorebooks/${store_id}`);
+                }
+                else{
+                    console.log('you have no stores somehow');
+                    this.props.history.push('/');
+                }
+            })
+            .catch(error =>{
+                console.log(error)
+            })
+        }
+        else{
+            this.props.history.push("/");
+        }
     }
    
     render() { 

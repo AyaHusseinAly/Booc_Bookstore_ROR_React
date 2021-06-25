@@ -16,12 +16,12 @@ class ShortStory extends Component {
 
                 <div className="col col-7 mt-2" style={{ width: '100%', heigth: '100%', display: 'inline-block' }}>
                     <h5>{this.props.shortstory.title}</h5>
-                    <p>
-                        <Rating rate={this.props.shortstory.rate} />
-                        <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 Reviews)</a>
+                    <p className='row'>
+                        <div style={{ display: 'inline-block' }}><Rating rate={this.props.shortstory.rate} /></div>
+                        <span className="mx-2" style={{ color: '#ADB4C3', display: 'inline-block' }}>({this.props.shortstory.noReviews} Reviews)</span>
                     </p>
                     <div style={{ flexDirection: 'row', overflowWrap: 'break-word' }}>
-                        <span>{this.props.shortstory.summary && this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 80) + '....' : this.props.shortstory.summary}</span>
+                        <span>{this.props.shortstory.summary && this.props.shortstory.summary.length > 85 ? this.props.shortstory.summary.slice(0, 70) + '....' : this.props.shortstory.summary}</span>
                     </div>
 
                     <div className='mt-3'>

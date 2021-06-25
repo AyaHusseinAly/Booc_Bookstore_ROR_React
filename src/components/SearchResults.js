@@ -186,11 +186,9 @@ class SearchResults extends Component {
                         <div className="col-2">
                             <h6 style={filterTextStyle} >OrderBy</h6>
                             <select value={this.state.selectOrderByVal} onChange={this.setSelectOrderByValue} style={mystyle}>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="">__none__</option>
+                            <option value="newest">newest</option>
+                            <option value="oldest">oldest</option>
                             </select>
                         </div>
                         

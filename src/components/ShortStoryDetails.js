@@ -6,6 +6,7 @@ import AddChapter from './addChapter';
 import ChapterDetails from './chapterDetails';
 import ReactStars from "react-rating-stars-component";
 import Likes from './Likes';
+import LikeCommentStory from './LikeCommentStory';
 import Rating from './Rating';
 import '../style/admin.css';
 import '../style/BookDetails.css';
@@ -24,7 +25,15 @@ import {
     WhatsappShareButton,
 
 } from "react-share";
+import { async } from 'q';
+const commentPopup = {
+    borderRadius: '10px 10px',
+    border: '4px solid #F8A488',
+    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.7)',
+    padding: '2rem',
+    width: '25rem',
 
+}
 const contentStyle = {
     // maxWidth: "600px",
     width: "60%"
@@ -49,16 +58,7 @@ class ShortStoryDetails extends Component {
             genre: [],
             date: '',
             image: '',
-            likes: [
-                { user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", user_id: '1' },
-                { user_name: 'Mona Youssef', user_img: "img/avatar.jpeg", user_id: '2' },
-                { user_name: 'Eman Hussein', user_img: "img/avatar.jpeg", user_id: '3' },
-                { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' },
-                { user_name: 'Fatma Tarek', user_img: "img/avatar.jpeg", user_id: '1' },
-                { user_name: 'Mona Youssef', user_img: "img/avatar.jpeg", user_id: '2' },
-                { user_name: 'Eman Hussein', user_img: "img/avatar.jpeg", user_id: '3' },
-                { user_name: 'Amal Tamam', user_img: "img/avatar.jpeg", user_id: '4' }
-            ],
+            likes: [],
             writer: {},
             bookmark_style: {},
             bookmark_method: "",
@@ -69,7 +69,9 @@ class ShortStoryDetails extends Component {
             follow_icon: "",
             review_flag: false,
             reviews: [],
-            storyRate: 0
+            storyRate: 0,
+            stroylikeflag: false,
+            commentStory: []
 
         }
 
@@ -111,7 +113,10 @@ class ShortStoryDetails extends Component {
         this.setState({ writer: res.data.writer });
         this.setState({ review_flag: res.data.review_flag });
         this.setState({ reviews: res.data.reviews });
-        this.setState({ storyRate: res.data.storyRate })
+        this.setState({ storyRate: res.data.storyRate });
+        this.setState({ likes: res.data.storyLikes });
+        this.setState({ stroylikeflag: res.data.likeFlag });
+        this.setState({ commentStory: res.data.commentStory });
         if (res.data.bookmarked_flag == false) {
             this.setState({ bookmark_style: { backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
             this.setState({ bookmark_string: "Add To Bookmark" });
@@ -237,8 +242,8 @@ class ShortStoryDetails extends Component {
                                                 })} section</h5>
                                                 <p>
                                                     <Rating rate={this.state.storyRate} />
-                                                    {/* <a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a> */}
-                                                    <StoryLikes likes={this.state.likes} />
+                                                    {/* <StoryLikes likes={this.state.likes} /> */}
+                                                    <span className=' m-2 ' style={{ fontSize: '1rem' }}>{this.state.reviews.length} Reviews</span>
                                                 </p>
                                             </div>
                                             <div className='col-xs-12 col-sm-12 col-md-5 col-lg-5'>
@@ -256,7 +261,11 @@ class ShortStoryDetails extends Component {
                                     </ul>
                                     <div className="about-product">
                                         <div className="about-info">
-                                            <h4>About Story</h4>
+                                            <div className='row mb-3'>
+                                                <h4 className='col col-4'>About Story</h4>
+                                                <div className='col col-8 mt-2' style={{ display: 'inline-block' }}><LikeCommentStory users={this.state.likes} story={this.state.shortStory} stroylikeflag={this.state.stroylikeflag} commentStory={this.state.commentStory} kind="Story" /></div>
+                                            </div>
+
                                             <p>{this.state.shortStory.summary}.</p>
                                         </div>
                                         {this.state.writer.id != localStorage.getItem('user_id') && <div className="about-info">
@@ -269,7 +278,7 @@ class ShortStoryDetails extends Component {
                                             {/* <div className="reviews"> */}
 
                                             {this.state.chapters.map((chapter) => {
-                                                return <div className="reviews my-6"><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+                                                return <div className="reviews my-6" style={{}}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
 
                                             })}
                                             {/* </div> */}
@@ -287,10 +296,6 @@ class ShortStoryDetails extends Component {
                                             return <div className="box-person">
                                                 <div className="img">
                                                     {review.user_avatar == "" ? <i className="fa fa-user"></i> :
-                                                        // <div className="rounded-circle" style={{
-                                                        //     height: '25px',
-                                                        //     width: '25px'
-                                                        // }}><img className="img-fluid" src={review.user_avatar} /></div>
                                                         <img className="rounded-circle" style={{ width: '40px', height: '40px', borderRadius: '50%' }} src={review.user_avatar} />}
                                                 </div>
                                                 <div className="info-details">
@@ -311,7 +316,7 @@ class ShortStoryDetails extends Component {
                                         {this.state.shortStory.user_id != localStorage.getItem('user_id') &&
                                             this.state.review_flag == false && < MakeRating story_id={this.state.shortStory.id} changeRateFlag={() => window.location.reload()} />}
                                     </div>
-                                    {/* <a href="#" className="more">See More..</a> */}
+
 
                                 </div>
                                 {this.state.shortStory.user_id != localStorage.getItem('user_id') && <div>
@@ -365,28 +370,32 @@ class Chapters extends Component {
     render() {
         return (<div className="row my-6">
             {/* <u className="mr-4" style={{ display: "inline-block", cursor: "pointer" }}>{this.props.chapter.title}</u> */}
-            <div className="col col-4"><ChapterDetails chapter={this.props.chapter} /></div>
-            <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
-            <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div>
-            <div className="col col-4"><span>{this.props.date}</span></div>
+            <div className="col col-3 "><ChapterDetails chapter={this.props.chapter} /></div>
+            {/* <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
+            <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div> */}
+            <div className='col col-6 px-0'>
+                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments} kind="Chapter" />
+            </div>
+
+            <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span></div>
         </div>)
     }
 }
-class StoryLikes extends Component {
-    render() {
-        return (<Popup
-            trigger={<a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>}
-            modal
-            contentStyle={popupStyle}
-        >
-            <div>
-                <Likes users={this.props.likes} />
-            </div>
-        </Popup >)
-    }
+// class StoryLikes extends Component {
+//     render() {
+//         return (<Popup
+//             trigger={<a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>}
+//             modal
+//             contentStyle={popupStyle}
+//         >
+//             <div>
+//                 <Likes users={this.props.likes} />
+//             </div>
+//         </Popup >)
+//     }
 
 
-}
+// }
 class MakeRating extends Component {
     constructor(props) {
         super();
@@ -552,6 +561,7 @@ class ReviewReport extends Component {
         );
     }
 }
+
 
 
 export default ShortStoryDetails;

@@ -35,8 +35,17 @@ class Community extends Component {
     render() {
 
         const onSearch = () =>{ 
-            let string=document.getElementById("form1").value;
+            let string=document.getElementById("searchform").value;
             console.log(string);
+            let data = {q:string}
+            axios.post('http://localhost:3000/searchStoryChapter',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+                this.setState({posts:response.data.posts});
+                console.log(this.state.posts);        
+
+            });
 
 
         }
@@ -59,7 +68,7 @@ class Community extends Component {
                             <i className="fas fa-search" style={{color:'gray'}}></i>
                         </button>
                         <div className="form-outline col-9" >
-                            <input type="search" id="form1" placeholder="Search for a Stroy or a Writer .." className="form-control" style={{backgroundColor:'#F8F8F8',paddingLeft:'1.5rem',height:'3rem'}} />
+                            <input type="search" id="searchform" placeholder="Search for a Stroy or a Writer .." className="form-control" style={{backgroundColor:'#F8F8F8',paddingLeft:'1.5rem',height:'3rem'}} />
                         </div>
                         <div className="dropdown show" >
                             <a className="btn btn-secondary dropdown-toggle ml-2" style={{backgroundColor:'white',opacity:'0.85',color:'#263044',height:'2.9rem'}} role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
