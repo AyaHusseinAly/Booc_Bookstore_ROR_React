@@ -139,6 +139,7 @@ const FreeBook = (props) => {
 
       const renderSlides = () =>
        freeBooks.map(book => (
+           
       <div >   
                     <figure  className="fir" style={{width: "200px",height: "100px",marginBottom: "200px"}} >
                     < div className="book_img">
@@ -162,8 +163,8 @@ const FreeBook = (props) => {
                         
                         </div>
                      </div>  
-                    <figcaption className="book_title" style={{textAlign: "center",fontSize: "15px",color:"black",fontFamily: "arial"}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>
-                    <button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.pdf.isAvailable&&book.accessInfo.pdf.downloadLink} onClick={()=>addDownloadBook(book)} style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Download</a></button>
+                    <figcaption className="book_title" style={{textAlign: "center",fontSize: "15px",color:"black",fontFamily: "arial"}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>  
+                    {book&&book.accessInfo.pdf.isAvailable ?<button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.pdf.isAvailable&&book.accessInfo.pdf.downloadLink} onClick={()=>addDownloadBook(book)} style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Download</a></button>:<button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.webReaderLink}  style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Read Online</a></button>}
                     </figure>
                     
 

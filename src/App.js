@@ -29,8 +29,6 @@ import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
 import axios from 'axios';
 import NotFound from './components/NotFound';
-
-
 import React, { Component } from 'react';
 
 
