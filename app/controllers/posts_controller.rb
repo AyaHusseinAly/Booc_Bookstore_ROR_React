@@ -3,8 +3,10 @@ class PostsController < ApplicationController
         @chapters = ShortStoriesChapter.all().order("created_at DESC");
         @stories = ShortStory.all().order("created_at DESC");
         @posts=mapChapterStoryToPost(@chapters,@stories,params['user_id'])
+        @paginated_posts=@posts.paginate(:page => params['page'], :per_page => 4)
+    
 
-        render :json => {posts:@posts}
+        render :json => {posts:@paginated_posts,page:@paginated_posts.current_page,pages:@paginated_posts.total_pages}
 
     end
     def followerPosts
