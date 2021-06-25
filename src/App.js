@@ -94,6 +94,7 @@ class App extends Component {
 
     }
     this.handleLogin = this.handleLogin.bind(this);
+    this.is_logged_in=this.is_logged_in.bind(this);
     // this.handleRedirect=this.handleRedirect.bind(this);
     // this.handleLogout=this.handleLogout.bind(this);
   }
@@ -160,7 +161,7 @@ class App extends Component {
   return (
     <div>
       <Header
-        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect}>
+        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} is_logged_in={this.is_logged_in} >
       </Header>
       <div style={{minHeight:400}}>
       <Switch>

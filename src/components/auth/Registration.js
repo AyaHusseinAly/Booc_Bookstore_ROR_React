@@ -71,7 +71,7 @@ class Registration extends Component {
             }
             else if (response.data.message === 'Something went wrong'){
                 this.setState({
-                    formErrors: response.data.errors
+                    formErrors: response.data.errors[0].details
                 })
 
             }
