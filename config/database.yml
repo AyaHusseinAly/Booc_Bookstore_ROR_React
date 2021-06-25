@@ -7,12 +7,21 @@
 default: &default
 
 
+
+  # adapter: postgresql
+  # encoding: unicode
+  # username: user1
+  # password: 147258
+  # host: localhost
+  # adapter: sqlite3
+
   adapter: postgresql
   encoding: unicode
   username: postgres
   password: 123
   host: localhost
   # adapter: sqlite3
+
 
 
   timeout: 5000

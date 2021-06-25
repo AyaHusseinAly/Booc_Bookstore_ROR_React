@@ -108,10 +108,81 @@ class ShortStoriesController < ApplicationController
 
         }
         @Finished.push(obj);
-        
-    end
+       end
         render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
     end
+
+    def getWriterStories
+        @Finished=[]
+        @NotFinishedYet=[]
+        ShortStory.where(status:'Not finished yet',user_id:params[:writer_id]).each do |story|
+            @image=""
+            if story&.image&.attached?
+             @image= rails_blob_url(story.image)
+            end 
+            @allReviews=StoryRatingReview.where(short_story_id:story.id )
+            @storyRate=StoryRatingReview.where(short_story_id:story.id ).sum(:rate)
+            if @allReviews.length > 0
+                @storyRate = @storyRate/@allReviews.length
+                if @storyRate - @storyRate.to_i < 0.25
+                    @storyRate=@storyRate.to_i 
+                elsif @storyRate - @storyRate.to_i < 0.75
+                    @storyRate=@storyRate.to_i + 0.5
+                else
+                    @storyRate=@storyRate.to_i + 1.0
+                end    
+            end
+            obj={
+                id:story.id,
+                title:story.title,
+                cover:@image,
+                target_audiance:story.target_audiance,
+                summary:story.summary,
+                status:story.status,
+                created_at:story.created_at,
+                user_id:story.user_id,
+                rate:@storyRate,
+                noReviews:@allReviews.length
+
+            }
+            @NotFinishedYet.push(obj);
+            
+        end
+        ShortStory.where(status:'finished',user_id:params[:writer_id]).each do |story|
+        @image=""
+        if story&.image&.attached?
+         @image= rails_blob_url(story.image)
+        end 
+        @allReviews=StoryRatingReview.where(short_story_id:story.id )
+        @storyRate=StoryRatingReview.where(short_story_id:story.id ).sum(:rate)
+        if @allReviews.length > 0
+            @storyRate = @storyRate/@allReviews.length
+            if @storyRate - @storyRate.to_i < 0.25
+                @storyRate=@storyRate.to_i 
+            elsif @storyRate - @storyRate.to_i < 0.75
+                @storyRate=@storyRate.to_i + 0.5
+            else
+                @storyRate=@storyRate.to_i + 1.0
+            end    
+        end
+        obj={
+            id:story.id,
+            title:story.title,
+            cover:@image,
+            target_audiance:story.target_audiance,
+            summary:story.summary,
+            status:story.status,
+            created_at:story.created_at,
+            user_id:story.user_id,
+            rate:@storyRate,
+            noReviews:@allReviews.length
+
+        }
+        @Finished.push(obj);
+       end
+        render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
+    end
+
     def show    
         if ShortStory.where(id:params['id']).first != nil
            @shortStory=ShortStory.find(params['id'])
@@ -290,21 +361,10 @@ class ShortStoriesController < ApplicationController
             render :json=>{message:"it is not in your bookmark already"}
         end
     end
-    def followWriter
-        @follow=Follow.create(reader_id:params[:reader_id],writer_id:params[:writer_id])
-        render :json=>{message:"followed successfully",following:@follow}
-    end
-    def unFollowWriter
-        if Follow.where(reader_id:params[:reader_id],writer_id:params[:writer_id]).length > 0
-            Follow.where(reader_id:params[:reader_id],writer_id:params[:writer_id]).delete_all
-            render :json=>{message:"removed following successfully"}
-        else 
-            render :json=>{message:"you already don't follow this writer"}
-        end
-    end
+   
     def addRateReviewStory
         @message=""
-        @rewiew={}
+        # @rewiew={}
         if params[:rating] 
             if User.where(id:params[:user_id]).length > 0 && ShortStory.where(id:params[:story_id]).length > 0 
                 @review=StoryRatingReview.create(user_id:params[:user_id],short_story_id:params[:story_id],rate:params[:rating])
@@ -320,7 +380,7 @@ class ShortStoriesController < ApplicationController
         else
             @message="bad request ,rating is requred"  
         end
-        render :json=>{message:@message,rate_review:@reviewrails}
+        render :json=>{message:@message}
     end
 
 end

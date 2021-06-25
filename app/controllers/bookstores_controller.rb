@@ -28,7 +28,7 @@ class BookstoresController < ApplicationController
     ################## Create BookStore  ############################
     def create  
         # Create Book Store
-        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:31.239811473864638,lng:29.96107643895042,kind: params['selectedOption'], distict:params['StoreCity']) 
+        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
         
         # Create Admin To Store
         render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
