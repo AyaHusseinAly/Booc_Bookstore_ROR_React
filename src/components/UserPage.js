@@ -149,97 +149,12 @@ const UserPage = (props) => {
                                 </div>
 
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                    <div className="person-follow">
+                                    {/* <div className="person-follow">
                                         <h3>Writers You Follow (15)</h3>
-                                        <div className="row" style={{ height: "800px" }}>
-                                            <Followers />
-                                            {/* <div className="col-sm-4 col-md-4 col-lg-4" >
-                                                <div className="text-img" >
-                                                    <img src="img/man.jpg" className="rounded-circle" />
-                                                    <h4 >Mohamed Naeem</h4>
-                                                    <span></span>
-                                                </div>
-                                            </div> */}
-                                            {/* <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle"  />
-                                            <h4>Mostafa Naeem</h4>
-                                            <span>New Stories</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle"  />
-                                            <h4>Ibrahim Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Mohamed Naeem</h4>
-                                            <span>New Stories</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Ibrahim Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Mostafa Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Mohamed Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Ibrahim Naeem</h4>
-                                            <span>New Stories</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Mostafa Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Mohamed Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Ibrahim Naeem</h4>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4 col-md-4 col-lg-4">
-                                        <div className="text-img">
-                                            <img src="img/man.jpg" className="rounded-circle" />
-                                            <h4>Mostafa Naeem</h4>
-                                            <span>New Stories</span>
-                                        </div>
+                                        <div className="row" style={{ maxHeight: '400px' }}> */}
+                                    <Followers />
+                                    {/* </div>
                                     </div> */}
-                                        </div>
-                                        <a href="#" className="See-More text-center">More...</a>
-                                    </div>
                                 </div>
 
                             </div>

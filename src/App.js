@@ -91,12 +91,9 @@ class App extends Component {
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
       user: {},
-<<<<<<< HEAD
-      avatar: ""
-=======
+
       avatar: "",
 
->>>>>>> 54bc81bc94962f8439d435a0cad0c90a44a2bcb5
     }
     this.handleLogin = this.handleLogin.bind(this);
     // this.handleRedirect=this.handleRedirect.bind(this);
