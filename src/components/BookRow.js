@@ -8,10 +8,10 @@ const BookRow = (props) =>{
     const [shelfs, setShelfs] = useState([]);
     // const [Color, setColor] = useState('#263044');
     // const [isBlack, setIsBlack] = useState(true);
+    
 
     const addFavouriteBook = (book) =>{
-      
-     
+
       const getFav = JSON.parse(localStorage.getItem('book-favourite'))
 
       if(!getFav.some(bk => bk.id === book.id)){

@@ -21,6 +21,7 @@ import Favr from "./components/Favr";
 import ShortStoryDetails from './components/ShortStoryDetails';
 import BookRowSlide from './components/BookRowSlide';
 
+import FreeBook from './components/FreeBook';
 
 
 import Registration from './components/auth/Registration';
@@ -176,7 +177,7 @@ class App extends Component {
           <Route path="/BookShelf" component={BookShelf}/>
           <Route path="/DownloadsPage" component={DownloadsPage}/>
           <Route path="/UserPage" component={UserPage}/>
-          
+          <Route path="/FreeBook" component={ FreeBook}/>
           
 
           <Route 

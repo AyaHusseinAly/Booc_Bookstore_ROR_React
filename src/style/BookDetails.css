@@ -45,7 +45,7 @@
     margin-left: 10px;
 }
 
-.product .parent-box .button button:nth-child(2):hover,.product .parent-box .button button:last-child:hover {
+.product .parent-box .button button:nth-child(2):hover,.product .parent-box .button button:last-child:hover,.product .parent-box .button button:nth-child(3):hover {
     background: #f5b17b;
     border: 1px solid #f5b17b
 }
@@ -64,6 +64,7 @@
     text-decoration: none;
     margin-left: 10px;
 }
+
 .product .parent-box .button button:last-child {
     /* background: #f5b17b; */
     border: 1px solid #f5b17b;

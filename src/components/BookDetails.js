@@ -76,8 +76,7 @@ const BookDetails = (props) => {
                    const newDown = [...getDownloads,...newDownloadRow]
                 localStorage.setItem('book-download', JSON.stringify(newDown))
              
-            
-              };
+               };
             
     
        
@@ -100,8 +99,9 @@ const BookDetails = (props) => {
                                      <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
                                     <button><i className="fa fa-microphone"></i> Find near me</button>
                                     {book.length > 0 && book[0].accessInfo.pdf.isAvailable ? 
-                                    <button><i className="fa fa-download" ></i> <a href={book.length > 0 && book[0].accessInfo.pdf.acsTokenLink} onClick={()=>addDownloadBook(book[0])}>Download</a></button>:<span>  </span>}
-                                  
+                                    <button style={{border: "1px solid #F8A488"}}><i className="fa fa-download" ></i> <a href={book.length > 0 && book[0].accessInfo.pdf.acsTokenLink.replace(/acsm /, 'pdf')} onClick={()=>addDownloadBook(book[0])} style={{color: "black",TextDecoration: "none"}}>Download</a></button>:<span></span>}
+                                    {book.length > 0 && book[0].saleInfo.isEbook && !book[0].accessInfo.pdf.isAvailable  ? 
+                                    <button><i className="fa fa-money" ></i> <a href={book.length > 0 && book[0].saleInfo.buyLink}>Buy</a></button>:<span></span>}
                                 </div>
                             </div>
                         </div>
@@ -364,14 +364,14 @@ const BookDetails = (props) => {
             </div>
         </div>
 
-     {/* <div>  <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} /> </div> */}
-
-     {(book.length > 0 && book[0].volumeInfo.categories == "Science"  ||  book.length > 0 && book[0].volumeInfo.categories == "Social Science") &&
+     {/* <div>  <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} /> </div> 
+ 
+     {(book.length > 0 && book[0].volumeInfo.categories == "COMICS & GRAPHIC NOVELS"  ||  book.length > 0 && book[0].volumeInfo.categories == "Social Science" ||  book.length > 0 && book[0].volumeInfo.categories == "Juvenile Fiction") &&
                 <>
                 <div className="slid">
                 <div className="container">
                 <div className="info">
-                {/* <span>Similar Books</span> */}
+                <span>Similar Books</span> 
               
                 </div>
                <div className="up">
@@ -390,7 +390,30 @@ const BookDetails = (props) => {
 
 
 
-     {book.length > 0 && book[0].volumeInfo.categories && book[0].volumeInfo.categories != "Social Science"  ?
+     {book.length > 0 && book[0].volumeInfo.categories && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "COMICS & GRAPHIC NOVELS" && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "Juvenile Fiction" ?
+     <div className="slid">
+        <div className="container">
+                 <div className="info">
+                  <span>Similar Books</span> 
+                 <span>(5 books)</span> 
+                  </div>
+                 <div className="up">
+                 <div className="client active">
+                 <BookRowSlide  category= {book.length > 0 && book[0].volumeInfo.categories[0]} />
+                </div>
+                </div>
+             </div>
+     </div>:(book.length > 0 && book[0].volumeInfo.categories === "Social Science" &&
+     <div className="slid">
+     <div className="container">
+         </div> </div>)}  */}
+
+
+
+
+
+
+         {book.length > 0 && book[0].volumeInfo.categories && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "COMICS & GRAPHIC NOVELS" && book[0].volumeInfo.categories != "Comics & Graphic Novels"?
      <div className="slid">
         <div className="container">
                  <div className="info">
