@@ -49,11 +49,13 @@
 		figure:hover .hoverable {
 			opacity: 1;
 		  }
-		  figure .hoverable .details {
+		  figure .hoverable .deta {
 			background-color: var(--primaryColor);
 			color: white;
 			border-radius: 0.5rem;
 			padding: 10px 20px;
+			margin-left: 15px;
+			margin-bottom: 70px;
 			
 		  }
 	
@@ -72,6 +74,39 @@
 		.choose > span {
 			color: var(--primaryColor);
 		}
+		.tooltiptextshel, .tooltiptextfav{
+			visibility: hidden;
+			width: 100px;
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 6px;
+			position: absolute;
+			z-index: 100;
+			font-size: 17px;
+		}
 
+		.fa-plus:hover .tooltiptextshel {
+			visibility: visible;
+		  }
+		  .fa-heart:hover .tooltiptextfav {
+			visibility: visible;
+		  }
 				
-	
+		  /* .spanTrue{
+			color: var(--primaryColor);
+			position: absolute;
+			top: 40px;
+			left: 20px;
+			z-index: 90;
+
+		}	
+		.spanFalse{
+			color: rgb(228, 15, 15);
+			position: absolute;
+			top: 40px;
+			left: 20px;
+			z-index: 90;
+
+		}	 */

@@ -6,6 +6,7 @@ import ShortStory from './ShortStory';
 
 
 
+
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 const arrowStyle = { color: '#000' }; // style for an svg element
 const contentStyle = {
@@ -51,12 +52,13 @@ class Writer extends Component {
                 }
             })
             .then(response => {
+                console.log(response.data.NotFinishedYet.length);
                 this.setState({ shortstoiesNotFinished: response.data.NotFinishedYet });
                 this.setState({ shortstoiesFinished: response.data.Finished });
-                console.log(response.data.NotFinishedYet);
-                if (response.data.NotFinishedYet.length + response.data.Finished.length > 0) {
-                    this.setState({ empty: false });
-                }
+                console.log(response.data);
+                // if (response.data.NotFinishedYet.length + response.data.Finished.length > 0) {
+                //     this.setState({ empty: false });
+                // }
             });
 
     }
@@ -73,22 +75,26 @@ class Writer extends Component {
                     <h3 className='d-flex justify-content-center'>You haven't add any stories </h3>
                     <div className='d-flex justify-content-center'> <button className="py-2 px-5  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button></div>
                 </div>}
-                {this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length > 0 && <div>
+                {this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length > 0 && <div className='ml-5'>
                     <div className='d-flex justify-content-end mr-2'>
-                        <button className="py-1 px-3  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button>
+
+                        <button className="py-1 px-3  my-4 mr-4 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button>
                     </div>
-                    <h3 className='ml-5'>Previous Work</h3>
-                    <div className="container d-flex justify-content-between">
-                        <div className="col col-lg-6 col-md-12 col-xs-12" style={{ display: "inline-block" }}>
-                            <h4 style={{ textAlign: 'center' }}>Not finished yet</h4>
+                    <h2 className='ml-3'>Previous Work</h2>
+                    <br />
+                    <div className="row d-flex justify-content-end ml-2">
+                        <div className="col col-lg-6 col-md-12 col-xs-12 " style={{ display: "inline-block" }}>
+
+                            <h4 className=''>Not finished yet</h4>
 
                             {this.state.shortstoiesNotFinished.map(shortstory => {
                                 return <ShortStory shortstory={shortstory} chapters={this.state.chapters} />
 
+
                             })}
                         </div>
-                        <div className="col col-lg-6 col-md-12 col-xs-12" style={{ display: "inline-block" }}>
-                            <h4 style={{ textAlign: 'center' }}>Finished</h4>
+                        <div className="col col-lg-6 col-md-12 col-xs-12 " style={{ display: "inline-block" }}>
+                            <h4 style={{}}>Finished</h4>
 
                             {this.state.shortstoiesFinished.map(shortstory => {
                                 return <ShortStory shortstory={shortstory} chapters={this.state.chapters} />

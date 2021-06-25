@@ -25,9 +25,15 @@ class SearchResults extends Component {
           selectGener:"",
           selectOrderByVal:"",
           selectRatingVal:"",
+          favorites: [],
+          shelfs:[],
           
+
+          
+
         
         }
+       
       }
 
       state={
@@ -46,6 +52,7 @@ class SearchResults extends Component {
         
         this.setState({genres:res.data.short_stories});
         console.log(this.state.genres);
+        
        
     }
 
@@ -79,6 +86,53 @@ class SearchResults extends Component {
             selectYearsByVal: event.target.value
         });
       }
+
+    
+
+
+    
+
+    addFavouriteBook = (book) =>{
+      const getFav = JSON.parse(localStorage.getItem('book-favourite'))
+
+      if(!getFav.some(bk => bk.id === book.id)){
+      const newFavouriteRow = [...this.state.favorites, book];
+      this.setState({
+        favorites: newFavouriteRow
+    });
+      const newFav = [...getFav,...newFavouriteRow]
+      localStorage.setItem('book-favourite', JSON.stringify(newFav))}
+      else{
+          alert("added before");
+      }
+      
+
+  };
+
+
+
+  addShelfBook = (book) =>{
+
+    const getShelfs = JSON.parse(localStorage.getItem('book-shelf'))
+
+    if(!getShelfs.some(bk => bk.id === book.id)){
+      const newShelfeRow = [...this.state.shelfs, book];
+      
+         
+      this.setState({
+        shelfs: newShelfeRow
+    });
+
+    
+      const newShelf = [...getShelfs,...newShelfeRow]
+      
+      localStorage.setItem('book-shelf', JSON.stringify(newShelf))
+    }
+    else{
+      alert("added before");
+  }
+
+  };
 
     render() {
         const mystyle = {
@@ -138,6 +192,7 @@ class SearchResults extends Component {
                             </select>
                         </div>
                         
+
                         {/* <div className="col-2">
                             <h6 style={filterTextStyle}  >Genre</h6>
                             <select value={this.state.selectGener} onChange={this.setSelectGenerValue} style={mystyle}>
@@ -255,12 +310,21 @@ class SearchResults extends Component {
                 <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks?.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                    <div className="hoverable">
                      <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
-                         <span className="details">details</span>
+                         <span className="deta">details</span>
                       </Link>
                       
-                     <span className="icon-heart">
-                       <i className="fa fa-heart "></i>
-                     </span>
+                         <span className="icon-heart" onClick={()=>this.addFavouriteBook(book)} 
+                          >
+                           <i className="fa fa-heart"><span class="tooltiptextfav">add to fav</span></i>
+                          </span>
+                          <span  onClick={()=>this.addShelfBook(book)} 
+                           
+                          >
+                           <i className="fa fa-plus" style={{fontSize: "20px",color: "var(--primaryColor)",marginTop: "80px",position: "relative",right: "56px",bottom: "3px",
+                           display: "inline-block"}}>
+                           <span class="tooltiptextshel">add to shelf</span>
+                           </i>
+                          </span>
                     </div>
                  </div>  
                 <figcaption className="book_title" style={{alignItems:'center'}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>

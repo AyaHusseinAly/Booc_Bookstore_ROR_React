@@ -21,30 +21,41 @@ class Login extends Component {
     
     handleSubmit(event){
         console.log("submitted");
-        axios.post("http://localhost:3000/users/sign_in", {
+        axios.post("http://127.0.0.1:3000/users/sign_in", {
             user: {
                 email: this.state.email,
                 password: this.state.password,
-            
             }
         },
-        {withCredentials: false}
+        // {headers: {
+        // "Access-Control-Allow-Credentials":"true"}},
+        
+        // {withCredentials: true}
+        {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
+        "Access-Control-Allow-Methods": "GET, POST, PUT",
+        "Access-Control-Allow-Headers": "Content-Type"}}
         )
         .then(response => {
-            console.log(response.data);
-            if (response.data.message === 'You are logged in'){
+            // console.log(response);
+            if (response.status === 200){
                 console.log("login successful");
                 this.handleSuccessfulAuth(response.data);
+                console.log(response.data);
             }
-            else {
-                this.setState({
-                    formErrors: "Wrong e-mail or password."
-                })
+            // else {
+            //     this.setState({
+            //         formErrors: "Wrong e-mail or password."
+            //     })
 
-            }
+            // }
         })
         .catch(error =>{
-            console.log("login error", error);
+            console.log(error);
+            if (error.response?.status === 401){
+                this.setState({
+                    formErrors:Object.assign(this.state.formErrors, {error: "Wrong e-mail or password."})
+                })
+            }
         });
         event.preventDefault();
     }
@@ -61,20 +72,20 @@ class Login extends Component {
    
     render() { 
         var errors=[];
-        if(this.state.formErrors){
+        if(Object.keys(this.state.formErrors).length >0){
             for(const error in this.state.formErrors){
-                for(const [i,detail] of this.state.formErrors[error].entries()){
-                    errors.push(<li>{error} {detail}</li>);
-                }
+                    errors.push(<li>{this.state.formErrors[error]}</li>);
             }
+            console.log(this.state.formErrors)
         }
         return ( 
-            <div className="outer">
+            <div className="outer" style={{background: `url('${process.env.PUBLIC_URL}/img/home_backgrnd.png')`}}>
                     
-            <div className="mt-5 mb-5 inner">
+            <div className="mt-5 mb-5 inner" >
+                { errors.length > 0 &&
             <div className="alert alert-danger m-4">
                         {errors}
-                    </div>
+                    </div>}
                 <form onSubmit={this.handleSubmit}>
                 <h3>Log In</h3>
                 <br/>

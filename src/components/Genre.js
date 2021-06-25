@@ -12,7 +12,7 @@ class Genre extends Component {
 
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
 
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:"+this.props.match.params.id+"&startIndex=0&maxResults=40&orderBy=newest&key=AIzaSyBPgNZgauQGDO-H2QeZUREJ_ift0AZmyXY")
+        axios.get("https://www.googleapis.com/books/v1/volumes?q=+subject:"+this.props.match.params.id+"&startIndex=0&maxResults=40&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg")
         .then(response => {
             this.setState({results:response.data.items});
         });

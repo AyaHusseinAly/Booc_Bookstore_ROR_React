@@ -10,6 +10,10 @@ a {
     color: #263044;
 
 }
+a:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
 span {
     color: #ADB4C3;
 }
@@ -78,4 +82,32 @@ span .chapterTag{
   }
   .post:hover{
     background-color: #812e23;
+  }
+
+  .countsLink{
+    color: #535964;
+  }
+  .countsLink:hover{
+    color: #e44d3a;
+    text-decoration: underline;
+
+  }
+  .readLinks:hover{
+    /* color: #e44d3a; */
+    text-decoration: underline;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .adminLink{
+    font-size: medium;
+    margin-right: 1rem;
+     color:  #df9880;
+  }
+  .adminLink:hover{
+    color: #e44d3a;
+    text-decoration: underline;
+
   }
