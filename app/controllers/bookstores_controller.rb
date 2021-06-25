@@ -41,7 +41,6 @@ class BookstoresController < ApplicationController
 
     ################## Search From Map ############################
     def search
-        
         if params['bookName'] != ""
            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['bookName']+"%").select("bookstore_id")
         end    
@@ -223,4 +222,33 @@ class BookstoresController < ApplicationController
 
         end
     end
+
+    def apiSearch  
+        if params['q'] != ""
+            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['q']+"%").select("bookstore_id")
+            @Bookstore = Bookstore.where(id: @bookstores_id)
+            @poistion = []
+            @stores = []
+            @Bookstore.each do |bookstore|
+                positionobj={
+                    lat: bookstore.lat,
+                    lng: bookstore.lng,
+                }
+                stores= {
+                      id: bookstore.id,
+                      name:bookstore.name,
+                      phone: bookstore.phone, 
+                      kind: bookstore.kind, 
+                      img: bookstore.img,
+                      created_at: bookstore.created_at,
+                      updated_at: bookstore.updated_at, 
+                      position: positionobj,
+                }
+                @stores.push(stores);
+         end
+    
+            render :json =>{stores: @stores}
+        end
+     end
+     
 end
