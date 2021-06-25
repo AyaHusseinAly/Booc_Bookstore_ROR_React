@@ -9,8 +9,8 @@ default: &default
 
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: 123
+  # username: postgres
+  # password: 123
   host: localhost
   # adapter: sqlite3
 

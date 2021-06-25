@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2021_06_23_160156) do
+ActiveRecord::Schema.define(version: 2021_06_24_182153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +34,26 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "allowlist_jwts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "jti", null: false
+    t.string "aud", null: false
+    t.datetime "exp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_allowlist_jwts_on_user_id"
+  end
+
+  create_table "allowlisted_jwts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "jti", null: false
+    t.string "aud", null: false
+    t.datetime "exp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -246,6 +265,8 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "allowlist_jwts", "users", on_delete: :cascade
+  add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
   add_foreign_key "bookmarks", "short_stories"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "bookstore_books", "bookstores"
@@ -255,14 +276,12 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
   add_foreign_key "comment_stories", "short_stories"
   add_foreign_key "comment_stories", "users"
   add_foreign_key "comments", "short_stories_chapters"
-  add_foreign_key "likes", "short_stories"
-  add_foreign_key "likes", "users"
-  add_foreign_key "notifications", "users", column: "reciever_id_id"
-  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "like_chapters", "short_stories_chapters"
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"
   add_foreign_key "like_stories", "users"
+  add_foreign_key "notifications", "users", column: "reciever_id_id"
+  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
   add_foreign_key "short_stories_chapters", "short_stories"
