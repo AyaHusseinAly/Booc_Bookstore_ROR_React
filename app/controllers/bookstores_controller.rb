@@ -28,15 +28,19 @@ class BookstoresController < ApplicationController
     ################## Create BookStore  ############################
     def create  
         # Create Book Store
-        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
-        
+        @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
+      
+        @store.image.attach(params['BookStoreCover'])
+        if @store&.image&.attached?
+            @store.img= rails_blob_url(@store.image)
+            @store.save()
+        end 
         # Create Admin To Store
         render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
     end
 
     ################## Search From Map ############################
     def search
-        
         if params['bookName'] != ""
            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['bookName']+"%").select("bookstore_id")
         end    
@@ -215,6 +219,36 @@ class BookstoresController < ApplicationController
             render json: {message: "Bookstore Found", bookstore_id: bookstore.id, status: "ok"}
         else
             render json: {message: "No Bookstore Found", status:"not_found"}
+
         end
     end
+
+    def apiSearch  
+        if params['q'] != ""
+            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['q']+"%").select("bookstore_id")
+            @Bookstore = Bookstore.where(id: @bookstores_id)
+            @poistion = []
+            @stores = []
+            @Bookstore.each do |bookstore|
+                positionobj={
+                    lat: bookstore.lat,
+                    lng: bookstore.lng,
+                }
+                stores= {
+                      id: bookstore.id,
+                      name:bookstore.name,
+                      phone: bookstore.phone, 
+                      kind: bookstore.kind, 
+                      img: bookstore.img,
+                      created_at: bookstore.created_at,
+                      updated_at: bookstore.updated_at, 
+                      position: positionobj,
+                }
+                @stores.push(stores);
+         end
+    
+            render :json =>{stores: @stores}
+        end
+     end
+     
 end

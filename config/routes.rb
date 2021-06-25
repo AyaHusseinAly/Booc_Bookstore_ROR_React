@@ -40,13 +40,13 @@ post '/logged_in', to: 'members#is_logged_in?'
 
   post 'bookStoreSearchFromMap', to:'bookstores#search'
   post '/admin/BookStores', to:'bookstores#create'
+  get '/apiSearchBooks', to:'bookstores#apiSearch' 
 
 
   resources :notifications, only: [:create] 
   post '/get_bookstore_from_seller', to: 'bookstores#get_bookstore_from_seller_id'
   post '/notifications/get_notifications', to:'notifications#index'
   mount ActionCable.server, at: "/cable"
-  get '/communityPosts' , to:'chapters#posts'
   post '/communityPosts' , to:'posts#posts'
   post '/searchStoryChapter' , to:'posts#search'
   post '/commentChapter', to: 'comments_likes#commentChapter'
