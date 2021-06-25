@@ -14,7 +14,7 @@ const contentStyle = {
     width: "90%"
 };
 
-class MyStories extends Component {
+class WriterStories extends Component {
 
     state = {
         shortstoiesNotFinished: [],
@@ -46,7 +46,7 @@ class MyStories extends Component {
 
     async componentDidMount() {
         let data = {
-            writer_id: localStorage.getItem('user_id')
+            writer_id: this.props.match.params.id
         };
         let response = await axios.post("http://localhost:3000/writerStories", data,
             {
@@ -113,4 +113,4 @@ class MyStories extends Component {
     }
 }
 
-export default MyStories;
+export default WriterStories;
