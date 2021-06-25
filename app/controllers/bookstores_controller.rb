@@ -27,17 +27,41 @@ class BookstoresController < ApplicationController
 
     ################## Create BookStore  ############################
     def create  
-        # Create Book Store
-        @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
-      
-        @store.image.attach(params['BookStoreCover'])
-        if @store&.image&.attached?
-            @store.img= rails_blob_url(@store.image)
-            @store.save()
-        end 
+        @user = User.new(email:params['AdminEmail'], password:params['AdminPassword'],password_confirmation:params['ReAdminPassword'],role: "seller")
+        if @user.save()
+            #register_success
+            # Create Book Store
+            @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity'],user_id: @user.id) 
+            @store.image.attach(params['BookStoreCover'])
+            if @store&.image&.attached?
+                @store.img= rails_blob_url(@store.image)
+                @store.save()
+                render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword'],user: @user}
+            end 
+        ## end Create Book Store
+        else
+            register_failed(@user)
+        end
+
+      end
+
+        
         # Create Admin To Store
-        render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
-    end
+        
+      #  render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
+    #end
+
+    def register_failed(resource)
+        render json: { message: "Something went wrong", errors: [
+          {
+            status: '400',
+            title: 'Bad Request',
+            details: resource.errors,
+            code: '100'
+          }
+        ]
+      }, status: :ok
+      end
 
     ################## Search From Map ############################
     def search
