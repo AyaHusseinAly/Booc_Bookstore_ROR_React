@@ -25,6 +25,19 @@ class FollowersController < ApplicationController
             end
             @followers.push(obj)
         end
-        render :json=>{followers:@followers}
+        @readers=[] 
+        Follow.where(writer_id:params[:reader_id]).each do |follow|
+            user = User.find(follow.reader_id)
+            obj={
+                id:user.id,
+                name:user.name,
+                avatar:''
+            }
+            if user&.avatar&.attached?
+            obj[:avatar] = rails_blob_url(user.avatar)
+            end
+            @readers.push(obj)
+        end
+        render :json=>{followers:@followers,readers:@readers}
     end
 end

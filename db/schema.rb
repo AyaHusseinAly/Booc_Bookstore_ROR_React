@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_24_182153) do
+ActiveRecord::Schema.define(version: 2021_06_25_005709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 2021_06_24_182153) do
     t.float "lat"
     t.float "lng"
     t.string "distict"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_bookstores_on_user_id"
   end
 
   create_table "comment_chapters", force: :cascade do |t|
@@ -249,6 +251,7 @@ ActiveRecord::Schema.define(version: 2021_06_24_182153) do
   add_foreign_key "bookmarks", "users"
   add_foreign_key "bookstore_books", "bookstores"
   add_foreign_key "bookstore_rate_reviews", "bookstores"
+  add_foreign_key "bookstores", "users"
   add_foreign_key "comment_chapters", "short_stories_chapters"
   add_foreign_key "comment_chapters", "users"
   add_foreign_key "comment_stories", "short_stories"

@@ -28,8 +28,13 @@ class BookstoresController < ApplicationController
     ################## Create BookStore  ############################
     def create  
         # Create Book Store
-        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
-        
+        @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
+      
+        @store.image.attach(params['BookStoreCover'])
+        if @store&.image&.attached?
+            @store.img= rails_blob_url(@store.image)
+            @store.save()
+        end 
         # Create Admin To Store
         render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
     end
@@ -210,11 +215,11 @@ class BookstoresController < ApplicationController
     end
 
     def get_bookstore_from_seller_id
-        bookstore=Bookstore.where(seller_id: parapms[:seller_id])
+        bookstore=Bookstore.find_by(user_id: params[:seller_id])
         if bookstore.present?
-            render json: {message: "Bookstore Found", bookstore_id: bookstore.id}, status: ok
+            render json: {message: "Bookstore Found", bookstore_id: bookstore.id, status: "ok"}
         else
-            render json: {message: "No Bookstore Found"}, status:not_found
+            render json: {message: "No Bookstore Found", status:"not_found"}
         end
     end
 end
