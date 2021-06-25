@@ -24,13 +24,15 @@ import DownloadsPage from "./components/DownloadsPage";
 import UserPage from "./components/UserPage";
 import Favr from "./components/Favr";
 import ShortStoryDetails from './components/ShortStoryDetails';
+import ReactDOM from 'react-dom';
+import { ActionCableProvider, ActionCableConsumer } from 'react-actioncable-provider';
+
 import BookRowSlide from './components/BookRowSlide';
-
-
 
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login'
 import axios from 'axios';
+import NotFound from './components/NotFound';
 
 
 import React, { Component } from 'react';
@@ -41,6 +43,7 @@ import React, { Component } from 'react';
 import {
   Switch,
   Route,
+  BrowserRouter,
 } from "react-router-dom";
 import { isConstructorDeclaration } from 'typescript';
 
@@ -88,7 +91,12 @@ class App extends Component {
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
       user: {},
+<<<<<<< HEAD
       avatar: ""
+=======
+      avatar: "",
+
+>>>>>>> 54bc81bc94962f8439d435a0cad0c90a44a2bcb5
     }
     this.handleLogin = this.handleLogin.bind(this);
     // this.handleRedirect=this.handleRedirect.bind(this);
@@ -153,6 +161,7 @@ class App extends Component {
     }
   }
 
+
   render() {
     return (
       <div>
@@ -182,20 +191,22 @@ class App extends Component {
             <Route path="/mystories" component={MyStories} />
             <Route path="/addstory" component={AddStory} />
             <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
-            <Route path="/writerStories/:id" render={(props) => <WriterStories {...props} />} />
-
             <Route path="/userprofile" component={UserProfile} />
             <Route path="/FavoritesPage" component={FavoritesPage} />
             <Route path="/BookShelf" component={BookShelf} />
             <Route path="/DownloadsPage" component={DownloadsPage} />
             <Route path="/UserPage" component={UserPage} />
 
-            <Route path="/bookstorebooks/:id" component={BookStoreBooks} />
+            {this.state.user.role == 'seller' &&
+              <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
             <Route path="/addbook/:id" component={AddBook} />
-            <Route path="/admin" component={Admin} />
-
-
-
+            {this.state.user.role == 'admin' &&
+              <Route
+                path="/admin"
+                exact
+                render={props => (
+                  <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} />
+                )} />}
             <Route
               path="/sign_up"
               render={props => (
@@ -210,8 +221,8 @@ class App extends Component {
             />
             <Route path="/shortStory/:id" component={ShortStoryDetails} />
             {/* <Route path="/searchresults" component={SearchResults}/> */}
-
-
+            <Route path="/404" component={NotFound} />
+            <Route path="/writerStories/:id" render={(props) => <WriterStories {...props} />} />
 
 
           </Switch>
@@ -222,5 +233,6 @@ class App extends Component {
     )
   }
 }
+
 
 export default App;

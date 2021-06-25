@@ -8,7 +8,12 @@ import Popper from 'popper.js';
 import '../style/headerFooter.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-import  { useHistory } from 'react-router-dom'
+// import  { useHistory } from 'react-router-dom'
+import  ReactDOM from 'react-dom';
+import {ActionCableProvider, ActionCableConsumer} from 'react-actioncable-provider';
+import {Popover, Button,OverlayTrigger} from 'react-bootstrap'
+
+
 
 
 
@@ -17,6 +22,9 @@ import  { useHistory } from 'react-router-dom'
 class Header extends Component {
     constructor(props){
         super(props);
+        this.state={
+            notifications: []
+        };
         this.handleLogout=this.handleLogout.bind(this);
         // const handleRedirect=()=>{
         //     this.props.history.push('/login');
@@ -55,6 +63,31 @@ class Header extends Component {
     //      avatar: ""
     //    })
      }
+     componentDidMount = () =>{
+         axios.post('http://localhost:3000/notifications/get_notifications',{
+             reciever_id: this.props.user?.id
+         })
+         .then(response => {
+             if(response.data.message === 'notifications found'){
+                 this.setState({
+                     notifications: response.data.notifications
+                 });
+             }
+             else{
+                 console.log("no notification")
+             }
+         })
+         .catch(error=>{
+             console.log(error)
+         })
+     }
+     handleRecieveNotification = response => {
+        console.log(response.notifications);
+        console.log(this.state);
+        this.setState({
+            notifications: [ ... this.state.notifications, response.notifications]
+        })
+     }
     
     
     render() {
@@ -66,14 +99,14 @@ class Header extends Component {
             avatar='avatar.jpeg';
         }
         var name;
-        if (Object.keys(this.props.user).length > 0){
+        if (this.props.user?.id){
             name=this.props.user.name;
         }
         else{
             name="Guest"
         }
         var account_btn;
-        if(Object.keys(this.props.user).length >0){
+        if(this.props.user?.id){
             account_btn=<a 
             className="dropdown-item" 
             onClick={this.handleLogout}><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -83,6 +116,20 @@ class Header extends Component {
             className="dropdown-item" 
             href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
         }
+        const notifications = Object.keys(this.state.notifications).length>0 ? this.state.notifications.map((notification, index) => {
+            return(<div><p>{notification.body}</p> <hr/> </div>)
+        }): <p>you have no notifications</p>
+        const popover = (
+            <Popover id="popover-notification">
+              <Popover.Title as="h3">Notifications</Popover.Title>
+              <Popover.Content>
+                {notifications}
+              </Popover.Content>
+              <ActionCableConsumer
+              channel = {{ channel: 'NotificationChannel'}}
+              onRecieved = {this.handleRecieveNotification}/>
+            </Popover>
+          );
 
         return (
             <nav className="py-2">
@@ -110,7 +157,10 @@ class Header extends Component {
                     </div> */}
                    
                         <div className="dropdown show" >
-                            <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a>
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                        <img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" />
+                        </OverlayTrigger>
+                            {/* <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a> */}
                             <img  className="  m-1 rounded-circle"  src={avatar}  /> 
                         
                             <a className="dropdown-toggle ml-2"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{color:'white',fontSize:'2rem',backgroundColor:'#263044'}}>
@@ -151,7 +201,10 @@ class Header extends Component {
 
         );
     }
+    
+
 }
 
 
-    export default Header;
+
+export default Header;

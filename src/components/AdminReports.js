@@ -76,11 +76,13 @@ class AdminReports extends Component {
             <ul title="reports">
                 {this.state.reports.map(report =>
                 <div className="row communityCard ">
-                    {report.kind=='story'&& <li className="p-2 px-3 col-5">Anonymous have reported {report.user_name}'s story <span>({report.title})</span></li>
+                    {report.kind=='story'&& <li className="p-2 px-3 col-6">Anonymous have reported {report.user_name}'s story <span>({report.title})</span></li>
                     }
-                    {report.kind=='chapter'&&<li className="p-2 px-3 col-5">Anonymous have reported {report.user_name}'s chapter <span>({report.title} - story: {report.story_title})</span></li>
+                    {report.kind=='chapter'&&<li className="p-2 px-3 col-6">Anonymous have reported {report.user_name}'s chapter <span>({report.title} - story: {report.story_title})</span></li>
                     }
-                    {(report.kind=='commentStory'||report.kind=='commentChapter')&&<li className="p-2 px-3 col-5">Anonymous have reported {report.user_name}'s comment</li>
+                    {(report.kind=='commentStory'||report.kind=='commentChapter')&&<li className="p-2 px-3 col-6">Anonymous have reported {report.user_name}'s comment</li>
+                    }
+                    {report.kind=='review'&&<li className="p-2 px-3 col-6">Anonymous have reported {report.user_name}'s review <span>(on story: {report.story_title})</span></li>
                     }
                    
 
