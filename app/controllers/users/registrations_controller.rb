@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
                   dob: registration_params[:dob] )
     # if resource.persisted?
     if resource.save
-      if params[:avatar]
+      if registration_params[:avatar].present?
         resource.avatar.attach(registration_params[:avatar])
       end
       sign_up(resource_name, resource)
