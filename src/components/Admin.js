@@ -3,6 +3,7 @@ import '../style/admin.css';
 import BookRow from './BookRow';
 import AdminReports from './AdminReports';
 import AdminBookStores from './AdminBookStores';
+import AdminAllStores from './AdminAllStores';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import { Tabs } from 'antd';
@@ -57,16 +58,15 @@ class Admin extends Component {
                       </div> */}
                       <AdminBookStores></AdminBookStores>
                     </TabPane>
-                                      
+                    <TabPane tab="All Stores" key="3">
+                          <AdminAllStores></AdminAllStores>
+                    </TabPane>
+                        
           </Tabs>
       
         <hr/>
 
         </div>
-
-  	
-	
-
     );
     }
 }
