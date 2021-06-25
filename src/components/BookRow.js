@@ -8,10 +8,10 @@ const BookRow = (props) =>{
     const [shelfs, setShelfs] = useState([]);
     // const [Color, setColor] = useState('#263044');
     // const [isBlack, setIsBlack] = useState(true);
+    
 
     const addFavouriteBook = (book) =>{
-      
-     
+
       const getFav = JSON.parse(localStorage.getItem('book-favourite'))
 
       if(!getFav.some(bk => bk.id === book.id)){
@@ -69,7 +69,7 @@ const BookRow = (props) =>{
                     < div className="book_img">
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                        <div className="hoverable">
-                         <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                         <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="details">details</span>
                           </Link>
                           <span className="icon-heart" onClick={()=>addFavouriteBook(book)} 
