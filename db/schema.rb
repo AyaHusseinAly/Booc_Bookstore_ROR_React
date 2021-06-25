@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_23_160156) do
+ActiveRecord::Schema.define(version: 2021_06_24_182153) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -157,6 +157,11 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sender_id_id"
+    t.integer "reciever_id_id"
+    t.bigint "instance_id"
+    t.index ["reciever_id_id"], name: "index_notifications_on_reciever_id_id"
+    t.index ["sender_id_id"], name: "index_notifications_on_sender_id_id"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -242,6 +247,7 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.string "name"
     t.text "bio"
     t.date "dob"
+    t.string "role", default: "user"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

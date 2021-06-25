@@ -25,17 +25,27 @@ class BookstoresController < ApplicationController
         render :json => {message:" destroy book  succefully"}
     end
 
+    ################## Create BookStore  ############################
     def create  
+        # Create Book Store
+        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
+        
+        # Create Admin To Store
         render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
     end
 
     ################## Search From Map ############################
     def search
-        my_array = ["Giza","Alexandria","Cairo"]
+        
+        if params['bookName'] != ""
+           @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['bookName']+"%").select("bookstore_id")
+        end    
+
+        my_array = ["Cairo","Alexandria","Giza","Port Said","Suez","Luxor","al-Mansura","Damanhur","6th of October City","Kafr el-Dawwar"]
         if my_array.include? params["distict"]
-        #if params["distict"] != nil
             if params['bookName'] != "" && params['selectedOption'] == nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(distict: params[ "distict"])
+                #@Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(distict: params[ "distict"])
+                @Bookstore = Bookstore.where(id: @bookstores_id).where(distict: params[ "distict"])
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -57,7 +67,7 @@ class BookstoresController < ApplicationController
                 end
                 render :json =>{stores: @stores}
             elsif params['bookName'] != "" && params['selectedOption'] != nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(kind: params['selectedOption']).where(distict: params[ "distict"])
+                @Bookstore = Bookstore.where(id: @bookstores_id).where(kind: params['selectedOption']).where(distict: params[ "distict"])
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -127,7 +137,7 @@ class BookstoresController < ApplicationController
         else
             ################ No Distinct ####################
             if params['bookName'] != "" && params['selectedOption'] == nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%")
+                @Bookstore = Bookstore.where(id: @bookstores_id)
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -149,7 +159,7 @@ class BookstoresController < ApplicationController
                 end
                 render :json =>{stores: @stores}
             elsif params['bookName'] != "" && params['selectedOption'] != nil
-                @Bookstore = Bookstore.where("name LIKE ?","%"+ params['bookName']+"%").where(kind: params['selectedOption'])
+                @Bookstore = Bookstore.where(id: @bookstores_id).where(kind: params['selectedOption'])
                 @poistion = []
                 @stores = []
                 @Bookstore.each do |bookstore|
@@ -196,6 +206,15 @@ class BookstoresController < ApplicationController
                render :json =>{stores: @stores}
                #render :json => {message:"hello from back", title:params['bookName'],kind:params['selectedOption'],distinct:params[ "distict"],sharemyLocation:params["sharemyLocation"]}
             end
+        end
+    end
+
+    def get_bookstore_from_seller_id
+        bookstore=Bookstore.where(seller_id: parapms[:seller_id])
+        if bookstore.present?
+            render json: {message: "Bookstore Found", bookstore_id: bookstore.id}, status: ok
+        else
+            render json: {message: "No Bookstore Found"}, status:not_found
         end
     end
 end
