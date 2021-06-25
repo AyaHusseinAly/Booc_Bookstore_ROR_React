@@ -83,11 +83,15 @@ class Header extends Component {
              console.log(error)
          })
      }
+     handleOnConnected=response =>{
+         console.log("connected", response);
+     }
      handleRecieveNotification = response => {
-        console.log(response.notifications);
+         console.log(response)
+        console.log(response.data);
         console.log(this.state);
         this.setState({
-            notifications: [ ...this.state.notifications, response.notifications]
+            notifications: [ ...this.state.notifications, response.data]
         })
      }
     
@@ -127,10 +131,6 @@ class Header extends Component {
               <Popover.Content>
                 {notifications}
               </Popover.Content>
-              <ActionCableConsumer
-              channel = {{ channel: 'NotificationChannel',reciever_id: this.props.user.id}}
-              onRecieved = {this.handleRecieveNotification}
-              />
             </Popover>
           );
 
@@ -199,6 +199,11 @@ class Header extends Component {
                 </div>  
         
             </div>
+            <ActionCableConsumer
+              channel = {{ channel: 'NotificationChannel', user_id:this.props.user.id}}
+              onReceived = {this.handleRecieveNotification}
+              onConnected = {this.handleOnConnected}
+              />
         
         </nav>
 

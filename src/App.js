@@ -192,7 +192,7 @@ class App extends Component {
             <Route path="/mystories" component={MyStories}/>
           }
           { this.state.user.role != 'admin' &&
-            <Route path="/addstory" component={AddStory}/>
+            <Route path="/addstory" render={(props) => <AddStory {...props} user={this.state.user} />}/>
           }
           { this.state.user.role != 'admin' &&
           <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
