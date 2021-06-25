@@ -33,7 +33,7 @@ default: &default
 development:
   <<: *default
 
-  database: bookstore_development2
+  database: bookstore_development
 
   # database: db/development.sqlite3
 
@@ -42,10 +42,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: bookstore_test2
+  database: bookstore_test
   # database: db/test.sqlite3
 
 production:
   <<: *default
-  database: bookstore_production2
+  database: bookstore_production
   # database: db/production.sqlite3
