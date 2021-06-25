@@ -28,6 +28,7 @@ class WriterStories extends Component {
         empty: true,
         chapters: [],
         user: {},
+        bookmarks: [],
     }
 
 
@@ -48,6 +49,7 @@ class WriterStories extends Component {
         this.setState({ shortstoiesNotFinished: response.data.NotFinishedYet });
         this.setState({ shortstoiesFinished: response.data.Finished });
         this.setState({ user: response.data.writer_info });
+        this.setState({ bookmarks: response.data.bookmark });
         console.log(response.data);
 
 
@@ -91,18 +93,7 @@ class WriterStories extends Component {
                                 <div >
                                     <div >
                                         <div className="">
-                                            {/* <div className="" style={{}}>
-                                                <h3>Fininshed Stories</h3>
-                                                {this.state.shortstoiesFinished && this.state.shortstoiesFinished.length > 0 && <div className="img">
-                                                    <div className="row" style={{ width: "1300px", marginTop: "-120px" }}>
-                                                        <Favr items={this.state.shortstoiesFinished} style={{ height: "250px", marginTop: '-230px' }} />
-
-                                                    </div>
-                                                </div>}
-                                                {this.state.shortstoiesFinished && this.state.shortstoiesFinished.length == 0 && <div className="section-select text-center">No Fininshed Stories</div>}
-                                            </div> */}
-
-                                            <div className="" style={{}}>
+                                            <div className="" style={{ marginBottom: "120px" }}>
                                                 <h3>Fininshed Stories</h3>
                                                 {this.state.shortstoiesFinished && this.state.shortstoiesFinished.length > 0 && <div className="img">
                                                     <div className="row" style={{ width: "1300px", marginTop: "-120px" }}>
@@ -110,9 +101,10 @@ class WriterStories extends Component {
 
                                                     </div>
                                                 </div>}
-                                                {this.state.shortstoiesFinished && this.state.shortstoiesFinished.length == 0 && <div className="section-select text-center">No Unfinished Stories</div>}
-
+                                                {this.state.shortstoiesFinished && this.state.shortstoiesFinished.length == 0 && <div className="section-select text-center">No Fininshed Stories</div>}
                                             </div>
+
+
 
                                             <div className="" style={{}}>
                                                 <h3>Unfinished Stories</h3>
@@ -125,6 +117,18 @@ class WriterStories extends Component {
                                                 {this.state.shortstoiesNotFinished && this.state.shortstoiesNotFinished.length == 0 && <div className="section-select text-center">No Unfinished Stories</div>}
 
                                             </div>
+
+                                            {/* <div className="" style={{}}>
+                                                <h3>Book Marks</h3>
+                                                {this.state.bookmarks && this.state.bookmarks.length > 0 && <div className="img">
+                                                    <div className="row" style={{ width: "1300px", marginTop: "-120px" }}>
+                                                        <Favr items={this.state.bookmarks} style={{ height: "250px", marginTop: '-130px' }} />
+
+                                                    </div>
+                                                </div>}
+                                                {this.state.bookmarks && this.state.bookmarks.length == 0 && <div className="section-select text-center">You Didn't bookmark any stories for this writer</div>}
+
+                                            </div> */}
                                             <div className="" style={{ marginTop: "150px" }}>
                                                 <h3 style={{}}>Book Marks</h3>
                                                 <div className="img">
