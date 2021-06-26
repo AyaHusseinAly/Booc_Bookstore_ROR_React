@@ -20,8 +20,8 @@ export default function Favr(props) {
 
   return (
     <div className="Appi">
-      <Slider dots={true} infinite= {true} slidesToShow={2}  slidesToScroll={1}>
-     
+      <Slider dots={true} infinite= {true} slidesToShow={1}  slidesToScroll={1}>
+
       {renderSlides()}
       </Slider>
     </div>
