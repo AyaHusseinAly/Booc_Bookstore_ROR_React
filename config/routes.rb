@@ -68,5 +68,8 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/followWriter',to:'followers#followWriter'
   post '/unFollowWriter',to:'followers#unFollowWriter'
   post '/followeWriters',to:'followers#followeWriters'
+  post '/myProfileData' , to:'followers#getProfileData'
+  post '/addRateReviewBook', to:'book_rate_reviews#addRateReviewBook'
+  post '/ListBookRateReview', to: 'book_rate_reviews#ListBookRateReview'
 
 end
