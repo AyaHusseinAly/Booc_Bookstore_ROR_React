@@ -73,4 +73,21 @@ class FollowersController < ApplicationController
         end
         render :json=>{followers:@followers,readers:@readers}
     end
+    def getProfileData
+        ############get writer info####################
+       
+       user=User.find(params[:user_id]) 
+       @writer={
+           id:user.id,
+           name:user.name,
+           avatar:'',
+           following:Follow.where(reader_id:params[:writer_id]).count,
+           follower:Follow.where(writer_id:params[:writer_id]).count
+
+       }
+       if user&.avatar&.attached?
+        @writer[:avatar] = rails_blob_url(user.avatar)
+        end
+        render :json=>{user:@writer}
+    end
 end

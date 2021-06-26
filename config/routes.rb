@@ -48,7 +48,9 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/get_bookstore_from_seller', to: 'bookstores#get_bookstore_from_seller_id'
   post '/notifications/get_notifications', to:'notifications#index'
   mount ActionCable.server, at: "/cable"
+
   post '/communityPosts' , to:'posts#posts'
+  post '/followerPosts' , to:'posts#followerPosts'
   post '/searchStoryChapter' , to:'posts#search'
   post '/commentChapter', to: 'comments_likes#commentChapter'
   post '/likeChapter', to: 'comments_likes#likeChapter' 
@@ -69,5 +71,8 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/followWriter',to:'followers#followWriter'
   post '/unFollowWriter',to:'followers#unFollowWriter'
   post '/followeWriters',to:'followers#followeWriters'
+  post '/myProfileData' , to:'followers#getProfileData'
+  post '/addRateReviewBook', to:'book_rate_reviews#addRateReviewBook'
+  post '/ListBookRateReview', to: 'book_rate_reviews#ListBookRateReview'
 
 end

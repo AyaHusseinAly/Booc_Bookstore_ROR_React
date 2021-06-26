@@ -3,11 +3,24 @@ class PostsController < ApplicationController
         @chapters = ShortStoriesChapter.all().order("created_at DESC");
         @stories = ShortStory.all().order("created_at DESC");
         @posts=mapChapterStoryToPost(@chapters,@stories,params['user_id'])
+        @paginated_posts=@posts.paginate(:page => params['page'], :per_page => 4)
+    
+
+        render :json => {posts:@paginated_posts,page:@paginated_posts.current_page,pages:@paginated_posts.total_pages}
+
+    end
+    def followerPosts
+        @followers= Follow.where(reader_id:params['user_id'])
+        @stories = ShortStory.where(user_id:@followers).order("created_at DESC");
+        @chapters = []
+        @stories.each do |story|
+            @chapters.concat(story.short_stories_chapters)
+        end
+        @posts=mapChapterStoryToPost(@chapters,@stories,params['user_id'])
 
         render :json => {posts:@posts}
 
     end
-
     def is_current_user_likes_this_story(story_id,user_id)
         check = LikeStory.where(short_story_id:story_id,user_id:user_id)
         if check.length>0         
@@ -32,11 +45,21 @@ class PostsController < ApplicationController
 
         @chapters = ShortStoriesChapter.where("title LIKE ?", "%" + params[:q] + "%") + ShortStoriesChapter.where("summary LIKE ?", "%" + params[:q] + "%")
         @stories = ShortStory.where("title LIKE ?", "%" + params[:q] + "%") +  ShortStory.where("summary LIKE ?", "%" + params[:q] + "%") 
+        
+        @writers = User.where("username LIKE ?", "%" + params[:q] + "%")
+        @stories += ShortStory.where(user_id:@writers.ids)
+        
+        @stories.each do |story|
+            @chapters += story.short_stories_chapters
+        end
+
+        # puts User.where(id:@writers.ids)
+        
         @posts =mapChapterStoryToPost(@chapters,@stories,params['user_id'])
 
         render :json => {posts:@posts}
      end
-     
+
 
      def mapChapterStoryToPost(chapters, stories, id)
         @posts=[]
@@ -68,6 +91,7 @@ class PostsController < ApplicationController
                 id: story.id,
                 kind: "story",
                 writer:story.user.username,
+                writer_id:story.user.id,
                 writer_avatar:writer_avatar,
                 content: story.summary,
                 story_title:story.title,
@@ -109,6 +133,7 @@ class PostsController < ApplicationController
                 id: chapter.id,
                 kind:"chapter",
                 writer:chapter.short_story.user.username,
+                writer_id:chapter.short_story.user.id,
                 writer_avatar:writer_avatar,
                 content: chapter.summary,
                 story_title:chapter.short_story.title,
