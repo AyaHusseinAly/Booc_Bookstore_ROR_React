@@ -53,6 +53,7 @@
 ### Story details
 ![story details](https://user-images.githubusercontent.com/76849214/123522891-bee9f280-d6c0-11eb-9fde-14880a8d2a53.jpg)
 
+
 ### Admin panel
 #### Admin show reports
 ![reports](https://user-images.githubusercontent.com/76849214/123522543-20f52880-d6be-11eb-8677-5a54ece22982.jpg)
