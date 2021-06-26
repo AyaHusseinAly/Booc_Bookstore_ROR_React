@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 
 
 
+
+
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 const arrowStyle = { color: '#000' }; // style for an svg element
 const contentStyle = {
@@ -61,13 +63,17 @@ class MyStories extends Component {
         return (
 
             <div className='container' >
-                {
+                {!localStorage.getItem('user_id') && <div className='mt-5 pt-5' style={{ width: '100%', height: '100%' }}>
+                    <h3 className='d-flex justify-content-center'>You need to login </h3>
+                    <div className='d-flex justify-content-center'> <button className="py-2 px-5  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/login')}>Go To Login</i></button></div>
+                </div>}
+                {localStorage.getItem('user_id') &&
                     this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length == 0 && <div className='mt-5 pt-5' style={{ width: '100%', height: '100%' }}>
                         <h3 className='d-flex justify-content-center'>You haven't add any stories </h3>
                         <div className='d-flex justify-content-center'> <button className="py-2 px-5  my-3 ml-3 btn btn-lg" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }} onClick={() => this.props.history.push('/addstory')}>Add New Story</i></button></div>
                     </div>
                 }
-                {
+                {localStorage.getItem('user_id') &&
                     this.state.shortstoiesNotFinished.length + this.state.shortstoiesFinished.length > 0 && <div className='ml-5'>
                         <div className='d-flex justify-content-end mr-2'>
 
@@ -98,13 +104,13 @@ class MyStories extends Component {
                         </div>
                     </div>
                 }
-                <div style={{ border: "3px #E5E5E5 solid", borderRadius: "10px", height: "350px", margin: "20px 0" }}>
+                {localStorage.getItem('user_id') && <div style={{ border: "3px #E5E5E5 solid", borderRadius: "10px", height: "350px", margin: "20px 0" }}>
                     {this.state.bookmark.length == 0 ? <h3 className="mt-5 pt-5" style={{ textAlign: "center", fontWeight: 'bold', fontFamily: "arial" }} >No Bookmarks Yet</h3> : <h3 className="mt-2" style={{ textAlign: "center", fontWeight: 'bold', fontFamily: "arial" }} >Bookmarks</h3>}
 
                     {this.state.bookmark.length != 0 && <div className="row" style={{ width: "1300px", marginTop: "-120px" }}>
                         <Bookmark items={this.state.bookmark} />
                     </div>}
-                </div>
+                </div>}
             </div >
 
 

@@ -219,7 +219,7 @@ class ShortStoryDetails extends Component {
                                                 <div className="btn rounded-corners" style={{ backgroundColor: 'white', color: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }}
                                                     onClick={() => this.setStoryStatus(this.state.shortStory.id)}>Finish</div>
                                             </div>}
-                                            {this.state.shortStory.user_id != localStorage.getItem('user_id') && <div className="btn rounded-corners" style={this.state.bookmark_style}
+                                            {localStorage.getItem('user_id') && this.state.shortStory.user_id != localStorage.getItem('user_id') && <div className="btn rounded-corners" style={this.state.bookmark_style}
                                                 onClick={() => {
                                                     this.addToBookmark(this.state.shortStory.id, this.state.bookmark_method)
                                                 }}> <i className="fa fa-heart mr-3"></i>{this.state.bookmark_string}</div>}
@@ -247,7 +247,7 @@ class ShortStoryDetails extends Component {
                                                 </p>
                                             </div>
                                             <div className='col-xs-12 col-sm-12 col-md-5 col-lg-5'>
-                                                {this.state.shortStory.user_id != localStorage.getItem('user_id') && <div className="" style={this.state.follow_style}
+                                                {localStorage.getItem('user_id') && this.state.shortStory.user_id != localStorage.getItem('user_id') && <div className="" style={this.state.follow_style}
                                                     onClick={() => this.followWriter(this.state.follow_method)}><i class={this.state.follow_icon}></i>{this.state.follow_string}</div>}
                                             </div>
                                         </div>
@@ -312,10 +312,10 @@ class ShortStoryDetails extends Component {
                                         })}
                                     </div>
 
-                                    <div className="box-person" style={{ margin: '0', padding: '3px', width: '100%', backgroundColor: '#F8F8F8' }}>
+                                    {localStorage.getItem('user_id') && < div className="box-person" style={{ margin: '0', padding: '3px', width: '100%', backgroundColor: '#F8F8F8' }}>
                                         {this.state.shortStory.user_id != localStorage.getItem('user_id') &&
                                             this.state.review_flag == false && < MakeRating story_id={this.state.shortStory.id} changeRateFlag={() => window.location.reload()} />}
-                                    </div>
+                                    </div>}
 
 
                                 </div>
@@ -325,37 +325,43 @@ class ShortStoryDetails extends Component {
                                     <div className="mail">
                                         <h4>Share with Friends</h4>
                                         <EmailShareButton
-                                            body="I Strong Recommend This Book For You!"
+                                            url={window.location.href}
+                                            body="I Strong Recommend This Story For You!"
                                         >
-                                            <EmailIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </EmailShareButton>
+                                            <EmailIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} />
+                                        </EmailShareButton>
 
                                         <TwitterShareButton
                                             url={window.location.href}
-                                            quote="I Strong Recommend This Book For You!"
+                                            quote="I Strong Recommend This story For You!"
                                         >
-                                            <TwitterIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </TwitterShareButton>
+                                            <TwitterIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} />
+                                        </TwitterShareButton>
 
 
                                         <FacebookShareButton
                                             url={window.location.href}
-                                            quote={"I Strong Recommend This Book For You!"}
-                                            hashtag="#my favourite book"
+                                            quote={"I Strong Recommend This Story For You!"}
+                                            hashtag="#my favourite story"
 
                                         >
-                                            <FacebookIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </FacebookShareButton>
+                                            <FacebookIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} />
+                                        </FacebookShareButton>
 
 
                                         <LinkedinShareButton
                                             url={window.location.href}
                                         >
-                                            <LinkedinIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /> </LinkedinShareButton>
+                                            <LinkedinIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} />
+                                        </LinkedinShareButton>
 
 
                                         <WhatsappShareButton
-                                            title="I Strong Recommend This Book For You!"
+                                            title="I Strong Recommend This Story For You!"
                                             url={window.location.href}
                                         >
-                                            <WhatsappIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} /></WhatsappShareButton>
+                                            <WhatsappIcon size={30} logoFillColor="#f5b17b" round={true} style={{ marginTop: '10px', marginLeft: '10px' }} />
+                                        </WhatsappShareButton>
                                     </div> </div>}
                             </div>
                         </div>
