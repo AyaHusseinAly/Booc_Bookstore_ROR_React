@@ -259,7 +259,7 @@ class App extends Component {
                   <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
                 )}
               />}
-            {this.state.user.role == 'seller' &&
+            {this.state.user.role == 'seller' && 
               <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
             <Route path="/addbook/:id" component={AddBook} />
             <Route path="/create/BookStores" component={AdminBookStores} />
