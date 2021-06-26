@@ -16,8 +16,7 @@
 ### Front-End
     - React 
         - Google Api 
-        - Google MAp Api 
-        
+        - Google MAp Api        
 ### Database
     - PostgreSQL
         
