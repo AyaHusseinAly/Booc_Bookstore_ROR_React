@@ -51,7 +51,7 @@ const popupStyle = {
 class ShortStoryDetails extends Component {
 
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             shortStory: {},
             chapters: [],
@@ -71,7 +71,7 @@ class ShortStoryDetails extends Component {
             reviews: [],
             storyRate: 0,
             stroylikeflag: false,
-            commentStory: []
+            commentStory: [],
 
         }
 
@@ -374,7 +374,7 @@ class Chapters extends Component {
             {/* <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
             <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div> */}
             <div className='col col-6 px-0'>
-                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments} kind="Chapter" />
+                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments}  kind="Chapter" />
             </div>
 
             <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span></div>

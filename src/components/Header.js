@@ -70,7 +70,7 @@ class Header extends Component {
      handleReadNotifications(){
          if (localStorage.getItem('user_id')){
             axios.post('http://localhost:3000/notifications/read_notifications',{
-                user_id: localStorage.getItem('user_id')
+                reciever_id: localStorage.getItem('user_id')
             })
             .then(response=>{
                 console.log(response)
@@ -156,19 +156,25 @@ class Header extends Component {
         }
         const notifications = Object.keys(this.state.notifications).length>0 ? this.state.notifications.map((notification, index) => {
             // console.log(notification)
-            var link = ''
-            if(notification.kind==='story'){
-                link = `/shortStory/${notification.instance_id}`
+            while(index<5){
+                var link = ''
+                if(notification.kind==='story' || notification.kind==='story-comment'){
+                    link = `/shortStory/${notification.instance_id}`
+                }
+                
+                console.log(link)
+                return(<div className='notification-container'><Link className='notification-link' to={link}><Notification notification={notification}></Notification></Link></div>)
             }
-            console.log(link)
-            return(<div className='notification-container'><Link className='notification-link' to={link}><Notification notification={notification}></Notification></Link></div>)
-        }): <span>you have no notifications</span>
+        }): <span>{this.props.user.id && 'You have no notifications.' ||  <div className='notification-outer'><Link className='notification-link' to="/login">Login to view notifications</Link></div>}</span>
         const popover = (
             <Popover id="popover-notification" style={{padding:0, marginTop:25}}>
-              {/* <Popover.Title as="h3">Notifications</Popover.Title> */}
               <Popover.Content style={{padding:0,position:'absolute',right:-50}}>
                 {notifications}
+                {this.props.user.id &&<div className='notification-outer'> <Link className='notification-link' to='/notifications'>View All Notifications</Link></div>}
               </Popover.Content>
+              {/* <Popover.Title as="h3"><Link className='notification-link' to='/notifications'>View All Notifications</Link></Popover.Title>
+               */}
+               
             </Popover>
           );
 

@@ -63,7 +63,7 @@ class LikeCommentStory extends Component {
                 "Access-Control-Allow-Headers": "Content-Type"
             }
         });
-        console.log(response);
+        console.log("idk",response);
         this.setState({ storyLikeUsers: response.data.storyLikes });
         this.setState({ stroylikeflag: response.data.likeFlag });
 
@@ -138,6 +138,20 @@ class Comments extends Component {
 
                             }
                         });
+                        axios.post('http://localhost:3000/notifications', {
+                                    sender_id: res.data.sender.id,
+                                    reciever_id: res.data.writer_id,
+                                    kind: "story-comment",
+                                    instance_id: record_id,
+                                    body: `${res.data.sender.name} just commented on your story.`,
+                                    summary: `${res.data.comment.body.slice(0, 70)}...`
+                                })
+                                    .then(res => {
+                                        console.log(res);
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                    })
                         console.log(res.data);
                         this.setState({ comments: res.data.comments });
                         this.setState({ string: "" });

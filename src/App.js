@@ -16,6 +16,7 @@ import BookStoreBooks from './components/BookStoreBooks';
 import AddBook from './components/AddBook';
 
 import WriterStories from './components/WriterStories';
+import NotificationsPage from './components/NotificationsPage';
 
 
 
@@ -235,8 +236,14 @@ class App extends Component {
           <Route path="/404" component={NotFound} />
           
               
-
-            <Route path="/shortStory/:id" component={ShortStoryDetails} />
+          <Route 
+              path="/shortStory/:id"
+              exact
+              render={props => (
+                <ShortStoryDetails {...props}  user={this.state.user}  />
+              )}
+            />
+            {/* <Route path="/shortStory/:id" component={ShortStoryDetails} /> */}
             { this.state.user.role == 'admin' &&
              <Route 
               path="/admin"
@@ -248,7 +255,12 @@ class App extends Component {
              { this.state.user.role == 'seller' &&
           <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
           <Route path="/addbook/:id" component={AddBook} />
-
+          <Route
+              path="/notifications"
+              render={props => (
+                <NotificationsPage {...props} user={this.state.user} />
+              )}
+            />
           </Switch >
         </div >
         <Footer></Footer>

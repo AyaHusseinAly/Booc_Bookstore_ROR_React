@@ -2,16 +2,16 @@
     border:1px solid darkgray;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: start;
     padding: 12px;
     /* border-radius: 6px; */
-    width: 500px;
+    width: auto;
     background-color:whitesmoke ;
     /* margin: 0ch; */
 }
 .notification-img{
     border-radius: 8px;
-    width: 90px;
+    width: 70px;
 }
 .notification-content{
     padding-left: 5%;
@@ -31,13 +31,19 @@
 }
 .notification-outer:hover{
     border:1px solid black;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
     margin: 0ch;
     padding: 15px;
     transition: transform .2s;
     transform: scale(1.01);
     background-color: #E7EBF4;
     border-radius: 6px;
+}
+.notification-outer:hover a{
+    color: rgb(95, 132, 213);
+}
+.notification-outer a{
+    color: rgb(47, 47, 84);
+}
+.notification-outer a:hover{
+    color: rgb(95, 132, 213);
 }

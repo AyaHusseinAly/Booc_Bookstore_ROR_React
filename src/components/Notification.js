@@ -7,7 +7,15 @@ class Notification extends Component{
     }
     render(){
         return(<div >
-            {this.props.notification.kind === 'story' &&
+            {this.props.notification.kind === 'story'&&
+            <div className='notification-outer'>
+                <img src={this.props.notification.image} className='notification-img'></img>
+                <div className='notification-content'>
+                    <p className='notification-title'>{this.props.notification.body}</p>
+                    <p className='notification-text'><strong>Summary: </strong> {this.props.notification.summary}</p>
+                </div>
+            </div>}
+            {this.props.notification.kind === 'story-comment'&&
             <div className='notification-outer'>
                 <img src={this.props.notification.image} className='notification-img'></img>
                 <div className='notification-content'>

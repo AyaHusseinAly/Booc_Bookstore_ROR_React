@@ -95,6 +95,7 @@ footer {
     padding: 0ch;
     margin: 0ch;
     border-radius: 8px;
+    width: 500px;
 }
 .notification-link:hover{
     text-decoration: none;
