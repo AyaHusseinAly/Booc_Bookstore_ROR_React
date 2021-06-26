@@ -48,8 +48,7 @@ class Home extends Component {
         if(localStorage.getItem('book-favourite') === null){ localStorage.setItem('book-favourite', JSON.stringify([]))}
         if(localStorage.getItem('book-shelf') === null){ localStorage.setItem('book-shelf', JSON.stringify([]))}
         if(localStorage.getItem('book-download') === null){ localStorage.setItem('book-download', JSON.stringify([]))}
-   
-       
+      
     }
 
     render() {
