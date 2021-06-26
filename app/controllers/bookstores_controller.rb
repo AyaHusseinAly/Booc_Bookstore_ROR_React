@@ -13,8 +13,12 @@ class BookstoresController < ApplicationController
       end
     
     def Add_book 
-    @book=BookstoreBook.create!(book_title:params['bookTitle'],price:params['bookPrice'],book_isbn:params['bookIsbn'],bookstore_id:params['bookstoreId'])
-       
+    @book=BookstoreBook.create!(book_title:params['bookTitle'],price:params['bookPrice'],book_isbn:params['bookIsbn'], cover:'',bookstore_id:params['bookstoreId'])
+        @book.image.attach(params[:bookCover])
+        if @book&.image&.attached?
+            @book.cover= rails_blob_url(@book.image)
+            @book.save()
+        end
     #@bookstores = Bookstore.all()
     render :json => {message:" add book created succefully",book:@book}
     end
@@ -27,16 +31,44 @@ class BookstoresController < ApplicationController
 
     ################## Create BookStore  ############################
     def create  
-        # Create Book Store
-        Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:params['BookStoreCover'],lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity']) 
+        @user = User.new(email:params['AdminEmail'], password:params['AdminPassword'],password_confirmation:params['ReAdminPassword'],role: "seller")
+        if @user.save()
+            #register_success
+            # Create Book Store
+            @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity'],user_id: @user.id) 
+            @store.image.attach(params['BookStoreCover'])
+            if @store&.image&.attached?
+                @store.img= rails_blob_url(@store.image)
+                @store.save()
+                render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword'],user: @user}
+            end 
+        ## end Create Book Store
+        else
+            register_failed(@user)
+        end
+
+      end
+
         
         # Create Admin To Store
-        render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
-    end
+        
+      #  render :json =>{name: params['StoreTitle'],phone:params['StorePhone'],address:params['StoreAddress'] ,city:params['StoreCity'],street:params['StoreStreet'],kind:params['selectedOption'], nameAdmin:params['AdminEmail'],AdminPassword:params['AdminPassword'],ReAdminPassword:params['ReAdminPassword']}
+    #end
+
+    def register_failed(resource)
+        render json: { message: "Something went wrong", errors: [
+          {
+            status: '400',
+            title: 'Bad Request',
+            details: resource.errors,
+            code: '100'
+          }
+        ]
+      }, status: :ok
+      end
 
     ################## Search From Map ############################
     def search
-        
         if params['bookName'] != ""
            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['bookName']+"%").select("bookstore_id")
         end    
@@ -218,4 +250,56 @@ class BookstoresController < ApplicationController
 
         end
     end
+
+    def apiSearch  
+        if params['q'] != ""
+            @bookstores_id = BookstoreBook.where("book_title LIKE ?","%"+ params['q']+"%").select("bookstore_id")
+            @Bookstore = Bookstore.where(id: @bookstores_id)
+            @poistion = []
+            @stores = []
+            @Bookstore.each do |bookstore|
+                positionobj={
+                    lat: bookstore.lat,
+                    lng: bookstore.lng,
+                }
+                stores= {
+                      id: bookstore.id,
+                      name:bookstore.name,
+                      phone: bookstore.phone, 
+                      kind: bookstore.kind, 
+                      img: bookstore.img,
+                      created_at: bookstore.created_at,
+                      updated_at: bookstore.updated_at, 
+                      position: positionobj,
+                }
+                @stores.push(stores);
+         end
+    
+            render :json =>{stores: @stores}
+        end
+     end
+
+    def getAllStores
+        @stores = Bookstore.all
+        render :json =>{stores: @stores}
+    end
+
+    def adminSearchByNameOfStore
+        if params['q'] == ""
+            @stores = Bookstore.all
+        elsif params['q'] != ""
+            @stores =  Bookstore.where("name LIKE ?","%"+ params['q']+"%")
+        end
+        render :json =>{stores: @stores}
+    end
+
+    def adminDeleteOfStore
+        @id_come = params['id'].to_i  # id of store 
+        @Bookstore = Bookstore.find(@id_come)
+        @books = BookstoreBook.where(bookstore_id: @id_come).delete_all
+        Bookstore.where(id: @id_come).delete_all
+        @user_id = User.find(@Bookstore.user_id).delete
+     end
+
+     
 end

@@ -28,12 +28,6 @@ class ShortStoriesController < ApplicationController
         render :json=> @genres
     end
 
-    # def index
-    #     @stories = ShortStory.all().order("created_at DESC");
-    #     render :json => {stories:@stories}
-
-    # end
-
     def getShortStories
         @Finished=[]
         @NotFinishedYet=[]
@@ -70,13 +64,6 @@ class ShortStoriesController < ApplicationController
             @NotFinishedYet.push(obj);
             
         end
-        # @Finished.each do |story|
-        #     @image=""
-        #     if story&.image&.attached?
-        #      @image= rails_blob_url(story.image)
-        #     end 
-        #     story[:cover]=@image
-        # end
         ShortStory.where(status:'finished').each do |story|
         @image=""
         if story&.image&.attached?
@@ -108,7 +95,8 @@ class ShortStoriesController < ApplicationController
 
         }
         @Finished.push(obj);
-       end
+        end
+        
         render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
     end
 
@@ -180,7 +168,55 @@ class ShortStoriesController < ApplicationController
         }
         @Finished.push(obj);
        end
-        render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
+       ############get writer info####################
+       
+       user=User.find(params[:writer_id]) 
+       @writer={
+           id:user.id,
+           name:user.name,
+           avatar:'',
+           following:Follow.where(reader_id:params[:writer_id]).count,
+           follower:Follow.where(writer_id:params[:writer_id]).count
+
+       }
+       if user&.avatar&.attached?
+        @writer[:avatar] = rails_blob_url(user.avatar)
+        end
+        ##########stories of bookmarks for the writer###############
+        @bookmarks=[]
+        if Bookmark.where(user_id:params[:writer_id]).length >0 
+            Bookmark.where(user_id:params[:writer_id]).each do |bookmark|
+                story=ShortStory.find(bookmark.short_story_id)
+                ###########get rate of story##################
+                rate=StoryRatingReview.where(short_story_id:story.id).sum(:rate)
+                rate=StoryRatingReview.where(short_story_id:story.id).count
+                if rate - rate.to_i < 0.25
+                    rate=rate.to_i 
+                elsif rate - rate.to_i < 0.75
+                    rate=rate.to_i + 0.5
+                else
+                    rate=rate.to_i + 1.0
+                end  
+                obj={
+                    id:story.id,
+                    title:story.title,
+                    cover:"",
+                    rate:rate
+                }
+
+                if story&.image&.attached?
+                    obj[:cover]= rails_blob_url(story.image)
+                end
+                @bookmarks.push(obj)
+
+            end 
+        end
+
+        @followed_flag=false
+        if Follow.where(reader_id: params[:login], writer_id:params[:writer_id]).length>0
+            @followed_flag=true
+        end
+        render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished,writer_info:@writer,bookmark:@bookmarks,followed_flag:@followed_flag}
     end
 
     def show    
@@ -261,6 +297,7 @@ class ShortStoriesController < ApplicationController
            @reviews=[]
            @storyRate=0
            @allReviews=StoryRatingReview.where(short_story_id:params['id'] )
+           
            @allReviews.each do |rateReview|
                 user=User.find(rateReview.user_id)
                 @storyRate=@storyRate+rateReview.rate
@@ -381,6 +418,19 @@ class ShortStoriesController < ApplicationController
             @message="bad request ,rating is requred"  
         end
         render :json=>{message:@message}
+    end
+    def editStory
+        story=ShortStory.find(params[:story_id])
+        story.summary=params[:summary]
+        story.save
+        render :json=>{item:story}
+    end
+
+    def editChapter
+        story=ShortStoriesChapter.find(params[:chapter_id])
+        story.summary=params[:summary]
+        story.save
+        render :json=>{item:story}
     end
 
 end

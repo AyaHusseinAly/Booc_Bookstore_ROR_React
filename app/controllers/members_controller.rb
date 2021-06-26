@@ -1,6 +1,12 @@
 class MembersController < ApplicationController
   def is_logged_in?
+    related_bookstore_id=0
     user=User.find(params[:member][:id])
+    if user.role=="seller"
+      related_bookstore=Bookstore.find_by(user_id:user.id)
+      related_bookstore_id=related_bookstore.id
+    end  
+    
     # user=User.find(params[:id])
     avatar=""
     if user&.avatar&.attached?
@@ -9,7 +15,8 @@ class MembersController < ApplicationController
     render json:{
       user: user,
       avatar: avatar,
-      logged_in: true
+      logged_in: true,
+      bookstore_id:related_bookstore_id
     }
     # if current_user
     #   render json: {

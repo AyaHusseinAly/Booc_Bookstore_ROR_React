@@ -40,14 +40,19 @@ post '/logged_in', to: 'members#is_logged_in?'
 
   post 'bookStoreSearchFromMap', to:'bookstores#search'
   post '/admin/BookStores', to:'bookstores#create'
+  get '/apiSearchBooks', to:'bookstores#apiSearch' 
+  get '/stores', to:'bookstores#getAllStores'
+  get '/seach/store', to:'bookstores#adminSearchByNameOfStore'
+  delete '/deleteStore', to:'bookstores#adminDeleteOfStore'
 
 
   resources :notifications, only: [:create] 
   post '/get_bookstore_from_seller', to: 'bookstores#get_bookstore_from_seller_id'
   post '/notifications/get_notifications', to:'notifications#index'
   mount ActionCable.server, at: "/cable"
-  get '/communityPosts' , to:'chapters#posts'
+
   post '/communityPosts' , to:'posts#posts'
+  post '/followerPosts' , to:'posts#followerPosts'
   post '/searchStoryChapter' , to:'posts#search'
   post '/commentChapter', to: 'comments_likes#commentChapter'
   post '/likeChapter', to: 'comments_likes#likeChapter' 
@@ -69,4 +74,10 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/unFollowWriter',to:'followers#unFollowWriter'
   post '/followeWriters',to:'followers#followeWriters'
   post '/notifications/read_notifications', to: 'notifications#read_notifications'
+  post '/myProfileData' , to:'followers#getProfileData'
+  post '/addRateReviewBook', to:'book_rate_reviews#addRateReviewBook'
+  post '/ListBookRateReview', to: 'book_rate_reviews#ListBookRateReview'
+  post '/editStory',to:'short_stories#editStory'
+  post '/editChapter',to:'short_stories#editChapter'
+
 end
