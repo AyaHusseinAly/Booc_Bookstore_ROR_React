@@ -19,7 +19,7 @@ default: &default
   # username: postgres
   # password: 123
   # host: localhost
-  # adapter: sqlite3
+  adapter: sqlite3
 
 
 

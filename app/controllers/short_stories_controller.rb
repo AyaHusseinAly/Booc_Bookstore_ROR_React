@@ -419,5 +419,18 @@ class ShortStoriesController < ApplicationController
         end
         render :json=>{message:@message}
     end
+    def editStory
+        story=ShortStory.find(params[:story_id])
+        story.summary=params[:summary]
+        story.save
+        render :json=>{item:story}
+    end
+
+    def editChapter
+        story=ShortStoriesChapter.find(params[:chapter_id])
+        story.summary=params[:summary]
+        story.save
+        render :json=>{item:story}
+    end
 
 end

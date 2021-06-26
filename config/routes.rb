@@ -74,5 +74,7 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/myProfileData' , to:'followers#getProfileData'
   post '/addRateReviewBook', to:'book_rate_reviews#addRateReviewBook'
   post '/ListBookRateReview', to: 'book_rate_reviews#ListBookRateReview'
+  post '/editStory',to:'short_stories#editStory'
+  post '/editChapter',to:'short_stories#editChapter'
 
 end
