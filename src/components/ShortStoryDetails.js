@@ -278,7 +278,7 @@ class ShortStoryDetails extends Component {
                                             {/* <div className="reviews"> */}
 
                                             {this.state.chapters.map((chapter) => {
-                                                return <div className="reviews my-6" style={{}}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+                                                return <div className="reviews my-6" style={{}} key={chapter.id}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
 
                                             })}
                                             {/* </div> */}
@@ -293,7 +293,7 @@ class ShortStoryDetails extends Component {
                                     <h4>Reviews</h4>
                                     <div style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                         {this.state.reviews.map(review => {
-                                            return <div className="box-person">
+                                            return <div className="box-person" key={review.id}>
                                                 <div className="img">
                                                     {review.user_avatar == "" ? <i className="fa fa-user"></i> :
                                                         <img className="rounded-circle" style={{ width: '40px', height: '40px', borderRadius: '50%' }} src={review.user_avatar} />}
@@ -464,7 +464,7 @@ class MakeRating extends Component {
                             <i class="fa fa-paper-plane" aria-hidden="true" style={{ color: '#F8A488' }}></i>
                         </button>
                     </h4>
-                    <div classNmae='ml-5'>
+                    <div className='ml-5'>
                         {this.state.errors.rate && (<div className="alert alert-danger" role="alert">{this.state.errors.rate}</div>)}
                         <input className="px-1 ml-4" type="text" name="review" placeholder="Add review..." style={{ display: 'inline-block', width: '80%' }} value={this.state.review} onChange={(e) => this.setState({ review: e.currentTarget.value })} />
                         {/* <input type='hidden' name='rating' value={this.state.rating} /> */}
