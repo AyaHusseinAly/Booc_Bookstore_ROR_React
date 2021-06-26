@@ -15,6 +15,9 @@ ActiveRecord::Schema.define(version: 2021_06_26_091438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -115,6 +118,17 @@ ActiveRecord::Schema.define(version: 2021_06_26_091438) do
     t.index ["user_id"], name: "index_comment_stories_on_user_id"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.bigint "short_stories_chapter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["short_stories_chapter_id"], name: "index_comments_on_short_stories_chapter_id"
+  end
+
+>>>>>>> 46db56b18aa2ce7cad570a1c5e59d65bc7c041d1
   create_table "downloads", force: :cascade do |t|
     t.string "isbn"
     t.datetime "created_at", null: false
@@ -200,6 +214,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_091438) do
     t.datetime "updated_at", null: false
     t.bigint "short_story_id"
     t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
+
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -249,7 +264,10 @@ ActiveRecord::Schema.define(version: 2021_06_26_091438) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+<<<<<<< HEAD
   add_foreign_key "book_rating_reviews", "users"
+=======
+>>>>>>> 46db56b18aa2ce7cad570a1c5e59d65bc7c041d1
   add_foreign_key "bookmarks", "short_stories"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "bookstore_books", "bookstores"
@@ -259,6 +277,10 @@ ActiveRecord::Schema.define(version: 2021_06_26_091438) do
   add_foreign_key "comment_chapters", "users"
   add_foreign_key "comment_stories", "short_stories"
   add_foreign_key "comment_stories", "users"
+<<<<<<< HEAD
+=======
+  add_foreign_key "comments", "short_stories_chapters"
+>>>>>>> 46db56b18aa2ce7cad570a1c5e59d65bc7c041d1
   add_foreign_key "like_chapters", "short_stories_chapters"
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"
@@ -267,7 +289,10 @@ ActiveRecord::Schema.define(version: 2021_06_26_091438) do
   add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
+<<<<<<< HEAD
   add_foreign_key "short_stories_chapters", "short_stories"
+=======
+>>>>>>> 46db56b18aa2ce7cad570a1c5e59d65bc7c041d1
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
