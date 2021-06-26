@@ -4,35 +4,49 @@ import Comments from './CommunityCard';
 import '../style/community.css';
 import axios from 'axios';
 import CommunityCard from './CommunityCard';
+import { Pagination } from 'antd';
 
 class Community extends Component {
     state={
         posts:[],
+        current_page:0,
+        pages:0,
+        array_of_pages:[]
     }
     
-    async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
-        // const res=await axios.get('http://localhost:3000/api/shortStories',
-        // {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
-        // "Access-Control-Allow-Methods": "GET, POST, PUT",
-        // "Access-Control-Allow-Headers": "Content-Type"}})
-        
-        // this.setState({stories:res.data.stories});
-        
-        // console.log(this.state.stories);
-        let data={user_id:window.localStorage.getItem('user_id')};
+    async componentDidMount(){ 
+        let data={user_id:window.localStorage.getItem('user_id'),page:1};
         axios.post('http://localhost:3000/communityPosts',data,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
-            this.setState({posts:response.data.posts});
-            console.log(this.state.posts);        
-
+            this.setState({posts:response.data.posts, pages:response.data.pages, current_page:response.data.page});
+            let arr=[]
+            for(var i=1;i<=this.state.pages;i++){
+                arr.push(i)
+            }
+            this.setState({array_of_pages:arr});
+            console.log(this.state.current_page)
         });
        
     }
-   
 
     render() {
+        const changePage = (page) =>{
+            if(page=="prev"){page=this.state.current_page-1}
+            if(page=="nxt"){page=this.state.current_page+1}
+
+            let data={user_id:window.localStorage.getItem('user_id'),page:page};
+            axios.post('http://localhost:3000/communityPosts',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+            this.setState({posts:response.data.posts, pages:response.data.pages, current_page:response.data.page});
+            console.log(this.state.posts);        
+
+        });
+        }
+
 
         const onSearch = () =>{ 
             let string=document.getElementById("searchform").value;
@@ -42,7 +56,7 @@ class Community extends Component {
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
-                this.setState({posts:response.data.posts});
+                this.setState({posts:response.data.posts, pages:response.data.pages, current_page:response.data.page});
                 console.log(this.state.posts);        
 
             });
@@ -60,6 +74,18 @@ class Community extends Component {
     
             });
         }
+        const followedWriters= () =>{
+            let data={user_id:window.localStorage.getItem('user_id')};
+            axios.post('http://localhost:3000/followerPosts',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+                this.setState({posts:response.data.posts});
+                console.log(this.state.posts);        
+    
+            }); 
+
+        }
  
         return (
             <div className="pl-5 py-5">
@@ -75,8 +101,8 @@ class Community extends Component {
                                 Order By
                             </a>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/community')}>By Latest</a>
-                                <a className="dropdown-item" onClick={() => this.props.history.push('/community')}>Followed writers</a>
+                                <a className="dropdown-item" onClick={refresh}>By Latest</a>
+                                <a className="dropdown-item" onClick={followedWriters}>Followed writers</a>
                         
                         </div>
                         </div>
@@ -85,10 +111,10 @@ class Community extends Component {
                     <div className="col-3">
                         <div className="communityCard sideCard">
                             <a className="d-block my-3 ml-5" href="#" style={{color:'#535964',fontWeight:'bold'}}> <i className="fas fa-caret-right"></i> Stories Feed</a>
-                            <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/addstory') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a Story</a>
-                            <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Bookmarks</a>
-                            <a className="d-block my-4 ml-5" href="#" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Downloads</a>
-                            <a className="d-block my-3 ml-5" href="#" style={{color:'#535964'}} onClick={() => this.props.history.push('/writer') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Profile</a>
+                            <a className="d-block my-4 ml-5" href="/addstory" style={{color:'#535964'}} > <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Add a Story</a>
+                            <a className="d-block my-3 ml-5" href="/writer" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Bookmarks</a>
+                            <a className="d-block my-4 ml-5" href="/AllStories" style={{color:'#535964'}}> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> Navigate stories</a>
+                            <a className="d-block my-3 ml-5" href="#/UserPage" style={{color:'#535964'}} onClick={() => this.props.history.push('/writer') }> <i className="fas fa-caret-right "style={{color:'#F8F8F8'}}></i> My Profile</a>
 
 
                         </div>
@@ -103,8 +129,35 @@ class Community extends Component {
 
 
                     </div>
+                            
 
                 </div>
+                <div className=" d-flex justify-content-center">
+                    {/* <div className="col-5"></div>
+                            <Pagination  onPageChange={()=>{console.log("change")}} size='mini' siblingRange="2"
+                            defaulActivePage="1"
+                            totalPages="5"
+                            /> */}
+                         
+                            <ul class="pagination ">
+                                <li class="page-item"><a class="page-link" onClick={()=>{changePage("prev")}}>Previous</a></li>
+                                
+                                {
+                                    this.state.array_of_pages.map(i=>
+                                        <div>
+                                            {this.state.current_page!=i&&<li class="page-item" id={"page"+i}><a class="page-link " onClick={()=>{changePage(i)}}>{i}</a></li>}
+                                            {this.state.current_page==i&&<li class="page-item active"><a class="page-link " onClick={()=>{changePage(i)}}>{i}</a></li>}
+                                        </div>
+                                )
+                                }  
+
+
+                                <li class="page-item"><a class="page-link" onClick={()=>{changePage("nxt")}}>Next</a></li>
+                            </ul>
+                       
+                </div>
+                
+                
 
             </div>
 
