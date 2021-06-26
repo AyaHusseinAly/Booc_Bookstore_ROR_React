@@ -68,5 +68,5 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/followWriter',to:'followers#followWriter'
   post '/unFollowWriter',to:'followers#unFollowWriter'
   post '/followeWriters',to:'followers#followeWriters'
-
+  post '/notifications/read_notifications', to: 'notifications#read_notifications'
 end
