@@ -4,6 +4,7 @@
 - Fatma Tarek Abdallah
 - Mariam Samir Dwa
 - Samar Mohamed
+- Shoroq Alaa Tag
 - Suzan Naeem
 
 ## Tools and versions used 
