@@ -30,6 +30,7 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/shortStoryDetails' ,to:'short_stories#show'
   get '/shortStoriesGenres' ,to:'short_stories#getShortStoriesGenres'
   get '/shortStories' ,to:'short_stories#getShortStories'
+  post '/writerStories',to:'short_stories#getWriterStories'
   post '/createChapter' , to:'chapters#create'
 
   get '/allbookstores', to:'bookstores#allbookstores'
@@ -38,9 +39,17 @@ post '/logged_in', to: 'members#is_logged_in?'
   delete '/destroyBook/:id', to:'bookstores#destroy_book'
 
   post 'bookStoreSearchFromMap', to:'bookstores#search'
+  post '/admin/BookStores', to:'bookstores#create'
+  get '/apiSearchBooks', to:'bookstores#apiSearch' 
+  get '/stores', to:'bookstores#getAllStores'
 
 
+  resources :notifications, only: [:create] 
+  post '/get_bookstore_from_seller', to: 'bookstores#get_bookstore_from_seller_id'
+  post '/notifications/get_notifications', to:'notifications#index'
+  mount ActionCable.server, at: "/cable"
   post '/communityPosts' , to:'posts#posts'
+  post '/searchStoryChapter' , to:'posts#search'
   post '/commentChapter', to: 'comments_likes#commentChapter'
   post '/likeChapter', to: 'comments_likes#likeChapter' 
   post '/commentStory', to: 'comments_likes#commentStory'
@@ -48,13 +57,17 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/unlikeStory', to: 'comments_likes#unlikeStory'
   post '/likeStory', to: 'comments_likes#likeStory'  
   post '/report' , to: 'reports#create'
+  post '/deleteReport' , to: 'reports#deleteReport'
+  post '/deleteRecord' , to: 'reports#deleteRecord'
   get '/reports' , to: 'reports#index'
 
   post '/storyFinished' ,to:'short_stories#setStoryFinished'
   post '/addToBookmark' ,to:'short_stories#addToBookmark'
   post '/removeFromBookmark' ,to: 'short_stories#removeFromBookmark'
-  post '/followWriter',to:'short_stories#followWriter'
-  post '/unFollowWriter',to:'short_stories#unFollowWriter'
   post '/addRateReviewStory',to:'short_stories#addRateReviewStory'
+  post '/listStoryComments', to: 'comments_likes#listStoryComments'
+  post '/followWriter',to:'followers#followWriter'
+  post '/unFollowWriter',to:'followers#unFollowWriter'
+  post '/followeWriters',to:'followers#followeWriters'
 
 end

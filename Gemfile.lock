@@ -50,13 +50,13 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     aws-eventstream (1.1.1)
-    aws-partitions (1.467.0)
-    aws-sdk-core (3.114.2)
+    aws-partitions (1.471.0)
+    aws-sdk-core (3.115.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
-    aws-sdk-kms (1.43.0)
+    aws-sdk-kms (1.44.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
     aws-sdk-s3 (1.96.1)
@@ -90,7 +90,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     crass (1.0.6)
     devise (4.8.0)
       bcrypt (~> 3.0)
@@ -114,8 +114,8 @@ GEM
     duktape (2.6.0.0)
     erubi (1.10.0)
     execjs (2.8.1)
-    ffi (1.15.1)
-    ffi (1.15.1-x64-mingw32)
+    ffi (1.15.3-x64-mingw32)
+    geocoder (1.6.7)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.10)
@@ -125,7 +125,7 @@ GEM
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
     jwt (2.2.3)
-    loofah (2.9.1)
+    loofah (2.10.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -133,16 +133,10 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.0)
-    mini_portile2 (2.5.3)
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.7)
-    nokogiri (1.11.7)
-      mini_portile2 (~> 2.5.0)
-      racc (~> 1.4)
     nokogiri (1.11.7-x64-mingw32)
-      racc (~> 1.4)
-    nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.2.3-x64-mingw32)
@@ -182,6 +176,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.3.1)
     regexp_parser (2.1.1)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -232,16 +227,14 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    websocket-driver (0.7.4)
+    websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
 PLATFORMS
-  ruby
   x64-mingw32
-  x86_64-darwin-20
 
 DEPENDENCIES
   active_model_serializers (~> 0.8.0)
@@ -254,11 +247,13 @@ DEPENDENCIES
   devise
   devise-jwt
   duktape
+  geocoder
   jbuilder (~> 2.5)
   pg
   puma (~> 3.11)
   rack-cors
   rails (~> 5.2.6)
+  redis (~> 4.0)
   sass-rails (~> 5.0)
   selenium-webdriver
   turbolinks (~> 5)

@@ -11,12 +11,12 @@ class User < ApplicationRecord
           jwt_revocation_strategy: JwtDenylist
   # has_many :allowlisted_jwts, dependent: :destroy
   has_one_attached :avatar
-  validates :email,
-  uniqueness: { case_sensitive: false }
-  validates :username,
-  presence: true,
-  length: { minimum: 6 },
-  uniqueness: { case_sensitive: false }
+  # validates :email,
+  # uniqueness: { case_sensitive: false }
+  # validates :username,
+  # presence: true,
+  # length: { minimum: 6 },
+  # uniqueness: { case_sensitive: false }
   # validates :username,
   # format: { with: /\A[a-zA-Z0-9_-]+\z/, message: I18n.t('models.users.username') }
   # validates :username,

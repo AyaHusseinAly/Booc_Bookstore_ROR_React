@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_23_160156) do
+ActiveRecord::Schema.define(version: 2021_06_25_005709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.float "lat"
     t.float "lng"
     t.string "distict"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_bookstores_on_user_id"
   end
 
   create_table "comment_chapters", force: :cascade do |t|
@@ -160,6 +162,11 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "sender_id_id"
+    t.bigint "reciever_id_id"
+    t.bigint "instance_id"
+    t.index ["reciever_id_id"], name: "index_notifications_on_reciever_id_id"
+    t.index ["sender_id_id"], name: "index_notifications_on_sender_id_id"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -189,6 +196,8 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "short_story_id"
+    t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -232,6 +241,7 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
     t.string "name"
     t.text "bio"
     t.date "dob"
+    t.string "role", default: "user"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -241,6 +251,7 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
   add_foreign_key "bookmarks", "users"
   add_foreign_key "bookstore_books", "bookstores"
   add_foreign_key "bookstore_rate_reviews", "bookstores"
+  add_foreign_key "bookstores", "users"
   add_foreign_key "comment_chapters", "short_stories_chapters"
   add_foreign_key "comment_chapters", "users"
   add_foreign_key "comment_stories", "short_stories"
@@ -250,8 +261,11 @@ ActiveRecord::Schema.define(version: 2021_06_23_160156) do
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"
   add_foreign_key "like_stories", "users"
+  add_foreign_key "notifications", "users", column: "reciever_id_id"
+  add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
+  add_foreign_key "short_stories_chapters", "short_stories"
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
