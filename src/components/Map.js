@@ -30,8 +30,7 @@ class Map extends Component {
             state:'',
             zoom: 15,
             height: 400,
-            stores: [
-            ],
+            stores: [],
             latitudeOfMyPosition: '',
             longitudeOfMyPosition: '',
             
