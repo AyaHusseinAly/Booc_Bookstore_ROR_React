@@ -42,6 +42,8 @@ post '/logged_in', to: 'members#is_logged_in?'
   post '/admin/BookStores', to:'bookstores#create'
   get '/apiSearchBooks', to:'bookstores#apiSearch' 
   get '/stores', to:'bookstores#getAllStores'
+  get '/seach/store', to:'bookstores#adminSearchByNameOfStore'
+  delete '/deleteStore', to:'bookstores#adminDeleteOfStore'
 
 
   resources :notifications, only: [:create] 

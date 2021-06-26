@@ -6,6 +6,7 @@
 #
 default: &default
 
+
   # adapter: postgresql
   # encoding: unicode
   # username: user1
@@ -19,7 +20,8 @@ default: &default
   # username: postgres
   # password: 123
   # host: localhost
-  adapter: sqlite3
+  # adapter: sqlite3
+
 
 
 

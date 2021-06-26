@@ -283,5 +283,23 @@ class BookstoresController < ApplicationController
         @stores = Bookstore.all
         render :json =>{stores: @stores}
     end
+
+    def adminSearchByNameOfStore
+        if params['q'] == ""
+            @stores = Bookstore.all
+        elsif params['q'] != ""
+            @stores =  Bookstore.where("name LIKE ?","%"+ params['q']+"%")
+        end
+        render :json =>{stores: @stores}
+    end
+
+    def adminDeleteOfStore
+        @id_come = params['id'].to_i  # id of store 
+        @Bookstore = Bookstore.find(@id_come)
+        @books = BookstoreBook.where(bookstore_id: @id_come).delete_all
+        Bookstore.where(id: @id_come).delete_all
+        @user_id = User.find(@Bookstore.user_id).delete
+     end
+
      
 end
