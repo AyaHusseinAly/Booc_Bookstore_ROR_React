@@ -225,7 +225,7 @@ class AddStory extends Component {
                 {/************************* Store Admin *****************************/}
                 <label className="formLabel heading" style={{ display: 'block' }}><h3><strong>Store Admin</strong></h3></label><hr style={{borderColor: '#F8A488',}}/>
                 {/* Name of Your Admin Store */}
-                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminEmail'><h5><strong>Store Name</strong></h5></label>
+                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminEmail'><h5><strong>Email </strong></h5></label>
                 <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Admin's name.." aria-label=" Admin's name.." aria-describedby="basic-addon1" id='AdminEmail' value={this.state.AdminEmail}
                     onChange={(e) => this.setState({AdminEmail: e.currentTarget.value })}></input>
                 {/*Show Error If Exit related to Name Of Admin Store */}
@@ -235,7 +235,7 @@ class AddStory extends Component {
                 <br/>
                 {/* password of  Admin Store */}
                 <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminPassword'><h5><strong>Password</strong></h5></label>
-                <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Admin's password.." aria-label=" Admin's password.." aria-describedby="basic-addon1" id='AdminPassword' value={this.state.AdminPassword}
+                <input type="password"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Admin's password.." aria-label=" Admin's password.." aria-describedby="basic-addon1" id='AdminPassword' value={this.state.AdminPassword}
                     onChange={(e) => this.setState({AdminPassword: e.currentTarget.value })}></input>
                 {/*Show Error If Exit related to password */}
                 {this.state.errors.password && (<div className="alert alert-danger" role="alert">{this.state.errors.password}</div>)}
@@ -243,7 +243,7 @@ class AddStory extends Component {
                 <br/>
                 {/* repassword of  Admin Store */}
                 <label className="formLabel heading" style={{ display: 'block' }} htmlFor='ReAdminPassword'><h5><strong>Confirm Password</strong></h5></label>
-                <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Confirm Password.." aria-label="Confirm Password.." aria-describedby="basic-addon1" id='ReAdminPassword' value={this.state.ReAdminPassword}
+                <input type="password"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Confirm Password.." aria-label="Confirm Password.." aria-describedby="basic-addon1" id='ReAdminPassword' value={this.state.ReAdminPassword}
                     onChange={(e) => this.setState({ReAdminPassword: e.currentTarget.value })}></input>
                 {/*Show Error If Exit related to confirm password */}
                 {this.state.errors.repassword && (<div className="alert alert-danger" role="alert">{this.state.errors.repassword}</div>)}

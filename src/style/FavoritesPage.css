@@ -1,7 +1,8 @@
 .main{
 
 	border-image: 5px round;
-    margin-right:-80px
+    margin-right:-80px;
+	margin-left: 40px;
 	}
 	
 	.book_image{
@@ -30,7 +31,7 @@
 		.fig .hov{
 			content: "";
 			position: absolute;
-			left: 50%;
+			left: 48%;
 			top: 40%;
 			width: 90%;
 			height: 100%;

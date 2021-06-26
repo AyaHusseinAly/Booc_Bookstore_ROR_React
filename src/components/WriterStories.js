@@ -31,12 +31,47 @@ class WriterStories extends Component {
         chapters: [],
         user: {},
         bookmarks: [],
+        follow_style: {},
+        follow_method: "",
+        follow_string: "",
+        follow_icon: "",
     }
 
+    followWriter = async (url) => {
+        let data = {
+            writer_id: this.props.match.params.id,
+            reader_id: localStorage.getItem('user_id')
 
+        }
+        const res = await axios.post(`http://localhost:3000/${url}`, data, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT",
+                "Access-Control-Allow-Headers": "Content-Type",
+
+            }
+        });
+        console.log(res.data);
+        this.setState({ user: res.data.writer_info })
+        if (url == "followWriter") {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', border: "1px #F8A488 solid" } });
+            this.setState({ follow_string: "UnFollow" });
+            this.setState({ follow_method: "unFollowWriter" });
+            this.setState({ follow_icon: "fas fa-user-minus mr-2" });
+
+        }
+        else if (url == "unFollowWriter") {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
+            this.setState({ follow_string: "Follow" });
+            this.setState({ follow_method: "followWriter" });
+            this.setState({ follow_icon: "fas fa-user-plus mr-2" });
+        }
+
+    }
     async componentDidMount() {
         let data = {
-            writer_id: this.props.match.params.id
+            writer_id: this.props.match.params.id,
+            login: localStorage.getItem('user_id')
         };
         let response = await axios.post("http://localhost:3000/writerStories", data,
             {
@@ -53,6 +88,18 @@ class WriterStories extends Component {
         this.setState({ user: response.data.writer_info });
         this.setState({ bookmarks: response.data.bookmark });
         console.log(response.data);
+        if (response.data.followed_flag == false) {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: '#F8A488', color: 'white', borderRadius: '5px' } });
+            this.setState({ follow_string: "Follow" });
+            this.setState({ follow_method: "followWriter" });
+            this.setState({ follow_icon: "fas fa-user-plus mr-2" });
+        }
+        else if (response.data.followed_flag == true) {
+            this.setState({ follow_style: { textAlign: 'center', backgroundColor: 'white', color: '#F8A488', borderRadius: '5px', border: "1px #F8A488 solid" } });
+            this.setState({ follow_string: "UnFollow" });
+            this.setState({ follow_method: "unFollowWriter" });
+            this.setState({ follow_icon: "fas fa-user-minus mr-2" });
+        }
 
 
     }
@@ -68,15 +115,25 @@ class WriterStories extends Component {
                 <div className='ml-5'>
                     <div className="info-person">
                         <div className="container">
+                            <div className="d-flex justify-content-end mt-2 mr-2">
+                                <div className="p-2" style={this.state.follow_style}
+                                    onClick={() => this.followWriter(this.state.follow_method)}><i class={this.state.follow_icon}></i>{this.state.follow_string}</div>
+
+                            </div>
                             <div className="content-info">
+                                {/* <div> */}
                                 <div className="img">
                                     <img className="rounded-circle" style={{ width: '150px', height: '150px', borderRadius: '50%', display: 'block' }} src={this.state.user.avatar} />
 
                                 </div>
                                 <div className="text-content">
-                                    <h3>{this.state.user.name}</h3>
-                                    <span><strong>{this.state.user.following}</strong> Following</span>
-                                    <span><strong>{this.state.user.follower}</strong> Followers</span>
+                                    <div>
+                                        <h3>{this.state.user.name}</h3>
+                                        <span><strong>{this.state.user.following}</strong> Following</span>
+                                        <span><strong>{this.state.user.follower}</strong> Followers</span>
+                                    </div>
+
+
                                 </div>
                             </div>
 

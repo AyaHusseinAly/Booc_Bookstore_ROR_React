@@ -12,6 +12,7 @@ const BookRowSlide = (props) => {
     const [books, setBooks] = useState([]);
     const [favorites, setFavorites] = useState([]);
     const [shelfs, setShelfs] = useState([]);
+    const [user,setUser] = useState([]);
    
     console.log(props)
     // console.log(props.match.params)
@@ -34,6 +35,34 @@ const BookRowSlide = (props) => {
         console.log(category)
 
     }, [])
+
+
+
+     useEffect(() =>{
+      const fetchUser = () => {
+
+    let data ={
+            user_id:localStorage.getItem('user_id')
+        }
+         axios.post("http://localhost:3000/myProfileData",data,
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type"
+                }
+            })
+            .then(response=>{
+                console.log(response.data.user)
+                setUser(response.data.user);
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+            
+      }
+      fetchUser();
+         },[]);
         
         
 
@@ -89,8 +118,9 @@ const BookRowSlide = (props) => {
                     
                     < div className="bk_img">
                     <img style={{width:'100%'}} src={books.length > 0&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                       {user.id?
                        <div className="hovable">
-                         <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                         <Link to={`/BookDetails/${books.length > 0&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="det">details</span>
                           </Link>
                           <span className="icon-ht" onClick={()=>addFavouriteBook(book)} 
@@ -106,9 +136,12 @@ const BookRowSlide = (props) => {
                            <span class="tooltiptextshel">add to shelf</span>
                            </i>
                           </span>
-                        </div>
+                        </div>:
+                          <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                             <span style={{textAlign:"center",marginLeft:"90px"}}>details</span>
+                          </Link>}
                      </div>  
-                    <figcaption className="book_title" style={{alignItems:'center'}}>{books.length > 0&&book.volumeInfo.title.slice(0,15)}</figcaption>
+                    <figcaption className="book_title" style={{alignItems:'center',marginLeft:"20px"}}>{books.length > 0&&book.volumeInfo.title.slice(0,20)}</figcaption>
                      
                     
                     </figure>
