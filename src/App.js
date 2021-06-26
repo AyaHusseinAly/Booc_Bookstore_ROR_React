@@ -16,7 +16,7 @@ import BookStoreBooks from './components/BookStoreBooks';
 import AddBook from './components/AddBook';
 
 import WriterStories from './components/WriterStories';
-
+import AdminBookStores from './components/AdminBookStores';
 
 
 import GoogleAPI from './classes/GoogleAPI';
@@ -262,7 +262,7 @@ class App extends Component {
             {this.state.user.role == 'seller' &&
               <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
             <Route path="/addbook/:id" component={AddBook} />
-
+            <Route path="/create/BookStores" component={AdminBookStores} />
           </Switch >
         </div >
         <Footer></Footer>

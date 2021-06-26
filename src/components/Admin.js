@@ -3,6 +3,7 @@ import '../style/admin.css';
 import BookRow from './BookRow';
 import AdminReports from './AdminReports';
 import AdminBookStores from './AdminBookStores';
+import AdminAllStores from './AdminAllStores';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import { Tabs } from 'antd';
@@ -43,30 +44,16 @@ class Admin extends Component {
                     <TabPane tab="Reports" key="1">
                           <AdminReports ></AdminReports>
                     </TabPane>  
-                    <TabPane tab="Bookstores" key="2">
-                    {/* <div className="container books_container">
-                            <BookRow items={this.state.fiction.slice(0,6)}></BookRow>
-                            <BookRow items={this.state.thriller.slice(0,6)}></BookRow>
-                            <BookRow items={this.state.horror.slice(0,6)}></BookRow>
-
-                        <div className="row d-flex justify-content-center " style={{textAlign: "center"}} >
-
-                          <a href="#collapse" style={{textAlign: "center"}} >  More... </a>
-
-                        </div>
-                      </div> */}
-                      <AdminBookStores></AdminBookStores>
+                    <TabPane tab="All Stores" key="2">
+                        <AdminAllStores></AdminAllStores>
                     </TabPane>
-                                      
+                  
+                        
           </Tabs>
       
         <hr/>
 
         </div>
-
-  	
-	
-
     );
     }
 }
