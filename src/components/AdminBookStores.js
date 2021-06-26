@@ -15,6 +15,7 @@ class AddStory extends Component {
             StoreAddress:"",
             StoreCity:"",
             StoreStreet:"",
+            StoreCoverPreview:"",
             //admin Registeration
             AdminEmail:"",
             AdminPassword:"",
@@ -28,8 +29,10 @@ class AddStory extends Component {
     /******************* add cover for Store ********************/
     handleStoreCover = (e) => {
         const file = URL.createObjectURL(e.target.files[0]);
-        this.setState({ BookStoreCover: file });
+        this.setState({ BookStoreCover: e.target.files[0] });
+        this.setState({ StoreCoverPreview: file });
     }
+
     // Action of cover uploaded 
     fileUploadAction = () => this.inputReference.current.click();
     /******************* End add cover for Store ********************/
@@ -67,8 +70,9 @@ class AddStory extends Component {
                 StoreCity: this.state.StoreCity,
                 StoreStreet: this.state.StoreStreet,
                 selectedOption: this.state.selectedValue,
+                BookStoreCover: this.state.BookStoreCover,
                 //Admin///
-                AdminEmail: this.state.selectedValue,
+                AdminEmail: this.state.AdminEmail,
                 AdminPassword: this.state.AdminPassword,
                 ReAdminPassword: this.state.ReAdminPassword,
             }
@@ -109,6 +113,8 @@ class AddStory extends Component {
            errors.city = "Please enter Store city"
         if (this.state.StoreStreet.trim() === "")
             errors.street= "Please enter Store street"
+        if (this.state.BookStoreCover.length === 0)
+            errors.cover = "Cover is required"
         //if (this.state.selectedValue  !== "Libraries" || this.state.selectedValue  !== "Bookstores")
         //   errors.kind= "Please select type of store"
 
@@ -131,7 +137,7 @@ class AddStory extends Component {
             <React.Fragment>
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
                     {/************************* Cover of Store****************************** */}
-                    {this.state.BookStoreCover && <img className='col-lg-3 col-sm-6 col-xs-12' style={{ width: '100%' }} src={this.state.BookStoreCover} alt="image of store" />}
+                    {this.state.BookStoreCover && <img className='col-lg-3 col-sm-6 col-xs-12' style={{ width: '100%' }} src={this.state.StoreCoverPreview} alt="image of store" />}
                     {/* if there is no cover for store */}
                     {!this.state.BookStoreCover &&
                         <div className='col-lg-3 col-md-4 col-xs-12 ' style={{ width: '100%', backgroundColor: '#ADB4C3'}}>
@@ -144,10 +150,13 @@ class AddStory extends Component {
                             </div>
                         </div>
                     }
+                    
                     {/************************* End of Cover of Store****************************** */}
 
                     <div className='col col-1'></div>
                     <div className='col col-7 col-lg-7 col-md-9 col-sm-11 col-xs-11'>
+                        {/******** Image valdiation Error ********/}
+                        {this.state.errors.cover  && (<div className="alert alert-danger" role="alert">{this.state.errors.cover }</div>)}
                         <label className="formLabel heading" style={{ display: 'block' }}><h3><strong>Information About Store</strong></h3></label><hr style={{borderColor: '#F8A488',}}/>
                         {/* Name of Your Store */}
                         <label className="formLabel heading" style={{ display: 'block' }} htmlFor='StoreTitle'><h5><strong>Store Name</strong></h5></label>
@@ -225,7 +234,7 @@ class AddStory extends Component {
 
                 <br/>
                 {/* password of  Admin Store */}
-                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminEmail'><h5><strong>Password</strong></h5></label>
+                <label className="formLabel heading" style={{ display: 'block' }} htmlFor='AdminPassword'><h5><strong>Password</strong></h5></label>
                 <input type="text"  style={{ borderRadius: '4px' }} className="form-control" placeholder=" Admin's password.." aria-label=" Admin's password.." aria-describedby="basic-addon1" id='AdminPassword' value={this.state.AdminPassword}
                     onChange={(e) => this.setState({AdminPassword: e.currentTarget.value })}></input>
                 {/*Show Error If Exit related to password */}

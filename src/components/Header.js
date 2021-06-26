@@ -10,7 +10,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 // import  { useHistory } from 'react-router-dom'
 import  ReactDOM from 'react-dom';
-import {ActionCableProvider, ActionCableConsumer} from 'react-actioncable-provider';
+import {ActionCableProvider, ActionCableConsumer,ActionCable} from 'react-actioncable-provider';
 import {Popover, Button,OverlayTrigger} from 'react-bootstrap'
 
 
@@ -64,8 +64,10 @@ class Header extends Component {
     //    })
      }
      componentDidMount = () =>{
+        //  this.props.is_logged_in();
          axios.post('http://localhost:3000/notifications/get_notifications',{
-             reciever_id: this.props.user?.id
+            //  reciever_id: this.props.user?.id
+            reciever_id: localStorage.getItem('user_id')
          })
          .then(response => {
              if(response.data.message === 'notifications found'){
@@ -85,7 +87,7 @@ class Header extends Component {
         console.log(response.notifications);
         console.log(this.state);
         this.setState({
-            notifications: [ ... this.state.notifications, response.notifications]
+            notifications: [ ...this.state.notifications, response.notifications]
         })
      }
     
@@ -126,8 +128,9 @@ class Header extends Component {
                 {notifications}
               </Popover.Content>
               <ActionCableConsumer
-              channel = {{ channel: 'NotificationChannel'}}
-              onRecieved = {this.handleRecieveNotification}/>
+              channel = {{ channel: 'NotificationChannel',reciever_id: this.props.user.id}}
+              onRecieved = {this.handleRecieveNotification}
+              />
             </Popover>
           );
 

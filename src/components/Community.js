@@ -4,27 +4,49 @@ import Comments from './CommunityCard';
 import '../style/community.css';
 import axios from 'axios';
 import CommunityCard from './CommunityCard';
+import { Pagination } from 'antd';
 
 class Community extends Component {
     state={
         posts:[],
+        current_page:0,
+        pages:0,
+        array_of_pages:[]
     }
     
     async componentDidMount(){ 
-        let data={user_id:window.localStorage.getItem('user_id')};
+        let data={user_id:window.localStorage.getItem('user_id'),page:1};
         axios.post('http://localhost:3000/communityPosts',data,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
-            this.setState({posts:response.data.posts});
-            console.log(this.state.posts);        
-
+            this.setState({posts:response.data.posts, pages:response.data.pages, current_page:response.data.page});
+            let arr=[]
+            for(var i=1;i<=this.state.pages;i++){
+                arr.push(i)
+            }
+            this.setState({array_of_pages:arr});
+            console.log(this.state.current_page)
         });
        
     }
-   
 
     render() {
+        const changePage = (page) =>{
+            if(page=="prev"){page=this.state.current_page-1}
+            if(page=="nxt"){page=this.state.current_page+1}
+
+            let data={user_id:window.localStorage.getItem('user_id'),page:page};
+            axios.post('http://localhost:3000/communityPosts',data,
+            {headers: {"Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT",
+            "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
+            this.setState({posts:response.data.posts, pages:response.data.pages, current_page:response.data.page});
+            console.log(this.state.posts);        
+
+        });
+        }
+
 
         const onSearch = () =>{ 
             let string=document.getElementById("searchform").value;
@@ -34,7 +56,7 @@ class Community extends Component {
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
-                this.setState({posts:response.data.posts});
+                this.setState({posts:response.data.posts, pages:response.data.pages, current_page:response.data.page});
                 console.log(this.state.posts);        
 
             });
@@ -107,8 +129,35 @@ class Community extends Component {
 
 
                     </div>
+                            
 
                 </div>
+                <div className=" d-flex justify-content-center">
+                    {/* <div className="col-5"></div>
+                            <Pagination  onPageChange={()=>{console.log("change")}} size='mini' siblingRange="2"
+                            defaulActivePage="1"
+                            totalPages="5"
+                            /> */}
+                         
+                            <ul class="pagination ">
+                                <li class="page-item"><a class="page-link" onClick={()=>{changePage("prev")}}>Previous</a></li>
+                                
+                                {
+                                    this.state.array_of_pages.map(i=>
+                                        <div>
+                                            {this.state.current_page!=i&&<li class="page-item" id={"page"+i}><a class="page-link " onClick={()=>{changePage(i)}}>{i}</a></li>}
+                                            {this.state.current_page==i&&<li class="page-item active"><a class="page-link " onClick={()=>{changePage(i)}}>{i}</a></li>}
+                                        </div>
+                                )
+                                }  
+
+
+                                <li class="page-item"><a class="page-link" onClick={()=>{changePage("nxt")}}>Next</a></li>
+                            </ul>
+                       
+                </div>
+                
+                
 
             </div>
 

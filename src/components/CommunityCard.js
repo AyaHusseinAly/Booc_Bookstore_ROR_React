@@ -50,92 +50,101 @@ class CommunityCard extends Component {
 
         }
         const likeStory = (story_id,is_liked) =>{ 
-            let data={
-                story_id:story_id,
-                user_id:window.localStorage.getItem('user_id')
-            };
-            if(!is_liked){
-                axios.post("http://localhost:3000/likeStory", data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, PUT",
-                    "Access-Control-Allow-Headers": "Content-Type",
+            if(localStorage.getItem('user_id') !== null){
+                let data={
+                    story_id:story_id,
+                    user_id:window.localStorage.getItem('user_id')
+                };
+                if(!is_liked){
+                    axios.post("http://localhost:3000/likeStory", data, {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT",
+                        "Access-Control-Allow-Headers": "Content-Type",
 
-                }
-            }).then(response => {
-                if(response){
-                    console.log(response);
-                    this.props.refresh_data();
-                    this.forceUpdate();
-                }
-                
-            });
-        }
-        else{
-            axios.post("http://localhost:3000/unlikeStory", data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, PUT",
-                    "Access-Control-Allow-Headers": "Content-Type",
-
-                }
-            }).then(response => {
-                if(response){
-                    console.log(response);
-                    this.props.refresh_data();
-                    this.forceUpdate();
-                }
-                
-            });
-
-        }
-
-        }
-        
-        const likeChapter = (chapter_id,is_liked) =>{ 
-            let data={
-                chapter_id:chapter_id,
-                user_id:window.localStorage.getItem('user_id')
-            };
-            if(!is_liked){         
-            axios.post("http://localhost:3000/likeChapter", data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, PUT",
-                    "Access-Control-Allow-Headers": "Content-Type",
-
-                }
-            }).then(response => {
-                if(response){
-                    this.props.refresh_data();
-                    this.forceUpdate();
-                    console.log(response);
+                    }
+                }).then(response => {
+                    if(response){
+                        console.log(response);
+                        this.props.refresh_data();
+                        this.forceUpdate();
+                    }
+                    
+                });
                 }
                 else{
-                    console.log(response);
-                }
-            });
+                    axios.post("http://localhost:3000/unlikeStory", data, {
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Methods": "GET, POST, PUT",
+                            "Access-Control-Allow-Headers": "Content-Type",
 
+                        }
+                    }).then(response => {
+                        if(response){
+                            console.log(response);
+                            this.props.refresh_data();
+                            this.forceUpdate();
+                        }
+                        
+                    });
+
+                }
             }
             else{
-                axios.post("http://localhost:3000/unlikeChapter", data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, POST, PUT",
-                    "Access-Control-Allow-Headers": "Content-Type",
+                window.location.href='login';
+            }      
+    }
+        
+        const likeChapter = (chapter_id,is_liked) =>{ 
+            if(localStorage.getItem('user_id') !== null){
+                let data={
+                    chapter_id:chapter_id,
+                    user_id:window.localStorage.getItem('user_id')
+                };
+                if(!is_liked){         
+                axios.post("http://localhost:3000/likeChapter", data, {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT",
+                        "Access-Control-Allow-Headers": "Content-Type",
+
+                    }
+                }).then(response => {
+                    if(response){
+                        this.props.refresh_data();
+                        this.forceUpdate();
+                        console.log(response);
+                    }
+                    else{
+                        console.log(response);
+                    }
+                });
 
                 }
-            }).then(response => {
-                if(response){
-                    this.props.refresh_data();
-                    this.forceUpdate();
-                    console.log(response);
-                }
+                else{
+                    axios.post("http://localhost:3000/unlikeChapter", data, {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT",
+                        "Access-Control-Allow-Headers": "Content-Type",
+
+                    }
+                }).then(response => {
+                    if(response){
+                        this.props.refresh_data();
+                        this.forceUpdate();
+                        console.log(response);
+                    }
+                    
+                });
+
                 
-            });
-
-            
+                }
             }
+            else{
+                window.location.href='login';
+            }  
         }
         return(       
 
@@ -186,7 +195,16 @@ class CommunityCard extends Component {
                                     <div style={{height:'1.8rem',border:'0.8px solid gray'}}></div>
                                 
                                 <div className="col-5 pl-5 ml-5" >
-                                    <a className="mx-2" style={{color:'#535964' }}><i className="far fa-comment-alt"></i></a>
+                                <Popup
+                                        trigger={ <a className="mx-2" style={{color:'#535964' }}><i className="far fa-comment-alt"></i></a>
+
+
+                                    }
+                                        modal
+                                        contentStyle={commentPopup}
+                                    >
+                                    <Comments comments={post.comments} post={post} refresh={this.props.refresh_data}></Comments>
+                                </Popup >
                                 <Popup
                                         trigger={<a   className="countsLink">{post.comments.length} Comments</a>
 
