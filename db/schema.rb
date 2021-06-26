@@ -196,8 +196,6 @@ ActiveRecord::Schema.define(version: 2021_06_25_005709) do
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "short_story_id"
-    t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
   create_table "short_story_genres", force: :cascade do |t|
@@ -265,7 +263,6 @@ ActiveRecord::Schema.define(version: 2021_06_25_005709) do
   add_foreign_key "notifications", "users", column: "sender_id_id"
   add_foreign_key "reports", "users"
   add_foreign_key "short_stories", "users"
-  add_foreign_key "short_stories_chapters", "short_stories"
   add_foreign_key "short_story_genres", "genres"
   add_foreign_key "short_story_genres", "short_stories"
   add_foreign_key "story_rate_reviews", "short_stories"
