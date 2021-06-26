@@ -6,8 +6,6 @@
 #
 default: &default
 
-
-<<<<<<< HEAD
   # adapter: postgresql
   # encoding: unicode
   # username: user1
