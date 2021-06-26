@@ -23,38 +23,24 @@ class AdminAllStores extends Component {
 
     
     handle= async () => {
-       
        await axios.get("http://localhost:3000/seach/store/",{ params: {q: this.state.bookName}})
         .then(response => {
         console.log(response)
         this.setState({stores:response.data.stores});
-        }); 
-        
+        });   
+    }
+
+    deleteStore = async (id) => {
+        await axios.delete("http://localhost:3000/deleteStore",{ params: {id: id}})
+        .then(response => {
+            console.log(response)
+           window.location.reload();
+        });  
     }
 
     
 
-    
-
-    render() {
-    
-        /*const deleteStore=(id)=>{
-            let data={id:id}
-            axios.post("http://localhost:3000/deleteStore",data,
-            {headers: {"Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT",
-            "Access-Control-Allow-Headers": "Content-Type"}})
-            .then(response => {
-                console.log(response)
-                axios.get("http://localhost:3000/stores")
-                .then(response => {
-                    console.log(response)
-                    this.setState({stores:response.data.stores});
-                });
-                 
-            });  
-        }*/
-       
+    render() {   
 
         return (
             <div>
@@ -81,8 +67,8 @@ class AdminAllStores extends Component {
                                 <td><a href="#" style={{ color: 'black',textDecoration: 'none' }}>{store.name}</a></td>
                                 <td>{store.distict} </td>
                                 <td>{store.kind}</td>
-                                <td><a href="#"  className="adminLink"> Delete Store </a></td>
-                                <td><a href={"/show_bookstore_books/"+store.id}  className="adminLink"> Show All Books </a></td>
+                                <td><a href="#" onClick={()=>{this.deleteStore(store.id)}} className="adminLink"> Delete Store </a></td>
+                                {/* <td><a href={"/show_bookstore_books/"+store.id}  className="adminLink"> Show All Books </a></td> */}
                             </tr>
                             )}
                         </tbody>

@@ -90,7 +90,7 @@ class AddStory extends Component {
                 }
             });
             console.log(res);
-            //window.location.reload();
+            window.location.reload();
            
         }
         else {
