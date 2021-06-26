@@ -50,7 +50,7 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     aws-eventstream (1.1.1)
-    aws-partitions (1.471.0)
+    aws-partitions (1.472.0)
     aws-sdk-core (3.115.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -114,6 +114,7 @@ GEM
     duktape (2.6.0.0)
     erubi (1.10.0)
     execjs (2.8.1)
+    ffi (1.15.3)
     ffi (1.15.3-x64-mingw32)
     geocoder (1.6.7)
     globalid (0.4.2)
@@ -133,12 +134,17 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.0)
+    mini_portile2 (2.5.3)
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.7)
+    nokogiri (1.11.7)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     nokogiri (1.11.7-x64-mingw32)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.2.3)
     pg (1.2.3-x64-mingw32)
     public_suffix (4.0.6)
     puma (3.12.6)
@@ -234,6 +240,7 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
+  ruby
   x64-mingw32
 
 DEPENDENCIES

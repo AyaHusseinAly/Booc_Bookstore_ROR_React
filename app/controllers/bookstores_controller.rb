@@ -283,5 +283,14 @@ class BookstoresController < ApplicationController
         @stores = Bookstore.all
         render :json =>{stores: @stores}
     end
+
+    def adminSearchByNameOfStore
+        if params['q'] == ""
+            @stores = Bookstore.all
+        elsif params['q'] != ""
+            @stores =  Bookstore.where("name LIKE ?","%"+ params['q']+"%")
+        end
+        render :json =>{stores: @stores}
+    end
      
 end
