@@ -45,6 +45,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import { isConstructorDeclaration } from 'typescript';
+import AllStories from './components/AllStories';
 
 
 
@@ -95,7 +96,7 @@ class App extends Component {
 
     }
     this.handleLogin = this.handleLogin.bind(this);
-    this.is_logged_in=this.is_logged_in.bind(this);
+    this.is_logged_in = this.is_logged_in.bind(this);
     // this.handleRedirect=this.handleRedirect.bind(this);
     // this.handleLogout=this.handleLogout.bind(this);
   }
@@ -158,96 +159,109 @@ class App extends Component {
     }
   }
 
-  
-  render(){
-  return (
-    <div>
-      <Header
-        loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} is_logged_in={this.is_logged_in} >
-      </Header>
-      <div style={{minHeight:400}}>
-      <Switch>
-        { this.state.user.role != 'admin'
-         &&
-          <Route 
-          path="/"
-          exact 
-          render={props => (
-            <Home { ... props} loggedInStatus={this.state.loggedInStatus} />
-          )}
-          /> }
-           { this.state.user.role != 'admin' &&
-          <Route path="/genre/:id" exact component={Genre}/>
-          }
-          { this.state.user.role != 'admin' &&
-            <Route path="/map" component={Map}/>
-          }
-          { this.state.user.role != 'admin' &&
+
+
+  render() {
+    return (
+      <div>
+        <Header
+          loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} is_logged_in={this.is_logged_in} >
+        </Header>
+        <div style={{ minHeight: 400 }}>
+          <Switch>
+            {this.state.user.role != 'admin'
+              &&
+              <Route
+                path="/"
+                exact
+                render={props => (
+                  <Home {...props} loggedInStatus={this.state.loggedInStatus} />
+                )}
+              />}
+            {this.state.user.role != 'admin' &&
+              <Route path="/genre/:id" exact component={Genre} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/map" component={Map} />
+            }
+            {/* { this.state.user.role != 'admin' &&
              (<Route path="/writer" component={ Writer}/> )
-          }
-          { this.state.user.role != 'admin' &&
-            <Route path="/community" component={Community}/>
-          } 
-          { this.state.user.role != 'admin' &&
-            <Route path="/mystories" component={MyStories}/>
-          }
-          { this.state.user.role != 'admin' &&
-            <Route path="/addstory" component={AddStory}/>
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/userprofile" component={UserProfile}/>
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/FavoritesPage" component={FavoritesPage}/>
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/BookShelf" component={BookShelf}/>
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/DownloadsPage" component={DownloadsPage}/>
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/UserPage" component={UserPage}/>
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/FreeBook" component={FreeBook} />
-          }
-          { this.state.user.role != 'admin' &&
-          <Route path="/writerStories/:id" render={(props) => <WriterStories {...props} />} />
-           }
-          <Route
+          } */}
+            {this.state.user.role != 'admin' &&
+              (<Route path="/writer" component={MyStories} />)
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/community" component={Community} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/mystories" component={MyStories} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/addstory" component={AddStory} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/bookdetails/:isbn" render={(props) => <BookDetails {...props} />} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/userprofile" component={UserProfile} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/FavoritesPage" component={FavoritesPage} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/BookShelf" component={BookShelf} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/DownloadsPage" component={DownloadsPage} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/UserPage" component={UserPage} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/FreeBook" component={FreeBook} />
+            }
+            {this.state.user.role != 'admin' &&
+              <Route path="/writerStories/:id" render={(props) => <WriterStories {...props} />} />
+            }
+            <Route
+
               path="/sign_up"
               render={props => (
                 <Registration {...props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin} />
               )}
             />
-          
+
             <Route
               path="/login"
               render={props => (
                 <Login {...props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin} />
               )}
             />
-          
-          <Route path="/404" component={NotFound} />
-          
-              
+            {/* <<<<<<< HEAD
+            <Route path="/shortStory/:id" component={ShortStoryDetails} />
+           
+            <Route path="/404" component={NotFound} />
+            <Route path="/writerStories/:id" render={(props) => <WriterStories {...props} />} />
+            <Route path="/AllStories" component={AllStories} />
+======= */}
+
+            <Route path="/404" component={NotFound} />
+
+
+            <Route path="/AllStories" component={AllStories} />
 
             <Route path="/shortStory/:id" component={ShortStoryDetails} />
-            { this.state.user.role == 'admin' &&
-             <Route 
-              path="/admin"
-              exact
-              render={props => (
-                <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
-              )}
-            />}
-             { this.state.user.role == 'seller' &&
-          <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
-          <Route path="/addbook/:id" component={AddBook} />
+            {this.state.user.role == 'admin' &&
+              <Route
+                path="/admin"
+                exact
+                render={props => (
+                  <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
+                )}
+              />}
+            {this.state.user.role == 'seller' &&
+              <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
+            <Route path="/addbook/:id" component={AddBook} />
 
           </Switch >
         </div >

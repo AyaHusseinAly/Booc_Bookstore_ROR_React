@@ -49,18 +49,16 @@ class AddBook extends Component {
                 bookIsbn: this.state.bookIsbn,
                 bookPrice: this.state.bookPrice,
                 bookstoreId: this.state.bookstoreId,
-               // bookCover: this.state.bookCover,
+                bookCover: this.state.bookCover,
 
             }
             Object.keys(this.state).forEach((key, value) => {
                 return data.append(key, this.state[key])
             })
-            // data.append("shortStoryCover", this.state.shortStoryCover);
-            // const submitdata = { obj, data }
+           
             console.log("submit");
             console.log(obj.bookCover); //notdefine
-            //  console.log("file ===========");
-            // console.log(this.state.bookCoverPreview);
+            
              console.log("send ++++++++++");
             console.log(this.state.bookCover);
             const res = await axios.post("http://localhost:3000/addbook", data, {
@@ -93,29 +91,18 @@ class AddBook extends Component {
             errors.bookTitle = "Title is required"
         if (this.state.bookPrice.trim() === "")
             errors.bookPrice = "Price is required"
+        if (this.state.bookIsbn.trim() === "")
+            errors.bookIsbn = "Isbn is required"
+        if (this.state.isin)
         // if (this.state.bookstoreId === "")
         //     errors.bookstoreId = "bookstoreId is required"
-        // if (this.state.shortStoryCover.length === 0)
+        //  if (this.state.bookCover.length === 0)
         //     errors.cover = "Cover is required"
         
         this.setState({ errors });
         return Object.keys(errors).length === 0 ? null : errors;
     }
-    // async componentDidMount() {
-    //     const res = await axios.get('http://localhost:3000/shortStoriesGenres',
-    //         {
-    //             headers: {
-    //                 "Access-Control-Allow-Origin": "*",
-    //                 "Access-Control-Allow-Methods": "GET, POST, PUT",
-    //                 "Access-Control-Allow-Headers": "Content-Type"
-    //             }
-    //         });
-
-    //     this.setState({ genres: res.data.short_stories });
-    //     // console.log("herrrrrrrrrrrrrrrrr");
-    //     console.log(this.state.genres);
-
-    // }
+    
 
     fileUploadAction = () => this.inputReference.current.click();
     // fileUploadInputChange = (e) =>this.setState({fileUploadState:e.target.value});
@@ -124,7 +111,7 @@ class AddBook extends Component {
         return (
 
             <React.Fragment>
-                <h1>{this.props.match.params.id}</h1>
+                <h1>Add Book</h1>
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
                     {this.state.bookCoverPreview && <img className='col col-3' style={{ width: '100%' }} src={this.state.bookCoverPreview} alt="The current file" />}
                     {!this.state.bookCoverPreview &&
@@ -149,7 +136,13 @@ class AddBook extends Component {
                         <input type="text" className="formControl p-1" style={{ borderRadius: '4px' }} placeholder=" Book Price .." id='bookPrice' value={this.state.bookPrice}
                             onChange={(e) => this.setState({ bookPrice: e.currentTarget.value })} />
                         {this.state.errors.bookPrice && (<div className="alert alert-danger" role="alert">{this.state.errors.bookPrice}</div>)}
-                        <div className='d-flex justify-content-between mt-4'>
+                        
+                        <label className="formLabel mt-4" style={{ display: 'block' }}
+                            htmlFor='bookPrice'>Book Price</label>
+                        <input type="text" className="formControl p-1" style={{ borderRadius: '4px' }} placeholder=" Book Isbn .." id='bookIsbn' value={this.state.bookIsbn}
+                            onChange={(e) => this.setState({ bookIsbn: e.currentTarget.value })} />
+                        {this.state.errors.bookIsbn && (<div className="alert alert-danger" role="alert">{this.state.errors.bookIsbn}</div>)}
+                        {/* <div className='d-flex justify-content-between mt-4'>
                             <div>
                                 <label className="formLabel" style={{ display: 'block' }}
                                     htmlFor='bookIsbn'>Book Isbn</label>
@@ -157,7 +150,7 @@ class AddBook extends Component {
                                     onChange={(e) => this.setState({ bookIsbn: e.currentTarget.value })}/>
                                     
                             </div>
-                        </div>
+                        </div> */}
                         {/* <label className="formLabel mt-4" style={{ display: 'block' }} htmlFor='bookstoreId'>Book store Id</label>
                         <input type="text" className="formControl " style={{ borderRadius: '4px', display: 'inlineBlock' }} id='bookstoreId' value={this.state.bookstoreId}
                             onChange={(e) => this.setState({ bookstoreId: e.currentTarget.value })} />

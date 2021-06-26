@@ -35,7 +35,7 @@ class Followers extends Component {
                 <div className="person-follow">
                     <h3>Writers You Follow ({this.state.writers.length})</h3>
                     <div className="row" style={{ maxHeight: '400px' }}>
-                        {this.state.writers.length > 0 && this.state.writers.map((user) => {
+                        {this.state.writers && this.state.writers.length > 0 && this.state.writers.map((user) => {
                             return <Link className="col-sm-4 col-md-4 col-lg-4" style={{ height: '160px' }} to={`/writerStories/${user.id}`} >
                                 <div className="text-img" >
                                     <img src={user.avatar} className="rounded-circle" style={{ width: '120px', height: '120px', borderRadius: '50%', display: 'block' }} />
@@ -49,7 +49,7 @@ class Followers extends Component {
                     <hr />
                     <h3>Readers Who Follow You({this.state.readers.length})</h3>
                     <div className="row" style={{ maxHeight: '400px' }}>
-                        {this.state.readers.length > 0 && this.state.readers.map((user) => {
+                        {this.state.readers && this.state.readers.length > 0 && this.state.readers.map((user) => {
                             return <Link className="col-sm-4 col-md-4 col-lg-4" style={{ height: '160px' }} to={`/writerStories/${user.id}`}>
                                 <div className="text-img" >
                                     <img src={user.avatar} className="rounded-circle" style={{ width: '120px', height: '120px', borderRadius: '50%', display: 'block' }} />

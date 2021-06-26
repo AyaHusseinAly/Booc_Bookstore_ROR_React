@@ -95,8 +95,8 @@ const BookDetails = (props) => {
                                 <img src={book.length > 0 && book[0].volumeInfo.imageLinks.thumbnail} style={{ width: '400px'}}/>
                                 <div className="button">
                                    
-                                     <button><i className="fa fa-book " ></i> 
-                                     <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
+                                    <button><i className="fa fa-book " ></i> 
+                                    <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
                                     <button><i className="fa fa-microphone"></i> Find near me</button>
                                     {book.length > 0 && book[0].accessInfo.pdf.isAvailable ? 
                                     <button style={{border: "1px solid #F8A488"}}><i className="fa fa-book" ></i> <a href={book.length > 0 && book[0].accessInfo.webReaderLink} style={{color: "black",TextDecoration: "none"}}>Read Online</a></button>:<span></span>}
