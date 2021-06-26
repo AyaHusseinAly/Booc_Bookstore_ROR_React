@@ -39,6 +39,7 @@ const BookShelf = (props) => {
 
                 <>
                  <h2 style={{textAlign: "center",marginBottom: "20px"}}><span style={{color: "var(--secondaryColor)"}}>M</span>y Shelf B<span style={{color: "var(--secondaryColor)"}}>oo</span>k</h2>
+                
                  <div className="row ">
                  {shelfs?.map(bk=> 
                    <div className="col-7 col-md-2 main" >
@@ -61,7 +62,8 @@ const BookShelf = (props) => {
                     </div>)}
 
             
-                </div> 
+                
+                </div>
                 </>
     );
            

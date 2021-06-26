@@ -48,9 +48,9 @@ const DownloadsPage = (props) => {
                     < div className="book_img">
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
                        <div className="hovi">
-                         <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                         {/* <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="details">details</span>
-                          </Link>
+                          </Link> */}
                           <span className="remove-do" onClick={()=>removeDownloadBook(book)}>
                            <i className="fa fa-window-close" style={{padding: "18px",lineHeight: "50px"}}>remove</i>
                            
