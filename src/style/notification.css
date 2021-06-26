@@ -21,11 +21,13 @@
     color: rgb(46, 46, 46);
     font-family: Helvetica,Arial,  sans-serif;
     font-weight:600;
+    margin-bottom: 1ch;
 }
 .notification-text{
     color: gray;
     font-family: Helvetica,Arial,  sans-serif;
     font-weight:500;
+    margin-bottom: 0ch;
 }
 .notification-outer:hover{
     border:1px solid black;

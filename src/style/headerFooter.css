@@ -100,3 +100,17 @@ footer {
     text-decoration: none;
     text-emphasis: none;
 }
+.notification-overlay{
+    background-color: rgb(196, 29, 0,0.9);
+    border-radius: 2px;
+    position: absolute;
+    left: 1ch;
+    top:5ch;
+    padding: 3px;
+    font-size: 10px;
+    color: white;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+
+}

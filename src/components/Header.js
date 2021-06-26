@@ -25,9 +25,11 @@ class Header extends Component {
     constructor(props){
         super(props);
         this.state={
-            notifications: []
+            notifications: [],
+            newNotifications: 0
         };
         this.handleLogout=this.handleLogout.bind(this);
+        this.handleReadNotifications=this.handleReadNotifications.bind(this)
         // const handleRedirect=()=>{
         //     this.props.history.push('/login');
         // }
@@ -65,6 +67,24 @@ class Header extends Component {
     //      avatar: ""
     //    })
      }
+     handleReadNotifications(){
+         if (localStorage.getItem('user_id')){
+            axios.post('http://localhost:3000/notifications/read_notifications',{
+                user_id: localStorage.getItem('user_id')
+            })
+            .then(response=>{
+                console.log(response)
+                if(response.data.message === "read notifications"){
+                    this.setState({
+                        newNotifications: 0
+                    });
+                }
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+         }
+     }
      componentDidMount = () =>{
         //  this.props.is_logged_in();
          axios.post('http://localhost:3000/notifications/get_notifications',{
@@ -76,6 +96,16 @@ class Header extends Component {
                  this.setState({
                      notifications: response.data.notifications
                  });
+                 console.log("nots",response.data.notifications)
+                 console.log("state",this.state.notifications)
+                for (const notification of response.data.notifications){
+                    if(notification.read == false){
+                        this.setState({
+                            newNotifications: this.state.newNotifications + 1
+                        })
+                    }
+                    console.log("num",this.state.newNotifications)
+                }
              }
              else{
                  console.log("no notification")
@@ -125,16 +155,16 @@ class Header extends Component {
             href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
         }
         const notifications = Object.keys(this.state.notifications).length>0 ? this.state.notifications.map((notification, index) => {
-            console.log(notification)
+            // console.log(notification)
             var link = ''
             if(notification.kind==='story'){
                 link = `/shortStory/${notification.instance_id}`
             }
             console.log(link)
             return(<div className='notification-container'><Link className='notification-link' to={link}><Notification notification={notification}></Notification></Link></div>)
-        }): <p>you have no notifications</p>
+        }): <span>you have no notifications</span>
         const popover = (
-            <Popover id="popover-notification " style={{padding:0, marginTop:25}}>
+            <Popover id="popover-notification" style={{padding:0, marginTop:25}}>
               {/* <Popover.Title as="h3">Notifications</Popover.Title> */}
               <Popover.Content style={{padding:0,position:'absolute',right:-50}}>
                 {notifications}
@@ -168,8 +198,11 @@ class Header extends Component {
                     </div> */}
                    
                         <div className="dropdown show" >
-                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                        <img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" />
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} onEntered={this.handleReadNotifications}>
+                        <span>
+                        <img  className=" my-3 mr-3 icon"  src="img/icons/iconBell.png" />
+                        {(this.state.newNotifications > 0) && <div className='notification-overlay'>{this.state.newNotifications}</div>}
+                        </span>
                         </OverlayTrigger>
                             {/* <a  href="#" ><img  className="  my-3 mr-3 icon"  src="img/icons/iconBell.png" /></a> */}
                             <img  className="  m-1 rounded-circle"  src={avatar}  /> 
