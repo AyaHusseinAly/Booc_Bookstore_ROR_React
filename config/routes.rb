@@ -40,6 +40,8 @@ post '/logged_in', to: 'members#is_logged_in?'
 
   post 'bookStoreSearchFromMap', to:'bookstores#search'
   post '/admin/BookStores', to:'bookstores#create'
+  get '/apiSearchBooks', to:'bookstores#apiSearch' 
+  get '/stores', to:'bookstores#getAllStores'
 
 
   resources :notifications, only: [:create] 
