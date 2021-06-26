@@ -202,6 +202,10 @@ class ShortStoriesController < ApplicationController
                     cover:"",
                     rate:rate
                 }
+
+                if story&.image&.attached?
+                    obj[:cover]= rails_blob_url(story.image)
+                end
                 @bookmarks.push(obj)
 
             end 
