@@ -274,7 +274,7 @@ class ShortStoryDetails extends Component {
                                         <div className="about-info">
                                             <div className='row mb-3'>
                                                 <h4 className='col col-5'>About Story
-                                                    <Edit item={this.state.shortStory} setItem={(item) => window.location.reload()} kind='Story' />
+                                                    {localStorage.getItem('user_id') && this.state.writer.id == localStorage.getItem('user_id') && <Edit item={this.state.shortStory} setItem={(item) => window.location.reload()} kind='Story' />}
                                                     {/*) <i class="far fa-trash-alt" style={{ fontSize: '17px', cursor: 'pointer' }}></i> */}
                                                 </h4>
                                                 <div className='col col-7 mt-2' style={{ display: 'inline-block' }}><LikeCommentStory style={{ width: '30px' }} users={this.state.likes} story={this.state.shortStory} stroylikeflag={this.state.stroylikeflag} commentStory={this.state.commentStory} kind="Story" /></div>
@@ -292,7 +292,7 @@ class ShortStoryDetails extends Component {
                                             {/* <div className="reviews"> */}
 
                                             {this.state.chapters.map((chapter) => {
-                                                return <div className="reviews my-6" style={{}} key={chapter.id}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+                                                return <div className="reviews my-6" style={{}} key={chapter.id}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} writer={this.state.writer} /></div>
 
                                             })}
                                             {/* </div> */}
@@ -395,7 +395,7 @@ class Chapters extends Component {
             </div>
 
             <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span>
-                <Edit item={this.props.chapter} setItem={(item) => window.location.reload()} kind='Chapter' />
+                {localStorage.getItem('user_id') && localStorage.getItem('user_id') == this.props.writer.id && < Edit item={this.props.chapter} setItem={(item) => window.location.reload()} kind='Chapter' />}
                 {/* <i class="fas fa-edit ml-2" style={{ fontSize: '17px', cursor: 'pointer' }}></i><i class="far fa-trash-alt" style={{ fontSize: '17px', cursor: 'pointer' }}></i> */}
             </div>
         </div>)
