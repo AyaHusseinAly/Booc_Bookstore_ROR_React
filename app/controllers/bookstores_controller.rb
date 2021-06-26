@@ -15,8 +15,12 @@ class BookstoresController < ApplicationController
     
     
     def Add_book 
-    @book=BookstoreBook.create!(book_title:params['bookTitle'],price:params['bookPrice'],book_isbn:params['bookIsbn'],bookstore_id:params['bookstoreId'])
-       
+    @book=BookstoreBook.create!(book_title:params['bookTitle'],price:params['bookPrice'],book_isbn:params['bookIsbn'], cover:'',bookstore_id:params['bookstoreId'])
+        @book.image.attach(params[:bookCover])
+        if @book&.image&.attached?
+            @book.cover= rails_blob_url(@book.image)
+            @book.save()
+        end
     #@bookstores = Bookstore.all()
     render :json => {message:" add book created succefully",book:@book}
     end
