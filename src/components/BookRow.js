@@ -1,13 +1,41 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import '../style/admin.css';
 import '../style/ratingStars.css';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const BookRow = (props) =>{
     const [favorites, setFavorites] = useState([]);
     const [shelfs, setShelfs] = useState([]);
     // const [Color, setColor] = useState('#263044');
     // const [isBlack, setIsBlack] = useState(true);
+    const [user,setUser] = useState([]);
+
+     useEffect(() =>{
+      const fetchUser = () => {
+
+    let data ={
+            user_id:localStorage.getItem('user_id')
+        }
+         axios.post("http://localhost:3000/myProfileData",data,
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type"
+                }
+            })
+            .then(response=>{
+                console.log(response.data.user)
+                setUser(response.data.user);
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+            
+      }
+      fetchUser();
+         },[]);
     
 
     const addFavouriteBook = (book) =>{
@@ -68,30 +96,36 @@ const BookRow = (props) =>{
                     
                     < div className="book_img">
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
+                       {user.id?
                        <div className="hoverable">
-                         <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                         <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="details">details</span>
                           </Link>
+                          
                           <span className="icon-heart" onClick={()=>addFavouriteBook(book)} 
                           >
                            <i className="fa fa-heart"><span class="tooltiptextfav">add to fav</span></i>
                           </span>
-                          <span  onClick={()=>addShelfBook(book)} 
-                           
-                          >
+                          <span  onClick={()=>addShelfBook(book)} >
+                          
                            <i className="fa fa-plus" style={{fontSize: "20px",color: "var(--primaryColor)",marginTop: "120px",marginRight: "10px",textAlign: "center",position: "relative",
                            display: "inline-block"}}>
                            <span class="tooltiptextshel">add to shelf</span>
                            </i>
                           </span>
-                        </div>
+                          
+                        </div>: 
+                          <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                             <span style={{textAlign:"center",marginLeft:"50px"}}>details</span>
+                          </Link>}
+
                      </div>  
                     <figcaption className="book_title" style={{alignItems:'center'}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>
-                        <span className="active-star"></span>
-                        <span className="active-star"></span>
-                        <span className="active-star"></span>
-                        <span className="clip-star"></span>
-                        <span className="clip-star"></span>
+                        {user.id&&<span className="active-star"></span>}
+                        {user.id&&<span className="active-star"></span>}
+                        {user.id&&<span className="active-star"></span>}
+                        {user.id&&<span className="clip-star"></span>}
+                        {user.id&&<span className="clip-star"></span>}
                     
                     </figure>
                     

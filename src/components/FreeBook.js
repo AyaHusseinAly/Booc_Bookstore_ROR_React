@@ -8,6 +8,7 @@ import Slider from "react-slick";
 
 
 
+
 const FreeBook = (props) => {
     const [freeBooks, setfreeBooks] = useState([]);
     // const location = useLocation();
@@ -15,12 +16,13 @@ const FreeBook = (props) => {
     const [shelfs, setShelfs] = useState([]);
     const [downloads, setDownloads] = useState([]);
     const [favorites, setFavorites] = useState([]);
-   
+    const [user,setUser] = useState([]);
+
 
     useEffect(() =>{
         
             axios.get(
-                `https://www.googleapis.com/books/v1/volumes?q=hundred&download=epub&filter=free-ebooks&startIndex=0&maxResults=40&orderBy=newest&&key=AIzaSyCKJGq_tX3aqorh0Bznm5RsIgLVW7bE-y0`
+                `https://www.googleapis.com/books/v1/volumes?q=hundred&download=epub&filter=free-ebooks&startIndex=0&maxResults=40&orderBy=newest&&key=AIzaSyCgsK9dxkG33dNVndYmSGJ6cU27W-Tn1G8`
             ).then (result => {
                 console.log(result)
                 if(result.data.items)
@@ -30,6 +32,34 @@ const FreeBook = (props) => {
             })
          
     }, [])
+
+
+useEffect(() =>{
+      const fetchUser = () => {
+       let data ={
+            user_id:localStorage.getItem('user_id')
+        }
+         axios.post("http://localhost:3000/myProfileData",data,
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type"
+                }
+            })
+            .then(response=>{
+                console.log(response.data.user)
+                setUser(response.data.user);
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+            
+      }
+      fetchUser();
+         },[]);
+
+
         
         
         
@@ -164,7 +194,7 @@ const FreeBook = (props) => {
                         </div>
                      </div>  
                     <figcaption className="book_title" style={{textAlign: "center",fontSize: "15px",color:"black",fontFamily: "arial"}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>  
-                    {book&&book.accessInfo.pdf.isAvailable ?<button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.pdf.isAvailable&&book.accessInfo.pdf.downloadLink} onClick={()=>addDownloadBook(book)} style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Download</a></button>:<button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.webReaderLink}  style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Read Online</a></button>}
+                    {book&&user.id&&book.accessInfo.pdf.isAvailable ?<button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.pdf.isAvailable&&book.accessInfo.pdf.downloadLink} onClick={()=>addDownloadBook(book)} style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Download</a></button>:<button><i className="fa fa-download" style={{marginRight: "10px",color: "var(--primaryColor)"}}></i><a  href={book&&book.accessInfo.webReaderLink}  style={{textAlign: "center",fontSize: "15px",color:"var(--secondaryColor)"}}>Read Online</a></button>}
                     </figure>
                     
 

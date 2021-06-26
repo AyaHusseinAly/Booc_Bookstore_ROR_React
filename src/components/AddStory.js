@@ -161,8 +161,11 @@ class AddStory extends Component {
 
             <React.Fragment>
                 {/* {this.state.errors &&(<div className="alert alert-danger" role="alert">{Object.keys(this.state.errors ).map(function(key) {
+
                return <option value={key}>{this.state.errors[key]}</option>})}</div>)} */}
+                {this.state.errors.cover && (<div className="container mt-2 alert alert-danger" role="alert">{this.state.errors.cover}</div>)}
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
+
                     {this.state.shortStoryCoverPreview && <img className='col col-3' style={{ width: '100%' }} src={this.state.shortStoryCoverPreview} alt="The current file" />}
                     {!this.state.shortStoryCoverPreview &&
                         <div className='col col-3' style={{ width: '100%', backgroundColor: '#ADB4C3' }}>
