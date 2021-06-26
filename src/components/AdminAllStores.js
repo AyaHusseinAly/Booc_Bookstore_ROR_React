@@ -58,7 +58,7 @@ class AdminAllStores extends Component {
 
         return (
             <div>
-                <button className="py-1 px-3  my-4 mr-4 btn btn-lg float-right" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }}><a href="/admin" style={{ color: 'black',textDecoration: 'none' }}>Add New Store</a></i></button>
+                <button className="py-1 px-3  my-4 mr-4 btn btn-lg float-right" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488' }} ><i className="fa fa-plus-circle" style={{ color: 'black', border: 'none' }}><a href="/create/BookStores" style={{ color: 'black',textDecoration: 'none' }}>Add New Store</a></i></button>
                 <br/>
         <div className="px-5 py-2">
             <h5 style={{color:'#F8A488',textDecoration:'underline',marginBottom:'1rem'}}>All Stores</h5>
@@ -74,11 +74,12 @@ class AdminAllStores extends Component {
                 <tbody>
                 {this.state.stores.map(store =>
                     <tr>
-
-                    <td><a href={"/addbook/"+store.id} style={{ color: 'black',textDecoration: 'none' }}>{store.name}</a></td>
+                    {/* <td><a href={"/addbook/"+store.id} style={{ color: 'black',textDecoration: 'none' }}>{store.name}</a></td> */}
+                    <td><a href="#" style={{ color: 'black',textDecoration: 'none' }}>{store.name}</a></td>
                     <td>{store.distict} </td>
                     <td>{store.kind}</td>
                     <td><a href="#" onClick={()=>{deleteReport(store.id)}} className="adminLink"> Delete Store </a></td>
+                    <td><a href={"/show_bookstore_books/"+store.id}  className="adminLink"> Show All Books </a></td>
                     </tr>
                     )}
                 </tbody>
