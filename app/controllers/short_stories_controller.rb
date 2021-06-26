@@ -95,7 +95,8 @@ class ShortStoriesController < ApplicationController
 
         }
         @Finished.push(obj);
-       end
+        end
+        
         render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished}
     end
 
@@ -211,8 +212,11 @@ class ShortStoriesController < ApplicationController
             end 
         end
 
-        
-        render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished,writer_info:@writer,bookmark:@bookmarks}
+        @followed_flag=false
+        if Follow.where(reader_id: params[:login], writer_id:params[:writer_id]).length>0
+            @followed_flag=true
+        end
+        render :json=>{NotFinishedYet:@NotFinishedYet,Finished:@Finished,writer_info:@writer,bookmark:@bookmarks,followed_flag:@followed_flag}
     end
 
     def show    
@@ -293,6 +297,7 @@ class ShortStoriesController < ApplicationController
            @reviews=[]
            @storyRate=0
            @allReviews=StoryRatingReview.where(short_story_id:params['id'] )
+           
            @allReviews.each do |rateReview|
                 user=User.find(rateReview.user_id)
                 @storyRate=@storyRate+rateReview.rate
