@@ -59,6 +59,7 @@ const BookDetails = (props) => {
     const [reviews, setRev] = useState([]);
     const [isbn, setIsbn] = useState([]);
    const [review_flag,setFlag] = useState([]);
+    const [user,setUser] = useState([]);
    
     useEffect(() =>{
         const isbn = props.match.params.isbn;
@@ -105,6 +106,34 @@ const BookDetails = (props) => {
             
       }
       fetchRev();
+         },[]);
+
+         
+
+    useEffect(() =>{
+      const fetchUser = () => {
+
+    let data ={
+            user_id:localStorage.getItem('user_id')
+        }
+         axios.post("http://localhost:3000/myProfileData",data,
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type"
+                }
+            })
+            .then(response=>{
+                console.log(response.data.user)
+                setUser(response.data.user);
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+            
+      }
+      fetchUser();
          },[]);
       
        
@@ -155,10 +184,10 @@ const BookDetails = (props) => {
                                    
                                     <button><i className="fa fa-book " ></i> 
                                     <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
-                                    <button><i className="fa fa-microphone"></i> Find near me</button>
+                                    {user.id&&<button><i className="fa fa-microphone"></i> Find near me</button>}
                                     {book.length > 0 && book[0].accessInfo.pdf.isAvailable ? 
                                     <button style={{border: "1px solid #F8A488"}}><i className="fa fa-book" ></i> <a href={book.length > 0 && book[0].accessInfo.webReaderLink} style={{color: "black",TextDecoration: "none"}}>Read Online</a></button>:<span></span>}
-                                    {book.length > 0 && book[0].saleInfo.isEbook && !book[0].accessInfo.pdf.isAvailable  ? 
+                                    {book.length > 0 && user.id && book[0].saleInfo.isEbook && !book[0].accessInfo.pdf.isAvailable  ? 
                                     <button><i className="fa fa-money" ></i> <a href={book.length > 0 && book[0].saleInfo.buyLink}>Buy</a></button>:<span></span>}
                                 </div>
                             </div>
@@ -248,7 +277,7 @@ const BookDetails = (props) => {
                                 : <span> No rating yet </span>
                                 }
 
-                                <button className="btn-shelf"> <i className="fa fa-plus" onClick={()=>addShelfBook(book[0])} ></i> Add To Shelf Book</button>
+                              {user.id? <button className="btn-shelf"> <i className="fa fa-plus" onClick={()=>addShelfBook(book[0])} ></i> Add To Shelf Book</button>:<span></span>} 
                             </div>
                          
                             <ul className="list-unstyled details" style={{margin: '70px 0'}}>
@@ -352,7 +381,7 @@ const BookDetails = (props) => {
                        
                         
                     
-                        <div className="mail">
+                        {user.id&&<div className="mail">
                             <h4>Share with Friends</h4>
                             <EmailShareButton 
                              url={book.length > 0 && book[0].volumeInfo.previewLink}
@@ -389,7 +418,7 @@ const BookDetails = (props) => {
                            <WhatsappIcon size={30} logoFillColor="#f5b17b" round={true} style={{marginTop: '10px',marginLeft: '10px'}}/></WhatsappShareButton>
                            
                             
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>
