@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/js/dist/dropdown.js';
 import $ from 'jquery';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Popper from 'popper.js';
 import '../style/headerFooter.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
@@ -12,6 +13,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import  ReactDOM from 'react-dom';
 import {ActionCableProvider, ActionCableConsumer,ActionCable} from 'react-actioncable-provider';
 import {Popover, Button,OverlayTrigger} from 'react-bootstrap'
+import  Notification  from './Notification';
 
 
 
@@ -91,7 +93,7 @@ class Header extends Component {
         console.log(response.data);
         console.log(this.state);
         this.setState({
-            notifications: [ ...this.state.notifications, response.data]
+            notifications: [ response.data, ...this.state.notifications]
         })
      }
     
@@ -123,12 +125,18 @@ class Header extends Component {
             href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
         }
         const notifications = Object.keys(this.state.notifications).length>0 ? this.state.notifications.map((notification, index) => {
-            return(<div><p>{notification.body}</p> <hr/> </div>)
+            console.log(notification)
+            var link = ''
+            if(notification.kind==='story'){
+                link = `/shortStory/${notification.instance_id}`
+            }
+            console.log(link)
+            return(<div className='notification-container'><Link className='notification-link' to={link}><Notification notification={notification}></Notification></Link></div>)
         }): <p>you have no notifications</p>
         const popover = (
-            <Popover id="popover-notification">
-              <Popover.Title as="h3">Notifications</Popover.Title>
-              <Popover.Content>
+            <Popover id="popover-notification " style={{padding:0, marginTop:25}}>
+              {/* <Popover.Title as="h3">Notifications</Popover.Title> */}
+              <Popover.Content style={{padding:0,position:'absolute',right:-50}}>
                 {notifications}
               </Popover.Content>
             </Popover>

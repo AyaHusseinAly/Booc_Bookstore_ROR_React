@@ -90,9 +90,11 @@ class AddStory extends Component {
                             axios.post('http://localhost:3000/notifications',{
                                 sender_id: localStorage.getItem("user_id"),
                                 reciever_id: reader.id,
-                                type: "story",
+                                kind: "story",
                                 instance_id: res.data.story.id,
-                                body: `${this.props.user.name} just added a new story called '${res.data.story.title}'.`
+                                body: `${this.props.user.name} just added a new story called '${res.data.story.title}'.`,
+                                image: res.data.story.cover,
+                                summary: `${res.data.story.summary.slice(0,70)}...`
                             })
                             .then(response => {
                                 console.log(response);
