@@ -96,9 +96,9 @@ const BookRow = (props) =>{
                     
                     < div className="book_img">
                     <img style={{width:'100%'}} src={book&&book.volumeInfo.imageLinks.thumbnail} alt="" className="  book_image rounded  img-fluid"/>
-                       {user.id&&
+                       {user.id?
                        <div className="hoverable">
-                         <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                         <Link to={`/BookDetails/${book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
                              <span className="details">details</span>
                           </Link>
                           
@@ -114,15 +114,18 @@ const BookRow = (props) =>{
                            </i>
                           </span>
                           
-                        </div>}
+                        </div>: 
+                          <Link to={`/BookDetails/${book&&book.volumeInfo.industryIdentifiers[0].identifier}`} style={{ textDecoration: 'none' }}>
+                             <span style={{textAlign:"center",marginLeft:"50px"}}>details</span>
+                          </Link>}
 
                      </div>  
                     <figcaption className="book_title" style={{alignItems:'center'}}>{book&&book.volumeInfo.title.slice(0,15)}</figcaption>
-                        <span className="active-star"></span>
-                        <span className="active-star"></span>
-                        <span className="active-star"></span>
-                        <span className="clip-star"></span>
-                        <span className="clip-star"></span>
+                        {user.id&&<span className="active-star"></span>}
+                        {user.id&&<span className="active-star"></span>}
+                        {user.id&&<span className="active-star"></span>}
+                        {user.id&&<span className="clip-star"></span>}
+                        {user.id&&<span className="clip-star"></span>}
                     
                     </figure>
                     

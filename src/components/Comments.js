@@ -11,69 +11,76 @@ class Comments extends Component {
             overflowY: 'scroll'
         }
         const addComment = (record_id, kind) => {
-            if (window.localStorage.getItem('user_id')) {
-                let string = document.getElementById("commentContent").value;
+            if(localStorage.getItem('user_id') !== null){
 
-                if (string != "") {
+                if (window.localStorage.getItem('user_id')) {
+                    let string = document.getElementById("commentContent").value;
 
-                    if (kind == 'story') {
-                        let data = {
-                            body: string,
-                            story_id: record_id,
-                            user_id: window.localStorage.getItem('user_id')
-                        };
-                        axios.post("http://localhost:3000/commentStory", data, {
-                            headers: {
-                                "Access-Control-Allow-Origin": "*",
-                                "Access-Control-Allow-Methods": "GET, POST, PUT",
-                                "Access-Control-Allow-Headers": "Content-Type",
+                    if (string != "") {
 
-                            }
-                        }).then(response => {
-                            if (response) {
-                                console.log(response);
-                                this.props.refresh();
-                                this.forceUpdate();
-                                document.getElementById("commentContent").value = "";
-                                document.getElementById("loginfirst").innerText = "";
-                            }
+                        if (kind == 'story') {
+                            let data = {
+                                body: string,
+                                story_id: record_id,
+                                user_id: window.localStorage.getItem('user_id')
+                            };
+                            axios.post("http://localhost:3000/commentStory", data, {
+                                headers: {
+                                    "Access-Control-Allow-Origin": "*",
+                                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                                    "Access-Control-Allow-Headers": "Content-Type",
 
-                        });
+                                }
+                            }).then(response => {
+                                if (response) {
+                                    console.log(response);
+                                    this.props.refresh();
+                                    this.forceUpdate();
+                                    document.getElementById("commentContent").value = "";
+                                    document.getElementById("loginfirst").innerText = "";
+                                }
+
+                            });
+                        }
+                        else {
+                            let data = {
+                                body: string,
+                                chapter_id: record_id,
+                                user_id: window.localStorage.getItem('user_id')
+                            };
+                            axios.post("http://localhost:3000/commentChapter", data, {
+                                headers: {
+                                    "Access-Control-Allow-Origin": "*",
+                                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                                    "Access-Control-Allow-Headers": "Content-Type",
+
+                                }
+                            }).then(response => {
+                                if (response) {
+                                    console.log(response);
+                                    this.props.refresh();
+                                    this.forceUpdate();
+                                    document.getElementById("commentContent").value = "";
+                                    document.getElementById("loginfirst").innerText = "";
+                                }
+
+                            });
+
+                        }
                     }
                     else {
-                        let data = {
-                            body: string,
-                            chapter_id: record_id,
-                            user_id: window.localStorage.getItem('user_id')
-                        };
-                        axios.post("http://localhost:3000/commentChapter", data, {
-                            headers: {
-                                "Access-Control-Allow-Origin": "*",
-                                "Access-Control-Allow-Methods": "GET, POST, PUT",
-                                "Access-Control-Allow-Headers": "Content-Type",
-
-                            }
-                        }).then(response => {
-                            if (response) {
-                                console.log(response);
-                                this.props.refresh();
-                                this.forceUpdate();
-                                document.getElementById("commentContent").value = "";
-                                document.getElementById("loginfirst").innerText = "";
-                            }
-
-                        });
+                        document.getElementById("loginfirst").innerText = "Type your comment first";
 
                     }
                 }
                 else {
-                    document.getElementById("loginfirst").innerText = "Type your comment first";
+                    document.getElementById("loginfirst").innerText = "please log in first";
+
 
                 }
             }
-            else {
-                document.getElementById("loginfirst").innerText = "please log in first";
-
+            else{
+                window.location.href='login';
 
             }
 
