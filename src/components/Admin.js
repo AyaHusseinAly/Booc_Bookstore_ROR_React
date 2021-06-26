@@ -46,9 +46,7 @@ class Admin extends Component {
                     </TabPane>  
                     <TabPane tab="All Stores" key="2">
                         <AdminAllStores></AdminAllStores>
-                    </TabPane>
-                  
-                        
+                    </TabPane>          
           </Tabs>
       
         <hr/>
