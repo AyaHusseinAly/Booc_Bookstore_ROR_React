@@ -7,7 +7,7 @@ gem "aws-sdk-s3", require: false
 gem 'rails', '~> 5.2.6'
 # Use sqlite3 as the database for Active Record
 
-gem 'sqlite3'
+
 
 # gem 'sqlite3'
 gem 'pg'
