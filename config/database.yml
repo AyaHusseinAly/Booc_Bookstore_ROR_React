@@ -7,11 +7,11 @@
 default: &default
 
 
-  # adapter: postgresql
-  # encoding: unicode
+  adapter: postgresql
+  encoding: unicode
   # username: user1
   # password: 147258
-  # host: localhost
+  host: localhost
 
   # adapter: sqlite3
 

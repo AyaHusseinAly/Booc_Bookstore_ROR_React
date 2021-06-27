@@ -1,4 +1,5 @@
 App.notification = App.cable.subscriptions.create "NotificationChannel",
+App.cable = ActionCable.createConsumer("/cable")
   connected: ->
     # Called when the subscription is ready for use on the server
 
