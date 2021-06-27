@@ -47,6 +47,7 @@ class AddStory extends Component {
         const data = new FormData(e.target);
         const errors = this.validate();
 
+
         if (errors === null) {
             console.log(this.state.shortStoryCover);
             const obj = {
@@ -77,8 +78,41 @@ class AddStory extends Component {
                     "Access-Control-Allow-Headers": "Content-Type",
                 }
             });
-            console.log(res);
-            this.props.history.push('/writer')
+            if(res.data.message === " short story created succefully"){ 
+                // get all followers of the user to send notification
+                axios.post('http://localhost:3000//followeWriters',{
+                    reader_id: localStorage.getItem("user_id")
+                })
+                .then(response =>{
+                    if(response.data.readers.length > 0){
+                        console.log("hi",response.data)
+                        for (const reader of response.data.readers){
+                            axios.post('http://localhost:3000/notifications',{
+                                sender_id: localStorage.getItem("user_id"),
+                                reciever_id: reader.id,
+                                kind: "story",
+                                instance_id: res.data.story.id,
+                                body: `${this.props.user.name} just added a new story called '${res.data.story.title}'.`,
+                                image: res.data.story.cover,
+                                summary: `${res.data.story.summary.slice(0,70)}...`
+                            })
+                            .then(response => {
+                                console.log(response);
+                                console.log(res);
+                                this.props.history.push('/writer')
+                            })
+                            .catch(error =>{
+                                console.log(error);
+                            })
+                        }
+                    }
+
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+            }
+            
         }
         else {
             console.log('no submit');

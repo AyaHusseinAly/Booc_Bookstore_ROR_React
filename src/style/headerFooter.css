@@ -91,3 +91,27 @@ footer {
         width: 12rem;
     }
 }
+.notification-container{
+    padding: 0ch;
+    margin: 0ch;
+    border-radius: 8px;
+    width: 500px;
+}
+.notification-link:hover{
+    text-decoration: none;
+    text-emphasis: none;
+}
+.notification-overlay{
+    background-color: rgb(196, 29, 0,0.9);
+    border-radius: 2px;
+    position: absolute;
+    left: 1ch;
+    top:5ch;
+    padding: 3px;
+    font-size: 10px;
+    color: white;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+
+}

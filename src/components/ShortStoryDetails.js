@@ -60,7 +60,7 @@ const editpopupStyle = {
 class ShortStoryDetails extends Component {
 
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             shortStory: {},
             chapters: [],
@@ -80,7 +80,7 @@ class ShortStoryDetails extends Component {
             reviews: [],
             storyRate: 0,
             stroylikeflag: false,
-            commentStory: []
+            commentStory: [],
 
         }
 
@@ -391,7 +391,7 @@ class Chapters extends Component {
         return (<div className="row my-6">
             <div className="col col-3 "><ChapterDetails chapter={this.props.chapter} /></div>
             <div className='col col-6 px-0'>
-                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments} kind="Chapter" />
+                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments}  kind="Chapter" />
             </div>
 
             <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span>

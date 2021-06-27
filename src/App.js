@@ -16,6 +16,8 @@ import BookStoreBooks from './components/BookStoreBooks';
 import AddBook from './components/AddBook';
 
 import WriterStories from './components/WriterStories';
+import NotificationsPage from './components/NotificationsPage';
+
 import AdminBookStores from './components/AdminBookStores';
 
 
@@ -196,6 +198,7 @@ class App extends Component {
           { this.state.loggedInStatus == 'LOGGED_IN' &&
             <Route path="/mystories" component={MyStories}/>
           }
+
           { this.state.loggedInStatus == 'NOT_LOGGED_IN' &&
             <Route path="/mystories" render={(props) => <Login {...props} loggedInStatus={this.state.loggedInStatus} handleLogin={this.handleLogin} />}/>
 
@@ -249,25 +252,35 @@ class App extends Component {
               )}
             />
           
+          <Route path="/404" component={NotFound} />
+          
+              
+          <Route 
+              path="/shortStory/:id"
+              exact
+              render={props => (
+                <ShortStoryDetails {...props}  user={this.state.user}  />
+              )}
+            />
+            {/* <Route path="/shortStory/:id" component={ShortStoryDetails} /> */}
+            { this.state.user.role == 'admin' &&
 
-          { this.state.user.role == 'admin' &&
              <Route 
               path="/admin"
               exact
               render={props => (
                 <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
               )}
-              />
-            }
-
-            {this.state.user.role == 'admin' &&
-              <Route
-                path="/admin"
-                exact
-                render={props => (
-                  <Admin {...props} loggedInStatus={this.state.loggedInStatus} user={this.state.user} avatar={this.state.avatar} handleRedirect={this.handleRedirect} />
-                )}
-              />}
+            />}
+             {/* { this.state.user.role == 'seller' &&
+          <Route path="/bookstorebooks/:id" component={BookStoreBooks} />} */}
+          <Route path="/addbook/:id" component={AddBook} />
+          <Route
+              path="/notifications"
+              render={props => (
+                <NotificationsPage {...props} user={this.state.user} />
+              )}
+            />
               
             {this.state.user.role == 'seller' && 
             <Route path="/create/BookStores" component={AdminBookStores} />
@@ -275,7 +288,6 @@ class App extends Component {
 
             {this.state.user.role == 'seller' &&
               <Route path="/bookstorebooks/:id" component={BookStoreBooks} />}
-            <Route path="/addbook/:id" component={AddBook} />
             <Route path="/create/BookStores" component={AdminBookStores} />
             <Route path="*" component={NotFound} />
           </Switch >
