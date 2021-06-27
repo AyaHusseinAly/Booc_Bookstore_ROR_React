@@ -9,6 +9,7 @@ import BookRowSlide from './BookRowSlide';
 import Rating from './Rating';
 import Popup from "reactjs-popup";
 import axios from 'axios';
+import Map from './Map';
 import {
     EmailIcon,
     FacebookIcon,
@@ -58,7 +59,7 @@ const BookDetails = (props) => {
     const [downloads, setDownloads] = useState([]);
     const [reviews, setRev] = useState([]);
     const [isbn, setIsbn] = useState([]);
-   const [review_flag,setFlag] = useState([]);
+    const [review_flag,setFlag] = useState([]);
     const [user,setUser] = useState([]);
    
     useEffect(() =>{
@@ -166,7 +167,9 @@ const BookDetails = (props) => {
                };
             
     
-       
+            // const accessMap = () =>{
+            //     refs.child.searchApiBook(book.length > 0 && book[0].volumeInfo.title);
+            // }
 
         
         return(
@@ -184,7 +187,7 @@ const BookDetails = (props) => {
                                    
                                     <button><i className="fa fa-book " ></i> 
                                     <a href={book.length > 0 && book[0].volumeInfo.previewLink}  >Preview</a> </button>
-                                    {user.id&&<button><i className="fa fa-microphone"></i> Find near me</button>}
+                                    {user.id&&<button><i className="fas fa-map-marker-alt" stle={{marginRight: "30px"}} ></i><a style={{color: "black",textDecoration: "null"}} href="/map">Find near me</a></button>}
                                     {book.length > 0 && book[0].accessInfo.pdf.isAvailable ? 
                                     <button style={{border: "1px solid #F8A488"}}><i className="fa fa-book" ></i> <a href={book.length > 0 && book[0].accessInfo.webReaderLink} style={{color: "black",TextDecoration: "none"}}>Read Online</a></button>:<span></span>}
                                     {book.length > 0 && user.id && book[0].saleInfo.isEbook && !book[0].accessInfo.pdf.isAvailable  ? 
@@ -470,8 +473,8 @@ const BookDetails = (props) => {
 
 
 
-
-
+       {/* {review_flag == true? <Map ref="child" name={book.length > 0 && book[0].volumeInfo.title}/>:<span></span>}  */}
+      {/* {review_flag == true? <Map ref="child" />:<span></span>}  */}
 
          {book.length > 0 && book[0].volumeInfo.categories && book[0].volumeInfo.categories != "Social Science" && book[0].volumeInfo.categories != "COMICS & GRAPHIC NOVELS" && book[0].volumeInfo.categories != "Comics & Graphic Novels"?
      <div className="slid">

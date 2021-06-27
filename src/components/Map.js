@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import BookDetails from './BookDetails';
 
 import {
     InfoWindow,
@@ -204,6 +205,21 @@ class Map extends Component {
         console.log('newlat', newLat);
     }
     /******************** End make marker Dragable *****************************/
+
+    /*************make book api**************** **/
+
+    searchApiBook = (value)=>{
+        axios.get("http://localhost:3000/apiSearchBooks",{ params: {q: value}})
+        .then(response => {
+        console.log(response)
+        this.setState({stores:response.data.stores});
+        }); 
+    }
+
+
+
+
+    /************************************************8 */
 
     render() {
         /******************** Styling ***********************************/
@@ -404,6 +420,8 @@ class Map extends Component {
                     </div>
                     }
                 <br/>
+
+                 {/* <BookDetails func ={this.searchApiBook } /> */}
         </div>
     );
     }
