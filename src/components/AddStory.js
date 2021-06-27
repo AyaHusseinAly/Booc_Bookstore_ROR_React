@@ -81,10 +81,11 @@ class AddStory extends Component {
             });
             if(res.data.message === " short story created succefully"){ 
                 // get all followers of the user to send notification
-                axios.post('http://localhost:3000//followeWriters',{
+                axios.post(`${PRODUCTION_BACKEND_URL}/followeWriters`,{
                     reader_id: localStorage.getItem("user_id")
                 })
                 .then(response =>{
+                    console.log(response)
                     if(response.data.readers.length > 0){
                         console.log("hi",response.data)
                         for (const reader of response.data.readers){
@@ -100,7 +101,6 @@ class AddStory extends Component {
                             .then(response => {
                                 console.log(response);
                                 console.log(res);
-                                this.props.history.push('/writer')
                             })
                             .catch(error =>{
                                 console.log(error);
@@ -113,6 +113,7 @@ class AddStory extends Component {
                     console.log(error);
                 });
             }
+            this.props.history.push('/writer')
             
         }
         else {
