@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../style/sli.css';
 import Slider from "react-slick";
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 
 
@@ -39,7 +41,7 @@ useEffect(() =>{
        let data ={
             user_id:localStorage.getItem('user_id')
         }
-         axios.post("http://localhost:3000/myProfileData",data,
+         axios.post(`${PRODUCTION_BACKEND_URL}/myProfileData`,data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

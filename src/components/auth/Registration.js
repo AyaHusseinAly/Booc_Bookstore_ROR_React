@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../style/sign_up.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import DatePicker from 'react-date-picker'
+import DatePicker from 'react-date-picker';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../../constants/index.js'
 class Registration extends Component {
     
     constructor(props){
@@ -54,9 +55,9 @@ class Registration extends Component {
         }
         console.log("data",data);
         console.log("submitted");
-        axios.post("http://localhost:3000/users", data
+        axios.post(`${PRODUCTION_BACKEND_URL}/users`, data
         ,
-        {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
+        {headers: {"Access-Control-Allow-Origin": `${PRODUCTION_FRONTEND_URL}`,
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}
         // {headers: {

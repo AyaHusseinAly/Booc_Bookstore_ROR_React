@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 import {
     InfoWindow,
@@ -163,7 +164,7 @@ class Map extends Component {
             return data.append(key, this.state[key])
         })
     
-        const res = await axios.post("http://localhost:3000/bookStoreSearchFromMap",data, {
+        const res = await axios.post(`${PRODUCTION_BACKEND_URL}/bookStoreSearchFromMap`,data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ImageUploader from 'react-images-upload';
-
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 class AddBook extends Component {
     constructor(props) {
@@ -61,7 +61,7 @@ class AddBook extends Component {
             
              console.log("send ++++++++++");
             console.log(this.state.bookCover);
-            const res = await axios.post("http://localhost:3000/addbook", data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/addbook`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",

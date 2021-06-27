@@ -9,6 +9,8 @@ import BookRowSlide from './BookRowSlide';
 import Rating from './Rating';
 import Popup from "reactjs-popup";
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 import {
     EmailIcon,
     FacebookIcon,
@@ -94,7 +96,7 @@ const BookDetails = (props) => {
             
         }
         
-            let response = await axios.post("http://localhost:3000/ListBookRateReview", data, {
+            let response = await axios.post(`${PRODUCTION_BACKEND_URL}/ListBookRateReview`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -116,7 +118,7 @@ const BookDetails = (props) => {
     let data ={
             user_id:localStorage.getItem('user_id')
         }
-         axios.post("http://localhost:3000/myProfileData",data,
+         axios.post(`${PRODUCTION_BACKEND_URL}/myProfileData`,data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -533,7 +535,7 @@ class MakeRating extends Component {
                 return data.append(key, obj[key])
             })
 
-            const res = await axios.post("http://localhost:3000/addRateReviewBook", data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/addRateReviewBook`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -617,7 +619,7 @@ class ReviewReport extends Component {
                     related_record_id: post.id,
                     user_id: window.localStorage.getItem('user_id')
                 };
-                axios.post("http://localhost:3000/report", data, {
+                axios.post(`${PRODUCTION_BACKEND_URL}/report`, data, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "GET, POST, PUT",

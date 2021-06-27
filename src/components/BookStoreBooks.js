@@ -6,6 +6,8 @@ import Popup from "reactjs-popup";
 import axios from 'axios';
 import { Input, Space } from 'antd';
 import StoreBookRow from './StoreBookRow';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
@@ -36,7 +38,7 @@ class BookStoreBooks extends Component {
 
     
 
-    const res=await axios.get('http://localhost:3000/show_bookstore_books/'+this.props.match.params.id,
+    const res=await axios.get(`${PRODUCTION_BACKEND_URL}/show_bookstore_books/`+this.props.match.params.id,
     {headers: {"Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT",
     "Access-Control-Allow-Headers": "Content-Type"}});
@@ -56,7 +58,7 @@ class BookStoreBooks extends Component {
 
      console.log(param);
     //  if(window.confirm('Are you sure to delete this record ?')){
-      const res = await axios.delete('http://localhost:3000/destroyBook/'+param,{
+      const res = await axios.delete(`${PRODUCTION_BACKEND_URL}/destroyBook/`+param,{
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT , DELETE ",

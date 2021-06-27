@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Popup from "reactjs-popup";
 import '../style/AllStores.css';
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 class AdminAllStores extends Component {
     constructor(props) {
@@ -14,7 +16,7 @@ class AdminAllStores extends Component {
 
     
     async componentDidMount(){
-       await axios.get("http://localhost:3000/seach/store/",{ params: {q: this.state.bookName}})
+       await axios.get(`${PRODUCTION_BACKEND_URL}/seach/store/`,{ params: {q: this.state.bookName}})
         .then(response => {
         console.log(response)
         this.setState({stores:response.data.stores});
@@ -23,7 +25,7 @@ class AdminAllStores extends Component {
 
     
     handle= async () => {
-       await axios.get("http://localhost:3000/seach/store/",{ params: {q: this.state.bookName}})
+       await axios.get(`${PRODUCTION_BACKEND_URL}/seach/store/`,{ params: {q: this.state.bookName}})
         .then(response => {
         console.log(response)
         this.setState({stores:response.data.stores});
@@ -31,7 +33,7 @@ class AdminAllStores extends Component {
     }
 
     deleteStore = async (id) => {
-        await axios.delete("http://localhost:3000/deleteStore",{ params: {id: id}})
+        await axios.delete(`${PRODUCTION_BACKEND_URL}/deleteStore`,{ params: {id: id}})
         .then(response => {
             console.log(response)
            window.location.reload();

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../style/headerFooter.css';
 
@@ -25,7 +27,7 @@ class Comments extends Component {
                                 story_id: record_id,
                                 user_id: window.localStorage.getItem('user_id')
                             };
-                            axios.post("http://localhost:3000/commentStory", data, {
+                            axios.post(`${PRODUCTION_BACKEND_URL}/commentStory`, data, {
                                 headers: {
                                     "Access-Control-Allow-Origin": "*",
                                     "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -34,7 +36,7 @@ class Comments extends Component {
                                 }
                             }).then(response => {
                                 if (response) {
-                                    axios.post('http://localhost:3000/notifications', {
+                                    axios.post(`${PRODUCTION_BACKEND_URL}/notifications`, {
                                     sender_id: localStorage.getItem("user_id"),
                                     reciever_id: response.data.writer_id,
                                     kind: "story-comment",
@@ -63,7 +65,7 @@ class Comments extends Component {
                                 chapter_id: record_id,
                                 user_id: window.localStorage.getItem('user_id')
                             };
-                            axios.post("http://localhost:3000/commentChapter", data, {
+                            axios.post(`${PRODUCTION_BACKEND_URL}/commentChapter`, data, {
                                 headers: {
                                     "Access-Control-Allow-Origin": "*",
                                     "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -131,7 +133,7 @@ class Comments extends Component {
                 related_record_id: id,
                 user_id: window.localStorage.getItem('user_id')
             };
-            axios.post("http://localhost:3000/report", data, {
+            axios.post(`${PRODUCTION_BACKEND_URL}/report`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",

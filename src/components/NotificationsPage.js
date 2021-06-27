@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Notification from './Notification';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 class NotificationsPage extends Component{
     constructor(props){
@@ -11,7 +13,7 @@ class NotificationsPage extends Component{
         };
     }
     componentDidMount(){
-        axios.post('http://localhost:3000/notifications/get_notifications',{
+        axios.post(`${PRODUCTION_BACKEND_URL}/notifications/get_notifications`,{
             //  reciever_id: this.props.user?.id
             reciever_id: localStorage.getItem('user_id')
          })

@@ -4,7 +4,10 @@ import Favr from './Favr';
 import axios from 'axios';
 import Followers from './Followers';
 import { Tabs } from 'antd';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js';
+
 const TabPane = Tabs.TabPane;
+
 
 
 
@@ -35,7 +38,7 @@ const UserPage = (props) => {
     let data ={
             user_id:localStorage.getItem('user_id')
         }
-         axios.post("http://localhost:3000/myProfileData",data,
+         axios.post(`${PRODUCTION_BACKEND_URL}/myProfileData`,data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

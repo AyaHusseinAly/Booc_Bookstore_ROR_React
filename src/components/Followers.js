@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 class Followers extends Component {
     constructor(props) {
@@ -14,7 +16,7 @@ class Followers extends Component {
         let data = {
             reader_id: localStorage.getItem('user_id')
         };
-        let response = await axios.post("http://localhost:3000/followeWriters", data,
+        let response = await axios.post(`${PRODUCTION_BACKEND_URL}/followeWriters`, data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

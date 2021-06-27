@@ -9,6 +9,8 @@ import { Input, Space } from 'antd';
 // import '../style/headerFooter.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 
 
@@ -45,7 +47,7 @@ class SearchResults extends Component {
     async componentDidMount(){ //API Links will be edited to use from implemented Facade Class methods
 
         
-        const res=await axios.get('http://localhost:3000/shortStoriesGenres',
+        const res=await axios.get(`${PRODUCTION_BACKEND_URL}/shortStoriesGenres`,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}});

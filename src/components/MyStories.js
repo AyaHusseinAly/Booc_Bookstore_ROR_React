@@ -9,6 +9,7 @@ import '../style/slider.css';
 import Slider from "react-slick";
 import Rating from './Rating';
 import { Link } from "react-router-dom";
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 
 
@@ -38,7 +39,7 @@ class MyStories extends Component {
         let data = {
             writer_id: localStorage.getItem('user_id')
         };
-        let response = await axios.post("http://localhost:3000/writerStories", data,
+        let response = await axios.post(`${PRODUCTION_BACKEND_URL}/writerStories`, data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

@@ -8,6 +8,8 @@ import ReactStars from "react-rating-stars-component";
 import Likes from './Likes';
 import LikeCommentStory from './LikeCommentStory';
 import Rating from './Rating';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 import '../style/admin.css';
 import '../style/BookDetails.css';
 import {
@@ -89,7 +91,7 @@ class ShortStoryDetails extends Component {
         let data = {
             id: id
         }
-        const res = await axios.post("http://localhost:3000/storyFinished", data, {
+        const res = await axios.post(`${PRODUCTION_BACKEND_URL}/storyFinished`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -105,7 +107,7 @@ class ShortStoryDetails extends Component {
             id: this.props.match.params.id,
             login: localStorage.getItem("user_id")
         }
-        const res = await axios.post("http://localhost:3000/shortStoryDetails", data, {
+        const res = await axios.post(`${PRODUCTION_BACKEND_URL}/shortStoryDetails`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -158,7 +160,7 @@ class ShortStoryDetails extends Component {
             user_id: localStorage.getItem('user_id')
 
         }
-        const res = await axios.post(`http://localhost:3000/${url}`, data, {
+        const res = await axios.post(`${PRODUCTION_BACKEND_URL}/${url}`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -186,7 +188,7 @@ class ShortStoryDetails extends Component {
             reader_id: localStorage.getItem('user_id')
 
         }
-        const res = await axios.post(`http://localhost:3000/${url}`, data, {
+        const res = await axios.post(`${PRODUCTION_BACKEND_URL}/${url}`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -432,7 +434,7 @@ class MakeRating extends Component {
                 return data.append(key, obj[key])
             })
 
-            const res = await axios.post("http://localhost:3000/addRateReviewStory", data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/addRateReviewStory`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -516,7 +518,7 @@ class ReviewReport extends Component {
                     related_record_id: post.id,
                     user_id: window.localStorage.getItem('user_id')
                 };
-                axios.post("http://localhost:3000/report", data, {
+                axios.post(`${PRODUCTION_BACKEND_URL}/report`, data, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -594,7 +596,7 @@ class Edit extends Component {
                 }
             }
 
-            const res = await axios.post(`http://localhost:3000/edit${this.props.kind}`, data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/edit${this.props.kind}`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",

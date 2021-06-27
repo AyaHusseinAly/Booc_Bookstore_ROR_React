@@ -5,6 +5,8 @@ import '../style/community.css';
 import axios from 'axios';
 import CommunityCard from './CommunityCard';
 import { Pagination } from 'antd';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 class Community extends Component {
     state={
@@ -16,7 +18,7 @@ class Community extends Component {
     
     async componentDidMount(){ 
         let data={user_id:window.localStorage.getItem('user_id'),page:1};
-        axios.post('http://localhost:3000/communityPosts',data,
+        axios.post(`${PRODUCTION_BACKEND_URL}/communityPosts`,data,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
@@ -37,7 +39,7 @@ class Community extends Component {
             if(page=="nxt"){page=this.state.current_page+1}
 
             let data={user_id:window.localStorage.getItem('user_id'),page:page};
-            axios.post('http://localhost:3000/communityPosts',data,
+            axios.post(`${PRODUCTION_BACKEND_URL}/communityPosts`,data,
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
@@ -52,7 +54,7 @@ class Community extends Component {
             let string=document.getElementById("searchform").value;
             console.log(string);
             let data = {q:string}
-            axios.post('http://localhost:3000/searchStoryChapter',data,
+            axios.post(`${PRODUCTION_BACKEND_URL}/searchStoryChapter`,data,
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
@@ -65,7 +67,7 @@ class Community extends Component {
         }
         const refresh= () =>{ 
             let data={user_id:window.localStorage.getItem('user_id')};
-            axios.post('http://localhost:3000/communityPosts',data,
+            axios.post(`${PRODUCTION_BACKEND_URL}/communityPosts`,data,
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {
@@ -76,7 +78,7 @@ class Community extends Component {
         }
         const followedWriters= () =>{
             let data={user_id:window.localStorage.getItem('user_id')};
-            axios.post('http://localhost:3000/followerPosts',data,
+            axios.post(`${PRODUCTION_BACKEND_URL}/followerPosts`,data,
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}}).then(response => {

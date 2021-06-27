@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 
 class ReportPopup extends Component {
@@ -14,7 +16,7 @@ class ReportPopup extends Component {
                     related_record_id:post.id,
                     user_id: window.localStorage.getItem('user_id')
                 };
-                axios.post("http://localhost:3000/report", data, {
+                axios.post(`${PRODUCTION_BACKEND_URL}/report`, data, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "GET, POST, PUT",

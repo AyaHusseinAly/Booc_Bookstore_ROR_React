@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ImageUploader from 'react-images-upload';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 const cities= ["Cairo","Alexandria","Giza","Port Said","Suez","Luxor","al-Mansura","Damanhur","6th of October City","Kafr el-Dawwar"]
 class AddStory extends Component {
     constructor(props) {
@@ -82,7 +84,7 @@ class AddStory extends Component {
             })
             
             console.log("submit");
-            const res = await axios.post("http://localhost:3000/admin/BookStores",data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/admin/BookStores`,data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",

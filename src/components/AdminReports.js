@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Popup from "reactjs-popup";
 import '../style/community.css';
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 class AdminReports extends Component {
     state={
         reports:[]
     }
     componentDidMount(){
-        axios.get("http://localhost:3000/reports")
+        axios.get(`${PRODUCTION_BACKEND_URL}/reports`)
         .then(response => {
             console.log(response)
 
@@ -37,13 +39,13 @@ class AdminReports extends Component {
         }
         const deleteReport=(id)=>{
             let data={id:id}
-            axios.post("http://localhost:3000/deleteReport",data,
+            axios.post(`${PRODUCTION_BACKEND_URL}/deleteReport`,data,
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}})
             .then(response => {
                 console.log(response)
-                axios.get("http://localhost:3000/reports")
+                axios.get(`${PRODUCTION_BACKEND_URL}/reports`)
                 .then(response => {
                     console.log(response)
 
@@ -54,13 +56,13 @@ class AdminReports extends Component {
         }
         const deleteRecord=(id)=>{
             let data={id:id}
-            axios.post("http://localhost:3000/deleteRecord",data,
+            axios.post(`${PRODUCTION_BACKEND_URL}/deleteRecord`,data,
             {headers: {"Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT",
             "Access-Control-Allow-Headers": "Content-Type"}})
             .then(response => {
                 console.log(response)
-                axios.get("http://localhost:3000/reports")
+                axios.get(`${PRODUCTION_BACKEND_URL}/reports`)
                 .then(response => {
                     console.log(response)
 

@@ -10,6 +10,8 @@ import '../style/slider.css';
 import Slider from "react-slick";
 import Rating from './Rating';
 import { Link } from "react-router-dom";
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 
 
@@ -43,7 +45,7 @@ class WriterStories extends Component {
             reader_id: localStorage.getItem('user_id')
 
         }
-        const res = await axios.post(`http://localhost:3000/${url}`, data, {
+        const res = await axios.post(`${PRODUCTION_BACKEND_URL}/${url}`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -73,7 +75,7 @@ class WriterStories extends Component {
             writer_id: this.props.match.params.id,
             login: localStorage.getItem('user_id')
         };
-        let response = await axios.post("http://localhost:3000/writerStories", data,
+        let response = await axios.post(`${PRODUCTION_BACKEND_URL}/writerStories`, data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

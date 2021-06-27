@@ -5,6 +5,8 @@ import Likes from './Likes';
 import Comments from './Comments';
 import ReportPopup from './ReportPopup'
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -56,7 +58,7 @@ class CommunityCard extends Component {
                     user_id:window.localStorage.getItem('user_id')
                 };
                 if(!is_liked){
-                    axios.post("http://localhost:3000/likeStory", data, {
+                    axios.post(`${PRODUCTION_BACKEND_URL}/likeStory`, data, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -73,7 +75,7 @@ class CommunityCard extends Component {
                 });
                 }
                 else{
-                    axios.post("http://localhost:3000/unlikeStory", data, {
+                    axios.post(`${PRODUCTION_BACKEND_URL}/unlikeStory`, data, {
                         headers: {
                             "Access-Control-Allow-Origin": "*",
                             "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -103,7 +105,7 @@ class CommunityCard extends Component {
                     user_id:window.localStorage.getItem('user_id')
                 };
                 if(!is_liked){         
-                axios.post("http://localhost:3000/likeChapter", data, {
+                axios.post(`${PRODUCTION_BACKEND_URL}/likeChapter`, data, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -123,7 +125,7 @@ class CommunityCard extends Component {
 
                 }
                 else{
-                    axios.post("http://localhost:3000/unlikeChapter", data, {
+                    axios.post(`${PRODUCTION_BACKEND_URL}/unlikeChapter`, data, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "GET, POST, PUT",

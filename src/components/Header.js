@@ -9,6 +9,8 @@ import Popper from 'popper.js';
 import '../style/headerFooter.css';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 // import  { useHistory } from 'react-router-dom'
 import ReactDOM from 'react-dom';
 import { ActionCableProvider, ActionCableConsumer, ActionCable } from 'react-actioncable-provider';
@@ -37,10 +39,10 @@ class Header extends Component{
 
     }
     handleLogout() {
-        axios.delete("http://localhost:3000/users/sign_out",
+        axios.delete(`${PRODUCTION_BACKEND_URL}/users/sign_out`,
             {
                 headers: {
-                    "Access-Control-Allow-Origin": "http://localhost:3001",
+                    "Access-Control-Allow-Origin": `${PRODUCTION_FRONTEND_URL}`,
                     "Access-Control-Allow-Methods": "GET, POST, PUT",
                     "Access-Control-Allow-Headers": "Content-Type"
                 }
@@ -74,7 +76,7 @@ class Header extends Component{
     }
     handleReadNotifications() {
         if (localStorage.getItem('user_id')) {
-            axios.post('http://localhost:3000/notifications/read_notifications', {
+            axios.post(`${PRODUCTION_BACKEND_URL}/notifications/read_notifications`, {
                 reciever_id: localStorage.getItem('user_id')
             })
                 .then(response => {
@@ -98,7 +100,7 @@ class Header extends Component{
     //    
 componentDidMount = () => {
     //  this.props.is_logged_in();
-    axios.post('http://localhost:3000/notifications/get_notifications', {
+    axios.post(`${PRODUCTION_BACKEND_URL}/notifications/get_notifications`, {
         //  reciever_id: this.props.user?.id
         reciever_id: localStorage.getItem('user_id')
     })

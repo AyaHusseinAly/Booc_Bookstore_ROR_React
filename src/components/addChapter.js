@@ -4,6 +4,7 @@ import Popup from "reactjs-popup";
 import '../style/shortStory.css';
 import { Link } from "react-router-dom";
 
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
@@ -49,7 +50,7 @@ class AddChapter extends Component {
                 return data.append(key, this.state[key])
             })
 
-            const res = await axios.post("http://localhost:3000/createChapter", data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/createChapter`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",

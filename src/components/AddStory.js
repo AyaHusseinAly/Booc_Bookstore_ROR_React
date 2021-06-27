@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ImageUploader from 'react-images-upload';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 
 class AddStory extends Component {
@@ -71,7 +72,7 @@ class AddStory extends Component {
             // console.log(this.state.shortStoryCoverPreview);
             // console.log("send ++++++++++");
             console.log(this.state.shortStoryCover);
-            const res = await axios.post("http://localhost:3000/shortStories", data, {
+            const res = await axios.post(`${PRODUCTION_BACKEND_URL}/shortStories`, data, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -87,7 +88,7 @@ class AddStory extends Component {
                     if(response.data.readers.length > 0){
                         console.log("hi",response.data)
                         for (const reader of response.data.readers){
-                            axios.post('http://localhost:3000/notifications',{
+                            axios.post(`${PRODUCTION_BACKEND_URL}/notifications`,{
                                 sender_id: localStorage.getItem("user_id"),
                                 reciever_id: reader.id,
                                 kind: "story",
@@ -137,7 +138,7 @@ class AddStory extends Component {
         return Object.keys(errors).length === 0 ? null : errors;
     }
     async componentDidMount() {
-        const res = await axios.get('http://localhost:3000/shortStoriesGenres',
+        const res = await axios.get(`${PRODUCTION_BACKEND_URL}/shortStoriesGenres`,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

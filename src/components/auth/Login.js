@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../../style/sign_up.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../../constants/index.js'
 class Login extends Component {
     
     constructor(props){
@@ -21,7 +22,7 @@ class Login extends Component {
     
     handleSubmit(event){
         console.log("submitted");
-        axios.post("http://127.0.0.1:3000/users/sign_in", {
+        axios.post(`${PRODUCTION_BACKEND_URL}/users/sign_in`, {
             user: {
                 email: this.state.email,
                 password: this.state.password,
@@ -31,7 +32,7 @@ class Login extends Component {
         // "Access-Control-Allow-Credentials":"true"}},
         
         // {withCredentials: true}
-        {headers: {"Access-Control-Allow-Origin": "http://localhost:3001",
+        {headers: {"Access-Control-Allow-Origin": `${PRODUCTION_FRONTEND_URL}`,
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}
         )
@@ -71,7 +72,7 @@ class Login extends Component {
             this.props.history.push("/admin");
         }
         else if(data.user.role == 'seller'){
-            axios.post('http://localhost:3000/get_bookstore_from_seller',{
+            axios.post(`${PRODUCTION_BACKEND_URL}/get_bookstore_from_seller`,{
                 seller_id: data.user.id
             })
             .then(response =>{

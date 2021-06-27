@@ -9,6 +9,7 @@ import SearchResults from './SearchResults';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import FreeBook from './FreeBook';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 
 class Home extends Component {
@@ -37,7 +38,7 @@ class Home extends Component {
         .then(response => {
             this.setState({horror:response.data.items});
         });
-        const res=await axios.get('http://localhost:3000/shortStoriesGenres',
+        const res=await axios.get(`${PRODUCTION_BACKEND_URL}/shortStoriesGenres`,
         {headers: {"Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}});

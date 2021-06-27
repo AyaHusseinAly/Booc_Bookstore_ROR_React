@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import Likes from './Likes';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 
 
@@ -56,7 +58,7 @@ class LikeCommentStory extends Component {
             };
         }
 
-        let response = await axios.post(`http://localhost:3000/${url}`, data, {
+        let response = await axios.post(`${PRODUCTION_BACKEND_URL}/${url}`, data, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -130,7 +132,7 @@ class Comments extends Component {
                             story_id: record_id,
                             user_id: window.localStorage.getItem('user_id')
                         };
-                        let res = await axios.post("http://localhost:3000/commentStory", data, {
+                        let res = await axios.post(`${PRODUCTION_BACKEND_URL}/commentStory`, data, {
                             headers: {
                                 "Access-Control-Allow-Origin": "*",
                                 "Access-Control-Allow-Methods": "GET, POST, PUT",
@@ -138,7 +140,7 @@ class Comments extends Component {
 
                             }
                         });
-                        axios.post('http://localhost:3000/notifications', {
+                        axios.post(`${PRODUCTION_BACKEND_URL}/notifications`, {
                                     sender_id: res.data.sender.id,
                                     reciever_id: res.data.writer_id,
                                     kind: "story-comment",
@@ -163,7 +165,7 @@ class Comments extends Component {
                             chapter_id: record_id,
                             user_id: window.localStorage.getItem('user_id')
                         };
-                        let res = await axios.post("http://localhost:3000/commentChapter", data, {
+                        let res = await axios.post(`${PRODUCTION_BACKEND_URL}/commentChapter`, data, {
                             headers: {
                                 "Access-Control-Allow-Origin": "*",
                                 "Access-Control-Allow-Methods": "GET, POST, PUT",

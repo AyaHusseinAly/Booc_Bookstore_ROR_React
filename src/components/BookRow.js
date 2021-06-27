@@ -3,6 +3,8 @@ import '../style/admin.css';
 import '../style/ratingStars.css';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
+
 
 const BookRow = (props) =>{
     const [favorites, setFavorites] = useState([]);
@@ -17,7 +19,7 @@ const BookRow = (props) =>{
     let data ={
             user_id:localStorage.getItem('user_id')
         }
-         axios.post("http://localhost:3000/myProfileData",data,
+         axios.post(`${PRODUCTION_BACKEND_URL}/myProfileData`,data,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",

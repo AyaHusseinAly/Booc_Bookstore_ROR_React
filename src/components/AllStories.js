@@ -3,6 +3,7 @@ import axios from 'axios';
 import Popup from "reactjs-popup";
 import '../style/shortStory.css';
 import ShortStory from './ShortStory';
+import {PRODUCTION_BACKEND_URL,PRODUCTION_FRONTEND_URL} from '../constants/index.js'
 
 
 
@@ -24,7 +25,7 @@ class AllStories extends Component {
 
 
     componentDidMount() {
-        axios.get("http://localhost:3000/shortStories",
+        axios.get(`${PRODUCTION_BACKEND_URL}/shortStories`,
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
