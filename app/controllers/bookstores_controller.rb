@@ -35,7 +35,7 @@ class BookstoresController < ApplicationController
         if @user.save()
             #register_success
             # Create Book Store
-            @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:30.178821799548725,lng:31.224003216678657,kind: params['selectedOption'], distict:params['StoreCity'],user_id: @user.id) 
+            @store = Bookstore.create(name:params['StoreTitle'],phone:params['StorePhone'],img:'',lat:params[:storeLat],lng:params[:storeLng],kind: params['selectedOption'], distict:params['StoreCity'],user_id: @user.id) 
             @store.image.attach(params['BookStoreCover'])
             if @store&.image&.attached?
                 @store.img= rails_blob_url(@store.image)
