@@ -21,7 +21,10 @@ class CommentsLikesController < ApplicationController
             end
         end
         if @comment.persisted?
-            render :json => {message:" Success",comments:@comments}       
+            chapter=ShortStoriesChapter.find(params[:chapter_id])
+            writer=ShortStory.find(chapter.short_story.id).user
+            user=User.find(@comment.user_id)
+            render :json => {message:" Success",comments:@comments, chapter_id: chapter.id, writer_id: writer.id, comment: @comment}       
         else
             render :json => {message:"Error Occured",comments:@comments}
         end
@@ -101,7 +104,8 @@ class CommentsLikesController < ApplicationController
             end
         end
         if @comment.persisted?
-            render :json => {message:"Success",comments:@comments}       
+            writer=ShortStory.find(params[:story_id]).user
+            render :json => {message:"Success",comments:@comments,writer_id:writer.id,comment: @comment, sender: @comment.user}       
         else
             render :json => {message:"Error Occured",comments:@comments}
         end
