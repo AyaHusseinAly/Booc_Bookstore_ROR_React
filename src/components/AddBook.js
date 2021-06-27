@@ -36,7 +36,7 @@ class AddBook extends Component {
         console.log("send ++++++++++");
         console.log(this.state.bookCover);
     }
-    
+
     handleSubmit = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
@@ -55,11 +55,11 @@ class AddBook extends Component {
             Object.keys(this.state).forEach((key, value) => {
                 return data.append(key, this.state[key])
             })
-           
+
             console.log("submit");
             console.log(obj.bookCover); //notdefine
-            
-             console.log("send ++++++++++");
+
+            console.log("send ++++++++++");
             console.log(this.state.bookCover);
             const res = await axios.post("http://localhost:3000/addbook", data, {
                 headers: {
@@ -70,7 +70,7 @@ class AddBook extends Component {
                 }
             });
             console.log(res);
-            this.props.history.push('/bookstorebooks/'+this.props.match.params.id)
+            this.props.history.push('/bookstorebooks/' + this.props.match.params.id)
         }
         else {
             console.log('no submit');
@@ -80,11 +80,11 @@ class AddBook extends Component {
     }
     validate = () => {
         const errors = {};
-        console.log("booktitle",this.state.bookTitle)
-        console.log("bookIsbn",this.state.bookIsbn)
-        console.log("bookstoreId",this.props.match.params.id)
-        console.log("bookPrice",this.state.bookPrice)
-        console.log("bookCover",this.state.bookCover)
+        console.log("booktitle", this.state.bookTitle)
+        console.log("bookIsbn", this.state.bookIsbn)
+        console.log("bookstoreId", this.props.match.params.id)
+        console.log("bookPrice", this.state.bookPrice)
+        console.log("bookCover", this.state.bookCover)
 
 
         if (this.state.bookTitle.trim() === "")
@@ -94,15 +94,15 @@ class AddBook extends Component {
         if (this.state.bookIsbn.trim() === "")
             errors.bookIsbn = "Isbn is required"
         if (this.state.isin)
-        // if (this.state.bookstoreId === "")
-        //     errors.bookstoreId = "bookstoreId is required"
-        //  if (this.state.bookCover.length === 0)
-        //     errors.cover = "Cover is required"
-        
-        this.setState({ errors });
+            // if (this.state.bookstoreId === "")
+            //     errors.bookstoreId = "bookstoreId is required"
+            //  if (this.state.bookCover.length === 0)
+            //     errors.cover = "Cover is required"
+
+            this.setState({ errors });
         return Object.keys(errors).length === 0 ? null : errors;
     }
-    
+
 
     fileUploadAction = () => this.inputReference.current.click();
     // fileUploadInputChange = (e) =>this.setState({fileUploadState:e.target.value});
@@ -116,10 +116,10 @@ class AddBook extends Component {
                     {this.state.bookCoverPreview && <img className='col col-3' style={{ width: '100%' }} src={this.state.bookCoverPreview} alt="The current file" />}
                     {!this.state.bookCoverPreview &&
                         <div className='col col-3' style={{ width: '100%', backgroundColor: '#ADB4C3' }}>
-                            
+
                             <input type="file" hidden ref={this.inputReference}
                                 onChange={this.handleImageStore} />
-                            <div className="btn mx-5 align-self-center" style={{ textAlign: 'center', borderColor: '#F8A488', borderWidth: '3px', marginTop: '70%', backgroundColor: '#ADB4C3', display: 'block' }} onClick={this.fileUploadAction}>
+                            <div className="btn mx-5 mb-5 align-self-center" style={{ textAlign: 'center', borderColor: '#F8A488', borderWidth: '3px', marginTop: '50%', backgroundColor: '#ADB4C3', display: 'block' }} onClick={this.fileUploadAction}>
                                 <i className="fa fa-image" style={{ float: 'center' }}>  Upload Cover</i>
                             </div>
                         </div>}
@@ -131,12 +131,12 @@ class AddBook extends Component {
                             onChange={(e) => this.setState({ bookTitle: e.currentTarget.value })} />
                         {this.state.errors.bookTitle && (<div className="alert alert-danger" role="alert">{this.state.errors.bookTitle}</div>)}
 
-                        <label className="formLabel mt-4" style={{ display: 'block' }}
+                        {/* <label className="formLabel mt-4" style={{ display: 'block' }}
                             htmlFor='bookPrice'>Book Price</label>
                         <input type="text" className="formControl p-1" style={{ borderRadius: '4px' }} placeholder=" Book Price .." id='bookPrice' value={this.state.bookPrice}
                             onChange={(e) => this.setState({ bookPrice: e.currentTarget.value })} />
-                        {this.state.errors.bookPrice && (<div className="alert alert-danger" role="alert">{this.state.errors.bookPrice}</div>)}
-                        
+                        {this.state.errors.bookPrice && (<div className="alert alert-danger" role="alert">{this.state.errors.bookPrice}</div>)} */}
+
                         <label className="formLabel mt-4" style={{ display: 'block' }}
                             htmlFor='bookPrice'>Book Price</label>
                         <input type="text" className="formControl p-1" style={{ borderRadius: '4px' }} placeholder=" Book Isbn .." id='bookIsbn' value={this.state.bookIsbn}
