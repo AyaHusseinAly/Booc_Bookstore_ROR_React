@@ -47,6 +47,7 @@ class AddStory extends Component {
         const data = new FormData(e.target);
         const errors = this.validate();
 
+
         if (errors === null) {
             console.log(this.state.shortStoryCover);
             const obj = {
@@ -77,8 +78,41 @@ class AddStory extends Component {
                     "Access-Control-Allow-Headers": "Content-Type",
                 }
             });
-            console.log(res);
-            this.props.history.push('/writer')
+            if(res.data.message === " short story created succefully"){ 
+                // get all followers of the user to send notification
+                axios.post('http://localhost:3000//followeWriters',{
+                    reader_id: localStorage.getItem("user_id")
+                })
+                .then(response =>{
+                    if(response.data.readers.length > 0){
+                        console.log("hi",response.data)
+                        for (const reader of response.data.readers){
+                            axios.post('http://localhost:3000/notifications',{
+                                sender_id: localStorage.getItem("user_id"),
+                                reciever_id: reader.id,
+                                kind: "story",
+                                instance_id: res.data.story.id,
+                                body: `${this.props.user.name} just added a new story called '${res.data.story.title}'.`,
+                                image: res.data.story.cover,
+                                summary: `${res.data.story.summary.slice(0,70)}...`
+                            })
+                            .then(response => {
+                                console.log(response);
+                                console.log(res);
+                                this.props.history.push('/writer')
+                            })
+                            .catch(error =>{
+                                console.log(error);
+                            })
+                        }
+                    }
+
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+            }
+            
         }
         else {
             console.log('no submit');
@@ -127,8 +161,11 @@ class AddStory extends Component {
 
             <React.Fragment>
                 {/* {this.state.errors &&(<div className="alert alert-danger" role="alert">{Object.keys(this.state.errors ).map(function(key) {
+
                return <option value={key}>{this.state.errors[key]}</option>})}</div>)} */}
+                {this.state.errors.cover && (<div className="container mt-2 alert alert-danger" role="alert">{this.state.errors.cover}</div>)}
                 <form className='my-2 mx-5 p-5 row' style={{ width: '100%' }} onSubmit={this.handleSubmit} enctype="multipart/form-data">
+
                     {this.state.shortStoryCoverPreview && <img className='col col-3' style={{ width: '100%' }} src={this.state.shortStoryCoverPreview} alt="The current file" />}
                     {!this.state.shortStoryCoverPreview &&
                         <div className='col col-3' style={{ width: '100%', backgroundColor: '#ADB4C3' }}>

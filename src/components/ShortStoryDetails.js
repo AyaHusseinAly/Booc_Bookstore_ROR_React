@@ -48,10 +48,19 @@ const popupStyle = {
     overflowY: 'scroll'
 
 }
+const editpopupStyle = {
+    borderRadius: '10px 10px',
+    border: '4px solid #F8A488',
+    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.7)',
+    padding: '2rem',
+    width: '30rem',
+    maxHeight: '30rem',
+    overflowY: 'scroll'
+}
 class ShortStoryDetails extends Component {
 
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             shortStory: {},
             chapters: [],
@@ -71,7 +80,7 @@ class ShortStoryDetails extends Component {
             reviews: [],
             storyRate: 0,
             stroylikeflag: false,
-            commentStory: []
+            commentStory: [],
 
         }
 
@@ -142,6 +151,7 @@ class ShortStoryDetails extends Component {
 
 
     }
+
     addToBookmark = async (id, url) => {
         let data = {
             story_id: id,
@@ -199,6 +209,7 @@ class ShortStoryDetails extends Component {
         }
 
     }
+
 
     render() {
 
@@ -262,8 +273,11 @@ class ShortStoryDetails extends Component {
                                     <div className="about-product">
                                         <div className="about-info">
                                             <div className='row mb-3'>
-                                                <h4 className='col col-4'>About Story</h4>
-                                                <div className='col col-8 mt-2' style={{ display: 'inline-block' }}><LikeCommentStory users={this.state.likes} story={this.state.shortStory} stroylikeflag={this.state.stroylikeflag} commentStory={this.state.commentStory} kind="Story" /></div>
+                                                <h4 className='col col-5'>About Story
+                                                    {localStorage.getItem('user_id') && this.state.writer.id == localStorage.getItem('user_id') && <Edit item={this.state.shortStory} setItem={(item) => window.location.reload()} kind='Story' />}
+                                                    {/*) <i class="far fa-trash-alt" style={{ fontSize: '17px', cursor: 'pointer' }}></i> */}
+                                                </h4>
+                                                <div className='col col-7 mt-2' style={{ display: 'inline-block' }}><LikeCommentStory style={{ width: '30px' }} users={this.state.likes} story={this.state.shortStory} stroylikeflag={this.state.stroylikeflag} commentStory={this.state.commentStory} kind="Story" /></div>
                                             </div>
 
                                             <p>{this.state.shortStory.summary}.</p>
@@ -278,7 +292,7 @@ class ShortStoryDetails extends Component {
                                             {/* <div className="reviews"> */}
 
                                             {this.state.chapters.map((chapter) => {
-                                                return <div className="reviews my-6" style={{}} key={chapter.id}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} /></div>
+                                                return <div className="reviews my-6" style={{}} key={chapter.id}><Chapters key={chapter.id} chapter={chapter} date={chapter.created_at.slice(0, 10)} writer={this.state.writer} /></div>
 
                                             })}
                                             {/* </div> */}
@@ -375,33 +389,18 @@ class ShortStoryDetails extends Component {
 class Chapters extends Component {
     render() {
         return (<div className="row my-6">
-            {/* <u className="mr-4" style={{ display: "inline-block", cursor: "pointer" }}>{this.props.chapter.title}</u> */}
             <div className="col col-3 "><ChapterDetails chapter={this.props.chapter} /></div>
-            {/* <div className="col col-2"><i className="far fa-thumbs-up mr-4"> 2</i></div>
-            <div className="col col-2"><i className="far fa-comment-alt"> 2</i></div> */}
             <div className='col col-6 px-0'>
-                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments} kind="Chapter" />
+                <LikeCommentStory users={this.props.chapter.likes} story={this.props.chapter} stroylikeflag={this.props.chapter.userLikeFlag} commentStory={this.props.chapter.comments}  kind="Chapter" />
             </div>
 
-            <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span></div>
+            <div className="col col-3 p-0"><span style={{ padding: '0px', margin: '0px' }}>{this.props.date}</span>
+                {localStorage.getItem('user_id') && localStorage.getItem('user_id') == this.props.writer.id && < Edit item={this.props.chapter} setItem={(item) => window.location.reload()} kind='Chapter' />}
+                {/* <i class="fas fa-edit ml-2" style={{ fontSize: '17px', cursor: 'pointer' }}></i><i class="far fa-trash-alt" style={{ fontSize: '17px', cursor: 'pointer' }}></i> */}
+            </div>
         </div>)
     }
 }
-// class StoryLikes extends Component {
-//     render() {
-//         return (<Popup
-//             trigger={<a className="mx-2" style={{ color: '#ADB4C3' }}>(17 likes)</a>}
-//             modal
-//             contentStyle={popupStyle}
-//         >
-//             <div>
-//                 <Likes users={this.props.likes} />
-//             </div>
-//         </Popup >)
-//     }
-
-
-// }
 class MakeRating extends Component {
     constructor(props) {
         super();
@@ -568,6 +567,80 @@ class ReviewReport extends Component {
     }
 }
 
+// /////////////////////////////////////////////////////////////////////////
+class Edit extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            string: this.props.item.summary,
+            error: []
+
+
+        }
+    }
+    edit = async (id) => {
+        if (this.state.string != "") {
+            let data = {}
+            if (this.props.kind == 'Story') {
+                data = {
+                    story_id: id,
+                    summary: this.state.string
+                }
+            }
+            else {
+                data = {
+                    chapter_id: id,
+                    summary: this.state.string
+                }
+            }
+
+            const res = await axios.post(`http://localhost:3000/edit${this.props.kind}`, data, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT",
+                    "Access-Control-Allow-Headers": "Content-Type",
+
+                }
+            });
+            console.log(res.data.item);
+            this.props.setItem(res.data.item);
+        }
+        else {
+
+            this.state.error.summary = "cann't edit with empty summary"
+        }
+
+
+
+
+    }
+    render() {
+
+
+        return (
+            <Popup
+                trigger={<i class="fas fa-edit ml-2" style={{ fontSize: '17px', cursor: 'pointer' }} ></i>}
+                modal
+                contentStyle={editpopupStyle}
+                visible={this.state.visible}
+            >
+                <React.Fragment>
+
+                    <div className="form-outline" >
+                        <textarea className="formControl" rows="8" style={{ borderRadius: '4px', width: "90%", display: 'inline-block' }}
+                            onChange={(e) => this.setState({ string: e.currentTarget.value })} >{this.state.string}</textarea>
+                        {this.state.error.item && (<div className="alert alert-danger" role="alert">{this.state.error.item}</div>)}
+                    </div>
+                    <div className="d-flex justify-content-end">
+                        <div className="btn rounded-corners mr-4" style={{ backgroundColor: '#F8A488', borderColor: '#F8A488', borderRadius: '5px', display: 'inline-block' }} onClick={() => this.edit(this.props.item.id)}>Edit</div>
+                    </div>
+                </React.Fragment>
+            </Popup >
+
+
+        );
+    }
+}
 
 
 export default ShortStoryDetails;

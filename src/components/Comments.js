@@ -11,6 +11,7 @@ class Comments extends Component {
             overflowY: 'scroll'
         }
         const addComment = (record_id, kind) => {
+
             if(localStorage.getItem('user_id') !== null){
 
                 if (window.localStorage.getItem('user_id')) {
@@ -33,6 +34,20 @@ class Comments extends Component {
                                 }
                             }).then(response => {
                                 if (response) {
+                                    axios.post('http://localhost:3000/notifications', {
+                                    sender_id: localStorage.getItem("user_id"),
+                                    reciever_id: response.data.writer_id,
+                                    kind: "story-comment",
+                                    instance_id: record_id,
+                                    body: `${this.props.user.name} just commented on your story.`,
+                                    summary: `${response.data.comment.body.slice(0, 70)}...`
+                                })
+                                    .then(response => {
+                                        console.log(response);
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                    })
                                     console.log(response);
                                     this.props.refresh();
                                     this.forceUpdate();
