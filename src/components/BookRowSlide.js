@@ -22,7 +22,7 @@ const BookRowSlide = (props) => {
         const category = props.category
         
             axios.get(
-                `https://www.googleapis.com/books/v1/volumes?q=+subject:${category}&startIndex=1&maxResults=5&orderBy=newest&key=AIzaSyAzt2S4sYkZLX6fAAWM6OMeUVH4h8l_bdg`
+                `https://www.googleapis.com/books/v1/volumes?q=+subject:${category}&startIndex=1&maxResults=5&orderBy=newest&key=AIzaSyD9_t-TTlRiYRGH-UxXjRLz773OyTFy3_U`
             ).then (result => {
                 console.log(result)
                 if(result.data.items)

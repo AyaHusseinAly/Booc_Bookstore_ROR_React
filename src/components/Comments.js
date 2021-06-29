@@ -41,7 +41,7 @@ class Comments extends Component {
                                     reciever_id: response.data.writer_id,
                                     kind: "story-comment",
                                     instance_id: record_id,
-                                    body: `${this.props.user.name} just commented on your story.`,
+                                    body: `${response.data.sender.name} just commented on your story.`,
                                     summary: `${response.data.comment.body.slice(0, 70)}...`
                                 })
                                     .then(response => {
