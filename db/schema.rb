@@ -11,14 +11,15 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_06_26_133903) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -35,28 +36,8 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "allowlist_jwts", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "jti", null: false
-    t.string "aud", null: false
-    t.datetime "exp", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_allowlist_jwts_on_user_id"
-  end
-
-  create_table "allowlisted_jwts", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "jti", null: false
-    t.string "aud", null: false
-    t.datetime "exp", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
-  end
-
   create_table "book_rating_reviews", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "isbn"
     t.string "review"
     t.float "rate"
@@ -68,8 +49,8 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
   create_table "bookmarks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "short_story_id"
-    t.integer "user_id"
+    t.bigint "short_story_id"
+    t.bigint "user_id"
     t.index ["short_story_id"], name: "index_bookmarks_on_short_story_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
@@ -85,7 +66,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.string "book_title"
     t.string "book_isbn"
     t.string "cover"
-    t.integer "bookstore_id"
+    t.bigint "bookstore_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bookstore_id"], name: "index_bookstore_books_on_bookstore_id"
@@ -94,7 +75,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
   create_table "bookstore_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
-    t.integer "bookstore_id"
+    t.bigint "bookstore_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bookstore_id"], name: "index_bookstore_rate_reviews_on_bookstore_id"
@@ -110,14 +91,14 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.float "lat"
     t.float "lng"
     t.string "distict"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_bookstores_on_user_id"
   end
 
   create_table "comment_chapters", force: :cascade do |t|
     t.text "body"
-    t.integer "user_id"
-    t.integer "short_stories_chapter_id"
+    t.bigint "user_id"
+    t.bigint "short_stories_chapter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_stories_chapter_id"], name: "index_comment_chapters_on_short_stories_chapter_id"
@@ -126,20 +107,12 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
 
   create_table "comment_stories", force: :cascade do |t|
     t.text "body"
-    t.integer "user_id"
-    t.integer "short_story_id"
+    t.bigint "user_id"
+    t.bigint "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_story_id"], name: "index_comment_stories_on_short_story_id"
     t.index ["user_id"], name: "index_comment_stories_on_user_id"
-  end
-
-  create_table "comments", force: :cascade do |t|
-    t.text "body"
-    t.integer "short_stories_chapter_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["short_stories_chapter_id"], name: "index_comments_on_short_stories_chapter_id"
   end
 
   create_table "downloads", force: :cascade do |t|
@@ -169,8 +142,8 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
   end
 
   create_table "like_chapters", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "short_stories_chapter_id"
+    t.bigint "user_id"
+    t.bigint "short_stories_chapter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_stories_chapter_id"], name: "index_like_chapters_on_short_stories_chapter_id"
@@ -178,8 +151,8 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
   end
 
   create_table "like_stories", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "short_story_id"
+    t.bigint "user_id"
+    t.bigint "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_story_id"], name: "index_like_stories_on_short_story_id"
@@ -191,8 +164,8 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "sender_id_id"
-    t.integer "reciever_id_id"
+    t.bigint "sender_id_id"
+    t.bigint "reciever_id_id"
     t.bigint "instance_id"
     t.string "kind"
     t.string "summary"
@@ -206,7 +179,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.string "kind"
     t.text "reason"
     t.integer "related_record_id"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_reports_on_user_id"
@@ -220,7 +193,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_short_stories_on_user_id"
   end
 
@@ -229,24 +202,13 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "short_story_id"
+    t.bigint "short_story_id"
     t.index ["short_story_id"], name: "index_short_stories_chapters_on_short_story_id"
   end
 
-  create_table "short_stories_rating_reviews", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "short_story_id"
-    t.string "review"
-    t.float "rate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["short_story_id"], name: "index_short_stories_rating_reviews_on_short_story_id"
-    t.index ["user_id"], name: "index_short_stories_rating_reviews_on_user_id"
-  end
-
   create_table "short_story_genres", force: :cascade do |t|
-    t.integer "genre_id"
-    t.integer "short_story_id"
+    t.bigint "genre_id"
+    t.bigint "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_short_story_genres_on_genre_id"
@@ -256,15 +218,15 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
   create_table "story_rate_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
-    t.integer "short_story_id"
+    t.bigint "short_story_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["short_story_id"], name: "index_story_rate_reviews_on_short_story_id"
   end
 
   create_table "story_rating_reviews", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "short_story_id"
+    t.bigint "user_id"
+    t.bigint "short_story_id"
     t.string "review"
     t.float "rate"
     t.datetime "created_at", null: false
@@ -290,10 +252,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "allowlist_jwts", "users", on_delete: :cascade
-  add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
   add_foreign_key "book_rating_reviews", "users"
   add_foreign_key "bookmarks", "short_stories"
   add_foreign_key "bookmarks", "users"
@@ -304,7 +263,6 @@ ActiveRecord::Schema.define(version: 2021_06_26_133903) do
   add_foreign_key "comment_chapters", "users"
   add_foreign_key "comment_stories", "short_stories"
   add_foreign_key "comment_stories", "users"
-  add_foreign_key "comments", "short_stories_chapters"
   add_foreign_key "like_chapters", "short_stories_chapters"
   add_foreign_key "like_chapters", "users"
   add_foreign_key "like_stories", "short_stories"
