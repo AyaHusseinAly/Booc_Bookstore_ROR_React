@@ -42,7 +42,7 @@ class Header extends Component{
         axios.delete(`${PRODUCTION_BACKEND_URL}/users/sign_out`,
             {
                 headers: {
-                    "Access-Control-Allow-Origin": `${PRODUCTION_FRONTEND_URL}`,
+                    "Access-Control-Allow-Origin": `*`,
                     "Access-Control-Allow-Methods": "GET, POST, PUT",
                     "Access-Control-Allow-Headers": "Content-Type"
                 }

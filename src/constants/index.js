@@ -6,9 +6,9 @@ export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
-// export const PRODUCTION_BACKEND_URL = 'https://booc-bookstore-backend.herokuapp.com'
-// export const PRODUCTION_FRONTEND_URL = 'http://localhost:3001'
+export const PRODUCTION_BACKEND_URL = 'https://booc-bookstore-backend.herokuapp.com'
+export const PRODUCTION_FRONTEND_URL = 'https://booc-bookstore-frontend.herokuapp.com'
 
 export const ENVIROMENT = 'PRODUCTION'
-export const PRODUCTION_BACKEND_URL = 'http://localhost:3000'
-export const PRODUCTION_FRONTEND_URL = 'http://localhost:3001'
+// export const PRODUCTION_BACKEND_URL = 'http://localhost:3000'
+// export const PRODUCTION_FRONTEND_URL = 'http://localhost:3001'

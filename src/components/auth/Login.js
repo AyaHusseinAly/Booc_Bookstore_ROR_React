@@ -32,7 +32,7 @@ class Login extends Component {
         // "Access-Control-Allow-Credentials":"true"}},
         
         // {withCredentials: true}
-        {headers: {"Access-Control-Allow-Origin": `${PRODUCTION_FRONTEND_URL}`,
+        {headers: {"Access-Control-Allow-Origin": `*`,
         "Access-Control-Allow-Methods": "GET, POST, PUT",
         "Access-Control-Allow-Headers": "Content-Type"}}
         )
