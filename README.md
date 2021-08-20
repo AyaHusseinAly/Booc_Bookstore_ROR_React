@@ -11,7 +11,7 @@ http://booc-bookstore.herokuapp.com/
 
 ## Tools and versions used 
 ### Back-End
-    - Ruby in Rails v5.2
+    - Ruby on Rails v5.2
         - devise
         - devise-jwt 
         - redis v4.0
